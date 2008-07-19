@@ -1,0 +1,28 @@
+-- Compile started at Thursday, July 17, 2008 11:35:56 PM
+Info: Building output file C:\dev\trees\svn@fire\test\mi_help\Build\MusicImorter_Help.hxs.
+Info: Parsing topic  1: /Requirements.html
+Info: Parsing topic  2: /todo.html
+Info: Parsing topic  3: /_index_entry_not_found.html
+Info: Parsing topic  4: /_topic_not_found.html
+Info: Parsing topic  5: /glossary.html
+Info: Saving topic 1: /Requirements.html
+Info: Saving topic 2: /todo.html
+Info: Saving file: /Script/helpstudio.js
+Info: Saving file: /Stylesheets/helpstudio.css
+Info: Saving topic 3: /_index_entry_not_found.html
+Info: Saving topic 4: /_topic_not_found.html
+Info: Saving topic 5: /glossary.html
+Info: Saving file: /stopwordlist.txt
+Info: Saving file: MusicImorter_Help.hxc
+Info: Saving file: stopwordlist.txt
+Info: Saving file: MusicImorter_Help.HxF
+Info: Saving file: MusicImorter_Help.HxT
+Info: Saving file: MusicImorter_Help.HxK
+Info: Saving file: MusicImorter_Help_F.HxK
+Info: Saving file: MusicImorter_Help_N.HxK
+Info: Saving file: MusicImorter_Help_A.HxK
+Info: Saving file: MusicImorter_Help_D.HxK
+Info: Number of Topics: 5.
+Info: Number of URLs: 5.
+Info: Processing complete.
+-- Compile completed at Thursday, July 17, 2008 11:36:09 PM

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE HelpCollection>
+<HelpCollection DTDVersion="1.0" Title="MusicImorter_Help">
+
+  <TOCDef File="COL_MusicImorter_Help.HxT"/>
+
+  <KeywordIndexDef File="COL_MusicImorter_Help_K.HxK"/>
+  <KeywordIndexDef File="COL_MusicImorter_Help_F.HxK"/>
+  <KeywordIndexDef File="COL_MusicImorter_Help_N.HxK"/>
+  <KeywordIndexDef File="COL_MusicImorter_Help_A.HxK"/>
+  <KeywordIndexDef File="COL_MusicImorter_Help_D.HxK"/>
+
+  <ItemMoniker Name="!DefaultFullTextSearch" ProgId="HxDs.HxFullTextSearch" InitData="FTS"/>
+  <ItemMoniker Name="!DefaultTOC" ProgId="HxDs.HxHierarchy" InitData="COL_MusicImorter_Help"/>
+  <ItemMoniker Name="!DefaultKeywordIndex" ProgId="HxDs.HxIndex" InitData="K"/>
+  <ItemMoniker Name="!DefaultAssociativeIndex" ProgId="HxDs.HxIndex" InitData="A"/>
+  <ItemMoniker Name="!DefaultContextWindowIndex" ProgId="HxDs.HxIndex" InitData="F"/>
+  <ItemMoniker Name="!DefaultDynamicLinkIndex" ProgId="HxDs.HxIndex" InitData="D"/>
+  <ItemMoniker Name="!DefaultNamedUrlIndex" ProgId="HxDs.HxIndex" InitData="NamedUrlIndex"/>
+
+</HelpCollection>
