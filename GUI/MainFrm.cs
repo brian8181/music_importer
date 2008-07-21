@@ -37,6 +37,7 @@ namespace music_importer
     /// </summary>
     public partial class MainFrm : Form
     {
+        #region Construction
         private string[] args = null;
         private Importer importer = null;
         /// <summary>
@@ -68,6 +69,7 @@ namespace music_importer
             }
             cmbPriority.SelectedIndex = 1; //BelowNormal
         }
+        #endregion
 
         #region Settings / Configuration
         /// <summary>
@@ -217,214 +219,6 @@ namespace music_importer
                 Close();
             }
         }
-        #endregion
-
-        #region importer Events
-        /// <summary>
-        /// status changed
-        /// </summary>
-        /// <param name="str">new status message</param>
-        void importer_Status( string str )
-        {
-            SafeSet_Label( lbStatus, str );
-        }
-        /// <summary>
-        /// importer sync error
-        /// </summary>
-        void importer_SyncError()
-        {
-            MessageBox.Show( "A previous scan has not finished." );
-        }
-        /// <summary>
-        ///  scan started
-        /// </summary>
-        private void importer_TagScanStarted()
-        {
-            pictureBox2.Image = Properties.Resources.clipart_music_notes_023;
-            SafeSet_Label( lbMessage, "Tag scan started" );
-        }
-        /// <summary>
-        ///  scan finished
-        /// </summary>
-        private void importer_TagScanStopped()
-        {
-            pictureBox2.Image = null;
-            //SafeSet_Label( lbMessage, "Finished" );
-            SafeSet_Label( lbStatus, "Finished." );
-            this.Invoke( new VoidDelegate( delegate() {
-                                                    btnCancel.Enabled = true;
-                                                    btnCancel.Text = "Finished.";
-                                                }
-                                          ) );
-            // stop progess marquee
-            progressBar.Style = ProgressBarStyle.Continuous;
-            ToggleOn();
-        }
-        /// <summary>
-        ///  scan error
-        /// </summary>
-        /// <param name="str">errror message</param>
-        private void importer_Error( string str )
-        {
-            //throw new Exception( "The method or operation is not implemented." );
-        }
-        /// <summary>
-        /// process diectory changed
-        /// </summary>
-        /// <param name="str">directory</param>
-        private void importer_ProcessDirectory( string str )
-        {
-            if(this.InvokeRequired) // invoke on gui thread
-            {
-                this.Invoke( new StringDelegate( importer_ProcessDirectory ), new object[] { str } );
-                return;
-            }
-            lbDirectory.Text = str;
-        }
-        /// <summary>
-        /// importer status message
-        /// </summary>
-        /// <param name="str">message</param>
-        private void importer_Message( string str )
-        {
-            SafeSet_Label( lbMessage, str );
-        }
-        #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="str"></param>
-        private void SafeSet_Label( Label l, string s )
-        {
-            if(this.InvokeRequired) // invoke on gui thread
-            {
-                this.Invoke( new SafeSetLabelDelegate( SafeSet_Label ), new object[] { l, s } );
-                return;
-            }
-            l.Text = s;
-        }
-        ///<summary>
-        ///validate input
-        ///</summary>
-        ///<returns>true if valid otherwise false</returns>
-        private bool ValidateInput()
-        {
-            bool result = true;
-            if(!cbMysql.Checked)
-            {
-                result = result ? !string.IsNullOrEmpty( txtAddress.Text ) : false;
-                result = result ? !string.IsNullOrEmpty( txtPassword.Text ) : false;
-                result = result ? !string.IsNullOrEmpty( txtPort.Text ) : false;
-                result = result ? !string.IsNullOrEmpty( txtUser.Text ) : false;
-            }
-            else
-            {
-                result = result ? !string.IsNullOrEmpty( txtMySql.Text ) : false;
-            }
-            if(cbPlaylist.Checked)
-            {
-                result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
-            }
-            result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
-            // do art sizes make logical sense
-            if(cbGenerateThumbs.Checked)
-            {
-                if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
-                {
-                   StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
-                }
-            }
-            // create directory, if not exists                 
-            result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
-            if(!Directory.Exists( txtArtLoc.Text ))
-            {
-                DialogResult dr = MessageBox.Show(
-                    "Art location \"" + txtArtLoc.Text + "\" does not exist you do want to create it?",
-                    "Warning",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button1 );
-                if(dr != DialogResult.Yes)
-                    return false;
-                Directory.CreateDirectory( txtArtLoc.Text );
-                if(!Directory.Exists( txtArtLoc.Text ))
-                {
-                    return false;
-                }
-            }
-            if(cbCreateDB.Checked)
-            {
-                DialogResult dr = MessageBox.Show(
-                    "Current setting will cause database to be (re)created, causing loss of all data are you sure you want to continue?",
-                    "Warning",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button1 );
-                if(dr != DialogResult.Yes)
-                    return false;
-            }
-            return result;
-        }
-        /// <summary>
-        ///  toggle control from enabled to disabled
-        /// </summary>
-        public void ToggleOn()
-        {
-            Toggle( true );
-        }
-        public void ToggleOff()
-        {
-            Toggle( false );
-        }
-        public void Toggle( bool state )
-        {
-            if(this.InvokeRequired) // invoke on gui thread
-            {
-                this.Invoke( new SafeToggleDelegate( Toggle ), state );
-                return;
-            }
-            // progress bar
-            progressBar.Enabled = !state;
-            // button
-            btnOK.Enabled = state;
-            btnAdd.Enabled = state;
-            btnRemove.Enabled = state;
-            btnClear.Enabled = state;
-            btnBrowseArt.Enabled = state;
-            if(state) // turn on or leave off 
-            {
-                bool check = cbMysql.Checked;
-                txtMySql.Enabled = check;
-                txtAddress.Enabled = !check;
-                txtPassword.Enabled = !check;
-                txtUser.Enabled = !check;
-                txtPort.Enabled = !check;
-                txtSchema.Enabled = !check;
-                cbCreateDB.Enabled = !check;
-                txtSQLite.Enabled = cbPlaylist.Checked;
-            }
-            else // turn off
-            {
-                txtAddress.Enabled = state;
-                txtPassword.Enabled = state;
-                txtUser.Enabled = state;
-                txtPort.Enabled = state;
-                txtSchema.Enabled = state;
-                txtMySql.Enabled = state;
-                txtSQLite.Enabled = state;
-                cbCreateDB.Enabled = state;
-            }
-            txtMask.Enabled = state;
-            txtArtLoc.Enabled = state;
-            txtArtMask.Enabled = state;
-            // check boxes
-            cbMysql.Enabled = state;
-            cbArt.Enabled = state;
-            cbClean.Enabled = state;
-            cbLog.Enabled = state;
-            cbOptimize.Enabled = state;
-            cbPlaylist.Enabled = state;
-            cbTags.Enabled = state;
-        }
         /// <summary>
         /// btnAdd 
         /// </summary>
@@ -528,5 +322,218 @@ namespace music_importer
             cbSH_Pass.Text = cbSH_Pass.Text == "Show" ? "Hide" : "Show";
             txtPassword.PasswordChar = cbSH_Pass.Checked ? '*' : (char)0;
         }
+        #endregion
+
+        #region Importer Events
+        /// <summary>
+        /// status changed
+        /// </summary>
+        /// <param name="str">new status message</param>
+        void importer_Status( string str )
+        {
+            SafeSet_Label( lbStatus, str );
+        }
+        /// <summary>
+        /// importer sync error
+        /// </summary>
+        void importer_SyncError()
+        {
+            MessageBox.Show( "A previous scan has not finished." );
+        }
+        /// <summary>
+        ///  scan started
+        /// </summary>
+        private void importer_TagScanStarted()
+        {
+            pictureBox2.Image = Properties.Resources.clipart_music_notes_023;
+            SafeSet_Label( lbMessage, "Tag scan started" );
+        }
+        /// <summary>
+        ///  scan finished
+        /// </summary>
+        private void importer_TagScanStopped()
+        {
+            pictureBox2.Image = null;
+            //SafeSet_Label( lbMessage, "Finished" );
+            SafeSet_Label( lbStatus, "Finished." );
+            this.Invoke( new VoidDelegate( delegate() {
+                                                    btnCancel.Enabled = true;
+                                                    btnCancel.Text = "Finished.";
+                                                }
+                                          ) );
+            // stop progess marquee
+            progressBar.Style = ProgressBarStyle.Continuous;
+            ToggleOn();
+        }
+        /// <summary>
+        ///  scan error
+        /// </summary>
+        /// <param name="str">errror message</param>
+        private void importer_Error( string str )
+        {
+            //throw new Exception( "The method or operation is not implemented." );
+        }
+        /// <summary>
+        /// process diectory changed
+        /// </summary>
+        /// <param name="str">directory</param>
+        private void importer_ProcessDirectory( string str )
+        {
+            if(this.InvokeRequired) // invoke on gui thread
+            {
+                this.Invoke( new StringDelegate( importer_ProcessDirectory ), new object[] { str } );
+                return;
+            }
+            lbDirectory.Text = str;
+        }
+        /// <summary>
+        /// importer status message
+        /// </summary>
+        /// <param name="str">message</param>
+        private void importer_Message( string str )
+        {
+            SafeSet_Label( lbMessage, str );
+        }
+        #endregion
+
+        #region Helpers
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        private void SafeSet_Label( Label l, string s )
+        {
+            if(this.InvokeRequired) // invoke on gui thread
+            {
+                this.Invoke( new SafeSetLabelDelegate( SafeSet_Label ), new object[] { l, s } );
+                return;
+            }
+            l.Text = s;
+        }
+        /// <summary>
+        ///  toggle control from enabled to disabled
+        /// </summary>
+        public void ToggleOn()
+        {
+            Toggle( true );
+        }
+        public void ToggleOff()
+        {
+            Toggle( false );
+        }
+        public void Toggle( bool state )
+        {
+            if(this.InvokeRequired) // invoke on gui thread
+            {
+                this.Invoke( new SafeToggleDelegate( Toggle ), state );
+                return;
+            }
+            // progress bar
+            progressBar.Enabled = !state;
+            // button
+            btnOK.Enabled = state;
+            btnAdd.Enabled = state;
+            btnRemove.Enabled = state;
+            btnClear.Enabled = state;
+            btnBrowseArt.Enabled = state;
+            if(state) // turn on or leave off 
+            {
+                bool check = cbMysql.Checked;
+                txtMySql.Enabled = check;
+                txtAddress.Enabled = !check;
+                txtPassword.Enabled = !check;
+                txtUser.Enabled = !check;
+                txtPort.Enabled = !check;
+                txtSchema.Enabled = !check;
+                cbCreateDB.Enabled = !check;
+                txtSQLite.Enabled = cbPlaylist.Checked;
+            }
+            else // turn off
+            {
+                txtAddress.Enabled = state;
+                txtPassword.Enabled = state;
+                txtUser.Enabled = state;
+                txtPort.Enabled = state;
+                txtSchema.Enabled = state;
+                txtMySql.Enabled = state;
+                txtSQLite.Enabled = state;
+                cbCreateDB.Enabled = state;
+            }
+            txtMask.Enabled = state;
+            txtArtLoc.Enabled = state;
+            txtArtMask.Enabled = state;
+            // check boxes
+            cbMysql.Enabled = state;
+            cbArt.Enabled = state;
+            cbClean.Enabled = state;
+            cbLog.Enabled = state;
+            cbOptimize.Enabled = state;
+            cbPlaylist.Enabled = state;
+            cbTags.Enabled = state;
+        }
+        #endregion
+
+        #region Validation
+        ///<summary>
+        ///validate input
+        ///</summary>
+        ///<returns>true if valid otherwise false</returns>
+        private bool ValidateInput()
+        {
+            bool result = true;
+            if(!cbMysql.Checked)
+            {
+                result = result ? !string.IsNullOrEmpty( txtAddress.Text ) : false;
+                result = result ? !string.IsNullOrEmpty( txtPassword.Text ) : false;
+                result = result ? !string.IsNullOrEmpty( txtPort.Text ) : false;
+                result = result ? !string.IsNullOrEmpty( txtUser.Text ) : false;
+            }
+            else
+            {
+                result = result ? !string.IsNullOrEmpty( txtMySql.Text ) : false;
+            }
+            if(cbPlaylist.Checked)
+            {
+                result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
+            }
+            result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
+            // do art sizes make logical sense
+            if(cbGenerateThumbs.Checked)
+            {
+                if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
+                {
+                   StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
+                }
+            }
+            // create directory, if not exists                 
+            result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
+            if(!Directory.Exists( txtArtLoc.Text ))
+            {
+                DialogResult dr = MessageBox.Show(
+                    "Art location \"" + txtArtLoc.Text + "\" does not exist you do want to create it?",
+                    "Warning",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1 );
+                if(dr != DialogResult.Yes)
+                    return false;
+                Directory.CreateDirectory( txtArtLoc.Text );
+                if(!Directory.Exists( txtArtLoc.Text ))
+                {
+                    return false;
+                }
+            }
+            if(cbCreateDB.Checked)
+            {
+                DialogResult dr = MessageBox.Show(
+                    "Current setting will cause database to be (re)created, causing loss of all data are you sure you want to continue?",
+                    "Warning",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1 );
+                if(dr != DialogResult.Yes)
+                    return false;
+            }
+            return result;
+        }
+        #endregion
     }
 }
