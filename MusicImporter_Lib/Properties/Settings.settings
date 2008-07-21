@@ -32,17 +32,8 @@
     <Setting Name="Log" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ScanPlaylist" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="mysql_conn_str" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="Clean" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="mm_conn_str" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="use_conn_str" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -61,6 +52,15 @@
     </Setting>
     <Setting Name="art_mask" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.jpg;*.jpeg;*.png;*.bmp;*.gif</Value>
+    </Setting>
+    <Setting Name="ScanPlaylist" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="mysql_conn_str" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="mm_conn_str" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

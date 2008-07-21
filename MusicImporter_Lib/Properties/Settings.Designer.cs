@@ -135,30 +135,6 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ScanPlaylist {
-            get {
-                return ((bool)(this["ScanPlaylist"]));
-            }
-            set {
-                this["ScanPlaylist"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string mysql_conn_str {
-            get {
-                return ((string)(this["mysql_conn_str"]));
-            }
-            set {
-                this["mysql_conn_str"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Clean {
             get {
@@ -166,18 +142,6 @@ namespace MusicImporter_Lib.Properties {
             }
             set {
                 this["Clean"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string mm_conn_str {
-            get {
-                return ((string)(this["mm_conn_str"]));
-            }
-            set {
-                this["mm_conn_str"] = value;
             }
         }
         
@@ -250,6 +214,42 @@ namespace MusicImporter_Lib.Properties {
             }
             set {
                 this["art_mask"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ScanPlaylist {
+            get {
+                return ((bool)(this["ScanPlaylist"]));
+            }
+            set {
+                this["ScanPlaylist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string mysql_conn_str {
+            get {
+                return ((string)(this["mysql_conn_str"]));
+            }
+            set {
+                this["mysql_conn_str"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string mm_conn_str {
+            get {
+                return ((string)(this["mm_conn_str"]));
+            }
+            set {
+                this["mm_conn_str"] = value;
             }
         }
     }

@@ -40,15 +40,15 @@
   <ItemGroup>
     <Reference Include="CSharpOptParse, Version=1.0.1.0, Culture=neutral, PublicKeyToken=fc987de5fe9f6e83">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\libs\CSharpOptParse.dll</HintPath>
+      <HintPath>..\CSharpOptParse.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.48.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e0e56bbb0fb72f2, processorArchitecture=MSIL">
+    <Reference Include="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\libs\taglib-sharp.dll</HintPath>
+      <HintPath>..\taglib-sharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,17 +73,14 @@
     <Content Include="ACDSee7.exe_I07fa_0409.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\trunk\mysql-connector-net-5.1.6-src\Driver\MySql.Data.csproj">
+    <ProjectReference Include="..\..\mysql-connector\MySql.Data\Provider\MySql.Data.csproj">
       <Project>{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}</Project>
       <Name>MySql.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\trunk\Utility2\Utility2\Utility2.csproj">
+    <ProjectReference Include="..\..\utility\Utility2\Utility2.csproj">
       <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
       <Name>Utility2</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
