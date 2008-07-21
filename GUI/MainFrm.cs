@@ -101,7 +101,14 @@ namespace music_importer
             this.txtArtLoc.Text = Settings.Default.art_location;
             this.txtMask.Text = Settings.Default.file_mask;
             this.txtArtMask.Text = Settings.Default.art_mask;
+            // art & thumb settings
             this.cbGenerateThumbs.Checked = Settings.Default.insert_art;
+            this.art_large.Enabled = Settings.Default.insert_art;
+            this.art_small.Enabled = Settings.Default.insert_art;
+            this.art_xsmall.Enabled = Settings.Default.insert_art;
+            this.art_large.Value = Settings.Default.art_large;
+            this.art_small.Value = Settings.Default.art_small;
+            this.art_xsmall.Value = Settings.Default.art_xsmall;
         }
         /// <summary>
         /// save application settings
@@ -138,6 +145,9 @@ namespace music_importer
             Settings.Default.file_mask = this.txtMask.Text;
             Settings.Default.art_mask = this.txtArtMask.Text;
             Settings.Default.insert_art = this.cbGenerateThumbs.Checked;
+            Settings.Default.art_large = (int)this.art_large.Value;
+            Settings.Default.art_small = (int)this.art_small.Value;
+            Settings.Default.art_xsmall = (int)this.art_xsmall.Value;
             Settings.Default.Save();
             // GUI Settings
             Properties.Settings.Default.show_user = !cbSH_User.Checked;
@@ -447,6 +457,11 @@ namespace music_importer
                 txtSchema.Enabled = !check;
                 cbCreateDB.Enabled = !check;
                 txtSQLite.Enabled = cbPlaylist.Checked;
+
+                check = cbGenerateThumbs.Checked;
+                this.art_large.Enabled = check;
+                this.art_small.Enabled = check;
+                this.art_xsmall.Enabled = check;
             }
             else // turn off
             {
@@ -458,7 +473,11 @@ namespace music_importer
                 txtMySql.Enabled = state;
                 txtSQLite.Enabled = state;
                 cbCreateDB.Enabled = state;
+                this.art_large.Enabled = state;
+                this.art_small.Enabled = state;
+                this.art_xsmall.Enabled = state;
             }
+            
             txtMask.Enabled = state;
             txtArtLoc.Enabled = state;
             txtArtMask.Enabled = state;
