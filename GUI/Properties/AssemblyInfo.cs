@@ -6,11 +6,11 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "GUI_2" )]
+[assembly: AssemblyTitle( "music_importer" )]
 [assembly: AssemblyDescription( "Import ID3 tag information" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "bkp-online.com" )]
-[assembly: AssemblyProduct( "GUI_2 beta" )]
+[assembly: AssemblyProduct( "music_importer beta" )]
 [assembly: AssemblyCopyright( "Copyright © bkp-online.com 2008" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
@@ -30,6 +30,6 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion( "0.8.2.2" )]
-[assembly: AssemblyFileVersion( "0.8.2.2" )]
+[assembly: AssemblyVersion( "0.9.9.0" )]
+[assembly: AssemblyFileVersion( "0.9.9.0" )]
 [assembly: NeutralResourcesLanguageAttribute( "en" )]

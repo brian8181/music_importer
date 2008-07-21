@@ -7,8 +7,8 @@
     <ProjectGuid>{4E43DEFA-8717-4ED5-B234-C2B6F9B8AB15}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GUI_2</RootNamespace>
-    <AssemblyName>GUI_2</AssemblyName>
+    <RootNamespace>music_importer</RootNamespace>
+    <AssemblyName>music_importer</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -18,7 +18,7 @@
     <SccProvider>
     </SccProvider>
     <ApplicationIcon>ACDSee7.exe_I07fa_0409.ico</ApplicationIcon>
-    <StartupObject>GUI_2.Program</StartupObject>
+    <StartupObject>music_importer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +42,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CSharpOptParse.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=5.1.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -85,10 +86,6 @@
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\mysql-connector\MySql.Data\Provider\MySql.Data.csproj">
-      <Project>{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}</Project>
-      <Name>MySql.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\utility\Utility2\Utility2.csproj">
       <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
       <Name>Utility2</Name>

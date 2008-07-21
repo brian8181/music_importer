@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace GUI_2
+namespace music_importer
 {
     static class Program
     {

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace GUI_2
+namespace music_importer
 {
     partial class MainFrm
     {
@@ -95,6 +95,8 @@ namespace GUI_2
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.lbStatus = new System.Windows.Forms.Label();
+            this.cmbPriority = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -196,7 +198,7 @@ namespace GUI_2
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox1.Image = global::GUI_2.Properties.Resources.mono_powered;
+            this.pictureBox1.Image = global::music_importer.Properties.Resources.mono_powered;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point( 327, 22 );
             this.pictureBox1.Name = "pictureBox1";
@@ -401,7 +403,7 @@ namespace GUI_2
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point( 6, 526 );
+            this.progressBar.Location = new System.Drawing.Point( 6, 523 );
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size( 637, 23 );
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -451,7 +453,7 @@ namespace GUI_2
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point( 10, 188 );
+            this.label11.Location = new System.Drawing.Point( 9, 188 );
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size( 52, 13 );
             this.label11.TabIndex = 31;
@@ -504,7 +506,7 @@ namespace GUI_2
             // lbArtRoot
             // 
             this.lbArtRoot.AutoSize = true;
-            this.lbArtRoot.Location = new System.Drawing.Point( 11, 214 );
+            this.lbArtRoot.Location = new System.Drawing.Point( 9, 214 );
             this.lbArtRoot.Name = "lbArtRoot";
             this.lbArtRoot.Size = new System.Drawing.Size( 67, 13 );
             this.lbArtRoot.TabIndex = 26;
@@ -558,7 +560,7 @@ namespace GUI_2
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.pictureBox2.InitialImage = global::GUI_2.Properties.Resources.clipart_music_notes_023;
+            this.pictureBox2.InitialImage = global::music_importer.Properties.Resources.clipart_music_notes_023;
             this.pictureBox2.Location = new System.Drawing.Point( 6, 219 );
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size( 133, 178 );
@@ -568,12 +570,13 @@ namespace GUI_2
             // cbCreateDB
             // 
             this.cbCreateDB.AutoSize = true;
+            this.cbCreateDB.Font = new System.Drawing.Font( "Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
             this.cbCreateDB.ForeColor = System.Drawing.Color.Red;
             this.cbCreateDB.Location = new System.Drawing.Point( 11, 24 );
             this.cbCreateDB.Name = "cbCreateDB";
-            this.cbCreateDB.Size = new System.Drawing.Size( 126, 17 );
+            this.cbCreateDB.Size = new System.Drawing.Size( 108, 17 );
             this.cbCreateDB.TabIndex = 16;
-            this.cbCreateDB.Text = "(Re)Create Database";
+            this.cbCreateDB.Text = "(Re)Create DB";
             this.cbCreateDB.UseVisualStyleBackColor = true;
             // 
             // btnCancel
@@ -641,11 +644,31 @@ namespace GUI_2
             this.lbStatus.TabIndex = 24;
             this.lbStatus.Text = "Ready.";
             // 
+            // cmbPriority
+            // 
+            this.cmbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPriority.FormattingEnabled = true;
+            this.cmbPriority.Location = new System.Drawing.Point( 87, 554 );
+            this.cmbPriority.Name = "cmbPriority";
+            this.cmbPriority.Size = new System.Drawing.Size( 121, 21 );
+            this.cmbPriority.TabIndex = 26;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point( 6, 557 );
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size( 78, 13 );
+            this.label12.TabIndex = 27;
+            this.label12.Text = "Thread Priority:";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size( 651, 579 );
+            this.ClientSize = new System.Drawing.Size( 652, 582 );
+            this.Controls.Add( this.label12 );
+            this.Controls.Add( this.cmbPriority );
             this.Controls.Add( this.label9 );
             this.Controls.Add( this.lbStatus );
             this.Controls.Add( this.label8 );
@@ -670,6 +693,7 @@ namespace GUI_2
             this.grpOptions.PerformLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox2 ) ).EndInit();
             this.ResumeLayout( false );
+            this.PerformLayout();
 
         }
 
@@ -726,6 +750,8 @@ namespace GUI_2
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtArtMask;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.ComboBox cmbPriority;
+        private System.Windows.Forms.Label label12;
     }
 }
 

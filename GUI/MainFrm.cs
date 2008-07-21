@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+//
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,15 +21,16 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 using System.IO;
 using System.Collections.Specialized;
 using MusicImporter.TagLibV;
 using MusicImporter_Lib.Properties;
 using BKP.Online;
-
-namespace GUI_2
+//
+namespace music_importer
 {
-    public delegate void SafeSetLabelDelegate(Label l, string s);
+    public delegate void SafeSetLabelDelegate( Label l, string s );
     public delegate void SafeToggleDelegate( bool state );
     /// <summary>
     /// music importer GUI
@@ -41,7 +42,8 @@ namespace GUI_2
         /// <summary>
         /// default contructor
         /// </summary>
-        public MainFrm() : this(null)
+        public MainFrm()
+            : this( null )
         {
         }
         /// <summary>
@@ -57,6 +59,13 @@ namespace GUI_2
             // GUI Settings
             cbSH_User.Checked = !Properties.Settings.Default.show_user;
             cbSH_Pass.Checked = !Properties.Settings.Default.show_pass;
+            // init priorty combobox
+            Array values = Enum.GetValues(typeof(ThreadPriority));
+            foreach(ThreadPriority v in values)
+            {
+                cmbPriority.Items.Add( v.ToString() ); 
+            }
+            cmbPriority.SelectedIndex = 1; //BelowNormal
         }
         /// <summary>
         /// load application settings
@@ -77,7 +86,7 @@ namespace GUI_2
             this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
             this.txtMySql.Enabled = cbMysql.Checked;
             this.cbMysql.Checked = Settings.Default.use_conn_str;
-            this.txtSQLite.Enabled = cbPlaylist.Checked;  
+            this.txtSQLite.Enabled = cbPlaylist.Checked;
             this.cbCreateDB.Checked = Settings.Default.create_db;
             StringCollection dirs = Settings.Default.Dirs;
             foreach(string s in dirs)
@@ -87,7 +96,7 @@ namespace GUI_2
             this.txtArtLoc.Text = Settings.Default.art_location;
             this.txtMask.Text = Settings.Default.file_mask;
             this.txtArtMask.Text = Settings.Default.art_mask;
-        }                                                                                                       
+        }
         /// <summary>
         /// save application settings
         /// </summary>
@@ -148,7 +157,7 @@ namespace GUI_2
                     "Invalid Field Input",
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
                     MessageBoxDefaultButton.Button1 );
-                    ToggleOn();
+                ToggleOn();
                 return;
             }
             // SAVE GLOBAL SETTINGS BEFORE CONNECT
@@ -158,8 +167,8 @@ namespace GUI_2
             try
             {
                 importer.Connect();
-            } 
-            catch( MySql.Data.MySqlClient.MySqlException exp )
+            }
+            catch(MySql.Data.MySqlClient.MySqlException exp)
             {
                 MessageBox.Show(
                     exp.Message + ".\r\n\r\nPlease make sure connection fields are correct and try agian.",
@@ -176,6 +185,7 @@ namespace GUI_2
             importer.TagScanStarted += new VoidDelegate( importer_TagScanStarted );
             importer.TagScanStopped += new VoidDelegate( importer_TagScanStopped );
             importer.SyncError += new VoidDelegate( importer_SyncError );
+            importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
             importer.Scan( true );
         }
         /// <summary>
@@ -209,12 +219,11 @@ namespace GUI_2
             pictureBox2.Image = null;
             //SafeSet_Label( lbMessage, "Finished" );
             SafeSet_Label( lbStatus, "Finished." );
-            this.Invoke( new VoidDelegate(      delegate()
-                                                { 
+            this.Invoke( new VoidDelegate( delegate() {
                                                     btnCancel.Enabled = true;
                                                     btnCancel.Text = "Finished.";
-                                                } 
-                                          ));
+                                                }
+                                          ) );
             ToggleOn();
         }
         /// <summary>
@@ -281,11 +290,27 @@ namespace GUI_2
             {
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
             }
-            result = result ? (lbScanLocations.Items.Count > 0) : false;                                    
+            result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
+            // create directory, if not exists                 
             result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
+            if(!Directory.Exists( txtArtLoc.Text ))
+            {
+                DialogResult dr = MessageBox.Show(
+                    "Art location \"" + txtArtLoc + "\" does not exist you do want to create it?",
+                    "Warning",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1 );
+                if(dr != DialogResult.Yes)
+                    return false;
+                Directory.CreateDirectory( txtArtLoc.Text );
+                if(!Directory.Exists( txtArtLoc.Text ))
+                {
+                    return false;
+                }
+            }
             if(cbCreateDB.Checked)
             {
-                DialogResult dr = MessageBox.Show( 
+                DialogResult dr = MessageBox.Show(
                     "Current setting will cause database to be (re)created, causing loss of all data are you sure you want to continue?",
                     "Warning",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
@@ -306,7 +331,7 @@ namespace GUI_2
             {
                 ToggleOn();
                 btnCancel.Enabled = false;
-                        importer.StopScan();
+                importer.StopScan();
             }
             else
             {
@@ -324,11 +349,11 @@ namespace GUI_2
         {
             Toggle( false );
         }
-        public void Toggle(bool state)
+        public void Toggle( bool state )
         {
             if(this.InvokeRequired) // invoke on gui thread
             {
-                this.Invoke( new SafeToggleDelegate(Toggle), state );
+                this.Invoke( new SafeToggleDelegate( Toggle ), state );
                 return;
             }
             // progress bar
@@ -365,7 +390,7 @@ namespace GUI_2
             }
             txtMask.Enabled = state;
             txtArtLoc.Enabled = state;
-            txtArtMask.Enabled = state; 
+            txtArtMask.Enabled = state;
             // check boxes
             cbMysql.Enabled = state;
             cbArt.Enabled = state;
@@ -397,7 +422,7 @@ namespace GUI_2
         private void btnRemove_Click( object sender, EventArgs e )
         {
             object[] objs = new object[lbScanLocations.SelectedItems.Count];
-            lbScanLocations.SelectedItems.CopyTo( objs, 0 ); 
+            lbScanLocations.SelectedItems.CopyTo( objs, 0 );
             foreach(object o in objs)
             {
                 lbScanLocations.Items.Remove( o );
@@ -476,7 +501,7 @@ namespace GUI_2
         private void cbSH_Pass_CheckedChanged( object sender, EventArgs e )
         {
             cbSH_Pass.Text = cbSH_Pass.Text == "Show" ? "Hide" : "Show";
-            txtPassword.PasswordChar = cbSH_Pass.Checked ?  '*' : (char)0;
+            txtPassword.PasswordChar = cbSH_Pass.Checked ? '*' : (char)0;
         }
     }
 }

@@ -74,7 +74,15 @@ namespace MusicImporter.TagLibV
         private Thread thread = null;
         private string connect_string = string.Empty;
         private string mm_conn_str = string.Empty;
-
+        private ThreadPriority priority = ThreadPriority.BelowNormal;
+        /// <summary>
+        /// get / set thread priority (ignored if not threaded) 
+        /// </summary>
+        public ThreadPriority Priority
+        {
+            get { return priority; }
+            set { priority = value; }
+        }
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -156,7 +164,7 @@ namespace MusicImporter.TagLibV
                     thread = new Thread( new ThreadStart( Scan ) );
                     thread.Name = "Impoter Thread";
                     thread.IsBackground = true;
-                    thread.Priority = ThreadPriority.BelowNormal;
+                    thread.Priority = priority;
                     thread.Start();
                     return;
                 }
