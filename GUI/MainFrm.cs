@@ -1,16 +1,16 @@
 // Music Importer imports ID3 tags to a MySql database.
 // Copyright (C) 2008  Brian Preston
-
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -31,7 +31,6 @@ namespace GUI_2
 {
     public delegate void SafeSetLabelDelegate(Label l, string s);
     public delegate void SafeToggleDelegate( bool state );
-
     /// <summary>
     /// music importer GUI
     /// </summary>
@@ -39,14 +38,12 @@ namespace GUI_2
     {
         private string[] args = null;
         private Importer importer = null;
-        
         /// <summary>
         /// default contructor
         /// </summary>
         public MainFrm() : this(null)
         {
         }
-
         /// <summary>
         ///  cmd line constuctor
         /// </summary>
@@ -56,9 +53,7 @@ namespace GUI_2
             InitializeComponent();
             progressBar.Enabled = false;
             this.args = args;
-            
             if(args != null || args.Length < 1) LoadSettings();
-
             // GUI Settings
             cbSH_User.Checked = !Properties.Settings.Default.show_user;
             cbSH_Pass.Checked = !Properties.Settings.Default.show_pass;
@@ -79,12 +74,10 @@ namespace GUI_2
             this.cbArt.Checked = Settings.Default.RecanArt;
             this.cbTags.Checked = Settings.Default.ScanTags;
             this.cbOptimize.Checked = Settings.Default.Optimize;
-
             this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
             this.txtMySql.Enabled = cbMysql.Checked;
             this.cbMysql.Checked = Settings.Default.use_conn_str;
             this.txtSQLite.Enabled = cbPlaylist.Checked;  
-
             this.cbCreateDB.Checked = Settings.Default.create_db;
             StringCollection dirs = Settings.Default.Dirs;
             foreach(string s in dirs)
@@ -106,7 +99,6 @@ namespace GUI_2
             Settings.Default.Pass = this.txtPassword.Text;
             Settings.Default.schema = this.txtSchema.Text;
             Settings.Default.use_conn_str = cbMysql.Checked;
-
             if(cbMysql.Checked)
             {
                 Settings.Default.mysql_conn_str = this.txtMySql.Text;
@@ -122,7 +114,6 @@ namespace GUI_2
             Settings.Default.ScanTags = this.cbTags.Checked;
             Settings.Default.Optimize = this.cbOptimize.Checked;
             Settings.Default.create_db = this.cbCreateDB.Checked;
-
             Settings.Default.Dirs.Clear();
             foreach(FileInfo fi in lbScanLocations.Items)
             {
@@ -131,9 +122,7 @@ namespace GUI_2
             Settings.Default.art_location = this.txtArtLoc.Text;
             Settings.Default.file_mask = this.txtMask.Text;
             Settings.Default.art_mask = this.txtArtMask.Text;
-
             Settings.Default.Save();
-
             // GUI Settings
             Properties.Settings.Default.show_user = !cbSH_User.Checked;
             Properties.Settings.Default.show_pass = !cbSH_Pass.Checked;
@@ -147,26 +136,21 @@ namespace GUI_2
         private void btnOK_Click( object sender, EventArgs e )
         {
             ToggleOff();
-
             //
             btnOK.Enabled = false;
             btnCancel.Text = "Quit";
-
             // validate
             if(ValidateInput() == false)
             {
                 lbMessage.Text = "Invalid input";
-
                 MessageBox.Show(
                     "User input is not valid. Please check that each filed is entered and correct and try again.",
                     "Invalid Field Input",
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
                     MessageBoxDefaultButton.Button1 );
-
-                ToggleOn();
+                    ToggleOn();
                 return;
             }
-
             // SAVE GLOBAL SETTINGS BEFORE CONNECT
             SaveSettings();
             // connect
@@ -185,7 +169,6 @@ namespace GUI_2
                 ToggleOn();
                 return;
             }
-                       
             importer.Status += new StringDelegate( importer_Status );
             importer.Message += new BKP.Online.StringDelegate( importer_Message );
             importer.ProcessDirectory += new StringDelegate( importer_ProcessDirectory );
@@ -194,7 +177,6 @@ namespace GUI_2
             importer.TagScanStopped += new VoidDelegate( importer_TagScanStopped );
             importer.SyncError += new VoidDelegate( importer_SyncError );
             importer.Scan( true );
-
         }
         /// <summary>
         /// status changed
@@ -227,7 +209,6 @@ namespace GUI_2
             pictureBox2.Image = null;
             //SafeSet_Label( lbMessage, "Finished" );
             SafeSet_Label( lbStatus, "Finished." );
-
             this.Invoke( new VoidDelegate(      delegate()
                                                 { 
                                                     btnCancel.Enabled = true;
@@ -296,15 +277,12 @@ namespace GUI_2
             {
                 result = result ? !string.IsNullOrEmpty( txtMySql.Text ) : false;
             }
-
             if(cbPlaylist.Checked)
             {
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
             }
-
             result = result ? (lbScanLocations.Items.Count > 0) : false;                                    
             result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
-                           
             if(cbCreateDB.Checked)
             {
                 DialogResult dr = MessageBox.Show( 
@@ -315,7 +293,6 @@ namespace GUI_2
                 if(dr != DialogResult.Yes)
                     return false;
             }
-
             return result;
         }
         /// <summary>
@@ -342,8 +319,6 @@ namespace GUI_2
         public void ToggleOn()
         {
             Toggle( true );
-
-            
         }
         public void ToggleOff()
         {
@@ -365,7 +340,6 @@ namespace GUI_2
             btnRemove.Enabled = state;
             btnClear.Enabled = state;
             btnBrowseArt.Enabled = state;
-           
             if(state) // turn on or leave off 
             {
                 bool check = cbMysql.Checked;
@@ -377,7 +351,6 @@ namespace GUI_2
                 txtSchema.Enabled = !check;
                 cbCreateDB.Enabled = !check;
                 txtSQLite.Enabled = cbPlaylist.Checked;
-                
             }
             else // turn off
             {
@@ -390,7 +363,6 @@ namespace GUI_2
                 txtSQLite.Enabled = state;
                 cbCreateDB.Enabled = state;
             }
-            
             txtMask.Enabled = state;
             txtArtLoc.Enabled = state;
             txtArtMask.Enabled = state; 
@@ -402,8 +374,6 @@ namespace GUI_2
             cbOptimize.Enabled = state;
             cbPlaylist.Enabled = state;
             cbTags.Enabled = state;
-
-            
         }
         /// <summary>
         /// btnAdd 
@@ -414,7 +384,6 @@ namespace GUI_2
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.RootFolder = Environment.SpecialFolder.Desktop;
-
             if(dlg.ShowDialog() == DialogResult.OK)
             {
                 lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
@@ -429,7 +398,6 @@ namespace GUI_2
         {
             object[] objs = new object[lbScanLocations.SelectedItems.Count];
             lbScanLocations.SelectedItems.CopyTo( objs, 0 ); 
-            
             foreach(object o in objs)
             {
                 lbScanLocations.Items.Remove( o );
@@ -452,18 +420,15 @@ namespace GUI_2
         private void cbMysql_CheckedChanged( object sender, EventArgs e )
         {
             bool check = this.cbMysql.Checked;
-
             // set toggle button
             cbMysql.Text = cbMysql.Checked ? "Disable" : "Enable";
             txtMySql.Enabled = check;
-
             // set server info
             txtAddress.Enabled = !check;
             txtPort.Enabled = !check;
             txtUser.Enabled = !check;
             txtPassword.Enabled = !check;
             txtSchema.Enabled = !check;
-             
             // disallow creation with connect string
             //todo cbCreateDB.Checked = !check;
             cbCreateDB.Enabled = !check;
@@ -488,7 +453,6 @@ namespace GUI_2
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.RootFolder = Environment.SpecialFolder.Desktop;
-
             if(dlg.ShowDialog() == DialogResult.OK)
             {
                 txtArtLoc.Text = dlg.SelectedPath;
@@ -503,7 +467,6 @@ namespace GUI_2
         {
             cbSH_User.Text = cbSH_User.Text == "Show" ? "Hide" : "Show";
             txtUser.PasswordChar = cbSH_User.Checked ? '*' : (char)0;
-
         }
         /// <summary>
         /// show or hide pasword
