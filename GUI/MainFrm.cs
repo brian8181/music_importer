@@ -54,6 +54,7 @@ namespace music_importer
         {
             InitializeComponent();
             progressBar.Enabled = false;
+            progressBar.Style = ProgressBarStyle.Continuous;
             this.args = args;
             if(args != null || args.Length < 1) LoadSettings();
             // GUI Settings
@@ -67,6 +68,8 @@ namespace music_importer
             }
             cmbPriority.SelectedIndex = 1; //BelowNormal
         }
+
+        #region Settings / Configuration
         /// <summary>
         /// load application settings
         /// </summary>
@@ -96,6 +99,7 @@ namespace music_importer
             this.txtArtLoc.Text = Settings.Default.art_location;
             this.txtMask.Text = Settings.Default.file_mask;
             this.txtArtMask.Text = Settings.Default.art_mask;
+            this.cbGenerateThumbs.Checked = Settings.Default.insert_art;
         }
         /// <summary>
         /// save application settings
@@ -131,12 +135,16 @@ namespace music_importer
             Settings.Default.art_location = this.txtArtLoc.Text;
             Settings.Default.file_mask = this.txtMask.Text;
             Settings.Default.art_mask = this.txtArtMask.Text;
+            Settings.Default.insert_art = this.cbGenerateThumbs.Checked;
             Settings.Default.Save();
             // GUI Settings
             Properties.Settings.Default.show_user = !cbSH_User.Checked;
             Properties.Settings.Default.show_pass = !cbSH_Pass.Checked;
             Properties.Settings.Default.Save();
         }
+        #endregion
+
+        #region Control Events
         /// <summary>
         ///  start clicked
         /// </summary>
@@ -145,9 +153,10 @@ namespace music_importer
         private void btnOK_Click( object sender, EventArgs e )
         {
             ToggleOff();
-            //
             btnOK.Enabled = false;
             btnCancel.Text = "Quit";
+            // start progess marquee
+            progressBar.Style = ProgressBarStyle.Marquee;
             // validate
             if(ValidateInput() == false)
             {
@@ -157,10 +166,11 @@ namespace music_importer
                     "Invalid Field Input",
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
                     MessageBoxDefaultButton.Button1 );
-                ToggleOn();
+                // revert changes and return
+                importer_TagScanStopped();
                 return;
             }
-            // SAVE GLOBAL SETTINGS BEFORE CONNECT
+            // SAVE GLOBAL SETTINGS BEFORE CONNECT //
             SaveSettings();
             // connect
             importer = new Importer();
@@ -175,7 +185,8 @@ namespace music_importer
                     "MySql Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
                     MessageBoxDefaultButton.Button1 );
-                ToggleOn();
+                // revert changes and return
+                importer_TagScanStopped();
                 return;
             }
             importer.Status += new StringDelegate( importer_Status );
@@ -188,6 +199,27 @@ namespace music_importer
             importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
             importer.Scan( true );
         }
+        /// <summary>
+        /// btnCancel
+        /// </summary>
+        /// <param name="sender">the button</param>
+        /// <param name="e">arguments</param>
+        private void btnCancel_Click( object sender, EventArgs e )
+        {
+            if(btnCancel.Text == "Quit")
+            {
+                ToggleOn();
+                btnCancel.Enabled = false;
+                importer.StopScan();
+            }
+            else
+            {
+                Close();
+            }
+        }
+        #endregion
+
+        #region importer Events
         /// <summary>
         /// status changed
         /// </summary>
@@ -224,6 +256,8 @@ namespace music_importer
                                                     btnCancel.Text = "Finished.";
                                                 }
                                           ) );
+            // stop progess marquee
+            progressBar.Style = ProgressBarStyle.Continuous;
             ToggleOn();
         }
         /// <summary>
@@ -255,6 +289,8 @@ namespace music_importer
         {
             SafeSet_Label( lbMessage, str );
         }
+        #endregion
+
         /// <summary>
         /// 
         /// </summary>
@@ -291,12 +327,20 @@ namespace music_importer
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
             }
             result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
+            // do art sizes make logical sense
+            if(cbGenerateThumbs.Checked)
+            {
+                if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
+                {
+                   StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
+                }
+            }
             // create directory, if not exists                 
             result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
             if(!Directory.Exists( txtArtLoc.Text ))
             {
                 DialogResult dr = MessageBox.Show(
-                    "Art location \"" + txtArtLoc + "\" does not exist you do want to create it?",
+                    "Art location \"" + txtArtLoc.Text + "\" does not exist you do want to create it?",
                     "Warning",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
                     MessageBoxDefaultButton.Button1 );
@@ -321,24 +365,6 @@ namespace music_importer
             return result;
         }
         /// <summary>
-        /// btnCancel
-        /// </summary>
-        /// <param name="sender">the button</param>
-        /// <param name="e">arguments</param>
-        private void btnCancel_Click( object sender, EventArgs e )
-        {
-            if(btnCancel.Text == "Quit")
-            {
-                ToggleOn();
-                btnCancel.Enabled = false;
-                importer.StopScan();
-            }
-            else
-            {
-                Close();
-            }
-        }
-        /// <summary>
         ///  toggle control from enabled to disabled
         /// </summary>
         public void ToggleOn()
@@ -358,7 +384,6 @@ namespace music_importer
             }
             // progress bar
             progressBar.Enabled = !state;
-            progressBar.Visible = !state;
             // button
             btnOK.Enabled = state;
             btnAdd.Enabled = state;

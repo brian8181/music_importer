@@ -250,7 +250,7 @@ namespace MusicImporter.TagLibV
                     // RESCAN ART
                     if(Settings.Default.RecanArt)
                     {
-                        ScanArt();
+                        RescanArt();
                     }
 
                     // check for stop signal
@@ -319,7 +319,7 @@ namespace MusicImporter.TagLibV
                 //insert tag data
                 object artist_id = InsertArtist( tag );
                 object album_id = InsertAlbum( tag );
-                string art_id = InsertArt( tag, dir );
+                string art_id = Settings.Default.insert_art ? InsertArt( tag, dir ) : null;
                 InsertSong( tag, tag_file, art_id, artist_id, album_id );
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );
@@ -460,52 +460,6 @@ namespace MusicImporter.TagLibV
             return key;
         }
         /// <summary>
-        /// (Re)Scan and insert art from art directory
-        /// </summary>
-        private void ScanArt()
-        {
-            byte[] hash = null;
-            string[] files = DirectoryExt.GetFiles( Settings.Default.art_location, "*.jpg;*.jpeg;*.png;*.bmp;*.gif" );
-            for(int i = 0; i < files.Length; ++i)
-            {
-                OnMessage( "Processing Art: " + files[i] );
-                string filename = Path.GetFileName( files[i] );
-                string ext = Path.GetExtension( files[i] );
-                byte[] data = null;
-                string type = string.Empty;
-                string mime_type = string.Empty;
-                string description = string.Empty;
-                data = File.ReadAllBytes( files[i] );
-                type = "Cover";
-                mime_type = ext;
-                description = "cover art";
-                hash = ComputeHash( data );
-                string sql = "SELECT id FROM art WHERE hash=?hash";
-                MySqlCommand cmd = new MySqlCommand( sql );
-                cmd.Parameters.AddWithValue( "?hash", hash );
-                object obj = null;
-                obj = mysql_connection.ExecuteScalar( cmd );
-                try
-                {
-                    obj = mysql_connection.ExecuteScalar( cmd );
-                } catch
-                {
-                    //return;
-                }
-                if(obj == null)
-                {
-                    sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
-                    cmd = new MySqlCommand( sql );
-                    cmd.Parameters.AddWithValue( "?file", filename );
-                    cmd.Parameters.AddWithValue( "?type", type );
-                    cmd.Parameters.AddWithValue( "?hash", hash );
-                    cmd.Parameters.AddWithValue( "?description", description );
-                    cmd.Parameters.AddWithValue( "?mime_type", mime_type );
-                    mysql_connection.ExecuteNonQuery( cmd );
-                }
-            }
-        }
-        /// <summary>
         /// todo
         /// </summary>
         private void Prepare()
@@ -590,6 +544,49 @@ namespace MusicImporter.TagLibV
             mysql_connection.ExecuteNonQuery( cmd );
         }
         /// <summary>
+        /// import playlist
+        /// </summary>
+        private void ImportPlaylist()
+        {
+            // get all playlist from mediamonkey
+            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND IsAutoPlaylist=0" );
+            // just truncate tables and recreate
+            mysql_connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
+            mysql_connection.ExecuteNonQuery( "TRUNCATE playlists" );
+            foreach(DataRow row in ds.Tables[0].Rows)
+            {
+                // insert all playlist
+                long id = (long)row[0];
+                string name = (string)row[1];
+                name = name.Replace( "'", "''" );
+                //BKP:TODO use ExecuteScalar
+                string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0 )";
+                mysql_connection.ExecuteNonQuery( sql );
+                string playlist_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" ).ToString();
+                //Log( sql );
+                OnMessage( "Creating playlist: " + name + " ..." );
+                //  get the playlist id
+                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
+                foreach(DataRow pl_row in ds2.Tables[0].Rows)
+                {
+                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString() );
+                    if(ds3.Tables[0].Rows.Count > 0)
+                    {
+                        string path = (string)ds3.Tables[0].Rows[0][8];
+                        long order = (long)pl_row[3];
+                        path = path.Remove( 0, 16 );
+                        path = path.Replace( "\\", "/" );
+                        object song_id = GetKey( "song", "file", path );
+                        if(song_id == null)
+                            continue;
+                        sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "' )";
+                        mysql_connection.ExecuteNonQuery( sql );
+                        //Log( sql );
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// delete oprhaned songs (file no longer exsists)
         /// </summary>
         private void Clean()
@@ -634,45 +631,49 @@ namespace MusicImporter.TagLibV
             }
         }
         /// <summary>
-        /// import playlist
+        /// (Re)Scan and insert art from art directory
         /// </summary>
-        private void ImportPlaylist()
+        private void RescanArt()
         {
-            // get all playlist from mediamonkey
-            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND IsAutoPlaylist=0" );
-            // just truncate tables and recreate
-            mysql_connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
-            mysql_connection.ExecuteNonQuery( "TRUNCATE playlists" );
-            foreach(DataRow row in ds.Tables[0].Rows)
+            byte[] hash = null;
+            string[] files = DirectoryExt.GetFiles( Settings.Default.art_location, "*.jpg;*.jpeg;*.png;*.bmp;*.gif" );
+            for(int i = 0; i < files.Length; ++i)
             {
-                // insert all playlist
-                long id = (long)row[0];
-                string name = (string)row[1];
-                name = name.Replace( "'", "''" );
-                //BKP:TODO use ExecuteScalar
-                string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0 )";
-                mysql_connection.ExecuteNonQuery( sql );
-                string playlist_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" ).ToString();
-                //Log( sql );
-                OnMessage( "Creating playlist: " + name + " ..." );
-                //  get the playlist id
-                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
-                foreach(DataRow pl_row in ds2.Tables[0].Rows)
+                OnMessage( "Processing Art: " + files[i] );
+                string filename = Path.GetFileName( files[i] );
+                string ext = Path.GetExtension( files[i] );
+                byte[] data = null;
+                string type = string.Empty;
+                string mime_type = string.Empty;
+                string description = string.Empty;
+                data = File.ReadAllBytes( files[i] );
+                type = "Cover";
+                mime_type = ext;
+                description = "cover art";
+                hash = ComputeHash( data );
+                string sql = "SELECT id FROM art WHERE hash=?hash";
+                MySqlCommand cmd = new MySqlCommand( sql );
+                cmd.Parameters.AddWithValue( "?hash", hash );
+                object obj = null;
+                obj = mysql_connection.ExecuteScalar( cmd );
+                try
                 {
-                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString() );
-                    if(ds3.Tables[0].Rows.Count > 0)
-                    {
-                        string path = (string)ds3.Tables[0].Rows[0][8];
-                        long order = (long)pl_row[3];
-                        path = path.Remove( 0, 16 );
-                        path = path.Replace( "\\", "/" );
-                        object song_id = GetKey( "song", "file", path );
-                        if(song_id == null)
-                            continue;
-                        sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "' )";
-                        mysql_connection.ExecuteNonQuery( sql );
-                        //Log( sql );
-                    }
+                    obj = mysql_connection.ExecuteScalar( cmd );
+                }
+                catch
+                {
+                    //return;
+                }
+                if(obj == null)
+                {
+                    sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
+                    cmd = new MySqlCommand( sql );
+                    cmd.Parameters.AddWithValue( "?file", filename );
+                    cmd.Parameters.AddWithValue( "?type", type );
+                    cmd.Parameters.AddWithValue( "?hash", hash );
+                    cmd.Parameters.AddWithValue( "?description", description );
+                    cmd.Parameters.AddWithValue( "?mime_type", mime_type );
+                    mysql_connection.ExecuteNonQuery( cmd );
                 }
             }
         }

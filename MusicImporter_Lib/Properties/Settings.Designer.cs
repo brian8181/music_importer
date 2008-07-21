@@ -171,7 +171,7 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/.art/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string art_location {
             get {
                 return ((string)(this["art_location"]));
@@ -250,6 +250,54 @@ namespace MusicImporter_Lib.Properties {
             }
             set {
                 this["mm_conn_str"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool insert_art {
+            get {
+                return ((bool)(this["insert_art"]));
+            }
+            set {
+                this["insert_art"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("225")]
+        public int art_large {
+            get {
+                return ((int)(this["art_large"]));
+            }
+            set {
+                this["art_large"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("75")]
+        public int art_small {
+            get {
+                return ((int)(this["art_small"]));
+            }
+            set {
+                this["art_small"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int art_xsmall {
+            get {
+                return ((int)(this["art_xsmall"]));
+            }
+            set {
+                this["art_xsmall"] = value;
             }
         }
     }

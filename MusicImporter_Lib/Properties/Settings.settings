@@ -42,7 +42,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="art_location" Type="System.String" Scope="User">
-      <Value Profile="(Default)">/.art/</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="schema" Type="System.String" Scope="User">
       <Value Profile="(Default)">music</Value>
@@ -61,6 +61,18 @@
     </Setting>
     <Setting Name="mm_conn_str" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="insert_art" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="art_large" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">225</Value>
+    </Setting>
+    <Setting Name="art_small" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">75</Value>
+    </Setting>
+    <Setting Name="art_xsmall" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
     </Setting>
   </Settings>
 </SettingsFile>
