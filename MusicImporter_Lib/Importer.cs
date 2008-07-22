@@ -37,6 +37,7 @@ namespace MusicImporter.TagLibV
     /// </summary>
     public class Importer
     {
+        #region Events
         /// <summary>
         /// out sync error, occurs if scan is called while another scan in progress
         /// </summary>
@@ -65,9 +66,11 @@ namespace MusicImporter.TagLibV
         /// processing directory
         /// </summary>
         public event BKP.Online.StringDelegate ProcessDirectory;
+        #endregion
+
+        #region Construction
         private SQLiteDatabase mm_connection = new SQLiteDatabase();
         private MySqlDatabase mysql_connection = new MySqlDatabase();
-        //private string root_path = null;
         private string[] files = null;
         private ImporterOptions options = null;
         private volatile bool running = false;
@@ -127,6 +130,9 @@ namespace MusicImporter.TagLibV
             }
             mm_conn_str = settings.mm_conn_str;
         }
+        #endregion
+
+        #region Control Functions
         /// <summary>
         ///  connect to MySQL
         /// </summary>
@@ -303,14 +309,17 @@ namespace MusicImporter.TagLibV
                 {
                     tag_file = TagLib.File.Create( files[i] );
                     tag = tag_file.Tag;
-                    //OnMessage( "processing " + files[i] );
                 } 
-                //catch(TagLib.CorruptFileException)
-                //{
-                //}
-                //catch( TagLib.UnsupportedFormatException )
-                //{
-                //}
+                catch( TagLib.CorruptFileException e )
+                {
+                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    continue;
+                }
+                catch( TagLib.UnsupportedFormatException e )
+                {
+                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    continue;
+                }
                 catch(Exception e)
                 {
                     OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
@@ -328,6 +337,19 @@ namespace MusicImporter.TagLibV
                 Thread( dirs[i] );
             }
         }
+        /// <summary>
+        /// close database
+        /// </summary>
+        public void Close()
+        {
+            mysql_connection.Close();
+            if(mm_connection.connection.State == ConnectionState.Open)
+                mm_connection.Close();
+            Logger.DisposeLogger();
+        }
+        #endregion
+
+        #region Tag Inserts
         /// <summary>
         /// 
         /// </summary>
@@ -392,6 +414,7 @@ namespace MusicImporter.TagLibV
             string art = null;
             string key = null;
             byte[] hash = null;
+            // look for art in directory
             string[] files = DirectoryExt.GetFiles( current_dir, Settings.Default.art_mask );
             if(tag.Pictures.Length > 0 || files.Length > 0)
             {
@@ -425,12 +448,11 @@ namespace MusicImporter.TagLibV
                 }
                 //string path = System.IO.Path.GetPathRoot( root_path ) + ".album_art\\in\\" + art;
                 string path = Settings.Default.art_location;
-                path = ( path.EndsWith( "\\" ) ? path : path + "\\" ) + art;
+                path = ( path.EndsWith( "\\" ) ? path : path + "\\" ) + ".album_art\\" + art;
                 hash = ComputeHash( data );
                 string sql = "SELECT id FROM art WHERE hash=?hash";
                 MySqlCommand cmd = new MySqlCommand( sql );
                 cmd.Parameters.AddWithValue( "?hash", hash );
-                //BKP TODO: make a try / catch for overall function 
                 object obj = null;
                 try
                 {
@@ -441,7 +463,10 @@ namespace MusicImporter.TagLibV
                 }
                 if(obj == null)
                 {
+                    // write file to art location
                     System.IO.File.WriteAllBytes( path, data );
+                    // gen & write thumbs
+                    GenerateThumbs( path );
                     sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
                     cmd = new MySqlCommand( sql );
                     cmd.Parameters.AddWithValue( "?file", art );
@@ -586,6 +611,9 @@ namespace MusicImporter.TagLibV
                 }
             }
         }
+        #endregion
+
+        #region Maintainence
         /// <summary>
         /// delete oprhaned songs (file no longer exsists)
         /// </summary>
@@ -678,13 +706,34 @@ namespace MusicImporter.TagLibV
             }
         }
         /// <summary>
+        /// optimize tables (MySql)
+        /// </summary>
+        public void Optimize()
+        {
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE artist" );
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE album" );
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE art" );
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE song" );
+        }
+        #endregion
+        
+        #region Utility Functions
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        private void GenerateThumbs(string file)
+        {
+            //BKP todo
+        }
+        /// <summary>
         ///  get primary key for a given column value 
         /// </summary>
         /// <param name="table">the table</param>
         /// <param name="column">the column</param>
         /// <param name="value">value to match</param>
         /// <returns>primary key</returns>
-        public uint? GetKey( string table, string column, string value )
+        private uint? GetKey( string table, string column, string value )
         {
             MySqlCommand command = new MySqlCommand( "SELECT id FROM " + table + " WHERE " + column + "=?value LIMIT 1" );
             //command.Parameters.AddWithValue("?table", table);
@@ -694,16 +743,6 @@ namespace MusicImporter.TagLibV
             uint? result = (uint?)obj;
             // see if we have a result
             return result;
-        }
-        /// <summary>
-        /// optimize tables (MySql)
-        /// </summary>
-        public void Optimize()
-        {
-            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE artist" );
-            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE album" );
-            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE art" );
-            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE song" );
         }
         /// <summary>
         /// compute a hash value
@@ -729,36 +768,9 @@ namespace MusicImporter.TagLibV
                 strs[i].Replace( "`", "''" );
             }
         }
-        /// <summary>
-        /// close database
-        /// </summary>
-        public void Close()
-        {
-            mysql_connection.Close();
-            if(mm_connection.connection.State == ConnectionState.Open)
-                mm_connection.Close();
-            Logger.DisposeLogger();
-        }
-        ///// <summary>
-        ///// send msg to stdout & log
-        ///// </summary>
-        ///// <param name="str"></param>
-        //protected virtual void Out( string str )
-        //{
-        //    //if(Settings.Default.Log)
-        //    //    Trace.WriteLine( str );
-        //    //OnStatus( str );
-        //}
-        ///// <summary>
-        ///// send msg to log
-        ///// </summary>
-        ///// <param name="str"></param>
-        //protected virtual void Log( string str )
-        //{
-        //    if(Settings.Default.Log)
-        //        Trace.WriteLine( str );
-        //    //OnStatus( str );
-        //}
+        #endregion
+
+        #region Status \ Logging
         /// <summary>
         /// send msg to log
         /// </summary>
@@ -768,14 +780,14 @@ namespace MusicImporter.TagLibV
             Trace.WriteLine( Logger.Level.Error, str );
             OnError( str );
         }
-        ///// <summary>
-        ///// call status update
-        ///// </summary>
-        ///// <param name="msg">status message</param>
-        //protected virtual void OnStatus( string msg )
-        //{
-        //    if(Status != null) Status( msg );
-        //}
+        /// <summary>
+        /// call status update
+        /// </summary>
+        /// <param name="msg">status message</param>
+        protected virtual void OnStatus( string msg )
+        {
+            if(Status != null) Status( msg );
+        }
         /// <summary>
         /// call status update
         /// </summary>
@@ -823,5 +835,6 @@ namespace MusicImporter.TagLibV
         {
             if(SyncError != null) SyncError();
         }
+        #endregion
     }
 }

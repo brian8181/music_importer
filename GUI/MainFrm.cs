@@ -65,7 +65,7 @@ namespace music_importer
             Array values = Enum.GetValues(typeof(ThreadPriority));
             foreach(ThreadPriority v in values)
             {
-                cmbPriority.Items.Add( v.ToString() ); 
+                cmbPriority.Items.Add( v ); 
             }
             cmbPriority.SelectedIndex = 1; //BelowNormal
         }
@@ -355,7 +355,7 @@ namespace music_importer
         /// </summary>
         private void importer_TagScanStarted()
         {
-            pictureBox2.Image = Properties.Resources.clipart_music_notes_023;
+            //pictureBox2.Image = Properties.Resources.clipart_music_notes_023;
             SafeSet_Label( lbMessage, "Tag scan started" );
         }
         /// <summary>
@@ -363,17 +363,17 @@ namespace music_importer
         /// </summary>
         private void importer_TagScanStopped()
         {
-            pictureBox2.Image = null;
+            //pictureBox2.Image = null;
             //SafeSet_Label( lbMessage, "Finished" );
             SafeSet_Label( lbStatus, "Finished." );
             this.Invoke( new VoidDelegate( delegate() {
                                                     btnCancel.Enabled = true;
                                                     btnCancel.Text = "Finished.";
+                                                    // stop progess marquee
+                                                    progressBar.Style = ProgressBarStyle.Continuous;
+                                                    ToggleOn();
                                                 }
                                           ) );
-            // stop progess marquee
-            progressBar.Style = ProgressBarStyle.Continuous;
-            ToggleOn();
         }
         /// <summary>
         ///  scan error
