@@ -40,6 +40,7 @@ namespace music_importer
         #region Construction
         private string[] args = null;
         private Importer importer = null;
+        private DateTime start_time = DateTime.Now;
         /// <summary>
         /// default contructor
         /// </summary>
@@ -70,7 +71,6 @@ namespace music_importer
             cmbPriority.SelectedIndex = 1; //BelowNormal
         }
         #endregion
-
         #region Settings / Configuration
         /// <summary>
         /// load application settings
@@ -92,7 +92,9 @@ namespace music_importer
             this.txtMySql.Enabled = cbMysql.Checked;
             this.cbMysql.Checked = Settings.Default.use_conn_str;
             this.txtSQLite.Enabled = cbPlaylist.Checked;
-            this.cbCreateDB.Checked = Settings.Default.create_db;
+            // always false
+            //this.cbCreateDB.Checked = Settings.Default.create_db;
+            this.cbCreateDB.Checked = false;
             StringCollection dirs = Settings.Default.Dirs;
             foreach(string s in dirs)
             {
@@ -155,7 +157,6 @@ namespace music_importer
             Properties.Settings.Default.Save();
         }
         #endregion
-
         #region Control Events
         /// <summary>
         ///  start clicked
@@ -167,6 +168,9 @@ namespace music_importer
             ToggleOff();
             btnOK.Enabled = false;
             btnCancel.Text = "Quit";
+            btnPause.Enabled = true;
+            start_time = DateTime.Now;
+            lbStartTime.Text = start_time.ToShortTimeString();
             // start progess marquee
             progressBar.Style = ProgressBarStyle.Marquee;
             // validate
@@ -222,11 +226,36 @@ namespace music_importer
             {
                 ToggleOn();
                 btnCancel.Enabled = false;
+                btnPause.Text = "&Pause";
+                btnPause.Enabled = false;
                 importer.StopScan();
             }
             else
             {
                 Close();
+            }
+        }
+        /// <summary>
+        /// btnPause 
+        /// </summary>
+        /// <param name="sender">the button</param>
+        /// <param name="e">arguments</param>
+        private void btnPause_Click( object sender, EventArgs e )
+        {
+            if(importer != null)
+            {
+                if(btnPause.Text == "&Pause")
+                {
+                    importer.PauseScan();
+                    btnPause.Text = "&Continue";
+                    progressBar.Style = ProgressBarStyle.Continuous;
+                }
+                else
+                {
+                    importer.ContiueScan();
+                    btnPause.Text = "&Pause";
+                    progressBar.Style = ProgressBarStyle.Marquee;
+                }
             }
         }
         /// <summary>
@@ -332,8 +361,17 @@ namespace music_importer
             cbSH_Pass.Text = cbSH_Pass.Text == "Show" ? "Hide" : "Show";
             txtPassword.PasswordChar = cbSH_Pass.Checked ? '*' : (char)0;
         }
+        /// <summary>
+        /// change thread priority
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">args</param>
+        private void cmbPriority_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            if(importer != null)
+                importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
+        }
         #endregion
-
         #region Importer Events
         /// <summary>
         /// status changed
@@ -405,7 +443,6 @@ namespace music_importer
             SafeSet_Label( lbMessage, str );
         }
         #endregion
-
         #region Helpers
         /// <summary>
         /// 
@@ -419,6 +456,9 @@ namespace music_importer
                 return;
             }
             l.Text = s;
+            // this is a good place for now
+            TimeSpan ts = DateTime.Now - start_time;
+            lbElapsedTime.Text = ts.ToString();
         }
         /// <summary>
         ///  toggle control from enabled to disabled
@@ -457,7 +497,6 @@ namespace music_importer
                 txtSchema.Enabled = !check;
                 cbCreateDB.Enabled = !check;
                 txtSQLite.Enabled = cbPlaylist.Checked;
-
                 check = cbGenerateThumbs.Checked;
                 this.art_large.Enabled = check;
                 this.art_small.Enabled = check;
@@ -477,7 +516,6 @@ namespace music_importer
                 this.art_small.Enabled = state;
                 this.art_xsmall.Enabled = state;
             }
-            
             txtMask.Enabled = state;
             txtArtLoc.Enabled = state;
             txtArtMask.Enabled = state;
@@ -491,7 +529,6 @@ namespace music_importer
             cbTags.Enabled = state;
         }
         #endregion
-
         #region Validation
         ///<summary>
         ///validate input

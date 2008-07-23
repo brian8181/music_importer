@@ -77,15 +77,9 @@ namespace MusicImporter.TagLibV
         private Thread thread = null;
         private string connect_string = string.Empty;
         private string mm_conn_str = string.Empty;
+        private string art_path = string.Empty;
         private ThreadPriority priority = ThreadPriority.BelowNormal;
-        /// <summary>
-        /// get / set thread priority (ignored if not threaded) 
-        /// </summary>
-        public ThreadPriority Priority
-        {
-            get { return priority; }
-            set { priority = value; }
-        }
+        private ManualResetEvent pause = new ManualResetEvent( true );
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -129,10 +123,32 @@ namespace MusicImporter.TagLibV
                 connect_string = cn_str;
             }
             mm_conn_str = settings.mm_conn_str;
+
+            if(settings.insert_art)
+            {
+                art_path = Settings.Default.art_location;
+                art_path = ( art_path.EndsWith( "\\" ) ? art_path : art_path + "\\" ) + ".album_art\\";
+                Directory.CreateDirectory( art_path + "large\\" );
+                Directory.CreateDirectory( art_path + "small\\" );
+                Directory.CreateDirectory( art_path + "xsmall\\" );
+            }
         }
         #endregion
 
         #region Control Functions
+        /// <summary>
+        /// get / set thread priority (ignored if not threaded) 
+        /// </summary>
+        public ThreadPriority Priority
+        {
+            get { return priority; }
+            set 
+            {
+                if( thread != null )
+                    this.thread.Priority = priority; 
+                priority = value; 
+            }
+        }
         /// <summary>
         ///  connect to MySQL
         /// </summary>
@@ -198,11 +214,11 @@ namespace MusicImporter.TagLibV
                 try
                 {
                     OnTagScanStarted();
-                   
-                    OnMessage( "creating datsbase ..." );
+                                       
                     // CRATE DATABASE
                     if(Settings.Default.create_db)
                     {
+                        OnMessage( "creating database ..." );
                         if(!File.Exists( "recreate_music.sql" ))
                         {
                             LogError( "create database failed could not find file \"recreate_music.sql\" " );
@@ -215,14 +231,14 @@ namespace MusicImporter.TagLibV
                     }
                     // check for stop signal
                     if(!running) return;
-
+                    pause.WaitOne();
                     // make sure database set
                     mysql_connection.ChangeDatabase( Settings.Default.schema );
-
-                    Status( "scanning tags ..." );
+                                        
                     // SCAN TGAGS
                     if(Settings.Default.ScanTags)
                     {
+                        Status( "scanning tags ..." );
                         int len = Settings.Default.Dirs.Count;
                         for(int i = 0; i < len && running; ++i)
                         {
@@ -233,39 +249,44 @@ namespace MusicImporter.TagLibV
 
                     // check for stop signal
                     if(!running) return;
-
-                    Status( "scanning playlist ..." );
+                    pause.WaitOne();
+                  
                     // SCAN PLAYLIST
                     if(Settings.Default.ScanPlaylist)
                     {
+                        Status( "scanning playlist ..." );
                         ImportPlaylist();
                     }
                     // check for stop signal
                     if(!running) return;
+                    pause.WaitOne();
                    
-                    Status( "cleaning ..." );
                     // CLEAN
                     if(Settings.Default.Clean)
                     {
+                        Status( "cleaning ..." );
                         Clean();
                     }
                     
                     // check for stop signal
                     if(!running) return;
-                    Status( "scanning art directory ..." );
+                    pause.WaitOne();
+
                     // RESCAN ART
                     if(Settings.Default.RecanArt)
                     {
+                        Status( "scanning art directory ..." );
                         RescanArt();
                     }
 
                     // check for stop signal
                     if(!running) return;
+                    pause.WaitOne();
 
-                    Status( "optimizing ..." );
                     // OPITIMIZE
                     if(Settings.Default.Optimize)
                     {
+                        Status( "optimizing ..." );
                         Optimize();
                     }
                 }
@@ -294,6 +315,20 @@ namespace MusicImporter.TagLibV
             //thread.Join();
         }
         /// <summary>
+        /// 
+        /// </summary>
+        public void ContiueScan()
+        {
+            pause.Set();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void PauseScan()
+        {
+            pause.Reset();
+        }
+        /// <summary>
         /// thread function may or may not be an actual thread
         /// </summary>
         /// <param name="dir">base directory</param>
@@ -303,6 +338,7 @@ namespace MusicImporter.TagLibV
             files = DirectoryExt.GetFiles( dir, Settings.Default.file_mask );
             for(int i = 0; i < files.Length && running; ++i)
             {
+                pause.WaitOne();
                 TagLib.Tag tag = null;
                 TagLib.File tag_file = null;
                 try
@@ -334,6 +370,7 @@ namespace MusicImporter.TagLibV
             string[] dirs = System.IO.Directory.GetDirectories( dir );
             for(int i = 0; i < dirs.Length && running; ++i)
             {
+                pause.WaitOne();
                 Thread( dirs[i] );
             }
         }
@@ -446,9 +483,7 @@ namespace MusicImporter.TagLibV
                     mime_type = ext;
                     description = "cover art";
                 }
-                //string path = System.IO.Path.GetPathRoot( root_path ) + ".album_art\\in\\" + art;
-                string path = Settings.Default.art_location;
-                path = ( path.EndsWith( "\\" ) ? path : path + "\\" ) + ".album_art\\" + art;
+                                          
                 hash = ComputeHash( data );
                 string sql = "SELECT id FROM art WHERE hash=?hash";
                 MySqlCommand cmd = new MySqlCommand( sql );
@@ -464,9 +499,9 @@ namespace MusicImporter.TagLibV
                 if(obj == null)
                 {
                     // write file to art location
-                    System.IO.File.WriteAllBytes( path, data );
+                    System.IO.File.WriteAllBytes( art_path + art, data );
                     // gen & write thumbs
-                    GenerateThumbs( path );
+                    GenerateThumbs( art );
                     sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
                     cmd = new MySqlCommand( sql );
                     cmd.Parameters.AddWithValue( "?file", art );
@@ -510,7 +545,6 @@ namespace MusicImporter.TagLibV
             string s = ts.Seconds < 10 ? "0" + ts.Seconds.ToString() : ts.Seconds.ToString();
             StringBuilder length = new StringBuilder( h + m + ":" + s );
             StringBuilder file = new StringBuilder( tag_file.Name );
-            //StringBuilder mode = new StringBuilder(tag_file.Mode.ToString());
             StringBuilder lyrics = ( ( tag.Lyrics != null ) && ( tag.Lyrics != string.Empty ) ) ?
                 new StringBuilder( tag.Lyrics ) : null;
             // change path to unix style
@@ -584,11 +618,9 @@ namespace MusicImporter.TagLibV
                 long id = (long)row[0];
                 string name = (string)row[1];
                 name = name.Replace( "'", "''" );
-                //BKP:TODO use ExecuteScalar
                 string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0 )";
                 mysql_connection.ExecuteNonQuery( sql );
                 string playlist_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" ).ToString();
-                //Log( sql );
                 OnMessage( "Creating playlist: " + name + " ..." );
                 //  get the playlist id
                 DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
@@ -722,9 +754,16 @@ namespace MusicImporter.TagLibV
         /// 
         /// </summary>
         /// <param name="file"></param>
-        private void GenerateThumbs(string file)
+        private void GenerateThumbs(string file_name)
         {
-            //BKP todo
+            string art = art_path + file_name;
+            BKP.Online.Media.Thumb.Generate(
+                art_path + "large\\" + file_name, art, Settings.Default.art_large, 0, true );
+            BKP.Online.Media.Thumb.Generate( 
+                art_path + "small\\" + file_name, art, Settings.Default.art_small, 0, true );
+            BKP.Online.Media.Thumb.Generate( 
+                art_path + "xsmall\\" + file_name, art, Settings.Default.art_xsmall, 0, true );
+ 
         }
         /// <summary>
         ///  get primary key for a given column value 
@@ -736,8 +775,6 @@ namespace MusicImporter.TagLibV
         private uint? GetKey( string table, string column, string value )
         {
             MySqlCommand command = new MySqlCommand( "SELECT id FROM " + table + " WHERE " + column + "=?value LIMIT 1" );
-            //command.Parameters.AddWithValue("?table", table);
-            //command.Parameters.AddWithValue("?column", column);
             command.Parameters.AddWithValue( "?value", value );
             object obj = mysql_connection.ExecuteScalar( command );
             uint? result = (uint?)obj;
@@ -829,7 +866,7 @@ namespace MusicImporter.TagLibV
             if(TagScanStopped != null) TagScanStopped();
         }
         /// <summary>
-        /// 
+        /// scans can not be started twice
         /// </summary>
         protected virtual void OnSyncError()
         {
