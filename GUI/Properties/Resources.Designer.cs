@@ -67,6 +67,24 @@ namespace music_importer.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Art sizes must logical sense. (small &lt; large and small &gt; x-small)..
+        /// </summary>
+        internal static string art_sizes {
+            get {
+                return ResourceManager.GetString("art_sizes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to continue?.
+        /// </summary>
+        internal static string ask_continue {
+            get {
+                return ResourceManager.GetString("ask_continue", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap clipart_music_notes_019 {
             get {
                 object obj = ResourceManager.GetObject("clipart_music_notes_019", resourceCulture);
@@ -85,6 +103,15 @@ namespace music_importer.Properties {
             get {
                 object obj = ResourceManager.GetObject("clipart_music_notes_046", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location does not exist you do want to create it?.
+        /// </summary>
+        internal static string create_location {
+            get {
+                return ResourceManager.GetString("create_location", resourceCulture);
             }
         }
         
@@ -113,6 +140,15 @@ namespace music_importer.Properties {
             get {
                 object obj = ResourceManager.GetObject("taglib.logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting will cause database to be (re)created, causing loss of all data. .
+        /// </summary>
+        internal static string warn_create_db {
+            get {
+                return ResourceManager.GetString("warn_create_db", resourceCulture);
             }
         }
     }

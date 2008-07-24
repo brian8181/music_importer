@@ -44,6 +44,7 @@ namespace music_importer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cbOptimize = new System.Windows.Forms.CheckBox();
             this.cbArt = new System.Windows.Forms.CheckBox();
             this.cbTags = new System.Windows.Forms.CheckBox();
@@ -110,6 +111,8 @@ namespace music_importer
             this.lbStartTime = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.lbElapsedTime = new System.Windows.Forms.Label();
+            this.tt_btnStart = new System.Windows.Forms.ToolTip( this.components );
+            this.tt_create = new System.Windows.Forms.ToolTip( this.components );
             this.groupBox1.SuspendLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -126,7 +129,7 @@ namespace music_importer
             this.cbOptimize.Location = new System.Drawing.Point( 11, 102 );
             this.cbOptimize.Name = "cbOptimize";
             this.cbOptimize.Size = new System.Drawing.Size( 101, 17 );
-            this.cbOptimize.TabIndex = 14;
+            this.cbOptimize.TabIndex = 3;
             this.cbOptimize.Text = "Optimize Tables";
             this.cbOptimize.UseVisualStyleBackColor = true;
             // 
@@ -136,7 +139,7 @@ namespace music_importer
             this.cbArt.Location = new System.Drawing.Point( 11, 128 );
             this.cbArt.Name = "cbArt";
             this.cbArt.Size = new System.Drawing.Size( 79, 17 );
-            this.cbArt.TabIndex = 13;
+            this.cbArt.TabIndex = 4;
             this.cbArt.Text = "Rescan Art";
             this.cbArt.UseVisualStyleBackColor = true;
             // 
@@ -157,7 +160,7 @@ namespace music_importer
             this.cbPlaylist.Location = new System.Drawing.Point( 432, 155 );
             this.cbPlaylist.Name = "cbPlaylist";
             this.cbPlaylist.Size = new System.Drawing.Size( 44, 20 );
-            this.cbPlaylist.TabIndex = 2;
+            this.cbPlaylist.TabIndex = 10;
             this.cbPlaylist.Text = "Enable";
             this.cbPlaylist.UseVisualStyleBackColor = true;
             this.cbPlaylist.CheckedChanged += new System.EventHandler( this.cbPlaylist_CheckedChanged );
@@ -168,7 +171,7 @@ namespace music_importer
             this.cbLog.Location = new System.Drawing.Point( 11, 76 );
             this.cbLog.Name = "cbLog";
             this.cbLog.Size = new System.Drawing.Size( 44, 17 );
-            this.cbLog.TabIndex = 11;
+            this.cbLog.TabIndex = 2;
             this.cbLog.Text = "Log";
             this.cbLog.UseVisualStyleBackColor = true;
             // 
@@ -178,7 +181,7 @@ namespace music_importer
             this.cbClean.Location = new System.Drawing.Point( 11, 154 );
             this.cbClean.Name = "cbClean";
             this.cbClean.Size = new System.Drawing.Size( 70, 17 );
-            this.cbClean.TabIndex = 3;
+            this.cbClean.TabIndex = 5;
             this.cbClean.Text = "Clean Up";
             this.cbClean.UseVisualStyleBackColor = true;
             // 
@@ -207,7 +210,7 @@ namespace music_importer
             this.groupBox1.Location = new System.Drawing.Point( 6, 5 );
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size( 482, 195 );
-            this.groupBox1.TabIndex = 14;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MySql Database";
             // 
@@ -250,7 +253,7 @@ namespace music_importer
             this.cbSH_Pass.Location = new System.Drawing.Point( 217, 46 );
             this.cbSH_Pass.Name = "cbSH_Pass";
             this.cbSH_Pass.Size = new System.Drawing.Size( 44, 20 );
-            this.cbSH_Pass.TabIndex = 31;
+            this.cbSH_Pass.TabIndex = 3;
             this.cbSH_Pass.Text = "Show";
             this.cbSH_Pass.UseVisualStyleBackColor = true;
             this.cbSH_Pass.CheckedChanged += new System.EventHandler( this.cbSH_Pass_CheckedChanged );
@@ -262,7 +265,7 @@ namespace music_importer
             this.cbSH_User.Location = new System.Drawing.Point( 217, 21 );
             this.cbSH_User.Name = "cbSH_User";
             this.cbSH_User.Size = new System.Drawing.Size( 44, 20 );
-            this.cbSH_User.TabIndex = 30;
+            this.cbSH_User.TabIndex = 1;
             this.cbSH_User.Text = "Hide";
             this.cbSH_User.UseVisualStyleBackColor = true;
             this.cbSH_User.CheckedChanged += new System.EventHandler( this.cbSH_User_CheckedChanged );
@@ -283,7 +286,7 @@ namespace music_importer
             this.txtSchema.Location = new System.Drawing.Point( 74, 74 );
             this.txtSchema.Name = "txtSchema";
             this.txtSchema.Size = new System.Drawing.Size( 139, 20 );
-            this.txtSchema.TabIndex = 26;
+            this.txtSchema.TabIndex = 4;
             // 
             // cbMysql
             // 
@@ -292,7 +295,7 @@ namespace music_importer
             this.cbMysql.Location = new System.Drawing.Point( 432, 131 );
             this.cbMysql.Name = "cbMysql";
             this.cbMysql.Size = new System.Drawing.Size( 44, 20 );
-            this.cbMysql.TabIndex = 24;
+            this.cbMysql.TabIndex = 8;
             this.cbMysql.Text = "Enable";
             this.cbMysql.UseVisualStyleBackColor = true;
             this.cbMysql.CheckedChanged += new System.EventHandler( this.cbMysql_CheckedChanged );
@@ -304,7 +307,7 @@ namespace music_importer
             this.txtSQLite.Location = new System.Drawing.Point( 74, 155 );
             this.txtSQLite.Name = "txtSQLite";
             this.txtSQLite.Size = new System.Drawing.Size( 346, 20 );
-            this.txtSQLite.TabIndex = 23;
+            this.txtSQLite.TabIndex = 9;
             // 
             // txtMySql
             // 
@@ -314,7 +317,7 @@ namespace music_importer
             this.txtMySql.Location = new System.Drawing.Point( 74, 128 );
             this.txtMySql.Name = "txtMySql";
             this.txtMySql.Size = new System.Drawing.Size( 346, 20 );
-            this.txtMySql.TabIndex = 22;
+            this.txtMySql.TabIndex = 7;
             // 
             // label6
             // 
@@ -332,7 +335,7 @@ namespace music_importer
             this.txtPort.Location = new System.Drawing.Point( 439, 101 );
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size( 37, 20 );
-            this.txtPort.TabIndex = 11;
+            this.txtPort.TabIndex = 6;
             this.txtPort.Text = "3306";
             this.txtPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -342,7 +345,7 @@ namespace music_importer
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size( 139, 20 );
-            this.txtPassword.TabIndex = 8;
+            this.txtPassword.TabIndex = 2;
             // 
             // txtAddress
             // 
@@ -351,7 +354,7 @@ namespace music_importer
             this.txtAddress.Location = new System.Drawing.Point( 74, 101 );
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size( 346, 20 );
-            this.txtAddress.TabIndex = 4;
+            this.txtAddress.TabIndex = 5;
             this.txtAddress.Text = "localhost";
             // 
             // label4
@@ -368,7 +371,7 @@ namespace music_importer
             this.txtUser.Location = new System.Drawing.Point( 74, 20 );
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size( 139, 20 );
-            this.txtUser.TabIndex = 5;
+            this.txtUser.TabIndex = 0;
             this.txtUser.Text = "root";
             // 
             // label3
@@ -402,7 +405,7 @@ namespace music_importer
             this.btnAdd.Location = new System.Drawing.Point( 552, 154 );
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size( 75, 23 );
-            this.btnAdd.TabIndex = 15;
+            this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "&Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler( this.btnAdd_Click );
@@ -415,7 +418,7 @@ namespace music_importer
             this.lbScanLocations.Name = "lbScanLocations";
             this.lbScanLocations.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbScanLocations.Size = new System.Drawing.Size( 615, 95 );
-            this.lbScanLocations.TabIndex = 16;
+            this.lbScanLocations.TabIndex = 1;
             // 
             // progressBar
             // 
@@ -440,7 +443,7 @@ namespace music_importer
             this.btnOK.Location = new System.Drawing.Point( 571, 710 );
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size( 75, 23 );
-            this.btnOK.TabIndex = 17;
+            this.btnOK.TabIndex = 0;
             this.btnOK.Text = "&Start";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler( this.btnOK_Click );
@@ -458,7 +461,7 @@ namespace music_importer
             this.groupBox2.Location = new System.Drawing.Point( 6, 205 );
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size( 644, 224 );
-            this.groupBox2.TabIndex = 18;
+            this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Scan Locations";
             // 
@@ -484,7 +487,7 @@ namespace music_importer
             this.txtRoot.Location = new System.Drawing.Point( 79, 19 );
             this.txtRoot.Name = "txtRoot";
             this.txtRoot.Size = new System.Drawing.Size( 548, 20 );
-            this.txtRoot.TabIndex = 30;
+            this.txtRoot.TabIndex = 0;
             this.txtRoot.TextChanged += new System.EventHandler( this.txtRoot_TextChanged );
             // 
             // lblMask
@@ -509,14 +512,14 @@ namespace music_importer
             this.txtMask.Location = new System.Drawing.Point( 79, 190 );
             this.txtMask.Name = "txtMask";
             this.txtMask.Size = new System.Drawing.Size( 548, 20 );
-            this.txtMask.TabIndex = 28;
+            this.txtMask.TabIndex = 5;
             // 
             // btnRemove
             // 
             this.btnRemove.Location = new System.Drawing.Point( 473, 154 );
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size( 75, 23 );
-            this.btnRemove.TabIndex = 18;
+            this.btnRemove.TabIndex = 3;
             this.btnRemove.Text = "&Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler( this.btnRemove_Click );
@@ -526,7 +529,7 @@ namespace music_importer
             this.btnClear.Location = new System.Drawing.Point( 393, 154 );
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size( 75, 23 );
-            this.btnClear.TabIndex = 17;
+            this.btnClear.TabIndex = 2;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler( this.btnClear_Click );
@@ -547,7 +550,7 @@ namespace music_importer
             this.txtArtMask.Location = new System.Drawing.Point( 74, 44 );
             this.txtArtMask.Name = "txtArtMask";
             this.txtArtMask.Size = new System.Drawing.Size( 553, 20 );
-            this.txtArtMask.TabIndex = 30;
+            this.txtArtMask.TabIndex = 2;
             // 
             // btnBrowseArt
             // 
@@ -555,7 +558,7 @@ namespace music_importer
             this.btnBrowseArt.Location = new System.Drawing.Point( 600, 67 );
             this.btnBrowseArt.Name = "btnBrowseArt";
             this.btnBrowseArt.Size = new System.Drawing.Size( 27, 23 );
-            this.btnBrowseArt.TabIndex = 27;
+            this.btnBrowseArt.TabIndex = 4;
             this.btnBrowseArt.Text = "...";
             this.btnBrowseArt.UseVisualStyleBackColor = true;
             this.btnBrowseArt.Click += new System.EventHandler( this.btnBrowseArt_Click );
@@ -576,7 +579,7 @@ namespace music_importer
             this.txtArtLoc.Location = new System.Drawing.Point( 74, 70 );
             this.txtArtLoc.Name = "txtArtLoc";
             this.txtArtLoc.Size = new System.Drawing.Size( 520, 20 );
-            this.txtArtLoc.TabIndex = 26;
+            this.txtArtLoc.TabIndex = 3;
             // 
             // grpOptions
             // 
@@ -589,7 +592,7 @@ namespace music_importer
             this.grpOptions.Location = new System.Drawing.Point( 496, 6 );
             this.grpOptions.Name = "grpOptions";
             this.grpOptions.Size = new System.Drawing.Size( 154, 194 );
-            this.grpOptions.TabIndex = 19;
+            this.grpOptions.TabIndex = 1;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Scan Options";
             // 
@@ -601,16 +604,17 @@ namespace music_importer
             this.cbCreateDB.Location = new System.Drawing.Point( 11, 24 );
             this.cbCreateDB.Name = "cbCreateDB";
             this.cbCreateDB.Size = new System.Drawing.Size( 108, 17 );
-            this.cbCreateDB.TabIndex = 16;
+            this.cbCreateDB.TabIndex = 0;
             this.cbCreateDB.Text = "(Re)Create DB";
             this.cbCreateDB.UseVisualStyleBackColor = true;
+            this.cbCreateDB.CheckedChanged += new System.EventHandler( this.cbCreateDB_CheckedChanged );
             // 
             // btnCancel
             // 
             this.btnCancel.Location = new System.Drawing.Point( 413, 710 );
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size( 75, 23 );
-            this.btnCancel.TabIndex = 20;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler( this.btnCancel_Click );
@@ -672,7 +676,7 @@ namespace music_importer
             this.cmbPriority.Location = new System.Drawing.Point( 90, 710 );
             this.cmbPriority.Name = "cmbPriority";
             this.cmbPriority.Size = new System.Drawing.Size( 121, 21 );
-            this.cmbPriority.TabIndex = 26;
+            this.cmbPriority.TabIndex = 3;
             this.cmbPriority.SelectedIndexChanged += new System.EventHandler( this.cmbPriority_SelectedIndexChanged );
             // 
             // label12
@@ -703,12 +707,13 @@ namespace music_importer
             0} );
             this.art_large.Name = "art_large";
             this.art_large.Size = new System.Drawing.Size( 56, 20 );
-            this.art_large.TabIndex = 33;
+            this.art_large.TabIndex = 5;
             this.art_large.Value = new decimal( new int[] {
             225,
             0,
             0,
             0} );
+            this.art_large.ValueChanged += new System.EventHandler( this.art_large_ValueChanged );
             // 
             // art_small
             // 
@@ -720,12 +725,13 @@ namespace music_importer
             0} );
             this.art_small.Name = "art_small";
             this.art_small.Size = new System.Drawing.Size( 56, 20 );
-            this.art_small.TabIndex = 35;
+            this.art_small.TabIndex = 6;
             this.art_small.Value = new decimal( new int[] {
             75,
             0,
             0,
             0} );
+            this.art_small.ValueChanged += new System.EventHandler( this.art_small_ValueChanged );
             // 
             // label14
             // 
@@ -746,12 +752,13 @@ namespace music_importer
             0} );
             this.art_xsmall.Name = "art_xsmall";
             this.art_xsmall.Size = new System.Drawing.Size( 56, 20 );
-            this.art_xsmall.TabIndex = 37;
+            this.art_xsmall.TabIndex = 7;
             this.art_xsmall.Value = new decimal( new int[] {
             50,
             0,
             0,
             0} );
+            this.art_xsmall.ValueChanged += new System.EventHandler( this.art_xsmall_ValueChanged );
             // 
             // label15
             // 
@@ -779,7 +786,7 @@ namespace music_importer
             this.groupBox3.Location = new System.Drawing.Point( 6, 435 );
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size( 644, 134 );
-            this.groupBox3.TabIndex = 28;
+            this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Album Art";
             // 
@@ -789,9 +796,10 @@ namespace music_importer
             this.cbGenerateThumbs.Location = new System.Drawing.Point( 74, 19 );
             this.cbGenerateThumbs.Name = "cbGenerateThumbs";
             this.cbGenerateThumbs.Size = new System.Drawing.Size( 153, 17 );
-            this.cbGenerateThumbs.TabIndex = 38;
+            this.cbGenerateThumbs.TabIndex = 1;
             this.cbGenerateThumbs.Text = "Enable Thumbnail Creation";
             this.cbGenerateThumbs.UseVisualStyleBackColor = true;
+            this.cbGenerateThumbs.CheckedChanged += new System.EventHandler( this.cbGenerateThumbs_CheckedChanged );
             // 
             // btnPause
             // 
@@ -799,7 +807,7 @@ namespace music_importer
             this.btnPause.Location = new System.Drawing.Point( 492, 710 );
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size( 75, 23 );
-            this.btnPause.TabIndex = 29;
+            this.btnPause.TabIndex = 1;
             this.btnPause.Text = "&Pause";
             this.btnPause.UseVisualStyleBackColor = true;
             this.btnPause.Click += new System.EventHandler( this.btnPause_Click );
@@ -844,6 +852,16 @@ namespace music_importer
             this.lbElapsedTime.TabIndex = 32;
             this.lbElapsedTime.Text = "0:00:00";
             // 
+            // tt_btnStart
+            // 
+            this.tt_btnStart.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.tt_btnStart.ToolTipTitle = "Start";
+            // 
+            // tt_create
+            // 
+            this.tt_create.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+            this.tt_create.ToolTipTitle = "Create Database";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -871,7 +889,7 @@ namespace music_importer
             this.Controls.Add( this.groupBox1 );
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainFrm";
-            this.Text = "Music Importer";
+            this.Text = "3";
             this.groupBox1.ResumeLayout( false );
             this.groupBox1.PerformLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).EndInit();
@@ -957,6 +975,8 @@ namespace music_importer
         private System.Windows.Forms.Label lbStartTime;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lbElapsedTime;
+        private System.Windows.Forms.ToolTip tt_btnStart;
+        private System.Windows.Forms.ToolTip tt_create;
     }
 }
 

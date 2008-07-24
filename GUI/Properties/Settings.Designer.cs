@@ -49,6 +49,9 @@ namespace music_importer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>music</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection schema_history {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["schema_history"]));
@@ -60,6 +63,9 @@ namespace music_importer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>3306</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection port_history {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["port_history"]));
@@ -71,6 +77,9 @@ namespace music_importer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>localhost</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection address_history {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["address_history"]));
@@ -82,6 +91,9 @@ namespace music_importer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>Database=\'music\';Address=\'localhost\'</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection mysql_history {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["mysql_history"]));
@@ -93,12 +105,37 @@ namespace music_importer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>*</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection sqlite_history {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["sqlite_history"]));
             }
             set {
                 this["sqlite_history"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection art_mask_history {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["art_mask_history"]));
+            }
+            set {
+                this["art_mask_history"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection file_mask_history {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["file_mask_history"]));
+            }
+            set {
+                this["file_mask_history"] = value;
             }
         }
     }

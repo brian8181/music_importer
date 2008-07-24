@@ -69,6 +69,9 @@ namespace music_importer
                 cmbPriority.Items.Add( v ); 
             }
             cmbPriority.SelectedIndex = 1; //BelowNormal
+
+            tt_btnStart.SetToolTip( btnOK, "click to start" );
+            tt_create.SetToolTip( cbCreateDB, Properties.Resources.warn_create_db );
         }
         #endregion
 
@@ -113,6 +116,26 @@ namespace music_importer
             this.art_large.Value = Settings.Default.art_large;
             this.art_small.Value = Settings.Default.art_small;
             this.art_xsmall.Value = Settings.Default.art_xsmall;
+
+            string[] strs = new string[Properties.Settings.Default.address_history.Count]; 
+            Properties.Settings.Default.address_history.CopyTo( strs, 0 );
+            this.txtAddress.AutoCompleteCustomSource.AddRange( strs );
+
+            strs = new string[Properties.Settings.Default.mysql_history.Count];
+            Properties.Settings.Default.mysql_history.CopyTo( strs, 0 );
+            this.txtMySql.AutoCompleteCustomSource.AddRange( strs );
+
+            strs = new string[Properties.Settings.Default.port_history.Count];
+            Properties.Settings.Default.port_history.CopyTo( strs, 0 );
+            this.txtPort.AutoCompleteCustomSource.AddRange( strs );
+
+            strs = new string[Properties.Settings.Default.schema_history.Count];
+            Properties.Settings.Default.schema_history.CopyTo( strs, 0 );
+            this.txtSchema.AutoCompleteCustomSource.AddRange( strs );
+
+            strs = new string[Properties.Settings.Default.sqlite_history.Count];
+            Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
+            this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
         }
         /// <summary>
         /// save application settings
@@ -157,6 +180,19 @@ namespace music_importer
             // GUI Settings
             Properties.Settings.Default.show_user = !cbSH_User.Checked;
             Properties.Settings.Default.show_pass = !cbSH_Pass.Checked;
+
+            int idx =  txtAddress.AutoCompleteCustomSource.IndexOf( txtAddress.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtAddress.AutoCompleteCustomSource.RemoveAt( idx );
+                txtAddress.AutoCompleteCustomSource.Add( txtAddress.Text );
+            }
+            else
+            {
+                txtAddress.AutoCompleteCustomSource.Add( txtAddress.Text );
+            }
+
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -403,6 +439,75 @@ namespace music_importer
             if(importer != null)
                 importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
         }
+        /// <summary>
+        /// create db is check changed
+        /// </summary>
+        /// <param name="sender">checkbox</param>
+        /// <param name="e">e</param>
+        private void cbCreateDB_CheckedChanged( object sender, EventArgs e )
+        {
+            if(cbCreateDB.Checked)
+            {
+                DialogResult dr = MessageBox.Show(
+                    "Current setting will cause database to be (re)created, causing loss of all data are you sure you want to continue?",
+                    "Warning",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button1 );
+                if(dr != DialogResult.Yes)
+                {
+                    cbCreateDB.Checked = false;
+                }
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        [Obsolete]
+        private void cbGenerateThumbs_CheckedChanged( object sender, EventArgs e )
+        {
+            // do art sizes make logical sense
+            if(cbGenerateThumbs.Checked)
+            {
+                if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
+                {
+                    StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
+                    cbGenerateThumbs.Checked = false;
+                }
+            }
+            this.art_large.Enabled = cbGenerateThumbs.Checked;
+            this.art_small.Enabled = cbGenerateThumbs.Checked;
+            this.art_xsmall.Enabled = cbGenerateThumbs.Checked;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void art_small_ValueChanged( object sender, EventArgs e )
+        {
+            art_xsmall.Maximum = art_small.Value - 1;
+            art_large.Minimum = art_small.Value + 1;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void art_large_ValueChanged( object sender, EventArgs e )
+        {
+            art_small.Maximum = art_large.Value - 1;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void art_xsmall_ValueChanged( object sender, EventArgs e )
+        {
+            art_small.Minimum = art_xsmall.Value + 1;
+        }
         #endregion
 
         #region Importer Events
@@ -588,15 +693,7 @@ namespace music_importer
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
             }
             result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
-            // do art sizes make logical sense
-            if(cbGenerateThumbs.Checked)
-            {
-                if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
-                {
-                   StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
-                }
-            }
-            // create directory, if not exists                 
+            // create directory, if not exists   
             result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
             if(!Directory.Exists( txtArtLoc.Text ))
             {
@@ -612,16 +709,6 @@ namespace music_importer
                 {
                     return false;
                 }
-            }
-            if(cbCreateDB.Checked)
-            {
-                DialogResult dr = MessageBox.Show(
-                    "Current setting will cause database to be (re)created, causing loss of all data are you sure you want to continue?",
-                    "Warning",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button1 );
-                if(dr != DialogResult.Yes)
-                    return false;
             }
             return result;
         }
