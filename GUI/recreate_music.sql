@@ -1,3 +1,19 @@
+-- Music Importer imports ID3 tags to a MySql database.
+-- Copyright (C) 2008  Brian Preston
+
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 ########################################
 ###  Music Database Creation Scripts ###
 ###      by                          ###
@@ -58,6 +74,8 @@ CREATE TABLE `playlist_songs` (
   `playlist_id` int(11) default NULL,
   `song_id` int(11) default NULL,
   `order` int(10) unsigned default NULL,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',`
   PRIMARY KEY  (`id`),
   KEY `Index_play_id` (`playlist_id`),
   KEY `Index_song_id` (`song_id`)
@@ -72,7 +90,21 @@ CREATE TABLE `playlists` (
   `name` text,
   `user_id` int(11) default NULL,
   `masked` tinyint(3) unsigned NOT NULL default '0',
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for playlists
+-- ----------------------------
+DROP TABLE IF EXISTS `location`;
+CREATE TABLE location` (
+  `id` int(11) NOT NULL auto_increment,
+  `path` text,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 -- ----------------------------

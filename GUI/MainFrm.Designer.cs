@@ -485,6 +485,7 @@ namespace music_importer
             this.txtRoot.Name = "txtRoot";
             this.txtRoot.Size = new System.Drawing.Size( 548, 20 );
             this.txtRoot.TabIndex = 30;
+            this.txtRoot.TextChanged += new System.EventHandler( this.txtRoot_TextChanged );
             // 
             // lblMask
             // 
