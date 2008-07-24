@@ -71,6 +71,7 @@ namespace music_importer
             cmbPriority.SelectedIndex = 1; //BelowNormal
         }
         #endregion
+
         #region Settings / Configuration
         /// <summary>
         /// load application settings
@@ -95,6 +96,7 @@ namespace music_importer
             // always false
             //this.cbCreateDB.Checked = Settings.Default.create_db;
             this.cbCreateDB.Checked = false;
+            this.txtRoot.Text = Settings.Default.music_root;
             StringCollection dirs = Settings.Default.Dirs;
             foreach(string s in dirs)
             {
@@ -139,6 +141,7 @@ namespace music_importer
             Settings.Default.Optimize = this.cbOptimize.Checked;
             Settings.Default.create_db = this.cbCreateDB.Checked;
             Settings.Default.Dirs.Clear();
+            Settings.Default.music_root = this.txtRoot.Text;
             foreach(FileInfo fi in lbScanLocations.Items)
             {
                 Settings.Default.Dirs.Add( fi.FullName );
@@ -157,6 +160,7 @@ namespace music_importer
             Properties.Settings.Default.Save();
         }
         #endregion
+
         #region Control Events
         /// <summary>
         ///  start clicked
@@ -267,9 +271,19 @@ namespace music_importer
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.RootFolder = Environment.SpecialFolder.Desktop;
+                       
             if(dlg.ShowDialog() == DialogResult.OK)
             {
-                lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
+                if( dlg.SelectedPath.StartsWith( txtRoot.Text, 
+                                                 true, 
+                                                 System.Globalization.CultureInfo.InvariantCulture ) )
+                {
+                    lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
+                }
+                else
+                {
+                    StdMsgBox.OK( "Path not under root" );
+                }
             }
         }
         /// <summary>
@@ -294,6 +308,24 @@ namespace music_importer
         private void btnClear_Click( object sender, EventArgs e )
         {
             lbScanLocations.Items.Clear();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtRoot_TextChanged( object sender, EventArgs e )
+        {
+            lbScanLocations.Items.Clear();
+            if(Directory.Exists( txtRoot.Text ))
+            {
+                btnAdd.Enabled = true;
+                lbScanLocations.Items.Add( new FileInfo( txtRoot.Text ) );
+            }
+            else
+            {
+                btnAdd.Enabled = false;
+            }
         }
         /// <summary>
         /// set use connnection string or not
@@ -372,6 +404,7 @@ namespace music_importer
                 importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
         }
         #endregion
+
         #region Importer Events
         /// <summary>
         /// status changed
@@ -443,6 +476,7 @@ namespace music_importer
             SafeSet_Label( lbMessage, str );
         }
         #endregion
+
         #region Helpers
         /// <summary>
         /// 
@@ -529,6 +563,7 @@ namespace music_importer
             cbTags.Enabled = state;
         }
         #endregion
+
         #region Validation
         ///<summary>
         ///validate input
