@@ -68,7 +68,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="recreate_music.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ACDSee7.exe_I07fa_0409.ico" />

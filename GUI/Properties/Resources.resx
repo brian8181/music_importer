@@ -154,4 +154,7 @@
   <data name="warn_create_db" xml:space="preserve">
     <value>Setting will cause database to be (re)created, causing loss of all data. </value>
   </data>
+  <data name="mm_message" xml:space="preserve">
+    <value>This feature requires &lt;a href="http://www.mediamonkey.com/"&gt;Media Monkey"&lt;/a&gt;.</value>
+  </data>
 </root>

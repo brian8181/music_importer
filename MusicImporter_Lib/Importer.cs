@@ -240,9 +240,17 @@ namespace MusicImporter.TagLibV
                     {
                         Status( "scanning tags ..." );
                         int len = Settings.Default.Dirs.Count;
-                        for(int i = 0; i < len && running; ++i)
+                        // scan just root or all in list
+                        if(len > 0)
                         {
-                            Thread( Settings.Default.Dirs[i] );
+                            for(int i = 0; i < len && running; ++i)
+                            {
+                                Thread( Settings.Default.Dirs[i] );
+                            }
+                        }
+                        else
+                        {
+                            Thread( Settings.Default.music_root );
                         }
                     }
                     OnProcessDirectory( "None." );

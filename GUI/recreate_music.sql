@@ -1,4 +1,5 @@
--- Music Importer imports ID3 tags to a MySql database.
+-- Music Importer imports ID3 tags to a MySql database. 
+-- (Music Database Creation Scripts) July 24, 2008
 -- Copyright (C) 2008  Brian Preston
 
 -- This program is free software: you can redistribute it and/or modify
@@ -13,12 +14,6 @@
 
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-########################################
-###  Music Database Creation Scripts ###
-###      by                          ###
-###   Brian Preston 7/16/2008        ###
-########################################
 
 SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
@@ -75,7 +70,7 @@ CREATE TABLE `playlist_songs` (
   `song_id` int(11) default NULL,
   `order` int(10) unsigned default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',`
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   KEY `Index_play_id` (`playlist_id`),
   KEY `Index_song_id` (`song_id`)
@@ -99,7 +94,7 @@ CREATE TABLE `playlists` (
 -- Table structure for playlists
 -- ----------------------------
 DROP TABLE IF EXISTS `location`;
-CREATE TABLE location` (
+CREATE TABLE `location` (
   `id` int(11) NOT NULL auto_increment,
   `path` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -148,3 +143,33 @@ CREATE TABLE `song` (
   CONSTRAINT `FK_song_2` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`),
   CONSTRAINT `FK_song_3` FOREIGN KEY (`art_id`) REFERENCES `art` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36392 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci PACK_KEYS=1 ROW_FORMAT=DYNAMIC COMMENT='InnoDB';
+
+-- ----------------------------
+-- Table structure for query_log
+-- ----------------------------
+
+DROP TABLE IF EXISTS `query_log`;
+CREATE TABLE `query_log` (
+  `id` int(11) NOT NULL auto_increment,
+  `query_type` text,
+  `album` text,
+  `artist` text,
+  `title` text,
+  `genre` text,
+  `file` text,
+  `comments` text,
+  `lyrics` text,
+  `and` tinyint(1) default '1',
+  `wildcard` tinyint(1) default '0',
+  `sortby` text,
+  `ip` text,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+   PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13625 DEFAULT CHARSET=latin1;
+
+-- CREATE TRIGGER `inserted_author_ts` BEFORE INSERT ON `album` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+-- CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+-- CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+
+-- END --

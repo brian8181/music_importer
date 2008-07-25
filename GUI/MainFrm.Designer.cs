@@ -113,6 +113,7 @@ namespace music_importer
             this.lbElapsedTime = new System.Windows.Forms.Label();
             this.tt_btnStart = new System.Windows.Forms.ToolTip( this.components );
             this.tt_create = new System.Windows.Forms.ToolTip( this.components );
+            this.tt_mm_message = new System.Windows.Forms.ToolTip( this.components );
             this.groupBox1.SuspendLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -862,6 +863,13 @@ namespace music_importer
             this.tt_create.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
             this.tt_create.ToolTipTitle = "Create Database";
             // 
+            // tt_mm_message
+            // 
+            this.tt_mm_message.IsBalloon = true;
+            this.tt_mm_message.ShowAlways = true;
+            this.tt_mm_message.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.tt_mm_message.ToolTipTitle = "MediaMonkey";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -889,7 +897,8 @@ namespace music_importer
             this.Controls.Add( this.groupBox1 );
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainFrm";
-            this.Text = "3";
+            this.RightToLeftLayout = true;
+            this.Text = "Music Importer";
             this.groupBox1.ResumeLayout( false );
             this.groupBox1.PerformLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).EndInit();
@@ -977,6 +986,7 @@ namespace music_importer
         private System.Windows.Forms.Label lbElapsedTime;
         private System.Windows.Forms.ToolTip tt_btnStart;
         private System.Windows.Forms.ToolTip tt_create;
+        private System.Windows.Forms.ToolTip tt_mm_message;
     }
 }
 

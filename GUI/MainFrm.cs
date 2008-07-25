@@ -72,6 +72,7 @@ namespace music_importer
 
             tt_btnStart.SetToolTip( btnOK, "click to start" );
             tt_create.SetToolTip( cbCreateDB, Properties.Resources.warn_create_db );
+            tt_mm_message.SetToolTip( txtSQLite, Properties.Resources.mm_message );
         }
         #endregion
 
@@ -110,6 +111,9 @@ namespace music_importer
             this.txtArtMask.Text = Settings.Default.art_mask;
             // art & thumb settings
             this.cbGenerateThumbs.Checked = Settings.Default.insert_art;
+            this.btnBrowseArt.Enabled = Settings.Default.insert_art;
+            this.txtArtLoc.Enabled = Settings.Default.insert_art;
+            this.txtArtMask.Enabled = Settings.Default.insert_art;
             this.art_large.Enabled = Settings.Default.insert_art;
             this.art_small.Enabled = Settings.Default.insert_art;
             this.art_xsmall.Enabled = Settings.Default.insert_art;
@@ -167,7 +171,11 @@ namespace music_importer
             Settings.Default.music_root = this.txtRoot.Text;
             foreach(FileInfo fi in lbScanLocations.Items)
             {
-                Settings.Default.Dirs.Add( fi.FullName );
+                // do not save root
+                if(fi.FullName.Length > txtRoot.Text.Length)  
+                {
+                    Settings.Default.Dirs.Add( fi.FullName );
+                }
             }
             Settings.Default.art_location = this.txtArtLoc.Text;
             Settings.Default.file_mask = this.txtMask.Text;
@@ -312,7 +320,8 @@ namespace music_importer
             {
                 if( dlg.SelectedPath.StartsWith( txtRoot.Text, 
                                                  true, 
-                                                 System.Globalization.CultureInfo.InvariantCulture ) )
+                                                 System.Globalization.CultureInfo.InvariantCulture ) &&
+                                                 dlg.SelectedPath.Length > txtRoot.Text.Length )
                 {
                     lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
                 }
@@ -464,10 +473,10 @@ namespace music_importer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        [Obsolete]
         private void cbGenerateThumbs_CheckedChanged( object sender, EventArgs e )
         {
             // do art sizes make logical sense
+            // Obsolete
             if(cbGenerateThumbs.Checked)
             {
                 if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
@@ -476,6 +485,9 @@ namespace music_importer
                     cbGenerateThumbs.Checked = false;
                 }
             }
+            this.btnBrowseArt.Enabled = cbGenerateThumbs.Checked; 
+            this.txtArtLoc.Enabled = cbGenerateThumbs.Checked;
+            this.txtArtMask.Enabled = cbGenerateThumbs.Checked;
             this.art_large.Enabled = cbGenerateThumbs.Checked;
             this.art_small.Enabled = cbGenerateThumbs.Checked;
             this.art_xsmall.Enabled = cbGenerateThumbs.Checked;
@@ -541,10 +553,10 @@ namespace music_importer
         {
             //pictureBox2.Image = null;
             //SafeSet_Label( lbMessage, "Finished" );
-            SafeSet_Label( lbStatus, "Finished." );
+            SafeSet_Label( lbStatus, "&Finished" );
             this.Invoke( new VoidDelegate( delegate() {
                                                     btnCancel.Enabled = true;
-                                                    btnCancel.Text = "Finished.";
+                                                    btnCancel.Text = "&Finished";
                                                     // stop progess marquee
                                                     progressBar.Style = ProgressBarStyle.Continuous;
                                                     ToggleOn();
@@ -637,9 +649,12 @@ namespace music_importer
                 cbCreateDB.Enabled = !check;
                 txtSQLite.Enabled = cbPlaylist.Checked;
                 check = cbGenerateThumbs.Checked;
-                this.art_large.Enabled = check;
-                this.art_small.Enabled = check;
-                this.art_xsmall.Enabled = check;
+                this.btnBrowseArt.Enabled = cbGenerateThumbs.Checked;
+                this.txtArtLoc.Enabled = cbGenerateThumbs.Checked;
+                this.txtArtMask.Enabled = cbGenerateThumbs.Checked;
+                this.art_large.Enabled = cbGenerateThumbs.Checked;
+                this.art_small.Enabled = cbGenerateThumbs.Checked;
+                this.art_xsmall.Enabled = cbGenerateThumbs.Checked;
             }
             else // turn off
             {
@@ -651,13 +666,16 @@ namespace music_importer
                 txtMySql.Enabled = state;
                 txtSQLite.Enabled = state;
                 cbCreateDB.Enabled = state;
+                this.btnBrowseArt.Enabled = state;
+                this.txtArtLoc.Enabled = state;
+                this.txtArtMask.Enabled = state;
                 this.art_large.Enabled = state;
                 this.art_small.Enabled = state;
                 this.art_xsmall.Enabled = state;
             }
+            txtRoot.Enabled = state;
             txtMask.Enabled = state;
-            txtArtLoc.Enabled = state;
-            txtArtMask.Enabled = state;
+            cbGenerateThumbs.Enabled = state;
             // check boxes
             cbMysql.Enabled = state;
             cbArt.Enabled = state;

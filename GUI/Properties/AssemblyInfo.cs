@@ -9,7 +9,7 @@ using System.Resources;
 [assembly: AssemblyTitle( "music_importer" )]
 [assembly: AssemblyDescription( "Import ID3 tag information" )]
 [assembly: AssemblyConfiguration( "" )]
-[assembly: AssemblyCompany( "bkp-online.com" )]
+[assembly: AssemblyCompany( "Bkp-Online Software" )]
 [assembly: AssemblyProduct( "music_importer beta" )]
 [assembly: AssemblyCopyright( "Copyright © bkp-online.com 2008" )]
 [assembly: AssemblyTrademark( "" )]

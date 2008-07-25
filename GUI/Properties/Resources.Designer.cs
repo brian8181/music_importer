@@ -122,6 +122,15 @@ namespace music_importer.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to This feature requires &lt;a href=&quot;http://www.mediamonkey.com/&quot;&gt;Media Monkey&quot;&lt;/a&gt;..
+        /// </summary>
+        internal static string mm_message {
+            get {
+                return ResourceManager.GetString("mm_message", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap mono_powered {
             get {
                 object obj = ResourceManager.GetObject("mono-powered", resourceCulture);
