@@ -140,6 +140,15 @@ namespace music_importer
             strs = new string[Properties.Settings.Default.sqlite_history.Count];
             Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
             this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
+
+            //todo mask
+            //strs = new string[Properties.Settings.Default.sqlite_history.Count];
+            //Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
+            //this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
+
+            //strs = new string[Properties.Settings.Default.sqlite_history.Count];
+            //Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
+            //this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
         }
         /// <summary>
         /// save application settings
@@ -189,17 +198,33 @@ namespace music_importer
             Properties.Settings.Default.show_user = !cbSH_User.Checked;
             Properties.Settings.Default.show_pass = !cbSH_Pass.Checked;
 
-            int idx =  txtAddress.AutoCompleteCustomSource.IndexOf( txtAddress.Text );
-            if(idx > 0)
-            {
-                // remove and put on top
-                txtAddress.AutoCompleteCustomSource.RemoveAt( idx );
-                txtAddress.AutoCompleteCustomSource.Add( txtAddress.Text );
-            }
-            else
-            {
-                txtAddress.AutoCompleteCustomSource.Add( txtAddress.Text );
-            }
+            string[] strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            Properties.Settings.Default.address_history.AddRange( strs );
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs )
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs )
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs )
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs )
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs )
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs )
 
             Properties.Settings.Default.Save();
         }
@@ -234,6 +259,7 @@ namespace music_importer
                 importer_TagScanStopped();
                 return;
             }
+                        
             // SAVE GLOBAL SETTINGS BEFORE CONNECT //
             SaveSettings();
             // connect
@@ -595,6 +621,73 @@ namespace music_importer
         #endregion
 
         #region Helpers
+        public void UpdateHistory()
+        {
+            // address
+            int idx = txtAddress.AutoCompleteCustomSource.IndexOf( txtAddress.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtAddress.AutoCompleteCustomSource.RemoveAt( idx );
+                txtAddress.AutoCompleteCustomSource.Add( txtAddress.Text );
+            }
+            else
+            {
+                txtAddress.AutoCompleteCustomSource.Add( txtAddress.Text );
+            }
+
+            // mysql
+            idx = txtMySql.AutoCompleteCustomSource.IndexOf( txtAddress.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtMySql.AutoCompleteCustomSource.RemoveAt( idx );
+                txtMySql.AutoCompleteCustomSource.Add( txtMySql.Text );
+            }
+            else
+            {
+                txtMySql.AutoCompleteCustomSource.Add( txtMySql.Text );
+            }
+
+            // port
+            idx = txtPort.AutoCompleteCustomSource.IndexOf( txtPort.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtPort.AutoCompleteCustomSource.RemoveAt( idx );
+                txtPort.AutoCompleteCustomSource.Add( txtPort.Text );
+            }
+            else
+            {
+                txtPort.AutoCompleteCustomSource.Add( txtPort.Text );
+            }
+
+            // schema
+            idx = txtSchema.AutoCompleteCustomSource.IndexOf( txtSchema.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtSchema.AutoCompleteCustomSource.RemoveAt( idx );
+                txtSchema.AutoCompleteCustomSource.Add( txtSchema.Text );
+            }
+            else
+            {
+                txtSchema.AutoCompleteCustomSource.Add( txtSchema.Text );
+            }
+
+            // sqlite
+            idx = txtSQLite.AutoCompleteCustomSource.IndexOf( txtSQLite.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtSQLite.AutoCompleteCustomSource.RemoveAt( idx );
+                txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
+            }
+            else
+            {
+                txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -711,10 +804,11 @@ namespace music_importer
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
             }
             result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
-            // create directory, if not exists   
-            result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
-            if(!Directory.Exists( txtArtLoc.Text ))
+            if(cbGenerateThumbs.Checked && !Directory.Exists( txtArtLoc.Text ))
             {
+                // create directory, if not exists   
+                result = result ? !string.IsNullOrEmpty( txtArtLoc.Text ) : false;
+
                 DialogResult dr = MessageBox.Show(
                     "Art location \"" + txtArtLoc.Text + "\" does not exist you do want to create it?",
                     "Warning",
