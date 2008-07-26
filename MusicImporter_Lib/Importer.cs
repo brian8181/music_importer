@@ -98,15 +98,15 @@ namespace MusicImporter.TagLibV
         /// intitialize from Setting file
         /// </summary>
         public Importer( MusicImporter_Lib.Properties.Settings settings )
-        {
-            BKP.Online.Logger.Init();
-            Initialize( settings );
+        {    Initialize( settings );
         }
         /// <summary>
         /// (Re)Initialize 
         /// </summary>
         public void Initialize( MusicImporter_Lib.Properties.Settings settings )
         {
+            //logger throws exceptions!!
+            //BKP.Online.Logger.Init();
             if(settings.use_conn_str)
             {
                 connect_string =  settings.mysql_conn_str;
@@ -232,26 +232,34 @@ namespace MusicImporter.TagLibV
                     // check for stop signal
                     if(!running) return;
                     pause.WaitOne();
-                    // make sure database set
-                    mysql_connection.ChangeDatabase( Settings.Default.schema );
-                                        
-                    // SCAN TGAGS
-                    if(Settings.Default.ScanTags)
+
+                    try
                     {
-                        Status( "scanning tags ..." );
-                        int len = Settings.Default.Dirs.Count;
-                        // scan just root or all in list
-                        if(len > 0)
+                        // make sure database set
+                        mysql_connection.ChangeDatabase( Settings.Default.schema );
+                        // SCAN TGAGS
+                        if(Settings.Default.ScanTags)
                         {
-                            for(int i = 0; i < len && running; ++i)
+                            Status( "scanning tags ..." );
+                            int len = Settings.Default.Dirs.Count;
+                            // scan just root or all in list
+                            if(len > 0)
                             {
-                                Thread( Settings.Default.Dirs[i] );
+                                for(int i = 0; i < len && running; ++i)
+                                {
+                                    Thread( Settings.Default.Dirs[i] );
+                                }
+                            }
+                            else
+                            {
+                                Thread( Settings.Default.music_root );
                             }
                         }
-                        else
-                        {
-                            Thread( Settings.Default.music_root );
-                        }
+                    }
+                    catch(MySqlException exp)
+                    {
+                       OnError( exp.Message );
+                       return;
                     }
                     OnProcessDirectory( "None." );
 
@@ -356,17 +364,17 @@ namespace MusicImporter.TagLibV
                 } 
                 catch( TagLib.CorruptFileException e )
                 {
-                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     continue;
                 }
                 catch( TagLib.UnsupportedFormatException e )
                 {
-                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     continue;
                 }
                 catch(Exception e)
                 {
-                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     continue;
                 }
                 //insert tag data
@@ -820,10 +828,9 @@ namespace MusicImporter.TagLibV
         /// send msg to log
         /// </summary>
         /// <param name="str"></param>
-        protected virtual void LogError( string str )
+        protected virtual void LogError( string msg )
         {
-            Trace.WriteLine( Logger.Level.Error, str );
-            OnError( str );
+            Trace.WriteLine( Logger.Level.Error, msg );
         }
         /// <summary>
         /// call status update
@@ -847,6 +854,7 @@ namespace MusicImporter.TagLibV
         /// <param name="msg">status message</param>
         protected virtual void OnError( string msg )
         {
+            LogError( msg ); 
             if(Error != null) Error( msg );
         }
         /// <summary>

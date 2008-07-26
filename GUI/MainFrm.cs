@@ -141,14 +141,13 @@ namespace music_importer
             Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
             this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
 
-            //todo mask
-            //strs = new string[Properties.Settings.Default.sqlite_history.Count];
-            //Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
-            //this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
+            strs = new string[Properties.Settings.Default.sqlite_history.Count];
+            Properties.Settings.Default.art_mask_history.CopyTo( strs, 0 );
+            this.txtArtMask.AutoCompleteCustomSource.AddRange( strs );
 
-            //strs = new string[Properties.Settings.Default.sqlite_history.Count];
-            //Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
-            //this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
+            strs = new string[Properties.Settings.Default.file_mask_history.Count];
+            Properties.Settings.Default.file_mask_history.CopyTo( strs, 0 );
+            this.txtMask.AutoCompleteCustomSource.AddRange( strs );
         }
         /// <summary>
         /// save application settings
@@ -208,7 +207,7 @@ namespace music_importer
 
             //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
             //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs )
+            //Properties.Settings.Default.address_history.AddRange( strs );
 
             //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
             //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
@@ -216,7 +215,7 @@ namespace music_importer
 
             //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
             //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs )
+            //Properties.Settings.Default.address_history.AddRange( strs );
 
             //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
             //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
@@ -224,7 +223,11 @@ namespace music_importer
 
             //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
             //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs )
+            //Properties.Settings.Default.address_history.AddRange( strs );
+
+            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
+            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            //Properties.Settings.Default.address_history.AddRange( strs );
 
             Properties.Settings.Default.Save();
         }
@@ -259,13 +262,13 @@ namespace music_importer
                 importer_TagScanStopped();
                 return;
             }
-                        
+            UpdateHistory();            
             // SAVE GLOBAL SETTINGS BEFORE CONNECT //
             SaveSettings();
             // connect
-            importer = new Importer();
             try
             {
+                importer = new Importer();
                 importer.Connect();
             }
             catch(MySql.Data.MySqlClient.MySqlException exp)
@@ -593,9 +596,14 @@ namespace music_importer
         ///  scan error
         /// </summary>
         /// <param name="str">errror message</param>
-        private void importer_Error( string str )
+        private void importer_Error( string error )
         {
-            //throw new Exception( "The method or operation is not implemented." );
+            MessageBox.Show(
+                    error + ".\r\n\r\nPlease make sure connection fields are correct and try agian.",
+                    "MySql Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1 );
+
         }
         /// <summary>
         /// process diectory changed
@@ -686,6 +694,32 @@ namespace music_importer
             else
             {
                 txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
+            }
+
+            // art mask
+            idx = txtArtMask.AutoCompleteCustomSource.IndexOf( txtArtMask.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtArtMask.AutoCompleteCustomSource.RemoveAt( idx );
+                txtArtMask.AutoCompleteCustomSource.Add( txtArtMask.Text );
+            }
+            else
+            {
+                txtArtMask.AutoCompleteCustomSource.Add( txtArtMask.Text );
+            }
+
+            // mask
+            idx = txtMask.AutoCompleteCustomSource.IndexOf( txtMask.Text );
+            if(idx > 0)
+            {
+                // remove and put on top
+                txtMask.AutoCompleteCustomSource.RemoveAt( idx );
+                txtMask.AutoCompleteCustomSource.Add( txtMask.Text );
+            }
+            else
+            {
+                txtMask.AutoCompleteCustomSource.Add( txtMask.Text );
             }
         }
         /// <summary>

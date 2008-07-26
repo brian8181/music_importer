@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MusicImporter_Lib")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("bkp-online.com")]
+[assembly: AssemblyCompany( "Bkp-Online Software" )]
 [assembly: AssemblyProduct("MusicImporter_Lib")]
-[assembly: AssemblyCopyright("Copyright © bkp-online.com 2008")]
+[assembly: AssemblyCopyright("Copyright © Brian 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

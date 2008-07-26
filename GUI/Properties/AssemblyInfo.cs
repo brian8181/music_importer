@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Bkp-Online Software" )]
 [assembly: AssemblyProduct( "music_importer beta" )]
-[assembly: AssemblyCopyright( "Copyright © bkp-online.com 2008" )]
+[assembly: AssemblyCopyright( "Copyright © Brian 2008" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
