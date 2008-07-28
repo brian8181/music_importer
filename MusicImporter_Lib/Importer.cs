@@ -45,11 +45,11 @@ namespace MusicImporter.TagLibV
         /// <summary>
         /// tag scan started
         /// </summary>
-        public event BKP.Online.VoidDelegate TagScanStarted;
+        public event BKP.Online.VoidDelegate ScanStarted;
         /// <summary>
         /// tag scan completed
         /// </summary>
-        public event BKP.Online.VoidDelegate TagScanStopped;
+        public event BKP.Online.VoidDelegate ScanStopped;
         /// <summary>
         /// status message
         /// </summary>
@@ -65,6 +65,7 @@ namespace MusicImporter.TagLibV
         /// <summary>
         /// processing directory
         /// </summary>
+        /// 
         public event BKP.Online.StringDelegate ProcessDirectory;
         #endregion
 
@@ -871,7 +872,7 @@ namespace MusicImporter.TagLibV
         /// <param name="msg">status message</param>
         protected virtual void OnTagScanStarted()
         {
-            if(TagScanStarted != null) TagScanStarted();
+            if(ScanStarted != null) ScanStarted();
         }
         /// <summary>
         /// call TagScanStopped
@@ -879,7 +880,7 @@ namespace MusicImporter.TagLibV
         /// <param name="msg">status message</param>
         protected virtual void OnTagScanStopped()
         {
-            if(TagScanStopped != null) TagScanStopped();
+            if(ScanStopped != null) ScanStopped();
         }
         /// <summary>
         /// scans can not be started twice

@@ -37,6 +37,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Deploy_Debug|AnyCPU' ">
+    <OutputPath>bin\Deploy_Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSharpOptParse, Version=1.0.1.0, Culture=neutral, PublicKeyToken=fc987de5fe9f6e83">
       <SpecificVersion>False</SpecificVersion>
@@ -98,6 +106,11 @@
   <ItemGroup>
     <Content Include="ACDSee7.exe_I07fa_0409.ico" />
     <Content Include="gpl-3.0.txt" />
+    <None Include="Resources\wmploc.dll_I0330_0409.ico" />
+    <None Include="Resources\MRT.exe_I0087_040e.ico" />
+    <None Include="Resources\MRT.exe_I0086_0415.ico" />
+    <None Include="Resources\MRT.exe_I0085_0412.ico" />
+    <None Include="Resources\wmploc.dll_I0331_0409.ico" />
     <None Include="recreate_music.sql" />
     <None Include="Resources\mono-powered.png" />
     <None Include="Resources\180px-Tux.png" />

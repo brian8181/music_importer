@@ -41,12 +41,19 @@ namespace music_importer
         private string[] args = null;
         private Importer importer = null;
         private DateTime start_time = DateTime.Now;
+
+        private System.Drawing.Image unlocked_img;
+        private System.Drawing.Image locked_img;
+        private System.Drawing.Image enabled_img;
+        private System.Drawing.Image disabled_img;
+
         /// <summary>
         /// default contructor
         /// </summary>
         public MainFrm()
             : this( null )
         {
+            
         }
         /// <summary>
         ///  cmd line constuctor
@@ -73,6 +80,15 @@ namespace music_importer
             tt_btnStart.SetToolTip( btnOK, "click to start" );
             tt_create.SetToolTip( cbCreateDB, Properties.Resources.warn_create_db );
             tt_mm_message.SetToolTip( txtSQLite, Properties.Resources.mm_message );
+
+            //hack
+            unlocked_img = cbSH_Pass.Image;
+            locked_img = cbSH_User.Image;
+                        
+            disabled_img = cbMysql.Image;
+            enabled_img = cbPlaylist.Image;
+            this.cbPlaylist_CheckedChanged( cbPlaylist, null );
+
         }
         #endregion
 
@@ -120,7 +136,8 @@ namespace music_importer
             this.art_large.Value = Settings.Default.art_large;
             this.art_small.Value = Settings.Default.art_small;
             this.art_xsmall.Value = Settings.Default.art_xsmall;
-
+            
+            // Copy Settings to AutoCompleteCustomSource
             string[] strs = new string[Properties.Settings.Default.address_history.Count]; 
             Properties.Settings.Default.address_history.CopyTo( strs, 0 );
             this.txtAddress.AutoCompleteCustomSource.AddRange( strs );
@@ -141,7 +158,8 @@ namespace music_importer
             Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
             this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
 
-            strs = new string[Properties.Settings.Default.sqlite_history.Count];
+            // the mask are loaded but not saved
+            strs = new string[Properties.Settings.Default.art_mask_history.Count];
             Properties.Settings.Default.art_mask_history.CopyTo( strs, 0 );
             this.txtArtMask.AutoCompleteCustomSource.AddRange( strs );
 
@@ -197,38 +215,27 @@ namespace music_importer
             Properties.Settings.Default.show_user = !cbSH_User.Checked;
             Properties.Settings.Default.show_pass = !cbSH_Pass.Checked;
 
+            // Copy AutoCompleteCustomSource to Settings
             string[] strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
             this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
             Properties.Settings.Default.address_history.AddRange( strs );
 
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs )
+            strs = new string[this.txtMySql.AutoCompleteCustomSource.Count];
+            this.txtMySql.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            Properties.Settings.Default.mysql_history.AddRange( strs );
 
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs );
+            strs = new string[this.txtPort.AutoCompleteCustomSource.Count];
+            this.txtPort.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            Properties.Settings.Default.port_history.AddRange( strs );
 
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs )
+            strs = new string[this.txtSchema.AutoCompleteCustomSource.Count];
+            this.txtSchema.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            Properties.Settings.Default.schema_history.AddRange( strs );
 
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs );
-
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs )
-
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs );
-
-            //strs = new string[this.txtAddress.AutoCompleteCustomSource.Count];
-            //this.txtAddress.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            //Properties.Settings.Default.address_history.AddRange( strs );
-
+            strs = new string[this.txtSQLite.AutoCompleteCustomSource.Count];
+            this.txtSQLite.AutoCompleteCustomSource.CopyTo( strs, 0 );
+            Properties.Settings.Default.sqlite_history.AddRange( strs );
+  
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -286,8 +293,8 @@ namespace music_importer
             importer.Message += new BKP.Online.StringDelegate( importer_Message );
             importer.ProcessDirectory += new StringDelegate( importer_ProcessDirectory );
             importer.Error += new StringDelegate( importer_Error );
-            importer.TagScanStarted += new VoidDelegate( importer_TagScanStarted );
-            importer.TagScanStopped += new VoidDelegate( importer_TagScanStopped );
+            importer.ScanStarted += new VoidDelegate( importer_TagScanStarted );
+            importer.ScanStopped += new VoidDelegate( importer_TagScanStopped );
             importer.SyncError += new VoidDelegate( importer_SyncError );
             importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
             importer.Scan( true );
@@ -402,6 +409,20 @@ namespace music_importer
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBrowseRoot_Click( object sender, EventArgs e )
+        {
+            FolderBrowserDialog dlg = new FolderBrowserDialog();
+            dlg.RootFolder = Environment.SpecialFolder.Desktop;
+            if(dlg.ShowDialog() == DialogResult.OK)
+            {
+                txtRoot.Text = dlg.SelectedPath;
+            }
+        }
+        /// <summary>
         /// set use connnection string or not
         /// </summary>
         /// <param name="sender">the CheckBox</param>
@@ -410,7 +431,16 @@ namespace music_importer
         {
             bool check = this.cbMysql.Checked;
             // set toggle button
-            cbMysql.Text = cbMysql.Checked ? "Disable" : "Enable";
+            //cbMysql.Text = cbMysql.Checked ? "Disable" : "Enable";
+            if(cbMysql.Checked)
+            {
+                cbMysql.Image = enabled_img;
+            }
+            else
+            {
+                cbMysql.Image = disabled_img;
+            }
+
             txtMySql.Enabled = check;
             // set server info
             txtAddress.Enabled = !check;
@@ -430,7 +460,15 @@ namespace music_importer
         private void cbPlaylist_CheckedChanged( object sender, EventArgs e )
         {
             // set toggle button
-            cbPlaylist.Text = cbPlaylist.Checked ? "Disable" : "Enable";
+            //cbPlaylist.Text = cbPlaylist.Checked ? "Disable" : "Enable";
+            if(cbPlaylist.Checked)
+            {
+                cbPlaylist.Image = enabled_img;
+            }
+            else
+            {
+                cbPlaylist.Image = disabled_img;
+            }
             txtSQLite.Enabled = cbPlaylist.Checked;
         }
         /// <summary>
@@ -454,8 +492,16 @@ namespace music_importer
         /// <param name="e">args</param>
         private void cbSH_User_CheckedChanged( object sender, EventArgs e )
         {
-            cbSH_User.Text = cbSH_User.Text == "Show" ? "Hide" : "Show";
+            //cbSH_User.Text = cbSH_User.Text == "Show" ? "Hide" : "Show";
             txtUser.PasswordChar = cbSH_User.Checked ? '*' : (char)0;
+            if(cbSH_User.Checked)
+            {
+                cbSH_User.Image = unlocked_img;
+            }
+            else
+            {
+                cbSH_User.Image = locked_img;
+            }
         }
         /// <summary>
         /// show or hide pasword
@@ -464,8 +510,16 @@ namespace music_importer
         /// <param name="e">args</param>
         private void cbSH_Pass_CheckedChanged( object sender, EventArgs e )
         {
-            cbSH_Pass.Text = cbSH_Pass.Text == "Show" ? "Hide" : "Show";
+            //cbSH_Pass.Text = cbSH_Pass.Text == "Show" ? "Hide" : "Show";
             txtPassword.PasswordChar = cbSH_Pass.Checked ? '*' : (char)0;
+            if(cbSH_Pass.Checked)
+            {
+                cbSH_Pass.Image = unlocked_img;
+            }
+            else
+            {
+                cbSH_Pass.Image = locked_img;
+            }
         }
         /// <summary>
         /// change thread priority
@@ -591,6 +645,7 @@ namespace music_importer
                                                     ToggleOn();
                                                 }
                                           ) );
+            importer.Close();
         }
         /// <summary>
         ///  scan error
@@ -694,32 +749,6 @@ namespace music_importer
             else
             {
                 txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
-            }
-
-            // art mask
-            idx = txtArtMask.AutoCompleteCustomSource.IndexOf( txtArtMask.Text );
-            if(idx > 0)
-            {
-                // remove and put on top
-                txtArtMask.AutoCompleteCustomSource.RemoveAt( idx );
-                txtArtMask.AutoCompleteCustomSource.Add( txtArtMask.Text );
-            }
-            else
-            {
-                txtArtMask.AutoCompleteCustomSource.Add( txtArtMask.Text );
-            }
-
-            // mask
-            idx = txtMask.AutoCompleteCustomSource.IndexOf( txtMask.Text );
-            if(idx > 0)
-            {
-                // remove and put on top
-                txtMask.AutoCompleteCustomSource.RemoveAt( idx );
-                txtMask.AutoCompleteCustomSource.Add( txtMask.Text );
-            }
-            else
-            {
-                txtMask.AutoCompleteCustomSource.Add( txtMask.Text );
             }
         }
         /// <summary>
@@ -859,5 +888,6 @@ namespace music_importer
             return result;
         }
         #endregion
+            
     }
 }

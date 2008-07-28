@@ -122,6 +122,20 @@ namespace music_importer.Properties {
             }
         }
         
+        internal static System.Drawing.Icon key_locked {
+            get {
+                object obj = ResourceManager.GetObject("key_locked", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon key_unlocked {
+            get {
+                object obj = ResourceManager.GetObject("key_unlocked", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to This feature requires &lt;a href=&quot;http://www.mediamonkey.com/&quot;&gt;Media Monkey&quot;&lt;/a&gt;..
         /// </summary>
@@ -135,6 +149,27 @@ namespace music_importer.Properties {
             get {
                 object obj = ResourceManager.GetObject("mono-powered", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon MRT_exe_I0085_0412 {
+            get {
+                object obj = ResourceManager.GetObject("MRT_exe_I0085_0412", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon MRT_exe_I0086_0415 {
+            get {
+                object obj = ResourceManager.GetObject("MRT_exe_I0086_0415", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon MRT_exe_I0087_040e {
+            get {
+                object obj = ResourceManager.GetObject("MRT_exe_I0087_040e", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

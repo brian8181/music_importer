@@ -45,6 +45,7 @@ namespace music_importer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( MainFrm ) );
             this.cbOptimize = new System.Windows.Forms.CheckBox();
             this.cbArt = new System.Windows.Forms.CheckBox();
             this.cbTags = new System.Windows.Forms.CheckBox();
@@ -77,6 +78,7 @@ namespace music_importer
             this.lbMessage = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnBrowseRoot = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.txtRoot = new System.Windows.Forms.TextBox();
             this.lblMask = new System.Windows.Forms.Label();
@@ -158,11 +160,11 @@ namespace music_importer
             // 
             this.cbPlaylist.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbPlaylist.Font = new System.Drawing.Font( "Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
-            this.cbPlaylist.Location = new System.Drawing.Point( 432, 155 );
+            this.cbPlaylist.Image = ( (System.Drawing.Image)( resources.GetObject( "cbPlaylist.Image" ) ) );
+            this.cbPlaylist.Location = new System.Drawing.Point( 439, 154 );
             this.cbPlaylist.Name = "cbPlaylist";
-            this.cbPlaylist.Size = new System.Drawing.Size( 44, 20 );
+            this.cbPlaylist.Size = new System.Drawing.Size( 32, 23 );
             this.cbPlaylist.TabIndex = 10;
-            this.cbPlaylist.Text = "Enable";
             this.cbPlaylist.UseVisualStyleBackColor = true;
             this.cbPlaylist.CheckedChanged += new System.EventHandler( this.cbPlaylist_CheckedChanged );
             // 
@@ -251,11 +253,11 @@ namespace music_importer
             this.cbSH_Pass.Checked = true;
             this.cbSH_Pass.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbSH_Pass.Font = new System.Drawing.Font( "Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.cbSH_Pass.Image = ( (System.Drawing.Image)( resources.GetObject( "cbSH_Pass.Image" ) ) );
             this.cbSH_Pass.Location = new System.Drawing.Point( 217, 46 );
             this.cbSH_Pass.Name = "cbSH_Pass";
-            this.cbSH_Pass.Size = new System.Drawing.Size( 44, 20 );
+            this.cbSH_Pass.Size = new System.Drawing.Size( 32, 23 );
             this.cbSH_Pass.TabIndex = 3;
-            this.cbSH_Pass.Text = "Show";
             this.cbSH_Pass.UseVisualStyleBackColor = true;
             this.cbSH_Pass.CheckedChanged += new System.EventHandler( this.cbSH_Pass_CheckedChanged );
             // 
@@ -263,11 +265,11 @@ namespace music_importer
             // 
             this.cbSH_User.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbSH_User.Font = new System.Drawing.Font( "Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
-            this.cbSH_User.Location = new System.Drawing.Point( 217, 21 );
+            this.cbSH_User.Image = ( (System.Drawing.Image)( resources.GetObject( "cbSH_User.Image" ) ) );
+            this.cbSH_User.Location = new System.Drawing.Point( 217, 19 );
             this.cbSH_User.Name = "cbSH_User";
-            this.cbSH_User.Size = new System.Drawing.Size( 44, 20 );
+            this.cbSH_User.Size = new System.Drawing.Size( 32, 23 );
             this.cbSH_User.TabIndex = 1;
-            this.cbSH_User.Text = "Hide";
             this.cbSH_User.UseVisualStyleBackColor = true;
             this.cbSH_User.CheckedChanged += new System.EventHandler( this.cbSH_User_CheckedChanged );
             // 
@@ -293,11 +295,11 @@ namespace music_importer
             // 
             this.cbMysql.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbMysql.Font = new System.Drawing.Font( "Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
-            this.cbMysql.Location = new System.Drawing.Point( 432, 131 );
+            this.cbMysql.Image = ( (System.Drawing.Image)( resources.GetObject( "cbMysql.Image" ) ) );
+            this.cbMysql.Location = new System.Drawing.Point( 439, 127 );
             this.cbMysql.Name = "cbMysql";
-            this.cbMysql.Size = new System.Drawing.Size( 44, 20 );
+            this.cbMysql.Size = new System.Drawing.Size( 32, 23 );
             this.cbMysql.TabIndex = 8;
-            this.cbMysql.Text = "Enable";
             this.cbMysql.UseVisualStyleBackColor = true;
             this.cbMysql.CheckedChanged += new System.EventHandler( this.cbMysql_CheckedChanged );
             // 
@@ -335,7 +337,7 @@ namespace music_importer
             // 
             this.txtPort.Location = new System.Drawing.Point( 439, 101 );
             this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size( 37, 20 );
+            this.txtPort.Size = new System.Drawing.Size( 32, 20 );
             this.txtPort.TabIndex = 6;
             this.txtPort.Text = "3306";
             this.txtPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -451,6 +453,7 @@ namespace music_importer
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add( this.btnBrowseRoot );
             this.groupBox2.Controls.Add( this.label16 );
             this.groupBox2.Controls.Add( this.txtRoot );
             this.groupBox2.Controls.Add( this.lblMask );
@@ -465,6 +468,17 @@ namespace music_importer
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Scan Locations";
+            // 
+            // btnBrowseRoot
+            // 
+            this.btnBrowseRoot.Font = new System.Drawing.Font( "Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.btnBrowseRoot.Image = ( (System.Drawing.Image)( resources.GetObject( "btnBrowseRoot.Image" ) ) );
+            this.btnBrowseRoot.Location = new System.Drawing.Point( 600, 16 );
+            this.btnBrowseRoot.Name = "btnBrowseRoot";
+            this.btnBrowseRoot.Size = new System.Drawing.Size( 27, 23 );
+            this.btnBrowseRoot.TabIndex = 37;
+            this.btnBrowseRoot.UseVisualStyleBackColor = true;
+            this.btnBrowseRoot.Click += new System.EventHandler( this.btnBrowseRoot_Click );
             // 
             // label16
             // 
@@ -487,7 +501,7 @@ namespace music_importer
             this.txtRoot.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.txtRoot.Location = new System.Drawing.Point( 79, 19 );
             this.txtRoot.Name = "txtRoot";
-            this.txtRoot.Size = new System.Drawing.Size( 548, 20 );
+            this.txtRoot.Size = new System.Drawing.Size( 515, 20 );
             this.txtRoot.TabIndex = 0;
             this.txtRoot.TextChanged += new System.EventHandler( this.txtRoot_TextChanged );
             // 
@@ -556,11 +570,11 @@ namespace music_importer
             // btnBrowseArt
             // 
             this.btnBrowseArt.Font = new System.Drawing.Font( "Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.btnBrowseArt.Image = ( (System.Drawing.Image)( resources.GetObject( "btnBrowseArt.Image" ) ) );
             this.btnBrowseArt.Location = new System.Drawing.Point( 600, 67 );
             this.btnBrowseArt.Name = "btnBrowseArt";
             this.btnBrowseArt.Size = new System.Drawing.Size( 27, 23 );
             this.btnBrowseArt.TabIndex = 4;
-            this.btnBrowseArt.Text = "...";
             this.btnBrowseArt.UseVisualStyleBackColor = true;
             this.btnBrowseArt.Click += new System.EventHandler( this.btnBrowseArt_Click );
             // 
@@ -987,6 +1001,7 @@ namespace music_importer
         private System.Windows.Forms.ToolTip tt_btnStart;
         private System.Windows.Forms.ToolTip tt_create;
         private System.Windows.Forms.ToolTip tt_mm_message;
+        private System.Windows.Forms.Button btnBrowseRoot;
     }
 }
 

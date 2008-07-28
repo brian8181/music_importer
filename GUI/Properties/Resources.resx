@@ -157,4 +157,19 @@
   <data name="mm_message" xml:space="preserve">
     <value>This feature requires &lt;a href="http://www.mediamonkey.com/"&gt;Media Monkey"&lt;/a&gt;.</value>
   </data>
+  <data name="key_locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wmploc.dll_I0331_0409.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="key_unlocked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wmploc.dll_I0330_0409.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MRT_exe_I0085_0412" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MRT.exe_I0085_0412.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MRT_exe_I0086_0415" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MRT.exe_I0086_0415.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MRT_exe_I0087_040e" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MRT.exe_I0087_040e.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
