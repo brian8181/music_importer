@@ -324,7 +324,7 @@ namespace MusicImporter.TagLibV
             }
         }
         /// <summary>
-        /// 
+        ///  stops running scan
         /// </summary>
         public void StopScan()
         {
@@ -339,7 +339,7 @@ namespace MusicImporter.TagLibV
             pause.Set();
         }
         /// <summary>
-        /// 
+        /// pauses a running scan
         /// </summary>
         public void PauseScan()
         {

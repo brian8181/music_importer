@@ -302,7 +302,7 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string music_root {
             get {
                 return ((string)(this["music_root"]));

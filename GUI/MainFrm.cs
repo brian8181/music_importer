@@ -87,6 +87,7 @@ namespace music_importer
                         
             disabled_img = cbMysql.Image;
             enabled_img = cbPlaylist.Image;
+            cbGenerateThumbs_CheckedChanged( cbGenerateThumbs, null );
             this.cbPlaylist_CheckedChanged( cbPlaylist, null );
 
         }
@@ -562,11 +563,16 @@ namespace music_importer
             // Obsolete
             if(cbGenerateThumbs.Checked)
             {
+                cbGenerateThumbs.Image = enabled_img;
                 if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
                 {
                     StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
                     cbGenerateThumbs.Checked = false;
                 }
+            }
+            else
+            {
+                cbGenerateThumbs.Image = disabled_img;
             }
             this.btnBrowseArt.Enabled = cbGenerateThumbs.Checked; 
             this.txtArtLoc.Enabled = cbGenerateThumbs.Checked;
