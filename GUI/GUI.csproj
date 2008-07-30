@@ -106,20 +106,16 @@
   <ItemGroup>
     <Content Include="ACDSee7.exe_I07fa_0409.ico" />
     <Content Include="gpl-3.0.txt" />
-    <None Include="Resources\wmploc.dll_I0330_0409.ico" />
-    <None Include="Resources\MRT.exe_I0087_040e.ico" />
-    <None Include="Resources\MRT.exe_I0086_0415.ico" />
-    <None Include="Resources\MRT.exe_I0085_0412.ico" />
-    <None Include="Resources\wmploc.dll_I0331_0409.ico" />
+    <None Include="Resources\disabled.trans.16.gif" />
+    <None Include="Resources\enabled.trans.16.gif" />
+    <None Include="Resources\lock.trans.16.gif" />
+    <None Include="Resources\unlock.trans.16.gif" />
     <None Include="recreate_music.sql" />
     <None Include="Resources\mono-powered.png" />
     <None Include="Resources\180px-Tux.png" />
     <None Include="Resources\fish_xiph_org.png" />
     <None Include="Resources\mysql_100x52-64.gif" />
-    <None Include="Resources\clipart_music_notes_046.gif" />
-    <None Include="Resources\clipart_music_notes_023.gif" />
     <None Include="Resources\taglib.logo.png" />
-    <None Include="clipart_music_notes_019.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

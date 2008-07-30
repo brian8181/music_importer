@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace GUI_2.Properties {
+namespace music_importer.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

@@ -85,33 +85,26 @@ namespace music_importer.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap clipart_music_notes_019 {
-            get {
-                object obj = ResourceManager.GetObject("clipart_music_notes_019", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap clipart_music_notes_023 {
-            get {
-                object obj = ResourceManager.GetObject("clipart_music_notes_023", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap clipart_music_notes_046 {
-            get {
-                object obj = ResourceManager.GetObject("clipart_music_notes_046", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Location does not exist you do want to create it?.
         /// </summary>
         internal static string create_location {
             get {
                 return ResourceManager.GetString("create_location", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap disabled_trans_16 {
+            get {
+                object obj = ResourceManager.GetObject("disabled_trans_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap enabled_trans_16 {
+            get {
+                object obj = ResourceManager.GetObject("enabled_trans_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -122,17 +115,10 @@ namespace music_importer.Properties {
             }
         }
         
-        internal static System.Drawing.Icon key_locked {
+        internal static System.Drawing.Bitmap lock_trans_16 {
             get {
-                object obj = ResourceManager.GetObject("key_locked", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon key_unlocked {
-            get {
-                object obj = ResourceManager.GetObject("key_unlocked", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("lock_trans_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -152,27 +138,6 @@ namespace music_importer.Properties {
             }
         }
         
-        internal static System.Drawing.Icon MRT_exe_I0085_0412 {
-            get {
-                object obj = ResourceManager.GetObject("MRT_exe_I0085_0412", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon MRT_exe_I0086_0415 {
-            get {
-                object obj = ResourceManager.GetObject("MRT_exe_I0086_0415", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Icon MRT_exe_I0087_040e {
-            get {
-                object obj = ResourceManager.GetObject("MRT_exe_I0087_040e", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap mysql_100x52_64 {
             get {
                 object obj = ResourceManager.GetObject("mysql_100x52-64", resourceCulture);
@@ -183,6 +148,13 @@ namespace music_importer.Properties {
         internal static System.Drawing.Bitmap taglib_logo {
             get {
                 object obj = ResourceManager.GetObject("taglib.logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap unlock_trans_16 {
+            get {
+                object obj = ResourceManager.GetObject("unlock_trans_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

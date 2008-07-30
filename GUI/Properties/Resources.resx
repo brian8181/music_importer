@@ -124,17 +124,8 @@
   <data name="fish_xiph_org" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fish_xiph_org.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="clipart_music_notes_019" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\clipart_music_notes_019.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="taglib.logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\taglib.logo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="clipart_music_notes_023" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clipart_music_notes_023.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="clipart_music_notes_046" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clipart_music_notes_046.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="180px-Tux" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\180px-Tux.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,19 +148,16 @@
   <data name="mm_message" xml:space="preserve">
     <value>This feature requires &lt;a href="http://www.mediamonkey.com/"&gt;Media Monkey"&lt;/a&gt;.</value>
   </data>
-  <data name="key_locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wmploc.dll_I0331_0409.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lock_trans_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lock.trans.16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="key_unlocked" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wmploc.dll_I0330_0409.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="unlock_trans_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\unlock.trans.16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MRT_exe_I0085_0412" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MRT.exe_I0085_0412.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="disabled_trans_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disabled.trans.16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MRT_exe_I0086_0415" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MRT.exe_I0086_0415.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MRT_exe_I0087_040e" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MRT.exe_I0087_040e.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="enabled_trans_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\enabled.trans.16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
