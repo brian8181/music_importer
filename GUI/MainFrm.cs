@@ -617,7 +617,8 @@ namespace music_importer
                                                     ToggleOn();
                                                 }
                                           ) );
-            importer.Close();
+            if( importer != null )
+                importer.Close();
         }
         /// <summary>
         ///  scan error
@@ -807,6 +808,7 @@ namespace music_importer
                 this.art_xsmall.Enabled = state;
             }
             txtRoot.Enabled = state;
+            btnBrowseRoot.Enabled = state;
             txtMask.Enabled = state;
             cbGenerateThumbs.Enabled = state;
             // check boxes
@@ -859,7 +861,15 @@ namespace music_importer
                     MessageBoxDefaultButton.Button1 );
                 if(dr != DialogResult.Yes)
                     return false;
-                Directory.CreateDirectory( txtArtLoc.Text );
+                try
+                {
+                    Directory.CreateDirectory( txtArtLoc.Text );
+                }
+                catch(System.IO.DirectoryNotFoundException e)
+                {
+                    StdMsgBox.OK( "Error creating directory.\r\n" + e.Message );
+                }
+
                 if(!Directory.Exists( txtArtLoc.Text ))
                 {
                     return false;
