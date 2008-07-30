@@ -878,6 +878,25 @@ namespace music_importer
             return result;
         }
         #endregion
+
+        private void settingsToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            SettingsFrm dlg = new SettingsFrm();
+            if(dlg.ShowDialog() == DialogResult.OK)
+            {
+            }
+        }
+
+        private void exitToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            if(importer != null)
+            {
+                importer.StopScan(); 
+                // todo wait for stop
+                importer.Close();
+            }
+            Close();
+        }
             
     }
 }
