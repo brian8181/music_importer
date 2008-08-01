@@ -612,6 +612,7 @@ namespace music_importer
             this.Invoke( new VoidDelegate( delegate() {
                                                     btnCancel.Enabled = true;
                                                     btnCancel.Text = "&Finished";
+                                                    btnPause.Enabled = false;
                                                     // stop progess marquee
                                                     progressBar.Style = ProgressBarStyle.Continuous;
                                                     ToggleOn();

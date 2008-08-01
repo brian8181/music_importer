@@ -78,9 +78,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ACDSee7.exe_I07fa_0409.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\utility\Utility2\Utility2.csproj">
       <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
       <Name>Utility2</Name>

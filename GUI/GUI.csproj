@@ -17,7 +17,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <ApplicationIcon>ACDSee7.exe_I07fa_0409.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
     <StartupObject>music_importer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -114,7 +115,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ACDSee7.exe_I07fa_0409.ico" />
     <Content Include="gpl-3.0.txt" />
     <None Include="Resources\disabled.trans.16.gif" />
     <None Include="Resources\enabled.trans.16.gif" />

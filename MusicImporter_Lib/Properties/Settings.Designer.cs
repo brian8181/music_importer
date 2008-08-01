@@ -157,7 +157,7 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".")]
         public string art_location {
             get {
                 return ((string)(this["art_location"]));
@@ -217,7 +217,8 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Port=3306;User Id=root;Password=password;Logging=True;Persi" +
+            "st Security Info=False")]
         public string mysql_conn_str {
             get {
                 return ((string)(this["mysql_conn_str"]));
@@ -229,7 +230,8 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=C:\\Documents and Settings\\<USER>\\Local Settings\\Application Data\\Medi" +
+            "aMonkey\\<NAME>.db")]
         public string mm_conn_str {
             get {
                 return ((string)(this["mm_conn_str"]));
@@ -302,7 +304,7 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".")]
         public string music_root {
             get {
                 return ((string)(this["music_root"]));

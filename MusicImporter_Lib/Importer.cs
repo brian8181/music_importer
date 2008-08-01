@@ -229,10 +229,20 @@ namespace MusicImporter.TagLibV
                         mysql_connection.ExecuteNonQuery( "CREATE DATABASE IF NOT EXISTS " + Settings.Default.schema );
                         mysql_connection.ChangeDatabase( Settings.Default.schema );
                         mysql_connection.ExecuteNonQuery( sql );
+                        // triggers
+                        sql = "CREATE TRIGGER `inserted_author_ts` BEFORE INSERT ON `album` " + 
+                            "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
+                        mysql_connection.ExecuteNonQuery( sql );
+                        sql = "CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` " +
+                           "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
+                        mysql_connection.ExecuteNonQuery( sql );
+                        sql = "CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` " +
+                           "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
+                        mysql_connection.ExecuteNonQuery( sql );
                     }
                     // check for stop signal
-                    if(!running) return;
                     pause.WaitOne();
+                    if(!running) return;
 
                     try
                     {
@@ -265,19 +275,20 @@ namespace MusicImporter.TagLibV
                     OnProcessDirectory( "None." );
 
                     // check for stop signal
-                    if(!running) return;
                     pause.WaitOne();
-                  
+                    if(!running) return;
+
                     // SCAN PLAYLIST
                     if(Settings.Default.ScanPlaylist)
                     {
                         Status( "scanning playlist ..." );
                         ImportPlaylist();
                     }
+                    
                     // check for stop signal
-                    if(!running) return;
                     pause.WaitOne();
-                   
+                    if(!running) return;
+
                     // CLEAN
                     if(Settings.Default.Clean)
                     {
@@ -286,8 +297,8 @@ namespace MusicImporter.TagLibV
                     }
                     
                     // check for stop signal
-                    if(!running) return;
                     pause.WaitOne();
+                    if(!running) return;
 
                     // RESCAN ART
                     if(Settings.Default.RecanArt)
@@ -297,8 +308,8 @@ namespace MusicImporter.TagLibV
                     }
 
                     // check for stop signal
-                    if(!running) return;
                     pause.WaitOne();
+                    if(!running) return;
 
                     // OPITIMIZE
                     if(Settings.Default.Optimize)
@@ -329,6 +340,7 @@ namespace MusicImporter.TagLibV
         public void StopScan()
         {
             running = false;
+            pause.Set();    // unpase
             //thread.Join();
         }
         /// <summary>
@@ -356,6 +368,8 @@ namespace MusicImporter.TagLibV
             for(int i = 0; i < files.Length && running; ++i)
             {
                 pause.WaitOne();
+                if(!running) return;
+
                 TagLib.Tag tag = null;
                 TagLib.File tag_file = null;
                 try

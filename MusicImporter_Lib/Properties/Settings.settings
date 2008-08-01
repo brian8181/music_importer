@@ -36,7 +36,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="art_location" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">.</Value>
     </Setting>
     <Setting Name="schema" Type="System.String" Scope="User">
       <Value Profile="(Default)">music</Value>
@@ -51,10 +51,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="mysql_conn_str" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Data Source=localhost;Port=3306;User Id=root;Password=password;Logging=True;Persist Security Info=False</Value>
     </Setting>
     <Setting Name="mm_conn_str" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Data Source=C:\Documents and Settings\&lt;USER&gt;\Local Settings\Application Data\MediaMonkey\&lt;NAME&gt;.db</Value>
     </Setting>
     <Setting Name="insert_art" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -73,7 +73,7 @@
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
     </Setting>
     <Setting Name="music_root" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">.</Value>
     </Setting>
   </Settings>
 </SettingsFile>
