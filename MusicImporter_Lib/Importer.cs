@@ -639,7 +639,7 @@ namespace MusicImporter.TagLibV
         private void ImportPlaylist()
         {
             // get all playlist from mediamonkey
-            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND IsAutoPlaylist=0" );
+            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)" );
             // just truncate tables and recreate
             mysql_connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
             mysql_connection.ExecuteNonQuery( "TRUNCATE playlists" );
@@ -649,10 +649,12 @@ namespace MusicImporter.TagLibV
                 long id = (long)row[0];
                 string name = (string)row[1];
                 name = name.Replace( "'", "''" );
-                string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0 )";
+                string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0, NULL, NULL )";
                 mysql_connection.ExecuteNonQuery( sql );
                 string playlist_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" ).ToString();
-                OnMessage( "Creating playlist: " + name + " ..." );
+                string msg = "Creating playlist: " + name + " ..."; 
+                OnMessage( msg );
+                Log( msg );
                 //  get the playlist id
                 DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
                 foreach(DataRow pl_row in ds2.Tables[0].Rows)
@@ -667,7 +669,7 @@ namespace MusicImporter.TagLibV
                         object song_id = GetKey( "song", "file", path );
                         if(song_id == null)
                             continue;
-                        sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "' )";
+                        sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "', NULL, NULL )";
                         mysql_connection.ExecuteNonQuery( sql );
                         //Log( sql );
                     }
@@ -845,7 +847,24 @@ namespace MusicImporter.TagLibV
         /// <param name="str"></param>
         protected virtual void LogError( string msg )
         {
-            Trace.WriteLine( Logger.Level.Error, msg );
+            Log( Logger.Level.Error, msg );
+        }
+        /// <summary>
+        /// send msg to log
+        /// </summary>
+        /// <param name="str"></param>
+        protected virtual void Log( string msg )
+        {
+            Log( Logger.Level.Information, msg );
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="msg"></param>
+        protected virtual void Log( Logger.Level level, string msg )
+        {
+            Trace.WriteLine( level, msg );
         }
         /// <summary>
         /// call status update
