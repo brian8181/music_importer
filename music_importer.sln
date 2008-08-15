@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{751EF4EC-AA5B-42CE-BC92-2430E5A03FB6}"
 	ProjectSection(SolutionItems) = preProject
 		GUI\post_build_copy.bat = GUI\post_build_copy.bat
+		Version.txt = Version.txt
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{2A28454C-45A7-4EC9-B756-A055408BFC40}"

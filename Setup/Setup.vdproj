@@ -359,7 +359,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MusicImporter_Lib, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MusicImporter_Lib, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_92B01A45BE9C3483C470A25B441744A5"
@@ -586,7 +586,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Music Importer 1.2.4-rc"
         "ProductCode" = "8:{5E8CEDBE-B603-491E-8A1E-BE87690DAF0B}"
-        "PackageCode" = "8:{986ED3DF-8C3C-4178-9C71-922ECC99EFF6}"
+        "PackageCode" = "8:{CC7A18C6-3860-4251-8B9F-8E0B2C2687E8}"
         "UpgradeCode" = "8:{D4ED5470-B21B-4C53-9378-EC51BBB2FFCB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -707,7 +707,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_186BF0A4B09049438DEE82994A5CFAEF"
             {
-            "Name" = "8:Music Importer"
+            "Name" = "8:Music Importer 1.2.4"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -721,7 +721,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_41CC218D1A79467B8FC4B8C46E6F94AF"
             {
-            "Name" = "8:Music Importer"
+            "Name" = "8:Music Importer 1.2.4"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
