@@ -606,7 +606,7 @@ namespace MusicImporter.TagLibV
             cmd.Parameters.AddWithValue( "?disc", tag.Disc );
             cmd.Parameters.AddWithValue( "?disc_count", tag.DiscCount );
             cmd.Parameters.AddWithValue( "?performer", tag.FirstPerformer );
-            cmd.Parameters.AddWithValue( "?tag_types", "Not Implemented" );
+            cmd.Parameters.AddWithValue( "?tag_types", tag.TagTypes.ToString() );
             cmd.Parameters.AddWithValue( "?track_count", tag.TrackCount );
             cmd.Parameters.AddWithValue( "?beats_per_minute", tag.BeatsPerMinute );
             cmd.Parameters.AddWithValue( "?song_id", song_id );
