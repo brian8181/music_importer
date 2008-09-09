@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1F4268821A074455A05D7BB29F673926"
+        "MsmKey" = "8:_3E09DA55EAE04AD5870C3144F00AF15A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3E09DA55EAE04AD5870C3144F00AF15A"
+        "MsmKey" = "8:_53257E64062E44A0A3459A34D053E77C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -77,6 +77,12 @@
         {
         "MsmKey" = "8:_D19E2CDE7CB419EC04F3451277C55723"
         "OwnerKey" = "8:_A7E3F0E7E8B03B1C30C8045BED0E3088"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DA9AFBE4CC5B4145A4651CCEA3634A50"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -284,10 +290,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1F4268821A074455A05D7BB29F673926"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3E09DA55EAE04AD5870C3144F00AF15A"
             {
-            "SourcePath" = "8:..\\GUI\\recreate_music.sql"
-            "TargetName" = "8:recreate_music.sql"
+            "SourcePath" = "8:README"
+            "TargetName" = "8:README"
             "Tag" = "8:"
             "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
             "Condition" = "8:"
@@ -304,10 +310,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3E09DA55EAE04AD5870C3144F00AF15A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_53257E64062E44A0A3459A34D053E77C"
             {
-            "SourcePath" = "8:README"
-            "TargetName" = "8:README"
+            "SourcePath" = "8:..\\GUI\\sql\\update.1.0.sql"
+            "TargetName" = "8:update.1.0.sql"
             "Tag" = "8:"
             "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
             "Condition" = "8:"
@@ -466,6 +472,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DA9AFBE4CC5B4145A4651CCEA3634A50"
+            {
+            "SourcePath" = "8:..\\GUI\\sql\\recreate_music.sql"
+            "TargetName" = "8:recreate_music.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E136C9AAE2692378C39676DD6FC20C0F"

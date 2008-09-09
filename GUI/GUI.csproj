@@ -120,12 +120,13 @@
     <None Include="Resources\enabled.trans.16.gif" />
     <None Include="Resources\lock.trans.16.gif" />
     <None Include="Resources\unlock.trans.16.gif" />
-    <None Include="recreate_music.sql" />
+    <None Include="sql\recreate_music.sql" />
     <None Include="Resources\mono-powered.png" />
     <None Include="Resources\180px-Tux.png" />
     <None Include="Resources\fish_xiph_org.png" />
     <None Include="Resources\mysql_100x52-64.gif" />
     <None Include="Resources\taglib.logo.png" />
+    <None Include="sql\update.1.0.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

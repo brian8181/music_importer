@@ -220,7 +220,7 @@ namespace MusicImporter.TagLibV
                     if(Settings.Default.create_db)
                     {
                         OnMessage( "creating database ..." );
-                        if(!File.Exists( "recreate_music.sql" ))
+                        if(!File.Exists( "./sql/recreate_music.sql" ))
                         {
                             LogError( "create database failed could not find file \"recreate_music.sql\" " );
                             return;
@@ -395,7 +395,7 @@ namespace MusicImporter.TagLibV
                 //insert tag data
                 object artist_id = InsertArtist( tag );
                 object album_id = InsertAlbum( tag );
-                string art_id = Settings.Default.insert_art ? InsertArt( tag, dir ) : null;
+                string art_id = InsertArt( tag, dir );
                 InsertSong( tag, tag_file, art_id, artist_id, album_id );
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );
@@ -527,7 +527,8 @@ namespace MusicImporter.TagLibV
                 {
                     return null;
                 }
-                if(obj == null)
+                //INSERT art if not found "and" inserting
+                if(obj == null && Settings.Default.insert_art)
                 {
                     // write file to art location
                     System.IO.File.WriteAllBytes( art_path + art, data );
@@ -545,7 +546,9 @@ namespace MusicImporter.TagLibV
                 }
                 else
                 {
-                    key = ( (uint)obj ).ToString();
+                    // see if the art was found
+                    if( obj != null )
+                        key = ( (uint)obj ).ToString();
                 }
             }
             return key;
