@@ -120,7 +120,8 @@
     <None Include="Resources\enabled.trans.16.gif" />
     <None Include="Resources\lock.trans.16.gif" />
     <None Include="Resources\unlock.trans.16.gif" />
-    <None Include="sql\recreate_music.sql" />
+    <None Include="sql\create_music.ms.sql" />
+    <None Include="sql\create_music.sql" />
     <None Include="Resources\mono-powered.png" />
     <None Include="Resources\180px-Tux.png" />
     <None Include="Resources\fish_xiph_org.png" />

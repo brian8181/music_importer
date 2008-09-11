@@ -80,9 +80,30 @@ CREATE TABLE [dbo].[album](
 	[album] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[artist] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[art] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,	
-	[extra] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+	[extra] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
 ) ON [PRIMARY]
 
+GO
+CREATE TABLE [dbo].[art](
+	[id] [int] NOT NULL,
+	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+CREATE TABLE [dbo].[playlists](
+	[id] [int] NOT NULL,
+	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
+) ON [PRIMARY]
+GO
+CREATE TABLE [dbo].[playlist_songs](
+	[id] [int] NOT NULL,
+	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
+) ON [PRIMARY]
 GO
 
 /****** Object:  Table [dbo].[artist]    Script Date: 09/09/2008 13:20:07 ******/
@@ -95,13 +116,14 @@ GO
 CREATE TABLE [dbo].[artist](
 	[id] [int] NOT NULL,
 	[artist] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	[extra] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+	[extra] [varchar](max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
 ) ON [PRIMARY]
 
 GO
 USE [music]
 GO
-/****** Object:  Table [dbo].[song]    Script Date: 09/09/2008 13:21:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,8 +132,8 @@ SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[song](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[album_id] [int] NULL,
 	[artist_id] [int] NULL,
+	[album_id] [int] NULL,
 	[title] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	[track] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[file] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -129,8 +151,20 @@ CREATE TABLE [dbo].[song](
 	[conductor] [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[copyright] [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	[disc] [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	[disc_count] [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+	[disc_count] [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[performer] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[tag_types] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[track_count] [int] NULL,
+	[beats_per_minute] [int] NULL
+ 	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
 ) ON [PRIMARY]
 
+GO
+CREATE TABLE [dbo].[query_log](
+	[id] [int] NOT NULL,
+	[update_ts] [timestamp] NULL,
+	[insert_ts] [datetime] NULL
+) ON [PRIMARY]
 GO
 SET ANSI_PADDING OFF
