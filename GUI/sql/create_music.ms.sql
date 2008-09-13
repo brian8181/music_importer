@@ -88,6 +88,7 @@ CREATE TABLE [dbo].[album](
 GO
 CREATE TABLE [dbo].[art](
 	[id] [int] NOT NULL,
+	[hash] [blob] NOT NULL, 
 	[update_ts] [timestamp] NULL,
 	[insert_ts] [datetime] NULL
 ) ON [PRIMARY]
