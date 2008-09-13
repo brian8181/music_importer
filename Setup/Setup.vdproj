@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_472343B481BD481BA4D841A30ACC31C7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_53257E64062E44A0A3459A34D053E77C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,6 +41,12 @@
         {
         "MsmKey" = "8:_5724F7E3B79976203BCFF4FD1CA761E1"
         "OwnerKey" = "8:_92B01A45BE9C3483C470A25B441744A5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_60179B01630F43DF97AD0AF6A6183E97"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,6 +75,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BC48F623AEEF49C89A4A3C0101C822C8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D19E2CDE7CB419EC04F3451277C55723"
         "OwnerKey" = "8:_92B01A45BE9C3483C470A25B441744A5"
         "MsmSig" = "8:_UNDEFINED"
@@ -77,12 +95,6 @@
         {
         "MsmKey" = "8:_D19E2CDE7CB419EC04F3451277C55723"
         "OwnerKey" = "8:_A7E3F0E7E8B03B1C30C8045BED0E3088"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DA9AFBE4CC5B4145A4651CCEA3634A50"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -310,6 +322,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_472343B481BD481BA4D841A30ACC31C7"
+            {
+            "SourcePath" = "8:..\\GUI\\sql\\create_music.sql"
+            "TargetName" = "8:create_music.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_1656579AA59E4D4D8F31BE93C4795625"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_53257E64062E44A0A3459A34D053E77C"
             {
             "SourcePath" = "8:..\\GUI\\sql\\update.1.0.sql"
@@ -359,6 +391,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_60179B01630F43DF97AD0AF6A6183E97"
+            {
+            "SourcePath" = "8:..\\GUI\\sql\\create_music.ms.sql"
+            "TargetName" = "8:create_music.ms.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_1656579AA59E4D4D8F31BE93C4795625"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_92B01A45BE9C3483C470A25B441744A5"
@@ -443,6 +495,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BC48F623AEEF49C89A4A3C0101C822C8"
+            {
+            "SourcePath" = "8:..\\GUI\\sql\\update.1.0.sql"
+            "TargetName" = "8:update.1.0.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_1656579AA59E4D4D8F31BE93C4795625"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D19E2CDE7CB419EC04F3451277C55723"
             {
             "AssemblyRegister" = "3:1"
@@ -472,26 +544,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DA9AFBE4CC5B4145A4651CCEA3634A50"
-            {
-            "SourcePath" = "8:..\\GUI\\sql\\recreate_music.sql"
-            "TargetName" = "8:recreate_music.sql"
-            "Tag" = "8:"
-            "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E136C9AAE2692378C39676DD6FC20C0F"
@@ -572,6 +624,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_1656579AA59E4D4D8F31BE93C4795625"
+                    {
+                    "Name" = "8:sql"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A66B31A31179413480FCA6FDFFAF5DB5"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_66D78C940E65412389B734DFD701730F"
