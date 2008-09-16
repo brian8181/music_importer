@@ -127,7 +127,8 @@
     <None Include="Resources\fish_xiph_org.png" />
     <None Include="Resources\mysql_100x52-64.gif" />
     <None Include="Resources\taglib.logo.png" />
-    <None Include="sql\update.1.0.sql" />
+    <None Include="sql\update.1.0.1.sql" />
+    <None Include="sql\update.1.1.1.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -138,7 +139,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>cp $(ProjectDir)recreate_music.sql $(TargetDir)recreate_music.sql
+    <PostBuildEvent>cp $(ProjectDir)*.sql $(TargetDir)*.sql
 $(ProjectDir)post_build_copy.bat $(ProjectName)\$(ConfigurationName) $(SolutionName)</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>

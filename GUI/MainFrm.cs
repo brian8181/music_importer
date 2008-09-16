@@ -24,8 +24,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.IO;
 using System.Collections.Specialized;
-using MusicImporter.TagLibV;
 using MusicImporter_Lib.Properties;
+using MusicImporter_Lib;
 using BKP.Online;
 //
 namespace music_importer
@@ -58,6 +58,7 @@ namespace music_importer
         public MainFrm( string[] args )
         {
             InitializeComponent();
+            
             progressBar.Enabled = false;
             progressBar.Style = ProgressBarStyle.Continuous;
             this.args = args;
@@ -65,6 +66,8 @@ namespace music_importer
             // GUI Settings
             cbSH_User.Checked = !Properties.Settings.Default.show_user;
             cbSH_Pass.Checked = !Properties.Settings.Default.show_pass;
+            cmbVersion.SelectedIndex = 0;
+
             // init priorty combobox
             Array values = Enum.GetValues(typeof(ThreadPriority));
             foreach(ThreadPriority v in values)
@@ -169,6 +172,14 @@ namespace music_importer
             else
             {
                 Properties.Settings.Default.sqlite_history = new StringCollection();
+            }
+            //load version box
+            string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
+            string[] files = Directory.GetFiles( proc_path, "update.?.?.?.sql" );
+            foreach( string f in files )
+            {
+                string version = Path.GetFileNameWithoutExtension( f );
+                cmbVersion.Items.Add(version);
             }
         }
         /// <summary>
@@ -284,7 +295,7 @@ namespace music_importer
             // connect
             try
             {
-                importer = new Importer();
+                importer = new Importer( cmbVersion.SelectedItem.ToString() );
                 importer.Connect();
             }
             catch(MySql.Data.MySqlClient.MySqlException exp)

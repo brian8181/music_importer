@@ -20,7 +20,7 @@ using System.Text;
 using CommandLine.OptParse;
 using System.ComponentModel;
 
-namespace MusicImporter.TagLibV
+namespace MusicImporter_Lib
 {
     public class ImporterOptions
     {

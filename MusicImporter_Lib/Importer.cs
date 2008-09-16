@@ -30,7 +30,7 @@ using BKP.Online.IO;
 using BKP.Online;
 using MusicImporter_Lib.Properties;
 
-namespace MusicImporter.TagLibV
+namespace MusicImporter_Lib
 {
     /// <summary>
     /// imports music tag information into database 
@@ -79,12 +79,13 @@ namespace MusicImporter.TagLibV
         private string connect_string = string.Empty;
         private string mm_conn_str = string.Empty;
         private string art_path = string.Empty;
+        private string version = "Auto";
         private ThreadPriority priority = ThreadPriority.BelowNormal;
         private ManualResetEvent pause = new ManualResetEvent( true );
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
-        public Importer() : this( Settings.Default ) 
+        public Importer(string version) : this( version, Settings.Default ) 
         {
         }
         /// <summary>
@@ -99,7 +100,16 @@ namespace MusicImporter.TagLibV
         /// intitialize from Setting file
         /// </summary>
         public Importer( MusicImporter_Lib.Properties.Settings settings )
-        {    Initialize( settings );
+        {    
+            Initialize( settings );
+        }
+        /// <summary>
+        /// intitialize from Setting file
+        /// </summary>
+        public Importer( string version, MusicImporter_Lib.Properties.Settings settings )
+        {
+            this.version = version;
+            Initialize( settings );
         }
         /// <summary>
         /// (Re)Initialize 
@@ -217,10 +227,11 @@ namespace MusicImporter.TagLibV
                     OnTagScanStarted();
                                        
                     // CRATE DATABASE
+                    string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
                     if(Settings.Default.create_db)
                     {
                         OnMessage( "creating database ..." );
-                        if(!File.Exists( "./sql/recreate_music.sql" ))
+                        if(!File.Exists( proc_path + "/create_music.sql" ))
                         {
                             LogError( "create database failed could not find file \"recreate_music.sql\" " );
                             return;
@@ -239,6 +250,8 @@ namespace MusicImporter.TagLibV
                         sql = "CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` " +
                            "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
                         mysql_connection.ExecuteNonQuery( sql );
+                        mysql_connection.ExecuteNonQuery( 
+                             "INSERT INTO `update` (`update`, `version`) VALUES( '1.0.0', 1 )" );
                     }
                     // check for stop signal
                     pause.WaitOne();
@@ -248,6 +261,8 @@ namespace MusicImporter.TagLibV
                     {
                         // make sure database set
                         mysql_connection.ChangeDatabase( Settings.Default.schema );
+                        UpdateDatabase(); // always update!
+                                          
                         // SCAN TGAGS
                         if(Settings.Default.ScanTags)
                         {
@@ -683,7 +698,42 @@ namespace MusicImporter.TagLibV
 
         #region Maintainence
         /// <summary>
-        /// delete oprhaned songs (file no longer exsists)
+        /// 
+        /// </summary>
+        private void UpdateDatabase()
+        {
+            //db check for installed version
+            int current_version = (int)mysql_connection.ExecuteScalar("SELECT MAX(version) FROM `music`.`update`");
+            string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
+            string[] files = Directory.GetFiles( proc_path, "update.?.?.?.sql" );
+            SortedList<int, DatabaseVersion> versions = new SortedList<int, DatabaseVersion>();
+            foreach(string f in files)
+            {
+                DatabaseVersion v = new DatabaseVersion( f );
+                versions.Add( v.Version, v );
+            }
+            // apply in order
+            DatabaseVersion update_2_ver = new DatabaseVersion( version );
+            // version 0 = auto (upgrade to latest) 
+            if( update_2_ver.Version == 0 || update_2_ver.Version > current_version )
+            {
+                foreach(DatabaseVersion ver in versions.Values)
+                {
+                    // version 0 = auto (upgrade to latest)
+                    if(ver.Version > update_2_ver.Version && update_2_ver.Version != 0)
+                        break;    
+                    if(ver.Version <= (long)current_version)
+                        continue;  // skip previous upgrades 
+
+                    string sql = File.ReadAllText( ver.Filename );
+                    mysql_connection.ExecuteNonQuery( sql );
+                    mysql_connection.ExecuteNonQuery( "INSERT INTO `update` (`update`, `version`) VALUES( '"
+                        + ver.ToString() + "', " + ver.Version + " )" );
+                }
+            }
+        }
+        /// <summary>
+        /// delete orphaned songs (file no longer exsists)
         /// </summary>
         private void Clean()
         {

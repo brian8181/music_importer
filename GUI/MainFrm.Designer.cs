@@ -118,6 +118,8 @@ namespace music_importer
             this.tt_create = new System.Windows.Forms.ToolTip( this.components );
             this.tt_mm_message = new System.Windows.Forms.ToolTip( this.components );
             this.toolTip = new System.Windows.Forms.ToolTip( this.components );
+            this.label20 = new System.Windows.Forms.Label();
+            this.cmbVersion = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -185,6 +187,8 @@ namespace music_importer
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add( this.cmbVersion );
+            this.groupBox1.Controls.Add( this.label20 );
             this.groupBox1.Controls.Add( this.pictureBox1 );
             this.groupBox1.Controls.Add( this.bl1 );
             this.groupBox1.Controls.Add( this.label10 );
@@ -217,7 +221,7 @@ namespace music_importer
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pictureBox1.Image = global::music_importer.Properties.Resources.mono_powered;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point( 328, 24 );
+            this.pictureBox1.Location = new System.Drawing.Point( 328, 16 );
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size( 93, 45 );
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -918,6 +922,26 @@ namespace music_importer
             this.toolTip.IsBalloon = true;
             this.toolTip.ShowAlways = true;
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point( 220, 80 );
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size( 45, 13 );
+            this.label20.TabIndex = 37;
+            this.label20.Text = "Version:";
+            // 
+            // cmbVersion
+            // 
+            this.cmbVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVersion.FormattingEnabled = true;
+            this.cmbVersion.Items.AddRange( new object[] {
+            "Auto"} );
+            this.cmbVersion.Location = new System.Drawing.Point( 279, 77 );
+            this.cmbVersion.Name = "cmbVersion";
+            this.cmbVersion.Size = new System.Drawing.Size( 142, 21 );
+            this.cmbVersion.TabIndex = 38;
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -1039,6 +1063,8 @@ namespace music_importer
         private BKP.Online.GUI.ImageCheckBox cbSH_User;
         private BKP.Online.GUI.ImageCheckBox cbSH_Pass;
         private BKP.Online.GUI.ImageCheckBox cbGenerateThumbs;
+        private System.Windows.Forms.ComboBox cmbVersion;
+        private System.Windows.Forms.Label label20;
     }
 }
 
