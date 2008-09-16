@@ -1,4 +1,4 @@
-	-- Music Importer imports ID3 tags to a MySql database. 
+-- Music Importer imports ID3 tags to a MySql database. 
 -- (Music Database Creation Scripts) July 24, 2008
 -- Copyright (C) 2008  Brian Preston
 
