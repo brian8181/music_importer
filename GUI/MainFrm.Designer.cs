@@ -52,6 +52,8 @@ namespace music_importer
             this.cbLog = new System.Windows.Forms.CheckBox();
             this.cbClean = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbVersion = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bl1 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -118,8 +120,6 @@ namespace music_importer
             this.tt_create = new System.Windows.Forms.ToolTip( this.components );
             this.tt_mm_message = new System.Windows.Forms.ToolTip( this.components );
             this.toolTip = new System.Windows.Forms.ToolTip( this.components );
-            this.label20 = new System.Windows.Forms.Label();
-            this.cmbVersion = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -216,6 +216,26 @@ namespace music_importer
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MySql Database";
             // 
+            // cmbVersion
+            // 
+            this.cmbVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVersion.FormattingEnabled = true;
+            this.cmbVersion.Items.AddRange( new object[] {
+            "Auto"} );
+            this.cmbVersion.Location = new System.Drawing.Point( 279, 77 );
+            this.cmbVersion.Name = "cmbVersion";
+            this.cmbVersion.Size = new System.Drawing.Size( 142, 21 );
+            this.cmbVersion.TabIndex = 3;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point( 220, 80 );
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size( 45, 13 );
+            this.label20.TabIndex = 37;
+            this.label20.Text = "Version:";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -234,7 +254,7 @@ namespace music_importer
             this.bl1.Location = new System.Drawing.Point( 12, 133 );
             this.bl1.Name = "bl1";
             this.bl1.Size = new System.Drawing.Size( 39, 13 );
-            this.bl1.TabIndex = 35;
+            this.bl1.TabIndex = 1;
             this.bl1.Text = "MySql:";
             // 
             // label10
@@ -243,7 +263,7 @@ namespace music_importer
             this.label10.Location = new System.Drawing.Point( 13, 160 );
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size( 42, 13 );
-            this.label10.TabIndex = 34;
+            this.label10.TabIndex = 2;
             this.label10.Text = "SQLite:";
             // 
             // cbSH_Pass
@@ -256,7 +276,7 @@ namespace music_importer
             this.cbSH_Pass.Location = new System.Drawing.Point( 218, 46 );
             this.cbSH_Pass.Name = "cbSH_Pass";
             this.cbSH_Pass.Size = new System.Drawing.Size( 32, 26 );
-            this.cbSH_Pass.TabIndex = 3;
+            this.cbSH_Pass.TabIndex = 10;
             this.toolTip.SetToolTip( this.cbSH_Pass, "Show / Hide user password." );
             this.cbSH_Pass.UseVisualStyleBackColor = true;
             this.cbSH_Pass.CheckedChanged += new System.EventHandler( this.cbSH_Pass_CheckedChanged );
@@ -269,7 +289,7 @@ namespace music_importer
             this.cbSH_User.Location = new System.Drawing.Point( 218, 19 );
             this.cbSH_User.Name = "cbSH_User";
             this.cbSH_User.Size = new System.Drawing.Size( 32, 26 );
-            this.cbSH_User.TabIndex = 1;
+            this.cbSH_User.TabIndex = 9;
             this.toolTip.SetToolTip( this.cbSH_User, "Show / Hide user name." );
             this.cbSH_User.UseVisualStyleBackColor = true;
             this.cbSH_User.CheckedChanged += new System.EventHandler( this.cbSH_User_CheckedChanged );
@@ -280,7 +300,7 @@ namespace music_importer
             this.label7.Location = new System.Drawing.Point( 11, 79 );
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size( 49, 13 );
-            this.label7.TabIndex = 27;
+            this.label7.TabIndex = 20;
             this.label7.Text = "Schema:";
             // 
             // cbPlaylist
@@ -291,7 +311,7 @@ namespace music_importer
             this.cbPlaylist.Location = new System.Drawing.Point( 436, 154 );
             this.cbPlaylist.Name = "cbPlaylist";
             this.cbPlaylist.Size = new System.Drawing.Size( 32, 26 );
-            this.cbPlaylist.TabIndex = 10;
+            this.cbPlaylist.TabIndex = 12;
             this.toolTip.SetToolTip( this.cbPlaylist, "Enable / disable SQlite connection string." );
             this.cbPlaylist.UseVisualStyleBackColor = true;
             this.cbPlaylist.CheckedChanged += new System.EventHandler( this.cbPlaylist_CheckedChanged );
@@ -303,7 +323,7 @@ namespace music_importer
             this.txtSchema.Location = new System.Drawing.Point( 75, 76 );
             this.txtSchema.Name = "txtSchema";
             this.txtSchema.Size = new System.Drawing.Size( 139, 20 );
-            this.txtSchema.TabIndex = 4;
+            this.txtSchema.TabIndex = 2;
             // 
             // cbMysql
             // 
@@ -313,7 +333,7 @@ namespace music_importer
             this.cbMysql.Location = new System.Drawing.Point( 436, 127 );
             this.cbMysql.Name = "cbMysql";
             this.cbMysql.Size = new System.Drawing.Size( 32, 26 );
-            this.cbMysql.TabIndex = 8;
+            this.cbMysql.TabIndex = 11;
             this.toolTip.SetToolTip( this.cbMysql, "Enable / disable MySql connection string." );
             this.cbMysql.UseVisualStyleBackColor = true;
             this.cbMysql.CheckedChanged += new System.EventHandler( this.cbMysql_CheckedChanged );
@@ -325,7 +345,7 @@ namespace music_importer
             this.txtSQLite.Location = new System.Drawing.Point( 75, 157 );
             this.txtSQLite.Name = "txtSQLite";
             this.txtSQLite.Size = new System.Drawing.Size( 346, 20 );
-            this.txtSQLite.TabIndex = 9;
+            this.txtSQLite.TabIndex = 8;
             // 
             // txtMySql
             // 
@@ -345,7 +365,7 @@ namespace music_importer
             this.label6.MaximumSize = new System.Drawing.Size( 479, 0 );
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size( 12, 15 );
-            this.label6.TabIndex = 21;
+            this.label6.TabIndex = 14;
             this.label6.Text = ":";
             // 
             // txtPort
@@ -353,7 +373,7 @@ namespace music_importer
             this.txtPort.Location = new System.Drawing.Point( 436, 103 );
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size( 40, 20 );
-            this.txtPort.TabIndex = 6;
+            this.txtPort.TabIndex = 5;
             this.txtPort.Text = "3306";
             this.txtPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -363,7 +383,7 @@ namespace music_importer
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size( 139, 20 );
-            this.txtPassword.TabIndex = 2;
+            this.txtPassword.TabIndex = 1;
             // 
             // txtAddress
             // 
@@ -372,7 +392,7 @@ namespace music_importer
             this.txtAddress.Location = new System.Drawing.Point( 75, 103 );
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size( 346, 20 );
-            this.txtAddress.TabIndex = 5;
+            this.txtAddress.TabIndex = 4;
             this.txtAddress.Text = "localhost";
             // 
             // label4
@@ -381,7 +401,7 @@ namespace music_importer
             this.label4.Location = new System.Drawing.Point( 11, 52 );
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size( 56, 13 );
-            this.label4.TabIndex = 10;
+            this.label4.TabIndex = 19;
             this.label4.Text = "Password:";
             // 
             // txtUser
@@ -398,7 +418,7 @@ namespace music_importer
             this.label3.Location = new System.Drawing.Point( 12, 25 );
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size( 32, 13 );
-            this.label3.TabIndex = 9;
+            this.label3.TabIndex = 18;
             this.label3.Text = "User:";
             // 
             // label1
@@ -407,7 +427,7 @@ namespace music_importer
             this.label1.Location = new System.Drawing.Point( 12, 106 );
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size( 48, 13 );
-            this.label1.TabIndex = 6;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Address:";
             // 
             // label2
@@ -921,26 +941,6 @@ namespace music_importer
             // 
             this.toolTip.IsBalloon = true;
             this.toolTip.ShowAlways = true;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point( 220, 80 );
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size( 45, 13 );
-            this.label20.TabIndex = 37;
-            this.label20.Text = "Version:";
-            // 
-            // cmbVersion
-            // 
-            this.cmbVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbVersion.FormattingEnabled = true;
-            this.cmbVersion.Items.AddRange( new object[] {
-            "Auto"} );
-            this.cmbVersion.Location = new System.Drawing.Point( 279, 77 );
-            this.cmbVersion.Name = "cmbVersion";
-            this.cmbVersion.Size = new System.Drawing.Size( 142, 21 );
-            this.cmbVersion.TabIndex = 38;
             // 
             // MainFrm
             // 

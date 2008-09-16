@@ -139,7 +139,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>cp $(ProjectDir)*.sql $(TargetDir)*.sql
+    <PostBuildEvent>copy /Y $(ProjectDir)sql\*.sql $(TargetDir)
 $(ProjectDir)post_build_copy.bat $(ProjectName)\$(ConfigurationName) $(SolutionName)</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
