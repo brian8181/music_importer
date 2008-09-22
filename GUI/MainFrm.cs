@@ -317,6 +317,7 @@ namespace music_importer
             importer.ScanStopped += new VoidDelegate( importer_TagScanStopped );
             importer.SyncError += new VoidDelegate( importer_SyncError );
             importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
+            importer.Count += new Int32Delegate( importer_Count );
             importer.Scan( true );
         }
         /// <summary>
@@ -666,6 +667,15 @@ namespace music_importer
         {
             SafeSet_Label( lbMessage, str );
         }
+        /// <summary>
+        ///  importer file count event
+        /// </summary>
+        /// <param name="value"></param>
+        void importer_Count( int value )
+        {
+            SafeSet_Label( this.lbFilesScanned, value.ToString() );
+        }
+
         #endregion
 
         #region Helpers

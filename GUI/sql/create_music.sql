@@ -180,25 +180,6 @@ CREATE TABLE  `music`.`update` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --Administration--
-DROP TABLE IF EXISTS `group`;
-CREATE TABLE  `web_admin`.`group` (
-  `id` int(11) NOT NULL auto_increment,
-  `group` text,
-  `comment` text,
-  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `limits`;
-CREATE TABLE  `limits` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `user_id` int(10) unsigned NOT NULL,
-  `ip` text NOT NULL,
-  `type` enum('CREATE', 'FAIL_LOGIN') NOT NULL default 'CREATE',
-  `insert_ts`timestamp NOT NULL default CURRENT_TIMESTAMP,
-   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -213,7 +194,17 @@ CREATE TABLE `user` (
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `user_idx` (`user`(20))
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `group`;
+CREATE TABLE  `group` (
+  `id` int(11) NOT NULL auto_increment,
+  `group` text,
+  `comment` text,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE `user_group` (
@@ -222,8 +213,10 @@ CREATE TABLE `user_group` (
   `group_id` int(11) default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_group_id` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`),
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
@@ -231,7 +224,43 @@ CREATE TABLE `login` (
   `user_id` int(11) default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `music`.`security_question`;
+CREATE TABLE  `music`.`security_question` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `question` text NOT NULL,
+  `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `security_question` (`question`, `default`) VALUES('What is your favorite pets name?', TRUE);
+INSERT INTO `security_question` (`question`, `default`) VALUES('What is your favorite singers name?', TRUE);
+INSERT INTO `security_question` (`question`, `default`) VALUES('What is your mother madien name?', TRUE);
+
+DROP TABLE IF EXISTS `music`.`user_security_question`;
+CREATE TABLE  `music`.`user_security_question` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `question_id` int(10) unsigned NOT NULL,
+  `answer` text NOT NULL,
+  `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `update_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO style (`style`, `file`) VALUES ('Default', './css/style.css'); 
+INSERT INTO style (`style`, `file`) VALUES ('Blue', './css/blue.css');
+INSERT INTO style (`style`, `file`) VALUES ('Green', './css/green.css');
+
+DROP TABLE IF EXISTS `music`.`user_setting`;
+CREATE TABLE  `music`.`user_setting` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `style` text NOT NULL,
+  `updated_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `download`;
 CREATE TABLE `download` (
@@ -240,7 +269,42 @@ CREATE TABLE `download` (
   `user_id` int(11) default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `limits`;
+CREATE TABLE  `limits` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `ip` text NOT NULL,
+  `type` enum('CREATE', 'FAIL_LOGIN') NOT NULL default 'CREATE',
+  `insert_ts`timestamp NOT NULL default CURRENT_TIMESTAMP,
+   PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `user_cart`;
+CREATE TABLE `user_cart` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int NOT NULL,
+  `song_id` int NOT NULL,
+  `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `song_tag`;
+CREATE TABLE `song_tag` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
 
 -- CREATE TRIGGER `inserted_author_ts` BEFORE INSERT ON `album` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
 -- CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';

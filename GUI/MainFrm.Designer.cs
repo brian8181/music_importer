@@ -120,6 +120,8 @@ namespace music_importer
             this.tt_create = new System.Windows.Forms.ToolTip( this.components );
             this.tt_mm_message = new System.Windows.Forms.ToolTip( this.components );
             this.toolTip = new System.Windows.Forms.ToolTip( this.components );
+            this.label21 = new System.Windows.Forms.Label();
+            this.lbFilesScanned = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ( (System.ComponentModel.ISupportInitialize)( this.pictureBox1 ) ).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -904,7 +906,7 @@ namespace music_importer
             // 
             this.label19.AutoEllipsis = true;
             this.label19.Font = new System.Drawing.Font( "Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
-            this.label19.Location = new System.Drawing.Point( 208, 589 );
+            this.label19.Location = new System.Drawing.Point( 195, 589 );
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size( 62, 18 );
             this.label19.TabIndex = 33;
@@ -914,7 +916,7 @@ namespace music_importer
             // 
             this.lbElapsedTime.AutoEllipsis = true;
             this.lbElapsedTime.Font = new System.Drawing.Font( "Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
-            this.lbElapsedTime.Location = new System.Drawing.Point( 279, 589 );
+            this.lbElapsedTime.Location = new System.Drawing.Point( 263, 589 );
             this.lbElapsedTime.Name = "lbElapsedTime";
             this.lbElapsedTime.Size = new System.Drawing.Size( 94, 18 );
             this.lbElapsedTime.TabIndex = 32;
@@ -942,11 +944,33 @@ namespace music_importer
             this.toolTip.IsBalloon = true;
             this.toolTip.ShowAlways = true;
             // 
+            // label21
+            // 
+            this.label21.AutoEllipsis = true;
+            this.label21.Font = new System.Drawing.Font( "Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.label21.Location = new System.Drawing.Point( 379, 589 );
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size( 91, 18 );
+            this.label21.TabIndex = 35;
+            this.label21.Text = "Files Scanned: ";
+            // 
+            // lbFilesScanned
+            // 
+            this.lbFilesScanned.AutoEllipsis = true;
+            this.lbFilesScanned.Font = new System.Drawing.Font( "Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
+            this.lbFilesScanned.Location = new System.Drawing.Point( 475, 589 );
+            this.lbFilesScanned.Name = "lbFilesScanned";
+            this.lbFilesScanned.Size = new System.Drawing.Size( 94, 18 );
+            this.lbFilesScanned.TabIndex = 34;
+            this.lbFilesScanned.Text = "0";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size( 649, 744 );
+            this.Controls.Add( this.label21 );
+            this.Controls.Add( this.lbFilesScanned );
             this.Controls.Add( this.label19 );
             this.Controls.Add( this.lbElapsedTime );
             this.Controls.Add( this.label17 );
@@ -1065,6 +1089,8 @@ namespace music_importer
         private BKP.Online.GUI.ImageCheckBox cbGenerateThumbs;
         private System.Windows.Forms.ComboBox cmbVersion;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label lbFilesScanned;
     }
 }
 

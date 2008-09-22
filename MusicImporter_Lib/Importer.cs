@@ -32,6 +32,7 @@ using MusicImporter_Lib.Properties;
 
 namespace MusicImporter_Lib
 {
+    public delegate void Int32Delegate(int value);
     /// <summary>
     /// imports music tag information into database 
     /// </summary>
@@ -50,6 +51,10 @@ namespace MusicImporter_Lib
         /// tag scan completed
         /// </summary>
         public event BKP.Online.VoidDelegate ScanStopped;
+        /// <summary>
+        /// status message
+        /// </summary>
+        public event Int32Delegate Count;
         /// <summary>
         /// status message
         /// </summary>
@@ -82,6 +87,7 @@ namespace MusicImporter_Lib
         private string version = "Auto";
         private ThreadPriority priority = ThreadPriority.BelowNormal;
         private ManualResetEvent pause = new ManualResetEvent( true );
+        private int file_count;
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -382,6 +388,8 @@ namespace MusicImporter_Lib
             files = DirectoryExt.GetFiles( dir, Settings.Default.file_mask );
             for(int i = 0; i < files.Length && running; ++i)
             {
+                ++file_count;
+                OnCount( file_count );
                 pause.WaitOne();
                 if(!running) return;
 
@@ -974,6 +982,13 @@ namespace MusicImporter_Lib
         protected virtual void OnSyncError()
         {
             if(SyncError != null) SyncError();
+        }
+        /// <summary>
+        /// scans can not be started twice
+        /// </summary>
+        protected virtual void OnCount( int value )
+        {
+            if(Count != null) Count(value);
         }
         #endregion
     }
