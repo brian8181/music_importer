@@ -446,9 +446,9 @@ namespace MusicImporter_Lib
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        private object InsertArtist( TagLib.Tag tag )
+        private object InsertArtist( TagLib tag )
         {
-            string artist = tag.FirstPerformer;
+            string artist = tag.Performers;
             object artist_id = null;
             if(artist != null && artist != string.Empty)
             {
