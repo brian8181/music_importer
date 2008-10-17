@@ -746,6 +746,8 @@ namespace MusicImporter_Lib
         private void Clean()
         {
             DataSet ds = mysql_connection.ExecuteQuery( "SELECT file FROM song" );
+            if(ds.Tables.Count != 1)
+                return;
             DataTable dt = ds.Tables[0];
             StringBuilder file = null;
             MySqlCommand cmd = new MySqlCommand();
@@ -766,11 +768,19 @@ namespace MusicImporter_Lib
                     ++c;
                 }
             }
+        }
+        /// <summary>
+        ///  deletes any records from art table where file no longer exsits
+        /// </summary>
+        public void DeleteMissingArt()
+        {
             //Clean Art By File
-            ds = mysql_connection.ExecuteQuery( "SELECT file FROM art" );
-            dt = ds.Tables[0];
-            file = null;
-            cmd = new MySqlCommand();
+            DataSet ds = mysql_connection.ExecuteQuery( "SELECT file FROM art" );
+            if(ds.Tables.Count != 1)
+                return;
+            DataTable dt = ds.Tables[0];
+            StringBuilder file = null;
+            MySqlCommand cmd = new MySqlCommand();
             foreach(DataRow row in dt.Rows)
             {
                 file = new StringBuilder( row[0].ToString() );
@@ -780,7 +790,7 @@ namespace MusicImporter_Lib
                 {
                     EscapeInvalidChars( file );
                     cmd.CommandText = "DELETE FROM art WHERE file='" + file + "'";
-                     //mysql_connection.ExecuteNonQuery(cmd);
+                    //mysql_connection.ExecuteNonQuery(cmd);
                 }
             }
         }

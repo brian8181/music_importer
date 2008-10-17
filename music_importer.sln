@@ -15,6 +15,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility2", "..\utility\Utility2\Utility2.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Console", "Test_Console\Test_Console.csproj", "{3173C546-C3C3-456B-AC11-49F3AD5F36F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET 2.0 = Debug|.NET 2.0
@@ -117,6 +119,26 @@ Global
 		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Release|x86.ActiveCfg = Release|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Debug|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy_Debug|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy_Debug|x86.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Deploy|x86.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Fast Debug|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Fast Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Fast Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Fast Debug|x86.ActiveCfg = Debug|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|.NET 2.0.ActiveCfg = Release|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
