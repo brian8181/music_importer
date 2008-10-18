@@ -621,7 +621,15 @@ namespace MusicImporter_Lib
             string year = (tag.Year == 0000 || (tag.Year > 1900 && tag.Year < 2155)) ? tag.Year.ToString() : "0000";    
             cmd.Parameters.AddWithValue( "?year", year );
             cmd.Parameters.AddWithValue( "?comments", tag.Comment );
-            cmd.Parameters.AddWithValue( "?encoder", "NA" );
+            TagLib.Id3v2.Tag idv2 = tag_file.GetTag( TagLib.TagTypes.Id3v2 ) as TagLib.Id3v2.Tag;
+            string encoder = "NA";
+            if(idv2 != null)
+            {
+                TagLib.Id3v2.TextInformationFrame frame =
+                    TagLib.Id3v2.TextInformationFrame.Get( (TagLib.Id3v2.Tag)tag, "TSSE", false );
+                encoder = frame != null && frame.Text.Length > 0 ? frame.Text[0] : "Unknown";
+            }
+            cmd.Parameters.AddWithValue( "?encoder", encoder );
             cmd.Parameters.AddWithValue( "?file_size", tag_file.Length.ToString() );
             cmd.Parameters.AddWithValue( "?file_type", tag_file.MimeType );
             cmd.Parameters.AddWithValue( "?art_id", art_id );
