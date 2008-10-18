@@ -105,9 +105,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\utility\Utility2\Utility2.csproj">
+    <ProjectReference Include="..\..\utility\Utility2\Utility.csproj">
       <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
-      <Name>Utility2</Name>
+      <Name>Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\MusicImporter_Lib\MusicImporter_Lib.csproj">
       <Project>{E93459B4-CF0B-4FAF-9511-8CE9B9882780}</Project>

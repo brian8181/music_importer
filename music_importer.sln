@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{2A28454C-45A7-4EC9-B756-A055408BFC40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility2", "..\utility\Utility2\Utility2.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "..\utility\Utility2\Utility.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Console", "Test_Console\Test_Console.csproj", "{3173C546-C3C3-456B-AC11-49F3AD5F36F7}"
 EndProject
