@@ -232,7 +232,7 @@ namespace MusicImporter_Lib
                 {
                     OnTagScanStarted();
                                        
-                    // CRATE DATABASE
+                    // Create DATABASE
                     string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
                     if(Settings.Default.create_db)
                     {
@@ -269,7 +269,7 @@ namespace MusicImporter_Lib
                         mysql_connection.ChangeDatabase( Settings.Default.schema );
                         UpdateDatabase(); // always update!
                                           
-                        // SCAN TGAGS
+                        // SCAN TAGS
                         if(Settings.Default.ScanTags)
                         {
                             Status( "scanning tags ..." );
@@ -362,10 +362,9 @@ namespace MusicImporter_Lib
         {
             running = false;
             pause.Set();    // unpase
-            //thread.Join();
         }
         /// <summary>
-        /// 
+        /// continue after pause
         /// </summary>
         public void ContiueScan()
         {
