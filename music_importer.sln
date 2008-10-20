@@ -1,15 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicImporter_Lib", "MusicImporter_Lib\MusicImporter_Lib.csproj", "{E93459B4-CF0B-4FAF-9511-8CE9B9882780}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{4E43DEFA-8717-4ED5-B234-C2B6F9B8AB15}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{751EF4EC-AA5B-42CE-BC92-2430E5A03FB6}"
 	ProjectSection(SolutionItems) = preProject
 		GUI\post_build_copy.bat = GUI\post_build_copy.bat
 		Version.txt = Version.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicImporter_Lib", "MusicImporter_Lib\MusicImporter_Lib.csproj", "{E93459B4-CF0B-4FAF-9511-8CE9B9882780}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{4E43DEFA-8717-4ED5-B234-C2B6F9B8AB15}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{2A28454C-45A7-4EC9-B756-A055408BFC40}"
 EndProject
