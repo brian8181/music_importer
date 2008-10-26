@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{751EF4EC-AA5B-42CE-BC92-2430E5A03FB6}"
 	ProjectSection(SolutionItems) = preProject
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		music_importer1.vsmdi = music_importer1.vsmdi
+		music_importer2.vsmdi = music_importer2.vsmdi
 		GUI\post_build_copy.bat = GUI\post_build_copy.bat
 		Version.txt = Version.txt
 	EndProjectSection
@@ -17,7 +20,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "..\utility\Utili
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Console", "Test_Console\Test_Console.csproj", "{3173C546-C3C3-456B-AC11-49F3AD5F36F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = music_importer2.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET 2.0 = Debug|.NET 2.0
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +147,26 @@ Global
 		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3173C546-C3C3-456B-AC11-49F3AD5F36F7}.Release|x86.ActiveCfg = Release|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Debug|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy_Debug|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy_Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Deploy|x86.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Fast Debug|.NET 2.0.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Fast Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Fast Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Fast Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Release|.NET 2.0.ActiveCfg = Release|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7FFA9D-8852-426D-821B-DCFC7D5866CD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

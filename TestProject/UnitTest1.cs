@@ -7,12 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TestProject
 {
     /// <summary>
-    /// Summary description for UnitTest
+    /// Summary description for UnitTest1
     /// </summary>
     [TestClass]
-    public class UnitTest
+    public class UnitTest1
     {
-        public UnitTest()
+        public UnitTest1()
         {
             //
             // TODO: Add constructor logic here

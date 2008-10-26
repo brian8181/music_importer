@@ -26,7 +26,7 @@ CREATE TABLE `tag` (
 DROP TABLE IF EXISTS `song_tag`;
 CREATE TABLE `song_tag` (
   `id` int(10) unsigned NOT NULL auto_increment,
-   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;

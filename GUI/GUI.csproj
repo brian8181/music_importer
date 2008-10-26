@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4E43DEFA-8717-4ED5-B234-C2B6F9B8AB15}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -65,6 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTMLReportFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTMLReportFrm.Designer.cs">
+      <DependentUpon>HTMLReportFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="HTMLReportFrm.resx">
+      <DependentUpon>HTMLReportFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainFrm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainFrm.cs</DependentUpon>
@@ -134,6 +143,7 @@
     <None Include="Resources\taglib.logo.png" />
     <None Include="sql\update.1.0.1.sql" />
     <None Include="sql\update.1.1.1.sql" />
+    <None Include="sql\update.1.1.2.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

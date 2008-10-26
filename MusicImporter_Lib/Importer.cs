@@ -88,6 +88,15 @@ namespace MusicImporter_Lib
         private ThreadPriority priority = ThreadPriority.BelowNormal;
         private ManualResetEvent pause = new ManualResetEvent( true );
         private int file_count;
+
+        private Reporter reporter = new Reporter();
+        /// <summary>
+        /// default ctor intitialize from default Setting file
+        /// </summary>
+        public Importer()
+            : this( "Auto", Settings.Default )
+        {
+        }
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -388,6 +397,7 @@ namespace MusicImporter_Lib
             for(int i = 0; i < files.Length && running; ++i)
             {
                 ++file_count;
+                reporter.ScannedCount++;     
                 OnCount( file_count );
                 pause.WaitOne();
                 if(!running) return;
@@ -576,6 +586,34 @@ namespace MusicImporter_Lib
             return key;
         }
         /// <summary>
+        ///  insert album art
+        /// </summary>
+        /// <param name="tag">the id3 tag</param>
+        /// <param name="current_dir">current directory</param>
+        /// <returns>primary key (insert id)</returns>
+        private bool InsertArt( TagLib.Tag tag, uint song_id, string current_dir )
+        {
+            string art = null;
+            string key = null;
+            byte[] hash = null;
+            // look for art in directory
+            string[] files = DirectoryExt.GetFiles( current_dir, Settings.Default.art_mask );
+            int len = tag.Pictures.Length;
+            foreach( TagLib.IPicture pic in tag.Pictures )
+            {
+            }
+            return true;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="song_id"></param>
+        /// <param name="art_id"></param>
+        private bool InsertSong_Art( long song_id, long art_id )
+        {
+            return true;
+        }
+        /// <summary>
         /// todo
         /// </summary>
         private void Prepare()
@@ -653,6 +691,7 @@ namespace MusicImporter_Lib
                       "?encoder, ?file_size, ?file_type, ?art_id, ?lyrics, ?composer, ?conductor, ?copyright, " +
                       "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute)";
                 OnMessage( "INSERTED: " + Path.GetFileName( tag_file.Name ) );
+                reporter.InsertSongCount++;    
             }
             else
             {
@@ -662,6 +701,7 @@ namespace MusicImporter_Lib
                       "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute " +
                       "WHERE id = ?song_id";
                 OnMessage( "UPDATED: " + Path.GetFileName( tag_file.Name ) );
+                reporter.UpdateSongCount++;
             }
             cmd.CommandText = sql;
             mysql_connection.ExecuteNonQuery( cmd );
@@ -761,7 +801,6 @@ namespace MusicImporter_Lib
             // Why dosen't this work?
             //cmd.Parameters.AddWithValue("@file", file);
             //cmd.CommandText = "DELETE FROM song WHERE file=@file";
-            int c = 0;
             foreach(DataRow row in dt.Rows)
             {
                 file = new StringBuilder( row[0].ToString() );
@@ -772,7 +811,7 @@ namespace MusicImporter_Lib
                     cmd.CommandText = "DELETE FROM song WHERE file='" + file + "'";
                     OnMessage( "Deleting: " + file );
                     mysql_connection.ExecuteNonQuery( cmd );
-                    ++c;
+                    reporter.DeleteSongCount++;
                 }
             }
         }
@@ -798,6 +837,8 @@ namespace MusicImporter_Lib
                     EscapeInvalidChars( file );
                     cmd.CommandText = "DELETE FROM art WHERE file='" + file + "'";
                     //mysql_connection.ExecuteNonQuery(cmd);
+                    reporter.DeleteArtCount++;
+
                 }
             }
         }
