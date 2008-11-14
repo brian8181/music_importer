@@ -245,5 +245,22 @@ namespace TestProject
             Assert.AreEqual( expected, actual );
             Assert.Inconclusive( "Verify the correctness of this test method." );
         }
+
+        /// <summary>
+        ///A test for InsertArt
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("MusicImporter_Lib.dll")]
+        public void InsertArtTest2()
+        {
+            Importer_Accessor target = new Importer_Accessor(); // TODO: Initialize to an appropriate value
+            Tag tag = null; // TODO: Initialize to an appropriate value
+            string current_dir = string.Empty; // TODO: Initialize to an appropriate value
+            string expected = string.Empty; // TODO: Initialize to an appropriate value
+            string actual;
+            actual = target.InsertArt(tag, current_dir);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
     }
 }

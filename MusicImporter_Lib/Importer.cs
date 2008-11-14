@@ -248,10 +248,10 @@ namespace MusicImporter_Lib
                         OnMessage( "creating database ..." );
                         if(!File.Exists( proc_path + "/create_music.sql" ))
                         {
-                            LogError( "create database failed could not find file \"recreate_music.sql\" " );
+                            LogError( "create database failed could not find file \"create_music.sql\" " );
                             return;
                         }
-                        string sql = File.ReadAllText( "recreate_music.sql" );
+                        string sql = File.ReadAllText( "create_music.sql" );
                         mysql_connection.ExecuteNonQuery( "CREATE DATABASE IF NOT EXISTS " + Settings.Default.schema );
                         mysql_connection.ChangeDatabase( Settings.Default.schema );
                         mysql_connection.ExecuteNonQuery( sql );
@@ -526,6 +526,16 @@ namespace MusicImporter_Lib
                 if(tag.Pictures.Length > 0)
                 {
                     TagLib.IPicture pic = tag.Pictures[0];
+                    // find the first front cover image, if not use first image
+                    foreach( TagLib.IPicture p in tag.Pictures )
+                    {
+                        if (p.Type == TagLib.PictureType.FrontCover)
+                        {
+                            pic = p;
+                            break;
+                        }
+                    }
+                    
                     if(pic.MimeType.StartsWith( "image/" ))
                     {
                         art = guid.ToString( "B" ) + pic.MimeType.Replace( "image/", "." );
@@ -658,12 +668,20 @@ namespace MusicImporter_Lib
             string year = (tag.Year == 0000 || (tag.Year > 1900 && tag.Year < 2155)) ? tag.Year.ToString() : "0000";    
             cmd.Parameters.AddWithValue( "?year", year );
             cmd.Parameters.AddWithValue( "?comments", tag.Comment );
-            TagLib.Id3v2.Tag idv2 = tag_file.GetTag( TagLib.TagTypes.Id3v2 ) as TagLib.Id3v2.Tag;
+            TagLib.Id3v2.Tag idv2 = null;
+            try
+            {
+                idv2 = tag_file.GetTag(TagLib.TagTypes.Id3v2) as TagLib.Id3v2.Tag;
+            }
+            catch
+            {
+                // taglib throws an exception on some file types? 
+            }
             string encoder = "NA";
             if(idv2 != null)
             {
                 TagLib.Id3v2.TextInformationFrame frame =
-                    TagLib.Id3v2.TextInformationFrame.Get( (TagLib.Id3v2.Tag)tag, "TSSE", false );
+                    TagLib.Id3v2.TextInformationFrame.Get( (TagLib.Id3v2.Tag)idv2, "TSSE", false );
                 encoder = frame != null && frame.Text.Length > 0 ? frame.Text[0] : "Unknown";
             }
             cmd.Parameters.AddWithValue( "?encoder", encoder );

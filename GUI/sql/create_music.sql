@@ -144,10 +144,6 @@ CREATE TABLE `song` (
   CONSTRAINT `FK_song_3` FOREIGN KEY (`art_id`) REFERENCES `art` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36392 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci PACK_KEYS=1 ROW_FORMAT=DYNAMIC COMMENT='InnoDB';
 
--- ----------------------------
--- Table structure for query_log
--- ----------------------------
-
 DROP TABLE IF EXISTS `query_log`;
 CREATE TABLE `query_log` (
   `id` int(11) NOT NULL auto_increment,
@@ -168,9 +164,8 @@ CREATE TABLE `query_log` (
    PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13625 DEFAULT CHARSET=latin1;
 
---update table--
-DROP TABLE IF EXISTS `music`.`update`;
-CREATE TABLE  `music`.`update` (
+DROP TABLE IF EXISTS `update`;
+CREATE TABLE  `update` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `update` text character set latin1 collate latin1_german1_ci NOT NULL,
   `version` int(11) default NULL,
@@ -178,8 +173,6 @@ CREATE TABLE  `music`.`update` (
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
-
---Administration--
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -226,10 +219,11 @@ CREATE TABLE `login` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `music`.`security_question`;
-CREATE TABLE  `music`.`security_question` (
+DROP TABLE IF EXISTS `security_question`;
+CREATE TABLE `security_question` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `question` text NOT NULL,
+  `default` tinyint(1) NOT NULL default '0', 
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -238,8 +232,8 @@ INSERT INTO `security_question` (`question`, `default`) VALUES('What is your fav
 INSERT INTO `security_question` (`question`, `default`) VALUES('What is your favorite singers name?', TRUE);
 INSERT INTO `security_question` (`question`, `default`) VALUES('What is your mother madien name?', TRUE);
 
-DROP TABLE IF EXISTS `music`.`user_security_question`;
-CREATE TABLE  `music`.`user_security_question` (
+DROP TABLE IF EXISTS `user_security_question`;
+CREATE TABLE  `user_security_question` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL,
   `question_id` int(10) unsigned NOT NULL,
@@ -249,12 +243,22 @@ CREATE TABLE  `music`.`user_security_question` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `style`;
+CREATE TABLE  `style` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `style` text NOT NULL,
+  `file` text NOT NULL,
+  `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `updated_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
 INSERT INTO style (`style`, `file`) VALUES ('Default', './css/style.css'); 
 INSERT INTO style (`style`, `file`) VALUES ('Blue', './css/blue.css');
 INSERT INTO style (`style`, `file`) VALUES ('Green', './css/green.css');
 
-DROP TABLE IF EXISTS `music`.`user_setting`;
-CREATE TABLE  `music`.`user_setting` (
+DROP TABLE IF EXISTS `user_setting`;
+CREATE TABLE  `user_setting` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `user_id` int(10) unsigned NOT NULL,
   `style` text NOT NULL,
@@ -305,9 +309,3 @@ CREATE TABLE `song_tag` (
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
-
--- CREATE TRIGGER `inserted_author_ts` BEFORE INSERT ON `album` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
--- CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
--- CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
---todo the rest the triggers--
--- END --
