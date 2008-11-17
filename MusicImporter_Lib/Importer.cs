@@ -90,6 +90,8 @@ namespace MusicImporter_Lib
         private int file_count;
 
         private Reporter reporter = new Reporter();
+        private ArtImporter art_importer = null;
+
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -182,7 +184,8 @@ namespace MusicImporter_Lib
         {
             try
             {
-                mysql_connection.Open( connect_string );  
+                mysql_connection.Open( connect_string );
+                art_importer = new ArtImporter(mysql_connection, art_path);
             }
             catch(MySql.Data.MySqlClient.MySqlException e)
             {
@@ -427,7 +430,8 @@ namespace MusicImporter_Lib
                 //insert tag data
                 object artist_id = InsertArtist( tag );
                 object album_id = InsertAlbum( tag );
-                string art_id = InsertArt( tag, dir );
+                //string art_id = InsertArt( tag, dir );
+                string art_id = art_importer.InsertArt( tag_file );
                 InsertSong( tag, tag_file, art_id, artist_id, album_id );
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );

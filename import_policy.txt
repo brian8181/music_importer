@@ -1,0 +1,19 @@
+Import Policy
+
+Art Import
+1. art does not exists DB
+	import
+2. art exsit in db but not on disk
+	delete from db
+	import
+	
+Art Cleaning
+3. art on disk not in db
+	delete from drive ? or import
+4. art in db not used by song
+	delete from db
+	delete from disk	
+		
+	
+
+
