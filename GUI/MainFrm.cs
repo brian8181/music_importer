@@ -30,6 +30,7 @@ using BKP.Online;
 //
 namespace music_importer
 {
+    public delegate void SafeSetLabelVisibleDelegate(Label l, bool visible);
     public delegate void SafeSetLabelDelegate( Label l, string s );
     public delegate void SafeToggleDelegate( bool state );
     /// <summary>
@@ -613,7 +614,11 @@ namespace music_importer
         /// </summary>
         private void importer_TagScanStarted()
         {
-          SafeSet_Label( lbMessage, "Tag scan started" );
+            SafeSet_Label( lbMessage, "Tag scan started" );
+            SafeSet_LabelVisible(lbDirectory_label, true);
+            SafeSet_LabelVisible(lbDirectory, true);
+            SafeSet_LabelVisible(lbFilesScanned_label, true);
+            SafeSet_LabelVisible(lbFilesScanned, true);
         }
         /// <summary>
         ///  scan finished
@@ -766,6 +771,19 @@ namespace music_importer
             // this is a good place for now
             TimeSpan ts = DateTime.Now - start_time;
             lbElapsedTime.Text = ts.ToString();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        private void SafeSet_LabelVisible(Label l, bool visible)
+        {
+            if (this.InvokeRequired) // invoke on gui thread
+            {
+                this.Invoke(new SafeSetLabelVisibleDelegate(SafeSet_LabelVisible), new object[] { l, visible });
+                return;
+            }
+            l.Visible = visible;
         }
         /// <summary>
         ///  toggle control from enabled to disabled

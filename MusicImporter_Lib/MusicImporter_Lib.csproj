@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="ArtImporter.cs" />
     <Compile Include="CLOpts.cs" />
+    <Compile Include="DatabaseManager.cs" />
     <Compile Include="DatabaseVersion.cs" />
     <Compile Include="Importer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

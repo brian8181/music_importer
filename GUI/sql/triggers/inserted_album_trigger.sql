@@ -1,0 +1,1 @@
+﻿CREATE TRIGGER `inserted_album_ts` BEFORE INSERT ON `album` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'

@@ -46,6 +46,14 @@ namespace MusicImporter_Lib
         /// <summary>
         /// tag scan started
         /// </summary>
+        public event BKP.Online.VoidDelegate CreateDatabaseStarted;
+        /// <summary>
+        /// tag scan completed
+        /// </summary>
+        public event BKP.Online.VoidDelegate CreateDatabaseCompleted;
+        /// <summary>
+        /// tag scan started
+        /// </summary>
         public event BKP.Online.VoidDelegate ScanStarted;
         /// <summary>
         /// tag scan completed
@@ -242,38 +250,37 @@ namespace MusicImporter_Lib
                 DateTime start = DateTime.Now;
                 try
                 {
-                    OnTagScanStarted();
-                                       
+                    OnCreateDatabaseStarted();
+
                     // Create DATABASE
                     string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
                     if(Settings.Default.create_db)
                     {
                         OnMessage( "creating database ..." );
-                        if(!File.Exists( proc_path + "/create_music.sql" ))
+                        string path = proc_path + "/create.sql";
+                        if(!File.Exists( path ))
                         {
                             LogError( "create database failed could not find file \"create_music.sql\" " );
                             return;
                         }
-                        string sql = File.ReadAllText( "create_music.sql" );
-                        mysql_connection.ExecuteNonQuery( "CREATE DATABASE IF NOT EXISTS " + Settings.Default.schema );
-                        mysql_connection.ChangeDatabase( Settings.Default.schema );
-                        mysql_connection.ExecuteNonQuery( sql );
-                        // triggers
-                        sql = "CREATE TRIGGER `inserted_author_ts` BEFORE INSERT ON `album` " + 
-                            "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
-                        mysql_connection.ExecuteNonQuery( sql );
-                        sql = "CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` " +
-                           "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
-                        mysql_connection.ExecuteNonQuery( sql );
-                        sql = "CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` " +
-                           "FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00'";
-                        mysql_connection.ExecuteNonQuery( sql );
+                        DatabaseManager db_mgr = new DatabaseManager(mysql_connection);
+                        string schema_name = Settings.Default.schema;
+
+                        mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
+                        db_mgr.CreateDatabase( schema_name );
+                        db_mgr.ExecuteFile( path );
+                       
+                        // insert initial version 
                         mysql_connection.ExecuteNonQuery( 
                              "INSERT INTO `update` (`update`, `version`) VALUES( '1.0.0', 1 )" );
                     }
+
+                    OnCreateDatabaseCompleted();
                     // check for stop signal
                     pause.WaitOne();
                     if(!running) return;
+
+                    OnTagScanStarted();
 
                     try
                     {
@@ -334,11 +341,11 @@ namespace MusicImporter_Lib
                     if(!running) return;
 
                     // RESCAN ART
-                    if(Settings.Default.RecanArt)
-                    {
-                        Status( "scanning art directory ..." );
-                        RescanArt();
-                    }
+                    //if(Settings.Default.RecanArt)
+                    //{
+                    //    Status( "scanning art directory ..." );
+                    //    RescanArt();
+                    //}
 
                     // check for stop signal
                     pause.WaitOne();
@@ -431,8 +438,8 @@ namespace MusicImporter_Lib
                 object artist_id = InsertArtist( tag );
                 object album_id = InsertAlbum( tag );
                 //string art_id = InsertArt( tag, dir );
-                string art_id = art_importer.InsertArt( tag_file );
-                InsertSong( tag, tag_file, art_id, artist_id, album_id );
+                object song_id = InsertSong(tag, tag_file, null, artist_id, album_id);
+                string[] art_ids = art_importer.InsertArt(song_id, tag_file); // do not need ret val
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );
             for(int i = 0; i < dirs.Length && running; ++i)
@@ -472,7 +479,7 @@ namespace MusicImporter_Lib
                 {
                     cmd.CommandText = "INSERT INTO artist (artist) Values(?artist)";
                     mysql_connection.ExecuteNonQuery( cmd );
-                    artist_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" );
+                    artist_id = mysql_connection.LastInsertID;
                 }
             }
             return artist_id;
@@ -496,7 +503,7 @@ namespace MusicImporter_Lib
                 {
                     cmd.CommandText = "INSERT INTO album (album, artist) Values(?album, ?artist)";
                     mysql_connection.ExecuteNonQuery( cmd );
-                    album_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" );
+                    album_id = mysql_connection.LastInsertID;
                 }
                 else
                 {
@@ -508,134 +515,6 @@ namespace MusicImporter_Lib
             return album_id;
         }
         /// <summary>
-        ///  insert album art
-        /// </summary>
-        /// <param name="tag">the id3 tag</param>
-        /// <param name="current_dir">current directory</param>
-        /// <returns>primary key (insert id)</returns>
-        private string InsertArt( TagLib.Tag tag, string current_dir )
-        {
-            string art = null;
-            string key = null;
-            byte[] hash = null;
-            // look for art in directory
-            string[] files = DirectoryExt.GetFiles( current_dir, Settings.Default.art_mask );
-            if(tag.Pictures.Length > 0 || files.Length > 0)
-            {
-                Guid guid = Guid.NewGuid();
-                byte[] data = null;
-                string type = string.Empty;
-                string mime_type = string.Empty;
-                string description = string.Empty;
-                if(tag.Pictures.Length > 0)
-                {
-                    TagLib.IPicture pic = tag.Pictures[0];
-                    // find the first front cover image, if not use first image
-                    foreach( TagLib.IPicture p in tag.Pictures )
-                    {
-                        if (p.Type == TagLib.PictureType.FrontCover)
-                        {
-                            pic = p;
-                            break;
-                        }
-                    }
-                    
-                    if(pic.MimeType.StartsWith( "image/" ))
-                    {
-                        art = guid.ToString( "B" ) + pic.MimeType.Replace( "image/", "." );
-                        data = new byte[pic.Data.Count];
-                        pic.Data.CopyTo( data, 0 );
-                        type = pic.Type.ToString();
-                        mime_type = pic.MimeType;
-                        description = pic.Description;
-                    }
-                    else { return null; }
-                }
-                else
-                {
-                    string ext = Path.GetExtension( files[0] );
-                    art = guid.ToString( "B" ) + ext;
-                    data = File.ReadAllBytes( files[0] );
-                    type = "Cover";
-                    mime_type = ext;
-                    description = "cover art";
-                }
-                                          
-                hash = ComputeHash( data );
-                string sql = "SELECT id FROM art WHERE hash=?hash";
-                MySqlCommand cmd = new MySqlCommand( sql );
-                cmd.Parameters.AddWithValue( "?hash", hash );
-                object obj = null;
-                try
-                {
-                    obj = mysql_connection.ExecuteScalar( cmd );
-                } catch
-                {
-                    return null;
-                }
-                //INSERT art if not found "and" inserting
-                if(obj == null && Settings.Default.insert_art)
-                {
-                    // write file to art location
-                    System.IO.File.WriteAllBytes( art_path + art, data );
-                    // gen & write thumbs
-                    GenerateThumbs( art );
-                    sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
-                    cmd = new MySqlCommand( sql );
-                    cmd.Parameters.AddWithValue( "?file", art );
-                    cmd.Parameters.AddWithValue( "?type", type );
-                    cmd.Parameters.AddWithValue( "?hash", hash );
-                    cmd.Parameters.AddWithValue( "?description", description );
-                    cmd.Parameters.AddWithValue( "?mime_type", mime_type );
-                    mysql_connection.ExecuteNonQuery( cmd );
-                    key = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" ).ToString();
-                }
-                else
-                {
-                    // see if the art was found
-                    if( obj != null )
-                        key = ( (uint)obj ).ToString();
-                }
-            }
-            return key;
-        }
-        /// <summary>
-        ///  insert album art
-        /// </summary>
-        /// <param name="tag">the id3 tag</param>
-        /// <param name="current_dir">current directory</param>
-        /// <returns>primary key (insert id)</returns>
-        private bool InsertArt( TagLib.Tag tag, uint song_id, string current_dir )
-        {
-            string art = null;
-            string key = null;
-            byte[] hash = null;
-            // look for art in directory
-            string[] files = DirectoryExt.GetFiles( current_dir, Settings.Default.art_mask );
-            int len = tag.Pictures.Length;
-            foreach( TagLib.IPicture pic in tag.Pictures )
-            {
-            }
-            return true;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="song_id"></param>
-        /// <param name="art_id"></param>
-        private bool InsertSong_Art( long song_id, long art_id )
-        {
-            return true;
-        }
-        /// <summary>
-        /// todo
-        /// </summary>
-        private void Prepare()
-        {
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Prepare();
-        }
-        /// <summary>
         ///  insert / update a song in database
         /// </summary>
         /// <param name="tag">id3 tag</param>
@@ -643,7 +522,7 @@ namespace MusicImporter_Lib
         /// <param name="art_id">sql art id</param>
         /// <param name="artist_id">sql artist id</param>
         /// <param name="album_id">sql album id</param>
-        private void InsertSong(
+        private string InsertSong(
             TagLib.Tag tag, TagLib.File tag_file, string art_id, object artist_id, object album_id )
         {
             // format the timespane (H:M:SS) 
@@ -727,6 +606,7 @@ namespace MusicImporter_Lib
             }
             cmd.CommandText = sql;
             mysql_connection.ExecuteNonQuery( cmd );
+            return mysql_connection.LastInsertID.ToString();
         }
         /// <summary>
         /// import playlist
@@ -746,7 +626,7 @@ namespace MusicImporter_Lib
                 name = name.Replace( "'", "''" );
                 string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0, NULL, NULL )";
                 mysql_connection.ExecuteNonQuery( sql );
-                string playlist_id = mysql_connection.ExecuteScalar( "SELECT LAST_INSERT_ID()" ).ToString();
+                string playlist_id = mysql_connection.LastInsertID.ToString();
                 string msg = "Creating playlist: " + name + " ..."; 
                 OnMessage( msg );
                 Log( msg );
@@ -864,53 +744,7 @@ namespace MusicImporter_Lib
                 }
             }
         }
-        /// <summary>
-        /// (Re)Scan and insert art from art directory
-        /// </summary>
-        private void RescanArt()
-        {
-            byte[] hash = null;
-            string[] files = DirectoryExt.GetFiles( Settings.Default.art_location, "*.jpg;*.jpeg;*.png;*.bmp;*.gif" );
-            for(int i = 0; i < files.Length; ++i)
-            {
-                OnMessage( "Processing Art: " + files[i] );
-                string filename = Path.GetFileName( files[i] );
-                string ext = Path.GetExtension( files[i] );
-                byte[] data = null;
-                string type = string.Empty;
-                string mime_type = string.Empty;
-                string description = string.Empty;
-                data = File.ReadAllBytes( files[i] );
-                type = "Cover";
-                mime_type = ext;
-                description = "cover art";
-                hash = ComputeHash( data );
-                string sql = "SELECT id FROM art WHERE hash=?hash";
-                MySqlCommand cmd = new MySqlCommand( sql );
-                cmd.Parameters.AddWithValue( "?hash", hash );
-                object obj = null;
-                obj = mysql_connection.ExecuteScalar( cmd );
-                try
-                {
-                    obj = mysql_connection.ExecuteScalar( cmd );
-                }
-                catch
-                {
-                    //return;
-                }
-                if(obj == null)
-                {
-                    sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
-                    cmd = new MySqlCommand( sql );
-                    cmd.Parameters.AddWithValue( "?file", filename );
-                    cmd.Parameters.AddWithValue( "?type", type );
-                    cmd.Parameters.AddWithValue( "?hash", hash );
-                    cmd.Parameters.AddWithValue( "?description", description );
-                    cmd.Parameters.AddWithValue( "?mime_type", mime_type );
-                    mysql_connection.ExecuteNonQuery( cmd );
-                }
-            }
-        }
+       
         /// <summary>
         /// optimize tables (MySql)
         /// </summary>
@@ -925,21 +759,6 @@ namespace MusicImporter_Lib
         
         #region Utility Functions
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="file"></param>
-        private void GenerateThumbs(string file_name)
-        {
-            string art = art_path + file_name;
-            BKP.Online.Media.Thumb.Generate(
-                art_path + "large\\" + file_name, art, Settings.Default.art_large, 0, true );
-            BKP.Online.Media.Thumb.Generate( 
-                art_path + "small\\" + file_name, art, Settings.Default.art_small, 0, true );
-            BKP.Online.Media.Thumb.Generate( 
-                art_path + "xsmall\\" + file_name, art, Settings.Default.art_xsmall, 0, true );
- 
-        }
-        /// <summary>
         ///  get primary key for a given column value 
         /// </summary>
         /// <param name="table">the table</param>
@@ -953,17 +772,6 @@ namespace MusicImporter_Lib
             object obj = mysql_connection.ExecuteScalar( command );
             uint? result = (uint?)obj;
             // see if we have a result
-            return result;
-        }
-        /// <summary>
-        /// compute a hash value
-        /// </summary>
-        /// <param name="data">data to hash</param>
-        /// <returns>the hash value</returns>
-        private byte[] ComputeHash( byte[] data )
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] result = md5.ComputeHash( data );
             return result;
         }
         /// <summary>
@@ -1039,6 +847,22 @@ namespace MusicImporter_Lib
         protected virtual void OnProcessDirectory( string msg )
         {
             if(ProcessDirectory != null) ProcessDirectory( msg );
+        }
+        /// <summary>
+        /// call TagScanStarted
+        /// </summary>
+        /// <param name="msg">status message</param>
+        protected virtual void OnCreateDatabaseStarted()
+        {
+            if (CreateDatabaseStarted != null) CreateDatabaseStarted();
+        }
+        /// <summary>
+        /// call TagScanStopped
+        /// </summary>
+        /// <param name="msg">status message</param>
+        protected virtual void OnCreateDatabaseCompleted()
+        {
+            if (CreateDatabaseCompleted != null) CreateDatabaseCompleted();
         }
         /// <summary>
         /// call TagScanStarted

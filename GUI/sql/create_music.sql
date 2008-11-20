@@ -47,6 +47,20 @@ CREATE TABLE `art` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `song_art`;
+CREATE TABLE `song_art` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `song_id` int(10) unsigned NOT NULL,
+  `art_id` int(10) unsigned NOT NULL,
+  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `Index_song_id` (`song_id`),
+  KEY `Index_art_id` (`art_id`),
+  CONSTRAINT `FK_song` FOREIGN KEY (`song_id`) REFERENCES `song` (`id`),
+  CONSTRAINT `FK_art` FOREIGN KEY (`art_id`) REFERENCES `art` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- ----------------------------
 -- Table structure for artist
 -- ----------------------------
@@ -142,7 +156,7 @@ CREATE TABLE `song` (
   CONSTRAINT `FK_song_1` FOREIGN KEY (`album_id`) REFERENCES `album` (`id`),
   CONSTRAINT `FK_song_2` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`),
   CONSTRAINT `FK_song_3` FOREIGN KEY (`art_id`) REFERENCES `art` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36392 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci PACK_KEYS=1 ROW_FORMAT=DYNAMIC COMMENT='InnoDB';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci PACK_KEYS=1 ROW_FORMAT=DYNAMIC COMMENT='InnoDB';
 
 DROP TABLE IF EXISTS `query_log`;
 CREATE TABLE `query_log` (
@@ -162,7 +176,7 @@ CREATE TABLE `query_log` (
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
    PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13625 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `update`;
 CREATE TABLE  `update` (
@@ -273,7 +287,7 @@ CREATE TABLE `download` (
   `user_id` int(11) default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `limits`;
 CREATE TABLE  `limits` (
@@ -283,16 +297,17 @@ CREATE TABLE  `limits` (
   `type` enum('CREATE', 'FAIL_LOGIN') NOT NULL default 'CREATE',
   `insert_ts`timestamp NOT NULL default CURRENT_TIMESTAMP,
    PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `user_cart`;
 CREATE TABLE `user_cart` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `user_id` int NOT NULL,
-  `song_id` int NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `song_id` int(11) NOT NULL,
+  `removed_ts` datetime default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
@@ -300,7 +315,7 @@ CREATE TABLE `tag` (
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `song_tag`;
 CREATE TABLE `song_tag` (
@@ -308,4 +323,4 @@ CREATE TABLE `song_tag` (
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

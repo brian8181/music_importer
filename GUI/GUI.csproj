@@ -150,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gpl-3.0.txt" />
+    <None Include="sql\create.sql" />
+    <None Include="sql\create_music_complete.sql" />
+    <None Include="sql\triggers\inserted_album_trigger.sql" />
     <None Include="Resources\disabled.trans.16.gif" />
     <None Include="Resources\enabled.trans.16.gif" />
     <None Include="Resources\lock.trans.16.gif" />
@@ -161,6 +164,7 @@
     <None Include="Resources\fish_xiph_org.png" />
     <None Include="Resources\mysql_100x52-64.gif" />
     <None Include="Resources\taglib.logo.png" />
+    <None Include="sql\triggers\inserted_artist_trigger.sql" />
     <None Include="sql\_update.1.0.1.sql" />
     <None Include="sql\_update.1.1.1.sql" />
     <None Include="sql\_update.1.1.2.sql" />

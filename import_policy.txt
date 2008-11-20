@@ -13,6 +13,14 @@ Art Cleaning
 4. art in db not used by song
 	delete from db
 	delete from disk	
+	
+	
+Import Art from folder
+	Options
+		1. Always
+		2. Only if no tag art.
+		3. Never
+			
 		
 	
 
