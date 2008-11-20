@@ -55,10 +55,16 @@
   <ItemGroup>
     <Compile Include="ArtImporterTest.cs" />
     <Compile Include="DatabaseManagerTest.cs" />
+    <Compile Include="DDLHelperTest.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="HTMLReportFrmTest.cs" />
     <Compile Include="ImporterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +86,15 @@
       <Project>{E93459B4-CF0B-4FAF-9511-8CE9B9882780}</Project>
       <Name>MusicImporter_Lib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\create.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

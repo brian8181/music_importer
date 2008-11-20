@@ -1,21 +1,18 @@
 ﻿using MusicImporter_Lib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using System.Data;
 using DB = BKP.Online.Data;
+using System.Data;
 
 namespace TestProject
 {
     
-    
     /// <summary>
-    ///This is a test class for DatabaseManagerTest and is intended
-    ///to contain all DatabaseManagerTest Unit Tests
+    ///This is a test class for DDLHelperTest and is intended
+    ///to contain all DDLHelperTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class DatabaseManagerTest
+    public class DDLHelperTest
     {
-
         private static BKP.Online.Data.IDatabase db = new BKP.Online.Data.MySqlDatabase();
         private static string schema_name = "music_test";
         private TestContext testContextInstance;
@@ -45,7 +42,7 @@ namespace TestProject
         {
             db.Open("Data Source=localhost;Port=3306;User Id=root;Password=sas_0125");
             db.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name); // drop test db
-
+           
             DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
             DataTable dt = ds.Tables[0];
             if (dt.Rows.Count > 0)
@@ -75,6 +72,19 @@ namespace TestProject
         //
         #endregion
 
+        /// <summary>
+        ///A test for CreateScript
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("MusicImporter_Lib.dll")]
+        public void CreateScriptTest()
+        {
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            DDLHelper_Accessor target = new DDLHelper_Accessor(param0); // TODO: Initialize to an appropriate value
+            string actual;
+            actual = target.CreateScript;
+            Assert.Inconclusive("Verify the correctness of this test method.");
+        }
 
         /// <summary>
         ///A test for ExecuteFile
@@ -83,7 +93,7 @@ namespace TestProject
         public void ExecuteFileTest()
         {
             CreateDatabaseTest();
-           
+
             DDLHelper target = new DDLHelper(db);
             db.ChangeDatabase("information_schema");
             DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
@@ -96,13 +106,25 @@ namespace TestProject
 
             db.ChangeDatabase(schema_name);
             // needs to be realtive 
-            string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\create_music_complete.sql"; 
+            string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\create_music_complete.sql";
             target.ExecuteFile(path);
             db.ChangeDatabase("information_schema");
-            ds  = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
+            ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
             dt = ds.Tables[0];
-            
+
             Assert.IsTrue(dt.Rows.Count > 0);
+        }
+             
+        /// <summary>
+        ///A test for Execute
+        ///</summary>
+        [TestMethod()]
+        public void ExecuteTest()
+        {
+            DB.IDatabase db = null; // TODO: Initialize to an appropriate value
+            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
+            target.Execute();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
         /// <summary>
@@ -111,63 +133,36 @@ namespace TestProject
         [TestMethod()]
         public void CreateDatabaseTest()
         {
-   
+
             DDLHelper target = new DDLHelper(db);
             target.CreateDatabase(schema_name);
             db.ChangeDatabase("information_schema");
             DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
             DataTable dt = ds.Tables[0];
-            
+
             Assert.IsTrue(dt.Rows.Count > 0);
         }
 
-        /// <summary>
-        ///A test for CreateScript
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MusicImporter_Lib.dll")]
-        public void CreateScriptTest()
-        {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            DDLHelper_Accessor target = new DDLHelper_Accessor(db); 
-            string actual;
-            actual = target.CreateScript;
-            StringAssert.StartsWith(actual, "DROP TABLE IF EXISTS `album`"); 
-        }
 
         /// <summary>
-        ///A test for ExecuteFile
+        ///A test for ExecuteAll
         ///</summary>
         [TestMethod()]
-        public void ExecuteFileTest1()
+        public void ExecuteCommandTest()
         {
+            CreateDatabaseTest();
+            ExecuteFileTest();
+            db.ChangeDatabase("music_test");
             DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
-            string path = string.Empty; // TODO: Initialize to an appropriate value
-            target.ExecuteFile(path);
+            string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\procedures"; // TODO: Initialize to an appropriate value
+            target.ExecuteDirectory(path);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
 
-        /// <summary>
-        ///A test for Execute
-        ///</summary>
-        [TestMethod()]
-        public void ExecuteTest1()
-        {
-            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
-            string sql = string.Empty; // TODO: Initialize to an appropriate value
-            target.Execute(sql);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for Execute
-        ///</summary>
-        [TestMethod()]
-        public void ExecuteTest()
-        {
-            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
-            target.Execute();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            db.ChangeDatabase("information_schema");
+            //DataSet ds = db.ExecuteQuery(SELECT * FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='music_test';);
+            //DataTable dt = ds.Tables[0];
+            //Assert.IsTrue(  dt.Rows.Count != 1 );
+            
         }
     }
 }

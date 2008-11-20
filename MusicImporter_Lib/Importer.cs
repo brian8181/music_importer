@@ -263,7 +263,7 @@ namespace MusicImporter_Lib
                             LogError( "create database failed could not find file \"create_music.sql\" " );
                             return;
                         }
-                        DatabaseManager db_mgr = new DatabaseManager(mysql_connection);
+                        DDLHelper db_mgr = new DDLHelper(mysql_connection);
                         string schema_name = Settings.Default.schema;
 
                         mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
@@ -522,7 +522,7 @@ namespace MusicImporter_Lib
         /// <param name="art_id">sql art id</param>
         /// <param name="artist_id">sql artist id</param>
         /// <param name="album_id">sql album id</param>
-        private string InsertSong(
+        private object InsertSong(
             TagLib.Tag tag, TagLib.File tag_file, string art_id, object artist_id, object album_id )
         {
             // format the timespane (H:M:SS) 
@@ -537,7 +537,7 @@ namespace MusicImporter_Lib
             // change path to unix style
             file.Remove( 0, 2 );
             file.Replace( '\\', '/' );
-            object song_id = GetKey( "song", "file", file.ToString() );
+             object song_id = GetKey( "song", "file", file.ToString() );
             MySqlCommand cmd = new MySqlCommand();
             cmd.Parameters.AddWithValue( "?artist_id", artist_id );
             cmd.Parameters.AddWithValue( "?album_id", album_id );
@@ -592,7 +592,10 @@ namespace MusicImporter_Lib
                       "?encoder, ?file_size, ?file_type, ?art_id, ?lyrics, ?composer, ?conductor, ?copyright, " +
                       "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute)";
                 OnMessage( "INSERTED: " + Path.GetFileName( tag_file.Name ) );
-                reporter.InsertSongCount++;    
+                cmd.CommandText = sql;
+                mysql_connection.ExecuteNonQuery(cmd);
+                song_id = mysql_connection.LastInsertID;
+                reporter.InsertSongCount++;
             }
             else
             {
@@ -602,11 +605,11 @@ namespace MusicImporter_Lib
                       "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute " +
                       "WHERE id = ?song_id";
                 OnMessage( "UPDATED: " + Path.GetFileName( tag_file.Name ) );
+                cmd.CommandText = sql;
+                mysql_connection.ExecuteNonQuery(cmd);
                 reporter.UpdateSongCount++;
             }
-            cmd.CommandText = sql;
-            mysql_connection.ExecuteNonQuery( cmd );
-            return mysql_connection.LastInsertID.ToString();
+            return song_id;
         }
         /// <summary>
         /// import playlist

@@ -152,6 +152,7 @@
     <Content Include="gpl-3.0.txt" />
     <None Include="sql\create.sql" />
     <None Include="sql\create_music_complete.sql" />
+    <None Include="sql\procedures\get_default_art.sql" />
     <None Include="sql\triggers\inserted_album_trigger.sql" />
     <None Include="Resources\disabled.trans.16.gif" />
     <None Include="Resources\enabled.trans.16.gif" />

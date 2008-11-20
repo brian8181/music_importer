@@ -106,12 +106,15 @@ namespace MusicImporter_Lib
         public void CreateLink(object song_id, object art_id)
         {
             string sql = "SELECT song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id";
-            
-            if ( db.Exists(sql) )
+            MySqlCommand cmd = new MySqlCommand(sql);
+            cmd.Parameters.AddWithValue("?song_id", song_id);
+            cmd.Parameters.AddWithValue("?art_id", art_id);
+
+            if (db.Exists(cmd))
                 return; // already in db
 
             sql = "INSERT INTO song_art VALUES(NULL, ?song_id, ?art_id, NULL, NOW())";
-            MySqlCommand cmd = new MySqlCommand(sql);
+            cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?song_id", song_id);
             cmd.Parameters.AddWithValue("?art_id", art_id);
             db.ExecuteNonQuery(cmd);
