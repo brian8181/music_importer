@@ -10,6 +10,7 @@ using System.Data.Common;
 using BKP.Online.Media;
 using MusicImporter_Lib.Properties;
 using BKP.Online.IO;
+using System.Data;
 
 namespace MusicImporter_Lib
 {
@@ -31,7 +32,7 @@ namespace MusicImporter_Lib
             this.db = db;
             this.art_path = art_path;
         }
-        
+
         /// <summary>
         ///  insert album art
         /// </summary>
@@ -50,11 +51,11 @@ namespace MusicImporter_Lib
             string current_dir = Path.GetDirectoryName(tag_file.Name);
             TagLib.Tag tag = tag_file.Tag;
             List<string> ids = new List<string>();
- 
+
             foreach (TagLib.IPicture pic in tag.Pictures)
             {
-              
-                art = GenerateFileName( pic );
+
+                art = GenerateFileName(pic);
                 data = new byte[pic.Data.Count];
                 pic.Data.CopyTo(data, 0);
                 type = pic.Type.ToString();
@@ -67,8 +68,7 @@ namespace MusicImporter_Lib
                     CreateLink(song_id, art_id);
                 }
             }
-
-
+            
             // look for art in directory
             //string[] files = DirectoryExt.GetFiles(current_dir, Settings.Default.art_mask);
             //foreach (string file in files)
@@ -156,7 +156,7 @@ namespace MusicImporter_Lib
             }
             return key;
         }
-        
+
         /// <summary>
         /// get the first front cover or the first picture
         /// </summary>
@@ -236,7 +236,7 @@ namespace MusicImporter_Lib
                 id = (uint)obj;
                 return true;
             }
-            
+
             return false;
         }
         /// <summary>
@@ -258,7 +258,7 @@ namespace MusicImporter_Lib
                     file = reader.GetString(0);
                 }
             }
-            return file != null && File.Exists( file );
+            return file != null && File.Exists(file);
         }
         /// <summary>
         /// compute a hash value
@@ -271,53 +271,136 @@ namespace MusicImporter_Lib
             byte[] result = md5.ComputeHash(data);
             return result;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CleanAll()
+        {
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public uint DeleteOrphanedInserts()
+        {
+            //create music_test and add art  
+            
+            return DeleteOrphanedInserts(Settings.Default.art_location);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        public uint DeleteOrphanedInserts(string path)
+        {
+            DataSet ds = db.ExecuteQuery("SELECT file FROM art");
 
+            if (ds.Tables.Count != 1)
+                return 0;
+
+            DataTable dt = ds.Tables[0];
+            MySqlCommand cmd = new MySqlCommand();
+            string file = string.Empty;
+            uint deleted = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                file = row[0].ToString();
+                string full_path = (path.EndsWith("\\") ? path : path + "\\") + file.ToString();
+                if (!File.Exists(full_path))
+                {
+                    // get id for file
+                    cmd = new MySqlCommand("SELECT id FROM art WHERE file=?file LIMIT 1");
+                    cmd.Parameters.AddWithValue("?file", file);
+                    object obj = db.ExecuteScalar(cmd);
+                    // delete all links from song_art table
+                    if (obj != null)
+                    {
+                        cmd = new MySqlCommand("DELETE FROM song_art WHERE art_id=?art_id");
+                        cmd.Parameters.AddWithValue("?art_id", obj);
+                        db.ExecuteNonQuery(cmd); 
+                    }
+                    // delete art
+                    cmd = new MySqlCommand("DELETE FROM art WHERE file=?file");
+                    cmd.Parameters.AddWithValue("?file", file);
+                    db.ExecuteNonQuery(cmd);
+                    ++deleted;
+                }
+            }
+            return deleted;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        public void DeleteOrphanedFiles()
+        {
+            DeleteOrphanedFiles(Settings.Default.music_root);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        public void DeleteOrphanedFiles(string path)
+        {
+            
+        }
+        /// <summary>
+        /// escape \ change invalid characters
+        /// </summary>
+        /// <param name="strs"></param>
+        private void EscapeInvalidChars(params StringBuilder[] strs)
+        {
+            for (int i = 0; i < strs.Length; ++i)
+            {
+                strs[i].Replace("'", "''");
+                strs[i].Replace("’", "''");
+                strs[i].Replace("`", "''");
+            }
+        }
         /// <summary>
         /// (Re)Scan and insert art from art directory
         /// </summary>
-        //private void RescanArt()
-        //{
-        //    byte[] hash = null;
-        //    string[] files = DirectoryExt.GetFiles( Settings.Default.art_location, "*.jpg;*.jpeg;*.png;*.bmp;*.gif" );
-        //    for(int i = 0; i < files.Length; ++i)
-        //    {
-        //        OnMessage( "Processing Art: " + files[i] );
-        //        string filename = Path.GetFileName( files[i] );
-        //        string ext = Path.GetExtension( files[i] );
-        //        byte[] data = null;
-        //        string type = string.Empty;
-        //        string mime_type = string.Empty;
-        //        string description = string.Empty;
-        //        data = File.ReadAllBytes( files[i] );
-        //        type = "Cover";
-        //        mime_type = ext;
-        //        description = "cover art";
-        //        hash = ComputeHash( data );
-        //        string sql = "SELECT id FROM art WHERE hash=?hash";
-        //        MySqlCommand cmd = new MySqlCommand( sql );
-        //        cmd.Parameters.AddWithValue( "?hash", hash );
-        //        object obj = null;
-        //        obj = mysql_connection.ExecuteScalar( cmd );
-        //        try
-        //        {
-        //            obj = mysql_connection.ExecuteScalar( cmd );
-        //        }
-        //        catch
-        //        {
-        //            //return;
-        //        }
-        //        if(obj == null)
-        //        {
-        //            sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
-        //            cmd = new MySqlCommand( sql );
-        //            cmd.Parameters.AddWithValue( "?file", filename );
-        //            cmd.Parameters.AddWithValue( "?type", type );
-        //            cmd.Parameters.AddWithValue( "?hash", hash );
-        //            cmd.Parameters.AddWithValue( "?description", description );
-        //            cmd.Parameters.AddWithValue( "?mime_type", mime_type );
-        //            mysql_connection.ExecuteNonQuery( cmd );
-        //        }
-        //    }
-        //}
+        private void RescanArt()
+        {
+            byte[] hash = null;
+            string[] files = DirectoryExt.GetFiles(Settings.Default.art_location, "*.jpg;*.jpeg;*.png;*.bmp;*.gif");
+            for (int i = 0; i < files.Length; ++i)
+            {
+                string filename = Path.GetFileName(files[i]);
+                string ext = Path.GetExtension(files[i]);
+                byte[] data = null;
+                string type = string.Empty;
+                string mime_type = string.Empty;
+                string description = string.Empty;
+                data = File.ReadAllBytes(files[i]);
+                type = "Cover";
+                mime_type = ext;
+                description = "cover art";
+                hash = ComputeHash(data);
+                string sql = "SELECT id FROM art WHERE hash=?hash";
+                MySqlCommand cmd = new MySqlCommand(sql);
+                cmd.Parameters.AddWithValue("?hash", hash);
+                object obj = null;
+                obj = db.ExecuteScalar(cmd);
+                try
+                {
+                    obj = db.ExecuteScalar(cmd);
+                }
+                catch
+                {
+                    //return;
+                }
+                if (obj == null)
+                {
+                    sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
+                    cmd = new MySqlCommand(sql);
+                    cmd.Parameters.AddWithValue("?file", filename);
+                    cmd.Parameters.AddWithValue("?type", type);
+                    cmd.Parameters.AddWithValue("?hash", hash);
+                    cmd.Parameters.AddWithValue("?description", description);
+                    cmd.Parameters.AddWithValue("?mime_type", mime_type);
+                    db.ExecuteNonQuery(cmd);
+                }
+            }
+        }
     }
 }

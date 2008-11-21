@@ -777,6 +777,7 @@ namespace MusicImporter_Lib
             // see if we have a result
             return result;
         }
+        
         /// <summary>
         /// escape \ change invalid characters
         /// </summary>

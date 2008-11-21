@@ -166,7 +166,7 @@ CREATE TABLE `song` (
   `performer` text collate latin1_german1_ci,
   `tag_types` text collate latin1_german1_ci,
   `track_count` int(10) unsigned default NULL,
-  `beats_per_minute` int(10) unsigned NOT NULL,
+  `beats_per_minute` int(10) unsigned default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
