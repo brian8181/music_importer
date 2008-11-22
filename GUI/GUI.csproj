@@ -115,6 +115,10 @@
       <DependentUpon>SettingsFrm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="StatusCtrl.resx">
+      <DependentUpon>StatusCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -136,6 +140,12 @@
     </Compile>
     <Compile Include="SettingsFrm.Designer.cs">
       <DependentUpon>SettingsFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StatusCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StatusCtrl.Designer.cs">
+      <DependentUpon>StatusCtrl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

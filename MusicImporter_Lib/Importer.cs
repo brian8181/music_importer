@@ -96,7 +96,6 @@ namespace MusicImporter_Lib
         private ThreadPriority priority = ThreadPriority.BelowNormal;
         private ManualResetEvent pause = new ManualResetEvent( true );
         private int file_count;
-
         private Reporter reporter = new Reporter();
         private ArtImporter art_importer = null;
 
@@ -162,8 +161,8 @@ namespace MusicImporter_Lib
 
             if(settings.insert_art)
             {
-                art_path = Settings.Default.art_location;
-                art_path = ( art_path.EndsWith( "\\" ) ? art_path : art_path + "\\" ) + ".album_art\\";
+                art_path = Settings.Default.art_location.TrimEnd('\\');
+                art_path += "\\.album_art\\";
                 Directory.CreateDirectory( art_path + "large\\" );
                 Directory.CreateDirectory( art_path + "small\\" );
                 Directory.CreateDirectory( art_path + "xsmall\\" );
@@ -333,6 +332,8 @@ namespace MusicImporter_Lib
                     if(Settings.Default.Clean)
                     {
                         Status( "cleaning ..." );
+                        reporter.DeleteArtFileCount = art_importer.DeleteOrphanedFiles();
+                        reporter.DeleteArtCount = art_importer.DeleteOrphanedInserts();
                         Clean();
                     }
                     
@@ -703,9 +704,9 @@ namespace MusicImporter_Lib
             DataTable dt = ds.Tables[0];
             StringBuilder file = null;
             MySqlCommand cmd = new MySqlCommand();
-            // Why dosen't this work?
-            //cmd.Parameters.AddWithValue("@file", file);
-            //cmd.CommandText = "DELETE FROM song WHERE file=@file";
+            
+            cmd.Parameters.AddWithValue("?file", file);
+            cmd.CommandText = "DELETE FROM song WHERE file=@file";
             foreach(DataRow row in dt.Rows)
             {
                 file = new StringBuilder( row[0].ToString() );
@@ -720,34 +721,7 @@ namespace MusicImporter_Lib
                 }
             }
         }
-        /// <summary>
-        ///  deletes any records from art table where file no longer exsits
-        /// </summary>
-        public void DeleteMissingArt()
-        {
-            //Clean Art By File
-            DataSet ds = mysql_connection.ExecuteQuery( "SELECT file FROM art" );
-            if(ds.Tables.Count != 1)
-                return;
-            DataTable dt = ds.Tables[0];
-            StringBuilder file = null;
-            MySqlCommand cmd = new MySqlCommand();
-            foreach(DataRow row in dt.Rows)
-            {
-                file = new StringBuilder( row[0].ToString() );
-                string path = Settings.Default.art_location;
-                path = ( path.EndsWith( "\\" ) ? path : path + "\\" ) + file.ToString();
-                if(!File.Exists( path ))
-                {
-                    EscapeInvalidChars( file );
-                    cmd.CommandText = "DELETE FROM art WHERE file='" + file + "'";
-                    //mysql_connection.ExecuteNonQuery(cmd);
-                    reporter.DeleteArtCount++;
 
-                }
-            }
-        }
-       
         /// <summary>
         /// optimize tables (MySql)
         /// </summary>
@@ -757,6 +731,7 @@ namespace MusicImporter_Lib
             mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE album" );
             mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE art" );
             mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE song" );
+            mysql_connection.ExecuteNonQuery("OPTIMIZE TABLE song_art");
         }
         #endregion
         

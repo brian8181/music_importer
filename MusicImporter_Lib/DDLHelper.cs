@@ -6,6 +6,8 @@ using BKP.Online.Data;
 using System.IO;
 using BKP.Online;
 using BKP.Online.IO;
+using System.Resources;
+using System.Globalization;
 
 namespace MusicImporter_Lib
 {
@@ -82,11 +84,21 @@ namespace MusicImporter_Lib
                 Execute(sql);
             }
         }
+        public void IterateResources()
+        {
+            ResourceManager mgr = Properties.Resources.ResourceManager;
+            System.Resources.ResourceSet set = mgr.GetResourceSet( CultureInfo.CurrentUICulture, false, false);
+            foreach (object o in set)
+            {
+                // do something
+            }
+        }
         /// <summary>
         /// execute all files in directory
         /// </summary>
         public void ExecuteDirectory(string path)
         {
+            
             string[] files = Directory.GetFiles(path, "*.sql");
             foreach (string file in files)
             {

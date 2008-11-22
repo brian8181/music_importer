@@ -13,7 +13,7 @@ namespace TestProject
     [TestClass()]
     public class DDLHelperTest
     {
-        private static BKP.Online.Data.IDatabase db = new BKP.Online.Data.MySqlDatabase();
+        private static BKP.Online.Data.IDatabase db = null;
         private static string schema_name = "music_test";
         private TestContext testContextInstance;
 
@@ -40,7 +40,7 @@ namespace TestProject
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
-            db.Open("Data Source=localhost;Port=3306;User Id=root;Password=sas_0125");
+            db = Globals.MySQL_DB;
             db.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name); // drop test db
            
             DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
@@ -80,10 +80,24 @@ namespace TestProject
         public void CreateScriptTest()
         {
             PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            DDLHelper_Accessor target = new DDLHelper_Accessor(param0); // TODO: Initialize to an appropriate value
+            DDLHelper_Accessor target = new DDLHelper_Accessor(db);
             string actual;
             actual = target.CreateScript;
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            StringAssert.StartsWith(actual, "DROP TABLE IF EXISTS `album`");
+        }
+
+        /// <summary>
+        ///A test for CreateDatabase
+        ///</summary>
+        [TestMethod()]
+        public void CreateDatabaseTest()
+        {
+            DDLHelper target = new DDLHelper(db);
+            target.CreateDatabase(schema_name);
+            db.ChangeDatabase("information_schema");
+            DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
+            DataTable dt = ds.Tables[0];
+            Assert.IsTrue(dt.Rows.Count > 0);
         }
 
         /// <summary>
@@ -91,6 +105,36 @@ namespace TestProject
         ///</summary>
         [TestMethod()]
         public void ExecuteFileTest()
+        {
+            //CreateDatabaseTest();
+
+            //DDLHelper target = new DDLHelper(db);
+            //db.ChangeDatabase("information_schema");
+            //DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
+            //DataTable dt = ds.Tables[0];
+            //if (dt.Rows.Count != 1)
+            //{
+            //    Assert.Inconclusive("database does not exist");
+            //    return;
+            //}
+
+            //db.ChangeDatabase(schema_name);
+            //// needs to be realtive 
+            //string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\create_music_complete.sql";
+            //target.ExecuteFile(path);
+            //db.ChangeDatabase("information_schema");
+            //ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
+            //dt = ds.Tables[0];
+
+            //Assert.IsTrue(dt.Rows.Count > 0);
+            Assert.Inconclusive("Obsolete");
+        }
+             
+        /// <summary>
+        ///A test for Execute
+        ///</summary>
+        [TestMethod()]
+        public void ExecuteTest()
         {
             CreateDatabaseTest();
 
@@ -106,49 +150,19 @@ namespace TestProject
 
             db.ChangeDatabase(schema_name);
             // needs to be realtive 
-            string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\create_music_complete.sql";
-            target.ExecuteFile(path);
+            target.Execute(MusicImporter_Lib.Properties.Resources.create);
             db.ChangeDatabase("information_schema");
-            ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
+            ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name  + "'");
             dt = ds.Tables[0];
 
             Assert.IsTrue(dt.Rows.Count > 0);
         }
-             
-        /// <summary>
-        ///A test for Execute
-        ///</summary>
-        [TestMethod()]
-        public void ExecuteTest()
-        {
-            DB.IDatabase db = null; // TODO: Initialize to an appropriate value
-            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
-            target.Execute();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
-
-        /// <summary>
-        ///A test for CreateDatabase
-        ///</summary>
-        [TestMethod()]
-        public void CreateDatabaseTest()
-        {
-
-            DDLHelper target = new DDLHelper(db);
-            target.CreateDatabase(schema_name);
-            db.ChangeDatabase("information_schema");
-            DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
-            DataTable dt = ds.Tables[0];
-
-            Assert.IsTrue(dt.Rows.Count > 0);
-        }
-
-
+               
         /// <summary>
         ///A test for ExecuteAll
         ///</summary>
         [TestMethod()]
-        public void ExecuteCommandTest()
+        public void ExecuteDirectoryTest()
         {
             CreateDatabaseTest();
             ExecuteFileTest();
@@ -163,6 +177,18 @@ namespace TestProject
             //DataTable dt = ds.Tables[0];
             //Assert.IsTrue(  dt.Rows.Count != 1 );
             
+        }
+
+
+        /// <summary>
+        ///A test for IterateResources
+        ///</summary>
+        [TestMethod()]
+        public void IterateResourcesTest()
+        {
+            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
+            target.IterateResources();
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }
 }

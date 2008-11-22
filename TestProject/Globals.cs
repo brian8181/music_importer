@@ -21,5 +21,13 @@ namespace TestProject
                 return mysql_db;
             }
         }
+
+        public static string SchemaName
+        {
+            get
+            {
+                return "music_test";
+            }
+        }
     }
 }

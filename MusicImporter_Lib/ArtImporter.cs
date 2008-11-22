@@ -69,20 +69,6 @@ namespace MusicImporter_Lib
                 }
             }
             
-            // look for art in directory
-            //string[] files = DirectoryExt.GetFiles(current_dir, Settings.Default.art_mask);
-            //foreach (string file in files)
-            //{
-            //    string ext = Path.GetExtension(files[0]);
-            //    art = guid.ToString("B") + ext;
-            //    data = File.ReadAllBytes(files[0]);
-            //    type = "Cover";
-            //    mime_type = ext;
-            //    description = Path.GetFileNameWithoutExtension( file );
-            //}
-
-            //return FindDefaultPicture(tag);
-
             return ids.ToArray(); // do wee need a ret val here?
         }
 
@@ -94,6 +80,8 @@ namespace MusicImporter_Lib
         private string GenerateFileName(TagLib.IPicture pic)
         {
             Guid guid = Guid.NewGuid();
+
+            string exp = @"[\w\\]*(?<ext>(jpg)|(jpeg)|(png)|(gif))"; // tdo
             string mime_type = pic.MimeType.ToLower();
             return guid.ToString("B") + mime_type.Replace("image/", ".");
         }
@@ -177,7 +165,6 @@ namespace MusicImporter_Lib
                     break;
                 }
             }
-
             return pic;
         }
 
@@ -271,19 +258,13 @@ namespace MusicImporter_Lib
             byte[] result = md5.ComputeHash(data);
             return result;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void CleanAll()
-        {
-        }
+
+        #region Maintenance
         /// <summary>
         /// 
         /// </summary>
         public uint DeleteOrphanedInserts()
         {
-            //create music_test and add art  
-            
             return DeleteOrphanedInserts(Settings.Default.art_location);
         }
         /// <summary>
@@ -296,7 +277,7 @@ namespace MusicImporter_Lib
 
             if (ds.Tables.Count != 1)
                 return 0;
-
+            
             DataTable dt = ds.Tables[0];
             MySqlCommand cmd = new MySqlCommand();
             string file = string.Empty;
@@ -304,7 +285,8 @@ namespace MusicImporter_Lib
             foreach (DataRow row in dt.Rows)
             {
                 file = row[0].ToString();
-                string full_path = (path.EndsWith("\\") ? path : path + "\\") + file.ToString();
+                path = path.Trim('\\');
+                string full_path = String.Format("{0}\\{1}\\{2}", path, ".album_art", file);
                 if (!File.Exists(full_path))
                 {
                     // get id for file
@@ -328,36 +310,44 @@ namespace MusicImporter_Lib
             return deleted;
         }
         /// <summary>
-        /// 
+        /// check each file in path to see if it's in the database, if not delete it
         /// </summary>
         /// <param name="path"></param>
-        public void DeleteOrphanedFiles()
+        public uint DeleteOrphanedFiles()
         {
-            DeleteOrphanedFiles(Settings.Default.music_root);
+            return DeleteOrphanedFiles(Settings.Default.art_location);
         }
         /// <summary>
-        /// 
+        /// check each file in path to see if it's in the database, if not delete it
         /// </summary>
-        /// <param name="path"></param>
-        public void DeleteOrphanedFiles(string path)
+        /// <param name="path">path to check</param>
+        public uint DeleteOrphanedFiles(string path)
         {
-            
-        }
-        /// <summary>
-        /// escape \ change invalid characters
-        /// </summary>
-        /// <param name="strs"></param>
-        private void EscapeInvalidChars(params StringBuilder[] strs)
-        {
-            for (int i = 0; i < strs.Length; ++i)
+            uint deleted = 0;
+            path = path.TrimEnd('\\');
+            string[] files = DirectoryExt.GetFiles(path + "\\.album_art", "*.jpg;*.jpeg;*.png;*.bmp;*.gif");
+            for (int i = 0; i < files.Length; ++i)
             {
-                strs[i].Replace("'", "''");
-                strs[i].Replace("’", "''");
-                strs[i].Replace("`", "''");
+                byte[] data = File.ReadAllBytes(files[i]);
+                byte[] hash = ComputeHash(data);
+
+                string sql = "SELECT id FROM art WHERE hash=?hash";
+                MySqlCommand cmd = new MySqlCommand(sql);
+                cmd.Parameters.AddWithValue("?hash", hash);
+                object obj = db.ExecuteScalar(cmd);
+
+                if (obj == null)
+                {
+                    File.Delete(files[i]);
+                    ++deleted;
+                }
             }
+            return deleted;
         }
         /// <summary>
-        /// (Re)Scan and insert art from art directory
+        /// (Re)Scan and insert art from art directory. 
+        /// This is a utility function that typically should not be used. This function 
+        /// preforms the opposite of the function DeleteOrphanedFiles.  
         /// </summary>
         private void RescanArt()
         {
@@ -402,5 +392,6 @@ namespace MusicImporter_Lib
                 }
             }
         }
+        #endregion
     }
 }
