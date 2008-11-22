@@ -16,7 +16,6 @@ namespace music_importer
         public HTMLReportFrm()
         {
             InitializeComponent();
-            DocumentText = "<html><body><h1>Report</h1></body></html>";
         }
 
         public string DocumentText

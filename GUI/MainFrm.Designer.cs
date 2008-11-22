@@ -122,6 +122,7 @@ namespace music_importer
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.lbFilesScanned_label = new System.Windows.Forms.Label();
             this.lbFilesScanned = new System.Windows.Forms.Label();
+            this.linkReport = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -968,11 +969,24 @@ namespace music_importer
             this.lbFilesScanned.Text = "0";
             this.lbFilesScanned.Visible = false;
             // 
+            // linkReport
+            // 
+            this.linkReport.AutoSize = true;
+            this.linkReport.Location = new System.Drawing.Point(422, 644);
+            this.linkReport.Name = "linkReport";
+            this.linkReport.Size = new System.Drawing.Size(65, 13);
+            this.linkReport.TabIndex = 36;
+            this.linkReport.TabStop = true;
+            this.linkReport.Text = "View Report";
+            this.linkReport.Visible = false;
+            this.linkReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReport_LinkClicked);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(649, 722);
+            this.Controls.Add(this.linkReport);
             this.Controls.Add(this.lbFilesScanned_label);
             this.Controls.Add(this.lbFilesScanned);
             this.Controls.Add(this.label19);
@@ -1095,6 +1109,7 @@ namespace music_importer
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label lbFilesScanned_label;
         private System.Windows.Forms.Label lbFilesScanned;
+        private System.Windows.Forms.LinkLabel linkReport;
     }
 }
 

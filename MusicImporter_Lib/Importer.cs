@@ -97,6 +97,12 @@ namespace MusicImporter_Lib
         private ManualResetEvent pause = new ManualResetEvent( true );
         private int file_count;
         private Reporter reporter = new Reporter();
+
+        public Reporter Reporter
+        {
+            get { return reporter; }
+            set { reporter = value; }
+        }
         private ArtImporter art_importer = null;
 
         /// <summary>
@@ -140,8 +146,6 @@ namespace MusicImporter_Lib
         /// </summary>
         public void Initialize( MusicImporter_Lib.Properties.Settings settings )
         {
-            //logger throws exceptions!!
-            //BKP.Online.Logger.Init();
             if(settings.use_conn_str)
             {
                 connect_string =  settings.mysql_conn_str;
@@ -334,7 +338,7 @@ namespace MusicImporter_Lib
                         Status( "cleaning ..." );
                         reporter.DeleteArtFileCount = art_importer.DeleteOrphanedFiles();
                         reporter.DeleteArtCount = art_importer.DeleteOrphanedInserts();
-                        Clean();
+                        reporter.DeleteSongCount = Clean();
                     }
                     
                     // check for stop signal
@@ -423,6 +427,7 @@ namespace MusicImporter_Lib
                 catch( TagLib.CorruptFileException e )
                 {
                     LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    reporter.AddCorruptFile(files[i]);
                     continue;
                 }
                 catch( TagLib.UnsupportedFormatException e )
@@ -457,7 +462,6 @@ namespace MusicImporter_Lib
             mysql_connection.Close();
             if(mm_connection.connection.State == ConnectionState.Open)
                 mm_connection.Close();
-            Logger.DisposeLogger();
         }
         #endregion
 
@@ -694,13 +698,14 @@ namespace MusicImporter_Lib
             }
         }
         /// <summary>
-        /// delete orphaned songs (file no longer exsists)
+        /// delete orphaned songs inserts (file no longer exsists)
         /// </summary>
-        private void Clean()
+        private int Clean()
         {
+            int deleted = 0;
             DataSet ds = mysql_connection.ExecuteQuery( "SELECT file FROM song" );
             if(ds.Tables.Count != 1)
-                return;
+                return 0;
             DataTable dt = ds.Tables[0];
             StringBuilder file = null;
             MySqlCommand cmd = new MySqlCommand();
@@ -716,10 +721,29 @@ namespace MusicImporter_Lib
                     EscapeInvalidChars( file );
                     cmd.CommandText = "DELETE FROM song WHERE file='" + file + "'";
                     OnMessage( "Deleting: " + file );
-                    mysql_connection.ExecuteNonQuery( cmd );
+                    deleted += mysql_connection.ExecuteNonQuery( cmd );
                     reporter.DeleteSongCount++;
                 }
             }
+            return deleted;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private int DeleteOrphanedArtist()
+        {
+            string sql = "DELETE FROM artist LEFT JOIN song ON artist.id=artist_id WHERE artist_id IS NULL";
+            return mysql_connection.ExecuteNonQuery( sql );
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private int DeleteOrphanedAlbums()
+        {
+            string sql = "DELETE FROM artist LEFT JOIN song ON artist.id=artist_id WHERE artist_id IS NULL";
+            return mysql_connection.ExecuteNonQuery( sql );
         }
 
         /// <summary>

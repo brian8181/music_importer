@@ -11,6 +11,7 @@ using BKP.Online.Media;
 using MusicImporter_Lib.Properties;
 using BKP.Online.IO;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace MusicImporter_Lib
 {
@@ -21,7 +22,7 @@ namespace MusicImporter_Lib
     {
         private IDatabase db = null;
         private string art_path = null;
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -80,10 +81,13 @@ namespace MusicImporter_Lib
         private string GenerateFileName(TagLib.IPicture pic)
         {
             Guid guid = Guid.NewGuid();
-
-            string exp = @"[\w\\]*(?<ext>(jpg)|(jpeg)|(png)|(gif))"; // tdo
-            string mime_type = pic.MimeType.ToLower();
-            return guid.ToString("B") + mime_type.Replace("image/", ".");
+            string exp = @"[\w\\]*(?<ext>(jpg)|(jpeg)|(png)|(gif)|(bmp))";
+            Regex regex = new Regex(exp, RegexOptions.IgnoreCase);
+            Match m = regex.Match(pic.MimeType);
+            string ext = m.Groups["ext"].Value.ToLower();
+            // name blank mime_type jpg extension
+            ext = ext == string.Empty ? "jpg" : ext;
+            return guid.ToString("B") + "." + ext;
         }
 
         /// <summary>

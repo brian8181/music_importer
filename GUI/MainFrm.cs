@@ -614,11 +614,21 @@ namespace music_importer
         /// </summary>
         private void importer_TagScanStarted()
         {
+            Logger.Init();
+
             SafeSet_Label( lbMessage, "Tag scan started" );
             SafeSet_LabelVisible(lbDirectory_label, true);
             SafeSet_LabelVisible(lbDirectory, true);
             SafeSet_LabelVisible(lbFilesScanned_label, true);
             SafeSet_LabelVisible(lbFilesScanned, true);
+
+            // todo
+            //this.Invoke(new VoidDelegate(delegate(){
+            //                                            lbMessage.Text = "Tag scan strated";
+                                                           // todo...
+            //                                            linkReport.Visible = true;
+            //                                        }
+            //                              ));
         }
         /// <summary>
         ///  scan finished
@@ -633,10 +643,12 @@ namespace music_importer
                                                     // stop progess marquee
                                                     progressBar.Style = ProgressBarStyle.Continuous;
                                                     ToggleOn();
+                                                    linkReport.Visible = true;
                                                 }
                                           ) );
             if( importer != null )
                 importer.Close();
+            Logger.DisposeLogger();
         }
         /// <summary>
         ///  scan error
@@ -937,6 +949,12 @@ namespace music_importer
             }
             Close();
         }
-            
+
+        private void linkReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            HTMLReportFrm frm = new HTMLReportFrm();
+            frm.DocumentText = importer.Reporter.GetHTML();
+            frm.ShowDialog();
+        }
     }
 }

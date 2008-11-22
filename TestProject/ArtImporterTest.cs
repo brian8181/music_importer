@@ -15,7 +15,6 @@ namespace TestProject
     [TestClass()]
     public class ArtImporterTest
     {
-
         private DB.IDatabase db = Globals.MySQL_DB; 
         private TestContext testContextInstance;
 
@@ -91,8 +90,7 @@ namespace TestProject
         //}
         //
         #endregion
-
-
+        
         /// <summary>
         ///A test for GenerateFileName
         ///</summary>
@@ -100,17 +98,23 @@ namespace TestProject
         [DeploymentItem("MusicImporter_Lib.dll")]
         public void GenerateFileNameTest()
         {
-             //PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            ArtImporter_Accessor target = new ArtImporter_Accessor(db, ""); // TODO: Initialize to an appropriate value
-            IPicture pic = new Picture();
-            pic.MimeType = "IMAGE/JPG";
-
-            string actual;
-            actual = target.GenerateFileName(pic);
-            StringAssert.EndsWith(actual, ".jpg");
-            string exp = @"^\{[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\}.\w+$";
+            ArtImporter_Accessor target = new ArtImporter_Accessor(db, ""); 
+            
+            // test strings
+            string[] mime_test = new string[] { "IMAGE/JPG", "image/jpg", "image/jpeg", "JPG", 
+                "image/png", "PNG", "image/bmp", "BMP", "" };
+            
+            string exp = @"^\{[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\}.(jpg)|(jpeg)|(png)|(bmp)$";
             Regex regex = new Regex(exp);
-            StringAssert.Matches(actual, regex);
+
+            foreach( string mime in mime_test )
+            {
+                IPicture pic = new Picture();
+                pic.MimeType = mime;
+                string actual;
+                actual = target.GenerateFileName(pic);
+                StringAssert.Matches(actual, regex);
+            }
         }
 
         /// <summary>
