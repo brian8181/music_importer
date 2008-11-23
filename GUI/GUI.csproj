@@ -161,24 +161,19 @@
   <ItemGroup>
     <Content Include="gpl-3.0.txt" />
     <None Include="sql\create.sql" />
-    <None Include="sql\create_music_complete.sql" />
     <None Include="sql\procedures\get_default_art.sql" />
     <None Include="sql\triggers\inserted_album_trigger.sql" />
     <None Include="Resources\disabled.trans.16.gif" />
     <None Include="Resources\enabled.trans.16.gif" />
     <None Include="Resources\lock.trans.16.gif" />
     <None Include="Resources\unlock.trans.16.gif" />
-    <None Include="sql\create_music.ms.sql" />
-    <None Include="sql\create_music.sql" />
     <None Include="Resources\mono-powered.png" />
     <None Include="Resources\180px-Tux.png" />
     <None Include="Resources\fish_xiph_org.png" />
     <None Include="Resources\mysql_100x52-64.gif" />
     <None Include="Resources\taglib.logo.png" />
     <None Include="sql\triggers\inserted_artist_trigger.sql" />
-    <None Include="sql\_update.1.0.1.sql" />
-    <None Include="sql\_update.1.1.1.sql" />
-    <None Include="sql\_update.1.1.2.sql" />
+    <None Include="sql\updates\update.1.0.1.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -211,7 +206,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)sql\*.sql" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(TargetDir)sql"
+xcopy "$(ProjectDir)sql" "$(TargetDir)sql" /S /Y</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

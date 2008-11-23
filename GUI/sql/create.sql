@@ -39,16 +39,16 @@ CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` FOR EACH ROW SET N
 
 DROP TABLE IF EXISTS `download`;
 CREATE TABLE `download` (
-  `id` int(11) NOT NULL auto_increment,
-  `song_id` int(11) default NULL,
-  `user_id` int(11) default NULL,
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `song_id` int(10) default NULL,
+  `user_id` int(10) default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group` (
-  `id` int(11) NOT NULL auto_increment,
+   `id` int(10) unsigned NOT NULL auto_increment,
   `group` text,
   `comment` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -68,7 +68,7 @@ CREATE TABLE `limits` (
 
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `path` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -77,17 +77,17 @@ CREATE TABLE `location` (
 
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
-  `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) default NULL,
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=738 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `playlist_songs`;
 CREATE TABLE `playlist_songs` (
-  `id` int(11) NOT NULL auto_increment,
-  `playlist_id` int(11) default NULL,
-  `song_id` int(11) default NULL,
+   `id` int(10) unsigned NOT NULL auto_increment,
+  `playlist_id` int(10) default NULL,
+  `song_id` int(10) default NULL,
   `order` int(10) unsigned default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -98,9 +98,9 @@ CREATE TABLE `playlist_songs` (
 
 DROP TABLE IF EXISTS `playlists`;
 CREATE TABLE `playlists` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `name` text,
-  `user_id` int(11) default NULL,
+  `user_id` int(10) default NULL,
   `masked` tinyint(3) unsigned NOT NULL default '0',
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -109,7 +109,7 @@ CREATE TABLE `playlists` (
 
 DROP TABLE IF EXISTS `query_log`;
 CREATE TABLE `query_log` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `query_type` text,
   `album` text,
   `artist` text,
@@ -136,25 +136,25 @@ CREATE TABLE `security_question` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
-INSERT INTO `security_question` VALUES  (1,'What is your favorite pets name?',1,'2008-11-18 13:24:35'),
- (2,'What is your favorite singers name?',1,'2008-11-18 13:24:35'),
- (3,'What is your mother madien name?',1,'2008-11-18 13:24:36');
+INSERT INTO `security_question` VALUES  (1,'What is your favorite pets name?',1, NULL),
+ (2,'What is your favorite singers name?',1, NULL),
+ (3,'What is your mother madien name?',1, NULL);
 
 DROP TABLE IF EXISTS `song`;
 CREATE TABLE `song` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `artist_id` int(10) unsigned default NULL,
   `album_id` int(10) unsigned default NULL,
-  `track` int(11) default NULL,
+  `track` int(10) default NULL,
   `title` text collate latin1_german1_ci,
   `file` text collate latin1_german1_ci NOT NULL,
   `genre` text collate latin1_german1_ci,
-  `bitrate` int(11) default NULL,
+  `bitrate` int(10) default NULL,
   `length` text character set latin1,
   `year` year(4) default NULL,
   `comments` text collate latin1_german1_ci,
   `encoder` text character set latin1,
-  `file_size` int(11) default NULL,
+  `file_size` int(10) default NULL,
   `file_type` text character set latin1,
   `art_id` int(10) unsigned default NULL,
   `lyrics` text collate latin1_german1_ci,
@@ -166,7 +166,7 @@ CREATE TABLE `song` (
   `performer` text collate latin1_german1_ci,
   `tag_types` text collate latin1_german1_ci,
   `track_count` int(10) unsigned default NULL,
-  `beats_per_minute` int(10) unsigned NOT NULL,
+  `beats_per_minute` int(10) unsigned default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
@@ -215,11 +215,11 @@ CREATE TABLE `style` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-INSERT INTO `style` VALUES  (4,'Default','./css/style.css','2008-11-18 13:24:36','0000-00-00 00:00:00'),
+INSERT INTO `style` VALUES  (4,'Default','./css/style.css',NOW(),'0000-00-00 00:00:00'),
  (5,'Blue','./css/blue.css',NOW(),'0000-00-00 00:00:00'),
  (6,'Green','./css/green.css',NOW(),'0000-00-00 00:00:00');
 
- DROP TABLE IF EXISTS `tag`;
+DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -231,17 +231,17 @@ DROP TABLE IF EXISTS `update`;
 CREATE TABLE `update` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `update` text character set latin1 collate latin1_german1_ci NOT NULL,
-  `version` int(11) default NULL,
+  `version` int(10) default NULL,
   `release_date` date default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
-INSERT INTO `update` VALUES  (2,'1.0.0',1,NULL,'2008-11-18 13:24:37');
+INSERT INTO `update` VALUES  (2,'1.0.0',1,NULL,NULL);
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `user` text NOT NULL,
   `full_name` text,
   `password` text,
@@ -257,8 +257,8 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `user_cart`;
 CREATE TABLE `user_cart` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL,
-  `song_id` int(11) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `song_id` int(10) NOT NULL,
   `removed_ts` datetime default NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
@@ -266,9 +266,9 @@ CREATE TABLE `user_cart` (
 
 DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE `user_group` (
-  `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) default NULL,
-  `group_id` int(11) default NULL,
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user_id` int(10) unsigned NOT NULL,
+  `group_id` int(10) unsigned NOT NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
@@ -296,5 +296,6 @@ CREATE TABLE `user_setting` (
   `style` text NOT NULL,
   `updated_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `update` (`update`, `version`, `release_date` ) VALUES( '1.0.0', 1, '2008-00-00' )

@@ -52,7 +52,6 @@ namespace music_importer
             this.cbLog = new System.Windows.Forms.CheckBox();
             this.cbClean = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmbVersion = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bl1 = new System.Windows.Forms.Label();
@@ -123,6 +122,7 @@ namespace music_importer
             this.lbFilesScanned_label = new System.Windows.Forms.Label();
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -190,7 +190,7 @@ namespace music_importer
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cmbVersion);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.bl1);
@@ -218,17 +218,6 @@ namespace music_importer
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MySql Database";
-            // 
-            // cmbVersion
-            // 
-            this.cmbVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbVersion.FormattingEnabled = true;
-            this.cmbVersion.Items.AddRange(new object[] {
-            "Auto"});
-            this.cmbVersion.Location = new System.Drawing.Point(279, 77);
-            this.cmbVersion.Name = "cmbVersion";
-            this.cmbVersion.Size = new System.Drawing.Size(142, 21);
-            this.cmbVersion.TabIndex = 3;
             // 
             // label20
             // 
@@ -981,6 +970,15 @@ namespace music_importer
             this.linkReport.Visible = false;
             this.linkReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReport_LinkClicked);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(277, 80);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 13);
+            this.label8.TabIndex = 38;
+            this.label8.Text = "lblVersionValue";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1105,11 +1103,11 @@ namespace music_importer
         private BKP.Online.GUI.ImageCheckBox cbSH_User;
         private BKP.Online.GUI.ImageCheckBox cbSH_Pass;
         private BKP.Online.GUI.ImageCheckBox cbGenerateThumbs;
-        private System.Windows.Forms.ComboBox cmbVersion;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label lbFilesScanned_label;
         private System.Windows.Forms.Label lbFilesScanned;
         private System.Windows.Forms.LinkLabel linkReport;
+        private System.Windows.Forms.Label label8;
     }
 }
 

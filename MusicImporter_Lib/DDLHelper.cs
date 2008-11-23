@@ -17,27 +17,61 @@ namespace MusicImporter_Lib
     class DDLHelper
     {
         private IDatabase db = null;
-
+        private SortedList<int, DatabaseVersion> versions = null;
+        private int current_version = -1;
+        private int update_version = -1;
+        
+        /// <summary>
+        /// the current version
+        /// </summary>
+        public int CurrentVersion
+        {
+            get { return current_version; }
+            set { current_version = value; }
+        }
+        /// <summary>
+        /// the update version
+        /// </summary>
+        public int UpdateVersion
+        {
+            get { return update_version; }
+        }
+        /// <summary>
+        /// gets the create script
+        /// </summary>
         private string CreateScript
         {
             get
             {
-                return Properties.Resources.create;
+                string path = System.IO.Path.GetDirectoryName( Globals.ProcessPath() );
+                return path.TrimEnd('\\') + "\\sql\\create.sql";
             }
         }
         /// <summary>
-        /// 
+        /// default ctor
         /// </summary>
-        /// <param name="db"></param>
-        /// <param name="art_path"></param>
+        /// <param name="db">the database connection</param>
         public DDLHelper(IDatabase db)
         {
             this.db = db;
+
+            //db check for installed version
+            current_version = (int)db.ExecuteScalar("SELECT MAX(version) FROM `music`.`update`");
+            string proc_path = Path.GetDirectoryName(Globals.ProcessPath());
+            string[] files = Directory.GetFiles(proc_path, "update.?.?.?.sql");
+            versions = new SortedList<int, DatabaseVersion>();
+            foreach (string f in files)
+            {
+                DatabaseVersion v = new DatabaseVersion(f);
+                versions.Add(v.Version, v);
+            }
+            // apply in order
+            update_version = versions.Keys[versions.Keys.Count - 1];
         }
         /// <summary>
-        /// 
+        ///  creates an empty database 
         /// </summary>
-        /// <param name="schema_name"></param>
+        /// <param name="schema_name">the name to give the database</param>
         public void CreateDatabase(string schema_name)
         {
             // create database
@@ -50,14 +84,18 @@ namespace MusicImporter_Lib
             db.ExecuteNonQuery(sql);
         }
         /// <summary>
-        /// 
+        /// executes the default create script file
         /// </summary>
-        public void Execute()
+        public void ExecuteCreateScript()
         {
-            Execute(CreateScript);
+            if (File.Exists(CreateScript))
+            {
+                string sql = File.ReadAllText(CreateScript);
+                Execute(sql);
+            }
         }
         /// <summary>
-        /// 
+        /// parses then executes a sql script one command at a time
         /// </summary>
         /// <param name="path"></param>
         public void Execute(string sql)
@@ -72,38 +110,35 @@ namespace MusicImporter_Lib
             }
         }
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        public void ExecuteFile(string path)
-        {
-            if (File.Exists(path))
-            {
-                // run create scipt
-                string sql = File.ReadAllText(path);
-                Execute(sql);
-            }
-        }
-        public void IterateResources()
-        {
-            ResourceManager mgr = Properties.Resources.ResourceManager;
-            System.Resources.ResourceSet set = mgr.GetResourceSet( CultureInfo.CurrentUICulture, false, false);
-            foreach (object o in set)
-            {
-                // do something
-            }
-        }
-        /// <summary>
-        /// execute all files in directory
+        /// execute all files in directory as single sql commands
         /// </summary>
         public void ExecuteDirectory(string path)
         {
-            
             string[] files = Directory.GetFiles(path, "*.sql");
             foreach (string file in files)
             {
                 string sql = File.ReadAllText(file);
                 db.ExecuteNonQuery(sql);
+            }
+        }
+        /// <summary>
+        /// update the database
+        /// </summary>
+        public void UpdateDatabase()
+        {
+            // apply in order
+            if (update_version > current_version)
+            {
+                foreach (DatabaseVersion ver in versions.Values)
+                {
+                    if (ver.Version <= (int)current_version)
+                        continue;  // skip previous upgrades 
+
+                    string sql = File.ReadAllText(ver.Filename);
+                    db.ExecuteNonQuery(sql);
+                    db.ExecuteNonQuery("INSERT INTO `update` (`update`, `version`) VALUES( '"
+                        + ver.ToString() + "', " + ver.Version + " )");
+                }
             }
         }
     }

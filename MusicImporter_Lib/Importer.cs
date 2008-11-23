@@ -92,7 +92,6 @@ namespace MusicImporter_Lib
         private string connect_string = string.Empty;
         private string mm_conn_str = string.Empty;
         private string art_path = string.Empty;
-        private string version = "Auto";
         private ThreadPriority priority = ThreadPriority.BelowNormal;
         private ManualResetEvent pause = new ManualResetEvent( true );
         private int file_count;
@@ -109,13 +108,7 @@ namespace MusicImporter_Lib
         /// default ctor intitialize from default Setting file
         /// </summary>
         public Importer()
-            : this( "Auto", Settings.Default )
-        {
-        }
-        /// <summary>
-        /// default ctor intitialize from default Setting file
-        /// </summary>
-        public Importer(string version) : this( version, Settings.Default ) 
+            : this( Settings.Default )
         {
         }
         /// <summary>
@@ -131,14 +124,6 @@ namespace MusicImporter_Lib
         /// </summary>
         public Importer( MusicImporter_Lib.Properties.Settings settings )
         {    
-            Initialize( settings );
-        }
-        /// <summary>
-        /// intitialize from Setting file
-        /// </summary>
-        public Importer( string version, MusicImporter_Lib.Properties.Settings settings )
-        {
-            this.version = version;
             Initialize( settings );
         }
         /// <summary>
@@ -254,30 +239,23 @@ namespace MusicImporter_Lib
                 try
                 {
                     OnCreateDatabaseStarted();
+                    DDLHelper db_mgr = new DDLHelper(mysql_connection);
 
                     // Create DATABASE
-                    string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
                     if(Settings.Default.create_db)
                     {
                         OnMessage( "creating database ..." );
-                        string path = proc_path + "/create.sql";
-                        if(!File.Exists( path ))
-                        {
-                            LogError( "create database failed could not find file \"create_music.sql\" " );
-                            return;
-                        }
-                        DDLHelper db_mgr = new DDLHelper(mysql_connection);
                         string schema_name = Settings.Default.schema;
 
                         mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
                         db_mgr.CreateDatabase( schema_name );
-                        db_mgr.ExecuteFile( path );
+                        db_mgr.ExecuteCreateScript();
                        
                         // insert initial version 
                         mysql_connection.ExecuteNonQuery( 
                              "INSERT INTO `update` (`update`, `version`) VALUES( '1.0.0', 1 )" );
-                    }
 
+                    }
                     OnCreateDatabaseCompleted();
                     // check for stop signal
                     pause.WaitOne();
@@ -289,7 +267,7 @@ namespace MusicImporter_Lib
                     {
                         // make sure database set
                         mysql_connection.ChangeDatabase( Settings.Default.schema );
-                        UpdateDatabase(); // always update!
+                        db_mgr.UpdateDatabase(); // update
                                           
                         // SCAN TAGS
                         if(Settings.Default.ScanTags)
@@ -662,41 +640,6 @@ namespace MusicImporter_Lib
         #endregion
 
         #region Maintainence
-        /// <summary>
-        /// 
-        /// </summary>
-        private void UpdateDatabase()
-        {
-            //db check for installed version
-            int current_version = (int)mysql_connection.ExecuteScalar("SELECT MAX(version) FROM `music`.`update`");
-            string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
-            string[] files = Directory.GetFiles( proc_path, "update.?.?.?.sql" );
-            SortedList<int, DatabaseVersion> versions = new SortedList<int, DatabaseVersion>();
-            foreach(string f in files)
-            {
-                DatabaseVersion v = new DatabaseVersion( f );
-                versions.Add( v.Version, v );
-            }
-            // apply in order
-            DatabaseVersion update_2_ver = new DatabaseVersion( version );
-            // version 0 = auto (upgrade to latest) 
-            if( update_2_ver.Version == 0 || update_2_ver.Version > current_version )
-            {
-                foreach(DatabaseVersion ver in versions.Values)
-                {
-                    // version 0 = auto (upgrade to latest)
-                    if(ver.Version > update_2_ver.Version && update_2_ver.Version != 0)
-                        break;    
-                    if(ver.Version <= (long)current_version)
-                        continue;  // skip previous upgrades 
-
-                    string sql = File.ReadAllText( ver.Filename );
-                    mysql_connection.ExecuteNonQuery( sql );
-                    mysql_connection.ExecuteNonQuery( "INSERT INTO `update` (`update`, `version`) VALUES( '"
-                        + ver.ToString() + "', " + ver.Version + " )" );
-                }
-            }
-        }
         /// <summary>
         /// delete orphaned songs inserts (file no longer exsists)
         /// </summary>

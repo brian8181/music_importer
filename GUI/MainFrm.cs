@@ -67,8 +67,7 @@ namespace music_importer
             // GUI Settings
             cbSH_User.Checked = !Properties.Settings.Default.show_user;
             cbSH_Pass.Checked = !Properties.Settings.Default.show_pass;
-            cmbVersion.SelectedIndex = 0;
-
+       
             // init priorty combobox
             Array values = Enum.GetValues(typeof(ThreadPriority));
             foreach(ThreadPriority v in values)
@@ -175,13 +174,13 @@ namespace music_importer
                 Properties.Settings.Default.sqlite_history = new StringCollection();
             }
             //load version box
-            string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
-            string[] files = Directory.GetFiles( proc_path, "update.?.?.?.sql" );
-            foreach( string f in files )
-            {
-                string version = Path.GetFileNameWithoutExtension( f );
-                cmbVersion.Items.Add(version);
-            }
+            //string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
+            //string[] files = Directory.GetFiles( proc_path, "update.?.?.?.sql" );
+            //foreach( string f in files )
+            //{
+            //    string version = Path.GetFileNameWithoutExtension( f );
+            //    cmbVersion.Items.Add(version);
+            //}
         }
         /// <summary>
         /// save application settings
@@ -296,7 +295,7 @@ namespace music_importer
             // connect
             try
             {
-                importer = new Importer( cmbVersion.SelectedItem.ToString() );
+                importer = new Importer();
                 importer.Connect();
             }
             catch(MySql.Data.MySqlClient.MySqlException exp)
@@ -949,7 +948,7 @@ namespace music_importer
             }
             Close();
         }
-
+             
         private void linkReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             HTMLReportFrm frm = new HTMLReportFrm();

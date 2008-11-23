@@ -150,9 +150,9 @@ namespace TestProject
 
             db.ChangeDatabase(schema_name);
             // needs to be realtive 
-            target.Execute(MusicImporter_Lib.Properties.Resources.create);
+            //target.Execute(@"..\\..\\");
             db.ChangeDatabase("information_schema");
-            ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name  + "'");
+            ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
             dt = ds.Tables[0];
 
             Assert.IsTrue(dt.Rows.Count > 0);
@@ -177,18 +177,6 @@ namespace TestProject
             //DataTable dt = ds.Tables[0];
             //Assert.IsTrue(  dt.Rows.Count != 1 );
             
-        }
-
-
-        /// <summary>
-        ///A test for IterateResources
-        ///</summary>
-        [TestMethod()]
-        public void IterateResourcesTest()
-        {
-            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
-            target.IterateResources();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }
 }

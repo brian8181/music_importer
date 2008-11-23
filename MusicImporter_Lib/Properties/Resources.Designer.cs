@@ -59,24 +59,5 @@ namespace MusicImporter_Lib.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DROP TABLE IF EXISTS `album`;
-        ///CREATE TABLE `album` (
-        ///  `id` int(10) unsigned NOT NULL auto_increment,
-        ///  `album` text collate latin1_german1_ci NOT NULL,
-        ///  `artist` text collate latin1_german1_ci,
-        ///  `art` text collate latin1_german1_ci,
-        ///  `extra` text collate latin1_german1_ci,
-        ///  `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-        ///  `insert_ts` timestamp NOT NULL default &apos;0000-00-00 00:00:00&apos;,
-        ///  PRIMARY KEY  (`id`)
-        ///) ENGINE=InnoDB AUTO_INCREMENT=2901 DEFAULT CHARSET=latin1 C [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string create {
-            get {
-                return ResourceManager.GetString("create", resourceCulture);
-            }
-        }
     }
 }

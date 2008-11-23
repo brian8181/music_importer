@@ -8,7 +8,7 @@ namespace Test_Console
     {
         static void Main( string[] args )
         {
-            MusicImporter_Lib.Importer importer = new MusicImporter_Lib.Importer( "0" );
+            MusicImporter_Lib.Importer importer = new MusicImporter_Lib.Importer();
             importer.Connect();
         }
     }
