@@ -252,6 +252,8 @@ namespace MusicImporter_Lib
                         db_mgr.ExecuteCreateScript();
                     }
 
+                    // change to database
+                    mysql_connection.ChangeDatabase( Settings.Default.schema );
                     // get version info
                     db_mgr.InitializeVersionInfo();
                     reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
@@ -323,13 +325,6 @@ namespace MusicImporter_Lib
                     // check for stop signal
                     pause.WaitOne();
                     if(!running) return;
-
-                    // RESCAN ART
-                    //if(Settings.Default.RecanArt)
-                    //{
-                    //    Status( "scanning art directory ..." );
-                    //    RescanArt();
-                    //}
 
                     // check for stop signal
                     pause.WaitOne();
@@ -424,7 +419,11 @@ namespace MusicImporter_Lib
                 object album_id = InsertAlbum( tag );
                 //string art_id = InsertArt( tag, dir );
                 object song_id = InsertSong(tag, tag_file, null, artist_id, album_id);
-                string[] art_ids = art_importer.InsertArt(song_id, tag_file); // do not need ret val
+                if (Settings.Default.insert_art)
+                {
+                    string[] art_ids = art_importer.InsertArt(song_id, tag_file); // do not need ret val
+                    reporter.InsertArtCount += art_ids.Length;
+                }
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );
             for(int i = 0; i < dirs.Length && running; ++i)

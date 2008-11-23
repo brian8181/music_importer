@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MusicImporter_Lib
 {
+    /// <summary>
+    /// collect and generate import reports
+    /// </summary>
     public class Reporter
     {
         private int scanned_count = 0;
@@ -32,7 +35,6 @@ namespace MusicImporter_Lib
             get { return db_version; }
             set { db_version = value; }
         }
-
         public int ScannedCount
         {
             get { return scanned_count; }
@@ -81,6 +83,11 @@ namespace MusicImporter_Lib
             get { return delete_artist_count; }
             set { delete_artist_count = value; }
         }
+        public int InsertArtCount
+        {
+            get { return insert_art_count; }
+            set { insert_art_count = value; }
+        }
         public uint DeleteArtCount
         {
             get { return delete_art_count; }
@@ -100,58 +107,66 @@ namespace MusicImporter_Lib
             corrupt_files.Add(file_name);
         }
         /// <summary>
-        /// 
+        /// helper function used by GetHTML
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         private string ListFragment(string name, string style)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<tr><td {1}>{0} INSERT Count:</td><td {1}>{{0}}</tr></td>", name, style);
-            sb.AppendFormat("<tr><td {1}>{0} DELETE Count:</td><td {1}>{{1}}</tr></td>", name, style);
+            sb.AppendFormat("<tr><td {1}>{0} INSERT Count:</td><td {1}>{{0}}</tr></td>\r\n", name, style);
+            sb.AppendFormat("<tr><td {1}>{0} DELETE Count:</td><td {1}>{{1}}</tr></td>\r\n", name, style);
             return sb.ToString();
         }
         /// <summary>
-        /// 
+        /// return report as HTML 
         /// </summary>
         /// <returns></returns>
         public string GetHTML()
         {
-            StringBuilder sb = new StringBuilder("<html><head>");
-            sb.AppendLine( "<style type=\"text/css\">" );
-            sb.AppendLine("body{ font-family: Arial; }");
+            StringBuilder sb = new StringBuilder("<html>\r\n<head>\r\n");
+
+            sb.AppendLine( "<style type=\"text/css\">\r\n" );
+            sb.AppendLine("body\r\n{\r\n\t font-family: Arial;\r\n}");
             sb.AppendLine( "</style>" );
             
             string dt = DateTime.Now.ToString(BKP.Online.Globals.PrettyLogDateFormat);   
             sb.AppendFormat("<h2>{0}</h2>\r\n", dt);
+            
             sb.AppendLine("<div style=\"text-align: center\">");
 
             string style = "style=\"font-size: 9pt\"";
 
             sb.AppendLine("<table>");
-            sb.AppendFormat("<tr><td {1}>Scanned Count:</td><td {1}>{0}</td></tr>", scanned_count, style);
-            sb.AppendFormat("<tr><td {1}>Corrupt Files Count:</td><td {1}>{0}</td></tr>", CorruptFileCount, style);
-            sb.AppendFormat("<tr><td {1}>Song INSERT Count:</td><td {1}>{0}</td></tr>", insert_song_count, style);
-            sb.AppendFormat("<tr><td {1}>Song UPDATE Count:</td><td {1}>{0}</td></tr>", update_song_count, style);
-            sb.AppendFormat("<tr><td {1}>Song DELETE Count:</td><td {1}>{0}</td></tr>", update_song_count, style);
+            sb.AppendFormat("<tr><td {1}>Scanned Count:</td><td {1}>{0}</td></tr>\r\n", scanned_count, style);
+            sb.AppendFormat("<tr><td {1}>Corrupt Files Count:</td><td {1}>{0}</td></tr>\r\n", CorruptFileCount, style);
+            sb.AppendFormat("<tr><td {1}>Song INSERT Count:</td><td {1}>{0}</td></tr>\r\n", insert_song_count, style);
+            sb.AppendFormat("<tr><td {1}>Song UPDATE Count:</td><td {1}>{0}</td></tr>\r\n", update_song_count, style);
+            sb.AppendFormat("<tr><td {1}>Song DELETE Count:</td><td {1}>{0}</td></tr>\r\n", update_song_count, style);
          
             sb.AppendLine("<br />");
-            sb.AppendFormat(ListFragment("Artist", style),
-                insert_artist_count, delete_artist_count);
+            sb.AppendFormat(ListFragment("Artist", style), insert_artist_count, delete_artist_count);
 
             sb.AppendLine("<br />");
-            sb.AppendFormat(ListFragment("Album", style),
-                insert_album_count, delete_album_count);
+            sb.AppendFormat(ListFragment("Album", style), insert_album_count, delete_album_count);
 
             sb.AppendLine("<br />");
-            sb.AppendFormat(ListFragment("Art", style),
-                insert_art_count, delete_art_count);
+            sb.AppendFormat(ListFragment("Art", style), insert_art_count, delete_art_count);
             
             sb.AppendLine("<br />");
-            sb.AppendFormat("<tr><td {1}>Delete Art File Count:</td><td {1}>{0}</tr></td>", delete_art_file_count, style);
+            sb.AppendFormat("<tr><td {1}>Delete Art File Count:</td><td {1}>{0}</tr></td>\r\n", delete_art_file_count, style);
+
             sb.AppendLine("</table>");
-            
-            sb.AppendLine("</div></div></body></html>");
+
+            sb.AppendLine("<br />");
+
+            sb.AppendFormat( "<div {0}>\r\n", style );
+            sb.AppendFormat("<i><b>Database version:{0} previous version:{1}</b></i>\r\n", db_version, db_prev_version);
+            sb.AppendLine("</div>");
+      
+            sb.AppendLine("</div>");
+
+            sb.AppendLine("</body>\r\n</html>");
             return sb.ToString();
         }
     }

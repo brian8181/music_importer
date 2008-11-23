@@ -20,6 +20,7 @@ namespace MusicImporter_Lib
         private SortedList<int, DatabaseVersion> versions = null;
         private DatabaseVersion current_version = null;
         private DatabaseVersion update_version = null;
+        private string schema_name = string.Empty;
         
         /// <summary>
         /// the current version

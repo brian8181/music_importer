@@ -102,7 +102,7 @@ namespace music_importer
             this.txtSQLite.Text = Settings.Default.mm_conn_str;
             this.cbClean.Checked = Settings.Default.Clean;
             this.cbLog.Checked = Settings.Default.Log;
-            this.cbArt.Checked = Settings.Default.RecanArt;
+            //this.cbArt.Checked = Settings.Default.RecanArt;
             this.cbTags.Checked = Settings.Default.ScanTags;
             this.cbOptimize.Checked = Settings.Default.Optimize;
             this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
@@ -204,7 +204,7 @@ namespace music_importer
             Settings.Default.ScanPlaylist = this.cbPlaylist.Checked;
             Settings.Default.Clean = this.cbClean.Checked;
             Settings.Default.Log = this.cbLog.Checked;
-            Settings.Default.RecanArt = this.cbArt.Checked;
+            //Settings.Default.RecanArt = this.cbArt.Checked;
             Settings.Default.ScanTags = this.cbTags.Checked;
             Settings.Default.Optimize = this.cbOptimize.Checked;
             Settings.Default.create_db = this.cbCreateDB.Checked;
@@ -268,6 +268,7 @@ namespace music_importer
         /// <param name="e">args</param>
         private void btnOK_Click( object sender, EventArgs e )
         {
+            linkReport.Visible = false;
             ToggleOff();
             btnOK.Enabled = false;
             btnCancel.Text = "Quit";
@@ -864,7 +865,7 @@ namespace music_importer
             cbGenerateThumbs.Enabled = state;
             // check boxes
             cbMysql.Enabled = state;
-            cbArt.Enabled = state;
+            //cbArt.Enabled = state;
             cbClean.Enabled = state;
             cbLog.Enabled = state;
             cbOptimize.Enabled = state;
