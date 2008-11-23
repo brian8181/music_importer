@@ -237,8 +237,6 @@ CREATE TABLE `update` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
-INSERT INTO `update` VALUES  (2,'1.0.0',1,NULL,NULL);
-
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) unsigned NOT NULL auto_increment,

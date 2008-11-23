@@ -242,7 +242,6 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue("?id", id);
             using (DbDataReader reader = db.ExecuteReader(cmd))
             {
-
                 file = null;
                 while (reader.Read())
                 {

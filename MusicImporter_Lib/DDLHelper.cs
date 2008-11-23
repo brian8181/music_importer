@@ -18,13 +18,13 @@ namespace MusicImporter_Lib
     {
         private IDatabase db = null;
         private SortedList<int, DatabaseVersion> versions = null;
-        private int current_version = -1;
-        private int update_version = -1;
+        private DatabaseVersion current_version = null;
+        private DatabaseVersion update_version = null;
         
         /// <summary>
         /// the current version
         /// </summary>
-        public int CurrentVersion
+        public DatabaseVersion CurrentVersion
         {
             get { return current_version; }
             set { current_version = value; }
@@ -32,7 +32,7 @@ namespace MusicImporter_Lib
         /// <summary>
         /// the update version
         /// </summary>
-        public int UpdateVersion
+        public DatabaseVersion UpdateVersion
         {
             get { return update_version; }
         }
@@ -54,19 +54,33 @@ namespace MusicImporter_Lib
         public DDLHelper(IDatabase db)
         {
             this.db = db;
-
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void InitializeVersionInfo()
+        {
             //db check for installed version
-            current_version = (int)db.ExecuteScalar("SELECT MAX(version) FROM `music`.`update`");
+            string version = (string)db.ExecuteScalar(
+                "SELECT `update` FROM `update` WHERE `version` = (SELECT MAX(version) FROM `update`)");
+            current_version = new DatabaseVersion();
+            current_version.ParseVersion(version);
             string proc_path = Path.GetDirectoryName(Globals.ProcessPath());
-            string[] files = Directory.GetFiles(proc_path, "update.?.?.?.sql");
+            proc_path.TrimEnd('\\');
+            string update_path = string.Format("{0}\\sql\\updates", proc_path);
+            string[] files = Directory.GetFiles(update_path, "update.?.?.?.sql");
             versions = new SortedList<int, DatabaseVersion>();
             foreach (string f in files)
             {
                 DatabaseVersion v = new DatabaseVersion(f);
                 versions.Add(v.Version, v);
             }
-            // apply in order
-            update_version = versions.Keys[versions.Keys.Count - 1];
+
+            if (versions.Keys.Count > 0)
+            {
+                // apply in order
+                update_version = versions.Values[versions.Values.Count - 1];
+            }
         }
         /// <summary>
         ///  creates an empty database 
@@ -127,17 +141,17 @@ namespace MusicImporter_Lib
         public void UpdateDatabase()
         {
             // apply in order
-            if (update_version > current_version)
+            if (update_version.Version > current_version.Version)
             {
                 foreach (DatabaseVersion ver in versions.Values)
                 {
-                    if (ver.Version <= (int)current_version)
+                    if (ver.Version <= current_version.Version)
                         continue;  // skip previous upgrades 
 
                     string sql = File.ReadAllText(ver.Filename);
                     db.ExecuteNonQuery(sql);
-                    db.ExecuteNonQuery("INSERT INTO `update` (`update`, `version`) VALUES( '"
-                        + ver.ToString() + "', " + ver.Version + " )");
+                    db.ExecuteNonQuery("INSERT INTO `update` (`update`, `version`, `release_date`) VALUES( '"
+                        + ver.ToString() + "', " + ver.Version + ", '2008-11-11' )");
                 }
             }
         }

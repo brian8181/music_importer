@@ -240,7 +240,7 @@ namespace MusicImporter_Lib
                 {
                     OnCreateDatabaseStarted();
                     DDLHelper db_mgr = new DDLHelper(mysql_connection);
-
+                    
                     // Create DATABASE
                     if(Settings.Default.create_db)
                     {
@@ -250,12 +250,14 @@ namespace MusicImporter_Lib
                         mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
                         db_mgr.CreateDatabase( schema_name );
                         db_mgr.ExecuteCreateScript();
-                       
-                        // insert initial version 
-                        mysql_connection.ExecuteNonQuery( 
-                             "INSERT INTO `update` (`update`, `version`) VALUES( '1.0.0', 1 )" );
-
                     }
+
+                    // get version info
+                    db_mgr.InitializeVersionInfo();
+                    reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
+                    reporter.DBVersion = db_mgr.UpdateVersion.ToString();
+                    db_mgr.UpdateDatabase(); // update
+
                     OnCreateDatabaseCompleted();
                     // check for stop signal
                     pause.WaitOne();
@@ -267,8 +269,7 @@ namespace MusicImporter_Lib
                     {
                         // make sure database set
                         mysql_connection.ChangeDatabase( Settings.Default.schema );
-                        db_mgr.UpdateDatabase(); // update
-                                          
+                                                                 
                         // SCAN TAGS
                         if(Settings.Default.ScanTags)
                         {

@@ -18,6 +18,20 @@ namespace MusicImporter_Lib
         private int insert_art_count = 0;
         private uint delete_art_count = 0;
         private uint delete_art_file_count = 0;
+        private string db_prev_version = string.Empty;
+
+        public string DBPeviousVersion
+        {
+            get { return db_prev_version; }
+            set { db_prev_version = value; }
+        }
+        private string db_version = string.Empty;
+
+        public string DBVersion
+        {
+            get { return db_version; }
+            set { db_version = value; }
+        }
 
         public int ScannedCount
         {

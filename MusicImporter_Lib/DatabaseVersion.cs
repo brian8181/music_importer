@@ -23,7 +23,6 @@ namespace MusicImporter_Lib
         {
             get { return filename; }
         }
-
         private string major = string.Empty;
         /// <summary>
         /// 
@@ -32,7 +31,6 @@ namespace MusicImporter_Lib
         {
             get { return major; }
         }
-
         private string minor = string.Empty;
         /// <summary>
         /// 
@@ -60,7 +58,14 @@ namespace MusicImporter_Lib
             get { return version; }
         }
         /// <summary>
-        /// 
+        /// create blank string, use ParseVersion to intialize
+        /// </summary>
+        /// <param name="filename"></param>
+        public DatabaseVersion()
+        {
+        }
+        /// <summary>
+        /// create with a string from database
         /// </summary>
         /// <param name="filename"></param>
         public DatabaseVersion( string filename )
@@ -69,7 +74,7 @@ namespace MusicImporter_Lib
             {
                 this.filename = filename;
                 Regex exp =
-                    new Regex( "^update.(?<major>[0-9]).(?<minor>[0-9]).(?<revison>[0-9])($|.sql$)" );
+                    new Regex("^update.(?<ver_str>[0-9].[0-9].[0-9]).sql$");
 
                 MatchCollection mc = exp.Matches( System.IO.Path.GetFileName(filename) );
                 if(mc.Count != 1)
@@ -78,15 +83,34 @@ namespace MusicImporter_Lib
                     return;
                 }
                 Match m = mc[0];
-                major = m.Groups["major"].Value;
-                minor = m.Groups["minor"].Value;
-                revison = m.Groups["revison"].Value;
-                version = int.Parse( major + minor + revison );
+                string ver_str = m.Groups["ver_str"].Value;
+                ParseVersion(ver_str);
             }
             catch
             {
                 valid = false;
             }
+        }
+        /// <summary>
+        /// parses a version string, can be used to create a version fomr db string
+        /// </summary>
+        /// <param name="value"></param>
+        public void ParseVersion(string value)
+        {
+            Regex exp =
+                   new Regex("^(?<major>[0-9]).(?<minor>[0-9]).(?<revison>[0-9])$");
+
+            MatchCollection mc = exp.Matches(value);
+            if (mc.Count != 1)
+            {
+                valid = false;
+                return;
+            }
+            Match m = mc[0];
+            major = m.Groups["major"].Value;
+            minor = m.Groups["minor"].Value;
+            revison = m.Groups["revison"].Value;
+            version = int.Parse(major + minor + revison);
         }
         /// <summary>
         /// 
