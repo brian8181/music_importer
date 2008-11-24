@@ -333,19 +333,59 @@ namespace MusicImporter_Lib
             {
                 byte[] data = File.ReadAllBytes(files[i]);
                 byte[] hash = ComputeHash(data);
-
-                string sql = "SELECT id FROM art WHERE hash=?hash";
+                string file = Path.GetFileName(files[i]);
+                
+                // file exist but hash doesn't match
+                string sql = "SELECT id FROM art WHERE file=?file AND NOT hash=?hash";
                 MySqlCommand cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
+                cmd.Parameters.AddWithValue("?file", file);
                 object obj = db.ExecuteScalar(cmd);
+                if (obj != null)
+                {
+                   // todo corrupt picture
+                }
 
+                // file doesn't exist
+                sql = "SELECT id FROM art WHERE file=?file";
+                cmd = new MySqlCommand(sql);
+                cmd.Parameters.AddWithValue("?hash", hash);
+                cmd.Parameters.AddWithValue("?file", file);
+                obj = db.ExecuteScalar(cmd);
                 if (obj == null)
                 {
                     File.Delete(files[i]);
+
+                    // delete thumbs if they exist
+                    string dir = Path.GetDirectoryName( files[i] );
+                    dir.TrimEnd('\\');
+
+                    string large = string.Format("{0}\\large\\{1}", dir, file);
+                    if (File.Exists(large))
+                    {
+                        File.Delete(large);
+                    }
+                    string small = string.Format("{0}\\small\\{1}", dir, file); 
+                    if( File.Exists(small) )
+                    {
+                        File.Delete(small);
+                    }
+                    string xsmall = string.Format("{0}\\xsmall\\{1}", dir, file);
+                    if (File.Exists(xsmall))
+                    {
+                        File.Delete(xsmall);
+                    }
                     ++deleted;
                 }
             }
             return deleted;
+        }
+        /// <summary>
+        /// delete any thumb with out parent
+        /// </summary>
+        private void DeleteOrphanedThumbs()
+        {
+            // todo
         }
         /// <summary>
         /// (Re)Scan and insert art from art directory. 

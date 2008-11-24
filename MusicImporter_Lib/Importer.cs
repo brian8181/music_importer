@@ -319,7 +319,9 @@ namespace MusicImporter_Lib
                         Status( "cleaning ..." );
                         reporter.DeleteArtFileCount = art_importer.DeleteOrphanedFiles();
                         reporter.DeleteArtCount = art_importer.DeleteOrphanedInserts();
-                        reporter.DeleteSongCount = Clean();
+                        
+                        //TODO clean need to delte art as to obey FKs
+                        //reporter.DeleteSongCount = Clean();
                     }
                     
                     // check for stop signal
