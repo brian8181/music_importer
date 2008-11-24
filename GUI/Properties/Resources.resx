@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mysql_100x52-64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="mysql" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mysql_100x52-64.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fish_xiph_org" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fish_xiph_org.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="taglib.logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="taglib_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\taglib.logo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="180px-Tux" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -159,5 +159,8 @@
   </data>
   <data name="enabled_trans_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\enabled.trans.16.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NA.JPG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

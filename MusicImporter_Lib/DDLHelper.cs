@@ -103,9 +103,16 @@ namespace MusicImporter_Lib
         /// </summary>
         public void ExecuteCreateScript()
         {
-            if (File.Exists(CreateScript))
+            ExecuteCreateScript(CreateScript);
+        }
+        /// <summary>
+        /// executes the default create script file
+        /// </summary>
+        public void ExecuteCreateScript(string file)
+        {
+            if (File.Exists(file))
             {
-                string sql = File.ReadAllText(CreateScript);
+                string sql = File.ReadAllText(file);
                 Execute(sql);
             }
         }

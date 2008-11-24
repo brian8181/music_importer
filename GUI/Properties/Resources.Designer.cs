@@ -138,16 +138,23 @@ namespace music_importer.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap mysql_100x52_64 {
+        internal static System.Drawing.Bitmap mysql {
             get {
-                object obj = ResourceManager.GetObject("mysql_100x52-64", resourceCulture);
+                object obj = ResourceManager.GetObject("mysql", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap NA {
+            get {
+                object obj = ResourceManager.GetObject("NA", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         internal static System.Drawing.Bitmap taglib_logo {
             get {
-                object obj = ResourceManager.GetObject("taglib.logo", resourceCulture);
+                object obj = ResourceManager.GetObject("taglib_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

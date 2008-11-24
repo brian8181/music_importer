@@ -12,6 +12,7 @@ using MusicImporter_Lib.Properties;
 using BKP.Online.IO;
 using System.Data;
 using System.Text.RegularExpressions;
+using BKP.Online;
 
 namespace MusicImporter_Lib
 {
@@ -32,6 +33,17 @@ namespace MusicImporter_Lib
         {
             this.db = db;
             this.art_path = art_path;
+
+            // place NA jpg
+            string path = System.IO.Path.GetDirectoryName( Globals.ProcessPath() );
+            string file = path = path.TrimEnd('\\') + "\\Resources\\NA.JPG";
+            string dest = art_path.TrimEnd('\\') + "\\NA.JPG";
+            
+            if (File.Exists(file) && !File.Exists(dest) )
+            {
+                File.Copy(file, dest);
+                GenerateThumbs(dest);
+            }
         }
 
         /// <summary>
@@ -40,7 +52,7 @@ namespace MusicImporter_Lib
         /// <param name="tag">the id3 tag</param>
         /// <param name="current_dir">current directory</param>
         /// <returns>primary key (insert id)</returns>
-        public string[] InsertArt(object song_id, TagLib.File tag_file)
+        public uint InsertArt(object song_id, TagLib.File tag_file)
         {
             string art = null;
             string key = null;
@@ -51,11 +63,14 @@ namespace MusicImporter_Lib
             string description = string.Empty;
             string current_dir = Path.GetDirectoryName(tag_file.Name);
             TagLib.Tag tag = tag_file.Tag;
-            List<string> ids = new List<string>();
+         
+            if (tag.Pictures.Length == 0)
+            {
+                return 0;
+            }
 
             foreach (TagLib.IPicture pic in tag.Pictures)
             {
-
                 art = GenerateFileName(pic);
                 data = new byte[pic.Data.Count];
                 pic.Data.CopyTo(data, 0);
@@ -65,12 +80,11 @@ namespace MusicImporter_Lib
                 if (pic.MimeType != "-->") // no support for linked art
                 {
                     string art_id = Insert(data, art, type, description, mime_type);
-                    ids.Add(art_id);
                     CreateLink(song_id, art_id);
                 }
             }
             
-            return ids.ToArray(); // do wee need a ret val here?
+            return 0; // do wee need a ret val here?
         }
 
         /// <summary>
@@ -199,7 +213,6 @@ namespace MusicImporter_Lib
                 art_path + "xsmall\\" + file_name, art, Settings.Default.art_xsmall, 0, true);
 
         }
-
         /// <summary>
         /// 
         /// </summary>

@@ -59,5 +59,12 @@ namespace MusicImporter_Lib.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap NA {
+            get {
+                object obj = ResourceManager.GetObject("NA", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

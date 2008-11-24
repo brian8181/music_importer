@@ -18,7 +18,7 @@ namespace MusicImporter_Lib
         private uint delete_album_count = 0;
         private int insert_artist_count = 0;
         private int delete_artist_count = 0;
-        private int insert_art_count = 0;
+        private uint insert_art_count = 0;
         private uint delete_art_count = 0;
         private uint delete_art_file_count = 0;
         private string db_prev_version = string.Empty;
@@ -83,7 +83,7 @@ namespace MusicImporter_Lib
             get { return delete_artist_count; }
             set { delete_artist_count = value; }
         }
-        public int InsertArtCount
+        public uint InsertArtCount
         {
             get { return insert_art_count; }
             set { insert_art_count = value; }
@@ -114,8 +114,8 @@ namespace MusicImporter_Lib
         private string ListFragment(string name, string style)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<tr><td {1}>{0} INSERT Count:</td><td {1}>{{0}}</tr></td>\r\n", name, style);
-            sb.AppendFormat("<tr><td {1}>{0} DELETE Count:</td><td {1}>{{1}}</tr></td>\r\n", name, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>{0} INSERT Count:</td><td {1}>{{0}}</tr></td>\r\n", name, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>{0} DELETE Count:</td><td {1}>{{1}}</tr></td>\r\n", name, style);
             return sb.ToString();
         }
         /// <summary>
@@ -126,8 +126,9 @@ namespace MusicImporter_Lib
         {
             StringBuilder sb = new StringBuilder("<html>\r\n<head>\r\n");
             sb.AppendLine("<title>Report</title>");
-            sb.AppendLine( "<style type=\"text/css\">\r\n" );
+            sb.AppendLine( "<style type=\"text/css\">" );
             sb.AppendLine("body\r\n{\r\n\t font-family: Arial;\r\n}");
+            sb.AppendLine(".gray_text\r\n{\r\n\tcolor:#666666;\r\n}");
             sb.AppendLine( "</style>" );
             sb.AppendLine("</head>");
 
@@ -139,15 +140,15 @@ namespace MusicImporter_Lib
             string style = "style=\"font-size: 9pt\"";
 
             sb.AppendLine("<table>");
-            sb.AppendFormat("<tr><td {1}>Scanned Count:</td><td {1}>{0}</td></tr>\r\n", scanned_count, style);
-            sb.AppendFormat("<tr><td {1}>Corrupt Files Count:</td><td {1}>{0}</td></tr>\r\n", CorruptFileCount, style);
-            sb.AppendFormat("<tr><td {1}>Song INSERT Count:</td><td {1}>{0}</td></tr>\r\n", insert_song_count, style);
-            sb.AppendFormat("<tr><td {1}>Song UPDATE Count:</td><td {1}>{0}</td></tr>\r\n", update_song_count, style);
-            sb.AppendFormat("<tr><td {1}>Song DELETE Count:</td><td {1}>{0}</td></tr>\r\n", delete_song_count, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>Scanned Count:</td><td {1}>{0}</td></tr>\r\n", scanned_count, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>Corrupt Files Count:</td><td {1}>{0}</td></tr>\r\n", CorruptFileCount, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>Song INSERT Count:</td><td {1}>{0}</td></tr>\r\n", insert_song_count, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>Song UPDATE Count:</td><td {1}>{0}</td></tr>\r\n", update_song_count, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>Song DELETE Count:</td><td {1}>{0}</td></tr>\r\n", delete_song_count, style);
             sb.AppendFormat(ListFragment("Artist", style), insert_artist_count, delete_artist_count);
             sb.AppendFormat(ListFragment("Album", style), insert_album_count, delete_album_count);
             sb.AppendFormat(ListFragment("Art", style), insert_art_count, delete_art_count);
-            sb.AppendFormat("<tr><td {1}>Delete Art File Count:</td><td {1}>{0}</tr></td>\r\n", delete_art_file_count, style);
+            sb.AppendFormat("<tr><td class=\"gray_text\" {1}>Delete Art File Count:</td><td {1}>{0}</tr></td>\r\n", delete_art_file_count, style);
             sb.AppendLine("</table>");
 
             sb.AppendLine("<br />");

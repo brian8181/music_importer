@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gpl-3.0.txt" />
+    <None Include="Resources\NA.JPG" />
     <None Include="sql\create.sql" />
     <None Include="sql\procedures\get_default_art.sql" />
     <None Include="sql\triggers\inserted_album_trigger.sql" />
@@ -207,8 +208,13 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>mkdir "$(TargetDir)sql"
-xcopy "$(ProjectDir)sql" "$(TargetDir)sql" /S /Y</PostBuildEvent>
+    <PostBuildEvent>REM copy all SQL files
+mkdir "$(TargetDir)sql"
+xcopy "$(ProjectDir)sql" "$(TargetDir)sql" /S /Y
+
+REM copy all resouce files
+mkdir "$(TargetDir)Resources"
+xcopy "$(ProjectDir)Resources" "$(TargetDir)Resources" /S /Y</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

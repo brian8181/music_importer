@@ -73,20 +73,6 @@ namespace TestProject
         #endregion
 
         /// <summary>
-        ///A test for CreateScript
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MusicImporter_Lib.dll")]
-        public void CreateScriptTest()
-        {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            DDLHelper_Accessor target = new DDLHelper_Accessor(db);
-            string actual;
-            actual = target.CreateScript;
-            StringAssert.StartsWith(actual, "DROP TABLE IF EXISTS `album`");
-        }
-
-        /// <summary>
         ///A test for CreateDatabase
         ///</summary>
         [TestMethod()]
@@ -101,40 +87,10 @@ namespace TestProject
         }
 
         /// <summary>
-        ///A test for ExecuteFile
+        ///A test for ExecuteCreateScript
         ///</summary>
         [TestMethod()]
-        public void ExecuteFileTest()
-        {
-            //CreateDatabaseTest();
-
-            //DDLHelper target = new DDLHelper(db);
-            //db.ChangeDatabase("information_schema");
-            //DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
-            //DataTable dt = ds.Tables[0];
-            //if (dt.Rows.Count != 1)
-            //{
-            //    Assert.Inconclusive("database does not exist");
-            //    return;
-            //}
-
-            //db.ChangeDatabase(schema_name);
-            //// needs to be realtive 
-            //string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\create_music_complete.sql";
-            //target.ExecuteFile(path);
-            //db.ChangeDatabase("information_schema");
-            //ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
-            //dt = ds.Tables[0];
-
-            //Assert.IsTrue(dt.Rows.Count > 0);
-            Assert.Inconclusive("Obsolete");
-        }
-             
-        /// <summary>
-        ///A test for Execute
-        ///</summary>
-        [TestMethod()]
-        public void ExecuteTest()
+        public void ExecuteCreateScriptTest()
         {
             CreateDatabaseTest();
 
@@ -149,34 +105,14 @@ namespace TestProject
             }
 
             db.ChangeDatabase(schema_name);
+            string file = @"..\..\..\GUI\bin\Debug\sql\create.sql";
             // needs to be realtive 
-            //target.Execute(@"..\\..\\");
+            target.ExecuteCreateScript(file);
             db.ChangeDatabase("information_schema");
             ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
             dt = ds.Tables[0];
 
             Assert.IsTrue(dt.Rows.Count > 0);
-        }
-               
-        /// <summary>
-        ///A test for ExecuteAll
-        ///</summary>
-        [TestMethod()]
-        public void ExecuteDirectoryTest()
-        {
-            CreateDatabaseTest();
-            ExecuteFileTest();
-            db.ChangeDatabase("music_test");
-            DDLHelper target = new DDLHelper(db); // TODO: Initialize to an appropriate value
-            string path = @"C:\Documents and Settings\brian\dev\muisc_importer\GUI\sql\procedures"; // TODO: Initialize to an appropriate value
-            target.ExecuteDirectory(path);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-
-            db.ChangeDatabase("information_schema");
-            //DataSet ds = db.ExecuteQuery(SELECT * FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='music_test';);
-            //DataTable dt = ds.Tables[0];
-            //Assert.IsTrue(  dt.Rows.Count != 1 );
-            
         }
     }
 }

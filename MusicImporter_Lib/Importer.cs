@@ -423,8 +423,8 @@ namespace MusicImporter_Lib
                 object song_id = InsertSong(tag, tag_file, null, artist_id, album_id);
                 if (Settings.Default.insert_art)
                 {
-                    string[] art_ids = art_importer.InsertArt(song_id, tag_file); // do not need ret val
-                    reporter.InsertArtCount += art_ids.Length;
+                    uint c = art_importer.InsertArt(song_id, tag_file); // do not need ret val
+                    reporter.InsertArtCount += c;
                 }
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );
