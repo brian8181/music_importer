@@ -9,15 +9,16 @@ namespace MusicImporter_Lib
     /// </summary>
     public class Reporter
     {
-        private int scanned_count = 0;
+        private uint scanned_count = 0;
         private List<string> corrupt_files = new List<string>();
-        private int insert_song_count = 0;
-        private int update_song_count = 0;
-        private int delete_song_count = 0;
-        private int insert_album_count = 0;
+        private uint insert_song_count = 0;
+        private uint update_song_count = 0;
+        private uint delete_song_count = 0;
+        private uint insert_album_count = 0;
+        private uint update_album_count = 0;
         private uint delete_album_count = 0;
-        private int insert_artist_count = 0;
-        private int delete_artist_count = 0;
+        private uint insert_artist_count = 0;
+        private uint delete_artist_count = 0;
         private uint insert_art_count = 0;
         private uint delete_art_count = 0;
         private uint delete_art_file_count = 0;
@@ -35,35 +36,35 @@ namespace MusicImporter_Lib
             get { return db_version; }
             set { db_version = value; }
         }
-        public int ScannedCount
+        public uint ScannedCount
         {
             get { return scanned_count; }
             set { scanned_count = value; }
         }
-        public int CorruptFileCount
+        public uint CorruptFileCount
         {
-            get { return corrupt_files.Count; }
+            get { return (uint)corrupt_files.Count; }
         }
         public string[] CorruptFiles
         {
             get { return corrupt_files.ToArray(); }
         }
-        public int InsertSongCount
+        public uint InsertSongCount
         {
             get { return insert_song_count; }
             set { insert_song_count = value; }
         }
-        public int DeleteSongCount
+        public uint DeleteSongCount
         {
             get { return delete_song_count; }
             set { delete_song_count = value; }
         }
-        public int UpdateSongCount
+        public uint UpdateSongCount
         {
             get { return update_song_count; }
             set { update_song_count = value; }
         }
-        public int InsertAlbumCount
+        public uint InsertAlbumCount
         {
             get { return insert_album_count; }
             set { insert_album_count = value; }
@@ -73,12 +74,17 @@ namespace MusicImporter_Lib
             get { return delete_album_count; }
             set { delete_album_count = value; }
         }
-        public int InsertArtistCount
+        public uint InsertArtistCount
         {
             get { return insert_artist_count; }
             set { insert_artist_count = value; }
         }
-        public int DeleteArtistCount
+        public uint UpdateAlbumCount
+        {
+            get { return update_album_count; }
+            set { update_album_count = value; }
+        }
+        public uint DeleteArtistCount
         {
             get { return delete_artist_count; }
             set { delete_artist_count = value; }

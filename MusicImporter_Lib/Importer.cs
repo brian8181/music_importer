@@ -465,6 +465,7 @@ namespace MusicImporter_Lib
                     cmd.CommandText = "INSERT INTO artist (artist) Values(?artist)";
                     mysql_connection.ExecuteNonQuery( cmd );
                     artist_id = mysql_connection.LastInsertID;
+                    reporter.InsertArtistCount++;
                 }
             }
             return artist_id;
@@ -489,12 +490,14 @@ namespace MusicImporter_Lib
                     cmd.CommandText = "INSERT INTO album (album, artist) Values(?album, ?artist)";
                     mysql_connection.ExecuteNonQuery( cmd );
                     album_id = mysql_connection.LastInsertID;
+                    reporter.InsertAlbumCount++;
                 }
                 else
                 {
                     cmd.Parameters.AddWithValue( "?album_id", album_id );
                     cmd.CommandText = "UPDATE album SET album=?album, artist=?artist WHERE id=?album_id";
                     mysql_connection.ExecuteNonQuery( cmd );
+                    reporter.UpdateAlbumCount++;
                 }
             }
             return album_id;

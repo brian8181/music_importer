@@ -1,4 +1,20 @@
-﻿using System;
+﻿// Music Importer imports ID3 tags to a MySql database.
+// Copyright (C) 2008  Brian Preston
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +33,7 @@ using BKP.Online;
 namespace MusicImporter_Lib
 {
     /// <summary>
-    /// 
+    /// importer for album art
     /// </summary>
     class ArtImporter
     {
@@ -42,7 +58,7 @@ namespace MusicImporter_Lib
             if (File.Exists(file) && !File.Exists(dest) )
             {
                 File.Copy(file, dest);
-                GenerateThumbs(dest);
+                GenerateThumbs(Path.GetFileName(dest));
             }
         }
 
@@ -51,7 +67,7 @@ namespace MusicImporter_Lib
         /// </summary>
         /// <param name="tag">the id3 tag</param>
         /// <param name="current_dir">current directory</param>
-        /// <returns>primary key (insert id)</returns>
+        /// <returns>count</returns>
         public uint InsertArt(object song_id, TagLib.File tag_file)
         {
             string art = null;
@@ -69,6 +85,7 @@ namespace MusicImporter_Lib
                 return 0;
             }
 
+            uint inserted = 0;
             foreach (TagLib.IPicture pic in tag.Pictures)
             {
                 art = GenerateFileName(pic);
@@ -77,14 +94,33 @@ namespace MusicImporter_Lib
                 type = pic.Type.ToString();
                 mime_type = pic.MimeType;
                 description = pic.Description;
+                
                 if (pic.MimeType != "-->") // no support for linked art
                 {
-                    string art_id = Insert(data, art, type, description, mime_type);
-                    CreateLink(song_id, art_id);
+                    hash = ComputeHash(data);
+                    uint id = 0;
+                    key = string.Empty;
+                    if (isDuplicateInsert(hash, out id))
+                    {
+                        string file = null;
+                        if (isOrphanedInsert(id, out file))
+                        {
+                            // write file
+                            SaveArt(file, data);
+                        }
+                        key = id.ToString();
+                    }
+                    else
+                    {
+                        // write file
+                        SaveArt(art, data);
+                        key = Insert(hash, art, type, description, mime_type);
+                        ++inserted;
+                    }
+                    CreateLink(song_id, key);
                 }
             }
-            
-            return 0; // do wee need a ret val here?
+            return inserted; 
         }
 
         /// <summary>
@@ -130,36 +166,18 @@ namespace MusicImporter_Lib
         /// 
         /// </summary>
         /// <returns></returns>
-        public string Insert(byte[] data, string art, string type, string description, string mime_type)
+        public string Insert(byte[] hash, string art, string type, string description, string mime_type)
         {
-            byte[] hash = ComputeHash(data);
-            uint id = 0;
-            string key = string.Empty;
-            if (isDuplicateInsert(hash, out id))
-            {
-                string file = null;
-                if (isOrphanedInsert(id, out file))
-                {
-                    // write file
-                    SaveArt(file, data);
-                }
-                key = id.ToString();
-            }
-            else
-            {
-                // write file
-                SaveArt(art, data);
+            string sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
+            MySqlCommand cmd = new MySqlCommand(sql);
+            cmd.Parameters.AddWithValue("?file", art);
+            cmd.Parameters.AddWithValue("?type", type);
+            cmd.Parameters.AddWithValue("?hash", hash);
+            cmd.Parameters.AddWithValue("?description", description);
+            cmd.Parameters.AddWithValue("?mime_type", mime_type);
+            db.ExecuteNonQuery(cmd);
+            string key = db.ExecuteScalar("SELECT LAST_INSERT_ID()").ToString();
 
-                string sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
-                MySqlCommand cmd = new MySqlCommand(sql);
-                cmd.Parameters.AddWithValue("?file", art);
-                cmd.Parameters.AddWithValue("?type", type);
-                cmd.Parameters.AddWithValue("?hash", hash);
-                cmd.Parameters.AddWithValue("?description", description);
-                cmd.Parameters.AddWithValue("?mime_type", mime_type);
-                db.ExecuteNonQuery(cmd);
-                key = db.ExecuteScalar("SELECT LAST_INSERT_ID()").ToString();
-            }
             return key;
         }
 
@@ -185,9 +203,8 @@ namespace MusicImporter_Lib
             }
             return pic;
         }
-
         /// <summary>
-        /// 
+        /// saves art to art location, this also generates thumbs
         /// </summary>
         /// <param name="file"></param>
         /// <param name="data"></param>
@@ -199,7 +216,7 @@ namespace MusicImporter_Lib
             GenerateThumbs(file);
         }
         /// <summary>
-        /// 
+        /// generate art thumbnails
         /// </summary>
         /// <param name="file_name"></param>
         private void GenerateThumbs(string file_name)
@@ -214,7 +231,7 @@ namespace MusicImporter_Lib
 
         }
         /// <summary>
-        /// 
+        /// returns true if art is a duplicate
         /// </summary>
         /// <param name="data"></param>
         /// <param name="obj"></param>
@@ -244,7 +261,7 @@ namespace MusicImporter_Lib
             return false;
         }
         /// <summary>
-        /// returns wheater a given art id has matching file on disk
+        /// returns true if a given art id has no matching file on disk
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
