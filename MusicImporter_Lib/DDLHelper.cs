@@ -8,6 +8,7 @@ using Utility;
 using Utility.IO;
 using System.Resources;
 using System.Globalization;
+using MySql.Data.MySqlClient;
 
 namespace MusicImporter_Lib
 {
@@ -163,5 +164,54 @@ namespace MusicImporter_Lib
                 }
             }
         }
+
+        #region Procedures
+        /// <summary>
+        /// delete song from database
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public int DeleteSong(string file)
+        {
+            return DeleteSong_Art(file, "song"); 
+        }
+        /// <summary>
+        /// delete art from database
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public int DeleteArt(string file)
+        {
+            return DeleteSong_Art(file, "art"); 
+        }
+        /// <summary>
+        /// a templatized method for deleting art or song INSERTS 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="replacement_prama"></param>
+        /// <returns></returns>
+        private int DeleteSong_Art(string file, string replacement_prama)
+        {
+            // get id for file
+            string sql = string.Format("SELECT id FROM {0} WHERE file=?file LIMIT 1", replacement_prama);
+            MySqlCommand cmd = new MySqlCommand(sql);
+            cmd.Parameters.AddWithValue("?file", file);
+            object obj = db.ExecuteScalar(cmd);
+            // delete all links from song_art table
+            if (obj != null)
+            {
+                sql = string.Format("DELETE FROM song_art WHERE {0}_id=?{0}", replacement_prama);
+                cmd = new MySqlCommand(sql);
+                cmd.Parameters.AddWithValue("?" + replacement_prama + "_id", obj);
+                db.ExecuteNonQuery(cmd);
+
+                sql = string.Format("DELETE FROM {0} WHERE id=?id", replacement_prama);
+                cmd = new MySqlCommand(sql);
+                cmd.Parameters.AddWithValue("?id", obj);
+                return (db.ExecuteNonQuery(cmd));
+            }
+            return 0;
+        }
+        #endregion
     }
 }

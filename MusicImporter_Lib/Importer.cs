@@ -120,6 +120,7 @@ namespace MusicImporter_Lib
         private ThreadPriority priority = ThreadPriority.BelowNormal;
         private ManualResetEvent pause = new ManualResetEvent( true );
         private int file_count;
+        private DDLHelper db_mgr = null;
         private Reporter reporter = new Reporter();
         private State current_state = State.Idle;
         private State last_state = State.Idle; 
@@ -272,7 +273,7 @@ namespace MusicImporter_Lib
                         OnCreateDatabaseStarted();
                         OnStatus(State.CreateDB);
 
-                        DDLHelper db_mgr = new DDLHelper(mysql_connection);
+                        db_mgr = new DDLHelper(mysql_connection);
 
                         // Create DATABASE
                         if (Settings.Default.create_db)
@@ -684,7 +685,7 @@ namespace MusicImporter_Lib
 
         #region Maintainence
         /// <summary>
-        /// delete orphaned songs inserts (file no longer exsists)
+        /// delete orphaned songs inserts when file no longer exists
         /// </summary>
         private int Clean()
         {
@@ -693,21 +694,15 @@ namespace MusicImporter_Lib
             if(ds.Tables.Count != 1)
                 return 0;
             DataTable dt = ds.Tables[0];
-            StringBuilder file = null;
-            MySqlCommand cmd = new MySqlCommand();
-            
-            cmd.Parameters.AddWithValue("?file", file);
-            cmd.CommandText = "DELETE FROM song WHERE file=@file";
             foreach(DataRow row in dt.Rows)
             {
-                file = new StringBuilder( row[0].ToString() );
-                string path = "z:" + file.ToString();
+                string file = row[0].ToString();
+                string root = Properties.Settings.Default.music_root.TrimEnd('\\', '/');
+                string path = string.Format("{0}//{1}", root, file);
                 if(!File.Exists( path ))
                 {
-                    EscapeInvalidChars( file );
-                    cmd.CommandText = "DELETE FROM song WHERE file='" + file + "'";
                     OnMessage( "Deleting: " + file );
-                    deleted += mysql_connection.ExecuteNonQuery( cmd );
+                    deleted += db_mgr.DeleteSong(file);
                     reporter.DeleteSongCount++;
                 }
             }
@@ -761,20 +756,6 @@ namespace MusicImporter_Lib
             uint? result = (uint?)obj;
             // see if we have a result
             return result;
-        }
-        
-        /// <summary>
-        /// escape \ change invalid characters
-        /// </summary>
-        /// <param name="strs"></param>
-        private void EscapeInvalidChars( params StringBuilder[] strs )
-        {
-            for(int i = 0; i < strs.Length; ++i)
-            {
-                strs[i].Replace( "'", "''" );
-                strs[i].Replace( "’", "''" );
-                strs[i].Replace( "`", "''" );
-            }
         }
         #endregion
 
@@ -867,14 +848,14 @@ namespace MusicImporter_Lib
             if(ScanStopped != null) ScanStopped();
         }
         /// <summary>
-        /// scans can not be started twice
+        /// 
         /// </summary>
         protected virtual void OnSyncError()
         {
             if(SyncError != null) SyncError();
         }
         /// <summary>
-        /// scans can not be started twice
+        /// 
         /// </summary>
         protected virtual void OnCount( int value )
         {
