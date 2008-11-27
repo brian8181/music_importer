@@ -51,6 +51,22 @@ namespace MusicImporter_Lib
             Cleaning
         }
 
+        public static class LogPolicy
+        {
+            // related to all
+            public static bool STARTS = true;
+            public static bool STOPS = true;
+            public static bool ERRORS = true;
+            // related to file scan
+            public static bool SCAN_ENTER_DIRECTORY = false;
+            public static bool SCAN_FILE = true;
+            public static bool SCAN_SQL = false;
+            // related to clean
+            public static bool CLEAN_ENTER_DIRECTORY = false;
+            public static bool CLEAN_SQL = false;
+            public static bool CLEAN_DELETE_FILE = true;
+        }
+
         #region Events
         /// <summary>
         /// out sync error, occurs if scan is called while another scan in progress
