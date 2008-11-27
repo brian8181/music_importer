@@ -138,7 +138,7 @@ namespace MusicImporter_Lib
             sb.AppendLine( "</style>" );
             sb.AppendLine("</head>");
 
-            string dt = DateTime.Now.ToString(BKP.Online.Globals.PrettyLogDateFormat);   
+            string dt = DateTime.Now.ToString(Utility.Globals.PrettyLogDateFormat);   
             sb.AppendFormat("<h2><i>{0}</i></h2>\r\n", dt);
             sb.AppendLine("<br />");
 

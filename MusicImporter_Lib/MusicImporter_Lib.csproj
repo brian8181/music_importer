@@ -113,12 +113,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\utility\Utility2\Utility.csproj">
-      <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -144,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NA.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\utility\utility\utility.csproj">
+      <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
+      <Name>utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

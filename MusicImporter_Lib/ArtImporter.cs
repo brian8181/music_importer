@@ -19,16 +19,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
-using BKP.Online.Data;
+using Utility.Data;
 using System.Security.Cryptography;
 using System.IO;
 using System.Data.Common;
-using BKP.Online.Media;
+using Utility.Media;
 using MusicImporter_Lib.Properties;
-using BKP.Online.IO;
+using Utility.IO;
 using System.Data;
 using System.Text.RegularExpressions;
-using BKP.Online;
+using Utility;
 
 namespace MusicImporter_Lib
 {
@@ -41,10 +41,10 @@ namespace MusicImporter_Lib
         private string art_path = null;
         
         /// <summary>
-        /// 
+        /// defualt ctor
         /// </summary>
-        /// <param name="db"></param>
-        /// <param name="art_path"></param>
+        /// <param name="db">the db connection</param>
+        /// <param name="art_path">path to art directory</param>
         public ArtImporter(IDatabase db, string art_path)
         {
             this.db = db;
@@ -61,7 +61,6 @@ namespace MusicImporter_Lib
                 GenerateThumbs(Path.GetFileName(dest));
             }
         }
-
         /// <summary>
         ///  insert album art
         /// </summary>
@@ -122,7 +121,6 @@ namespace MusicImporter_Lib
             }
             return inserted; 
         }
-
         /// <summary>
         /// generate file name for picture
         /// </summary>
@@ -139,7 +137,6 @@ namespace MusicImporter_Lib
             ext = ext == string.Empty ? "jpg" : ext;
             return guid.ToString("B") + "." + ext;
         }
-
         /// <summary>
         /// create link between song and art
         /// </summary>
@@ -161,10 +158,14 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue("?art_id", art_id);
             db.ExecuteNonQuery(cmd);
         }
-
         /// <summary>
-        /// 
+        /// do the database insert
         /// </summary>
+        /// <param name="hash"></param>
+        /// <param name="art"></param>
+        /// <param name="type"></param>
+        /// <param name="description"></param>
+        /// <param name="mime_type"></param>
         /// <returns></returns>
         public string Insert(byte[] hash, string art, string type, string description, string mime_type)
         {
@@ -180,7 +181,6 @@ namespace MusicImporter_Lib
 
             return key;
         }
-
         /// <summary>
         /// get the first front cover or the first picture
         /// </summary>
@@ -294,16 +294,16 @@ namespace MusicImporter_Lib
 
         #region Maintenance
         /// <summary>
-        /// 
+        /// delete inserts if file does not exists
         /// </summary>
         public uint DeleteOrphanedInserts()
         {
             return DeleteOrphanedInserts(Settings.Default.art_location);
         }
         /// <summary>
-        /// 
+        /// delete inserts if file does not exists
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">art path</param>
         public uint DeleteOrphanedInserts(string path)
         {
             DataSet ds = db.ExecuteQuery("SELECT file FROM art");

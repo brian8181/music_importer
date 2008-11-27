@@ -25,40 +25,49 @@ using System.Data.OleDb;
 using MySql.Data.MySqlClient;
 using MySql.Data.Types;
 using System.Security.Cryptography;
-using BKP.Online.Data;
-using BKP.Online.IO;
-using BKP.Online;
+using Utility.Data;
+using Utility.IO;
+using Utility;
 using MusicImporter_Lib.Properties;
 
 namespace MusicImporter_Lib
 {
+    public delegate void StateDelegate(Importer.State state);
     public delegate void Int32Delegate(int value);
     /// <summary>
     /// imports music tag information into database 
     /// </summary>
     public class Importer
     {
+        public enum State
+        {
+            Idle,
+            Prepare, // not idle 
+            Paused,
+            CreateDB,
+            CreatePlaylists,
+            Scanning,
+            Optimizing,
+            Cleaning
+        }
+
         #region Events
         /// <summary>
         /// out sync error, occurs if scan is called while another scan in progress
         /// </summary>
-        public event BKP.Online.VoidDelegate SyncError;
+        public event Utility.VoidDelegate SyncError;
         /// <summary>
         /// tag scan started
         /// </summary>
-        public event BKP.Online.VoidDelegate CreateDatabaseStarted;
-        /// <summary>
-        /// tag scan completed
-        /// </summary>
-        public event BKP.Online.VoidDelegate CreateDatabaseCompleted;
+        public event Utility.VoidDelegate CreateDatabaseStarted;
         /// <summary>
         /// tag scan started
         /// </summary>
-        public event BKP.Online.VoidDelegate ScanStarted;
+        public event Utility.VoidDelegate ScanStarted;
         /// <summary>
         /// tag scan completed
         /// </summary>
-        public event BKP.Online.VoidDelegate ScanStopped;
+        public event Utility.VoidDelegate ScanStopped;
         /// <summary>
         /// status message
         /// </summary>
@@ -66,20 +75,20 @@ namespace MusicImporter_Lib
         /// <summary>
         /// status message
         /// </summary>
-        public event BKP.Online.StringDelegate Status;
+        public event StateDelegate Status;
         /// <summary>
         /// message
         /// </summary>
-        public event BKP.Online.StringDelegate Message;
+        public event Utility.StringDelegate Message;
         /// <summary>
         ///  error message
         /// </summary>
-        public event BKP.Online.StringDelegate Error;
+        public event Utility.StringDelegate Error;
         /// <summary>
         /// processing directory
         /// </summary>
         /// 
-        public event BKP.Online.StringDelegate ProcessDirectory;
+        public event Utility.StringDelegate ProcessDirectory;
         #endregion
 
         #region Construction
@@ -96,6 +105,8 @@ namespace MusicImporter_Lib
         private ManualResetEvent pause = new ManualResetEvent( true );
         private int file_count;
         private Reporter reporter = new Reporter();
+        private State current_state = State.Idle;
+        private State last_state = State.Idle; 
 
         public Reporter Reporter
         {
@@ -234,110 +245,117 @@ namespace MusicImporter_Lib
             }
             else
             {
+                OnStatus(State.Prepare); // not idle
                 running = true;
                 DateTime start = DateTime.Now;
                 try
                 {
-                    OnCreateDatabaseStarted();
-                    DDLHelper db_mgr = new DDLHelper(mysql_connection);
-                    
-                    // Create DATABASE
-                    if(Settings.Default.create_db)
-                    {
-                        OnMessage( "creating database ..." );
-                        string schema_name = Settings.Default.schema;
-
-                        mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
-                        db_mgr.CreateDatabase( schema_name );
-                        db_mgr.ExecuteCreateScript();
-                    }
-
-                    // change to database
-                    mysql_connection.ChangeDatabase( Settings.Default.schema );
-                    // get version info
-                    db_mgr.InitializeVersionInfo();
-                    reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
-                    reporter.DBVersion = db_mgr.UpdateVersion.ToString();
-                    db_mgr.UpdateDatabase(); // update
-
-                    OnCreateDatabaseCompleted();
-                    // check for stop signal
-                    pause.WaitOne();
-                    if(!running) return;
-
-                    OnTagScanStarted();
-
                     try
                     {
-                        // make sure database set
-                        mysql_connection.ChangeDatabase( Settings.Default.schema );
-                                                                 
-                        // SCAN TAGS
-                        if(Settings.Default.ScanTags)
+                        // remove
+                        OnCreateDatabaseStarted();
+                        OnStatus(State.CreateDB);
+
+                        DDLHelper db_mgr = new DDLHelper(mysql_connection);
+
+                        // Create DATABASE
+                        if (Settings.Default.create_db)
                         {
-                            Status( "scanning tags ..." );
+                            OnMessage("creating database ...");
+                            string schema_name = Settings.Default.schema;
+
+                            mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
+                            db_mgr.CreateDatabase(schema_name);
+                            db_mgr.ExecuteCreateScript();
+                        }
+
+                        // change to database
+                        mysql_connection.ChangeDatabase(Settings.Default.schema);
+                        // get version info
+                        db_mgr.InitializeVersionInfo();
+                        reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
+                        reporter.DBVersion = db_mgr.UpdateVersion.ToString();
+                        db_mgr.UpdateDatabase(); // update
+
+                  
+                        // check for stop signal
+                        pause.WaitOne();
+                        if (!running) return;
+
+                        OnStatus(State.Scanning);
+                        OnTagScanStarted();
+
+
+                        // make sure database set
+                        mysql_connection.ChangeDatabase(Settings.Default.schema);
+
+                        // SCAN TAGS
+                        if (Settings.Default.ScanTags)
+                        {
+                            OnStatus(State.Scanning);
                             int len = Settings.Default.Dirs.Count;
                             // scan just root or all in list
-                            if(len > 0)
+                            if (len > 0)
                             {
-                                for(int i = 0; i < len && running; ++i)
+                                for (int i = 0; i < len && running; ++i)
                                 {
-                                    Thread( Settings.Default.Dirs[i] );
+                                    Thread(Settings.Default.Dirs[i]);
                                 }
                             }
                             else
                             {
-                                Thread( Settings.Default.music_root );
+                                Thread(Settings.Default.music_root);
                             }
                         }
                     }
-                    catch(MySqlException exp)
+                    catch (MySqlException exp)
                     {
-                       OnError( exp.Message );
-                       return;
+                        OnError(exp.Message);
+                        return;
                     }
-                    OnProcessDirectory( "None." );
+
+                    OnProcessDirectory("None.");
 
                     // check for stop signal
                     pause.WaitOne();
-                    if(!running) return;
+                    if (!running) return;
 
                     // SCAN PLAYLIST
-                    if(Settings.Default.ScanPlaylist)
+                    if (Settings.Default.ScanPlaylist)
                     {
-                        Status( "scanning playlist ..." );
+                        OnStatus(State.CreatePlaylists);
                         ImportPlaylist();
                     }
-                    
+
                     // check for stop signal
                     pause.WaitOne();
-                    if(!running) return;
+                    if (!running) return;
 
                     // CLEAN
-                    if(Settings.Default.Clean)
+                    if (Settings.Default.Clean)
                     {
-                        Status( "cleaning ..." );
+                        OnStatus(State.Cleaning);
                         reporter.DeleteArtFileCount = art_importer.DeleteOrphanedFiles();
                         reporter.DeleteArtCount = art_importer.DeleteOrphanedInserts();
-                        
-                        //TODO clean need to delte art as to obey FKs
+
+                        //TODO clean need to delete art as to obey FKs
                         //reporter.DeleteSongCount = Clean();
                     }
-                    
-                    // check for stop signal
-                    pause.WaitOne();
-                    if(!running) return;
 
                     // check for stop signal
                     pause.WaitOne();
-                    if(!running) return;
+                    if (!running) return;
 
                     // OPITIMIZE
-                    if(Settings.Default.Optimize)
+                    if (Settings.Default.Optimize)
                     {
-                        Status( "optimizing ..." );
+                        Status(State.Optimizing);
                         Optimize();
                     }
+                }
+                catch
+                {
+                    // log error
                 }
                 finally
                 {
@@ -351,6 +369,7 @@ namespace MusicImporter_Lib
                                 " elapsed time " + elapsed + ".");
                     Close();
                     OnTagScanStopped();
+                    OnStatus(State.Idle);
                     running = false;
                 }
             }
@@ -360,6 +379,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void StopScan()
         {
+            OnStatus(State.Idle);
             running = false;
             pause.Set();    // unpase
         }
@@ -368,6 +388,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void ContiueScan()
         {
+            OnStatus(last_state);
             pause.Set();
         }
         /// <summary>
@@ -375,6 +396,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void PauseScan()
         {
+            OnStatus(State.Paused);
             pause.Reset();
         }
         /// <summary>
@@ -770,9 +792,14 @@ namespace MusicImporter_Lib
         /// call status update
         /// </summary>
         /// <param name="msg">status message</param>
-        protected virtual void OnStatus( string msg )
+        protected virtual void OnStatus( State state )
         {
-            if(Status != null) Status( msg );
+            lock (this)
+            {
+                last_state = current_state;
+                current_state = state;
+            }
+            if(Status != null) Status( state );
         }
         /// <summary>
         /// call status update
@@ -806,14 +833,6 @@ namespace MusicImporter_Lib
         protected virtual void OnCreateDatabaseStarted()
         {
             if (CreateDatabaseStarted != null) CreateDatabaseStarted();
-        }
-        /// <summary>
-        /// call TagScanStopped
-        /// </summary>
-        /// <param name="msg">status message</param>
-        protected virtual void OnCreateDatabaseCompleted()
-        {
-            if (CreateDatabaseCompleted != null) CreateDatabaseCompleted();
         }
         /// <summary>
         /// call TagScanStarted

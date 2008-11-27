@@ -1,6 +1,6 @@
 ﻿using MusicImporter_Lib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DB = BKP.Online.Data;
+using DB = Utility.Data;
 using System.Data;
 
 namespace TestProject
@@ -13,7 +13,7 @@ namespace TestProject
     [TestClass()]
     public class DDLHelperTest
     {
-        private static BKP.Online.Data.IDatabase db = null;
+        private static Utility.Data.IDatabase db = null;
         private static string schema_name = "music_test";
         private TestContext testContextInstance;
 

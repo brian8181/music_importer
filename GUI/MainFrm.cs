@@ -26,7 +26,7 @@ using System.IO;
 using System.Collections.Specialized;
 using MusicImporter_Lib.Properties;
 using MusicImporter_Lib;
-using BKP.Online;
+using Utility;
 //
 namespace music_importer
 {
@@ -310,8 +310,8 @@ namespace music_importer
                 importer_TagScanStopped();
                 return;
             }
-            importer.Status += new StringDelegate( importer_Status );
-            importer.Message += new BKP.Online.StringDelegate( importer_Message );
+            importer.Status += new StateDelegate( importer_Status );
+            importer.Message += new Utility.StringDelegate( importer_Message );
             importer.ProcessDirectory += new StringDelegate( importer_ProcessDirectory );
             importer.Error += new StringDelegate( importer_Error );
             importer.ScanStarted += new VoidDelegate( importer_TagScanStarted );
@@ -598,8 +598,38 @@ namespace music_importer
         /// status changed
         /// </summary>
         /// <param name="str">new status message</param>
-        void importer_Status( string str )
+        void importer_Status( MusicImporter_Lib.Importer.State state )
         {
+            string str = string.Empty;
+            switch (state)
+            {
+                case Importer.State.Idle:
+                    str = "Idle";
+                    break;
+                case Importer.State.Prepare:
+                    str = "Preparing For Operation";
+                    break;
+                case Importer.State.Paused:
+                    str = "Paused";
+                    break;
+                case Importer.State.CreateDB:
+                    str = "Creating Database";
+                    break;
+                case Importer.State.CreatePlaylists:
+                    str = "Createing Playlists";
+                    break;
+                case Importer.State.Scanning:
+                    str = "Performing File Scan";
+                    break;
+                case Importer.State.Optimizing:
+                    str = "Optimizing Database";
+                    break;
+                case Importer.State.Cleaning:
+                    str = "Performing Database Maintainence";
+                    break;
+                default:
+                    break;
+            }
             SafeSet_Label( lbStatus, str );
         }
         /// <summary>

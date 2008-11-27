@@ -12,12 +12,10 @@ namespace music_importer
     public partial class HTMLReportFrm : Form
     {
         Reporter r = new Reporter();
-    
         public HTMLReportFrm()
         {
             InitializeComponent();
         }
-
         public string DocumentText
         {
             get
@@ -29,7 +27,5 @@ namespace music_importer
                 webBrowser1.DocumentText = value;
             }
         }
-
-
     }
 }
