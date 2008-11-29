@@ -303,7 +303,7 @@ namespace music_importer
             {
                 MessageBox.Show(
                     exp.Message + ".\r\n\r\nPlease make sure connection fields are correct and try agian.",
-                    "MySql Error",
+                    "MySql Connect Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
                     MessageBoxDefaultButton.Button1 );
                 // revert changes and return
@@ -318,7 +318,7 @@ namespace music_importer
             importer.ScanStopped += new VoidDelegate( importer_TagScanStopped );
             importer.SyncError += new VoidDelegate( importer_SyncError );
             importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
-            importer.Count += new Int32Delegate( importer_Count );
+            importer.FileScanned += new FileScanDelegate( importer_Count );
             importer.Scan( true );
         }
         /// <summary>
@@ -373,7 +373,7 @@ namespace music_importer
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
             dlg.RootFolder = Environment.SpecialFolder.Desktop;
-                       
+                                
             if(dlg.ShowDialog() == DialogResult.OK)
             {
                 if( dlg.SelectedPath.StartsWith( txtRoot.Text, 
@@ -655,7 +655,7 @@ namespace music_importer
             // todo
             //this.Invoke(new VoidDelegate(delegate(){
             //                                            lbMessage.Text = "Tag scan strated";
-                                                           // todo...
+            //                                                todo...
             //                                            linkReport.Visible = true;
             //                                        }
             //                              ));
@@ -665,16 +665,16 @@ namespace music_importer
         /// </summary>
         private void importer_TagScanStopped()
         {
-            SafeSet_Label( lbStatus, "&Finished" );
-            this.Invoke( new VoidDelegate( delegate() {
-                                                    btnCancel.Enabled = true;
-                                                    btnCancel.Text = "&Finished";
-                                                    btnPause.Enabled = false;
-                                                    // stop progess marquee
-                                                    progressBar.Style = ProgressBarStyle.Continuous;
-                                                    ToggleOn();
-                                                    linkReport.Visible = true;
-                                                }
+             this.Invoke( new VoidDelegate( delegate() {        
+                                                            lbStatus.Text = "&Finished";
+                                                            btnCancel.Enabled = true;
+                                                            btnCancel.Text = "&Finished";
+                                                            btnPause.Enabled = false;
+                                                            // stop progess marquee
+                                                            progressBar.Style = ProgressBarStyle.Continuous;
+                                                            ToggleOn();
+                                                            linkReport.Visible = true;
+                                                        }    
                                           ) );
             if( importer != null )
                 importer.Close();
@@ -718,7 +718,7 @@ namespace music_importer
         ///  importer file count event
         /// </summary>
         /// <param name="value"></param>
-        void importer_Count( int value )
+        void importer_Count( string file, int value )
         {
             SafeSet_Label( this.lbFilesScanned, value.ToString() );
         }
@@ -799,9 +799,9 @@ namespace music_importer
             }
         }
         /// <summary>
-        /// 
+        /// set the lable on correct thread
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="str">string value</param>
         private void SafeSet_Label( Label l, string s )
         {
             if(this.InvokeRequired) // invoke on gui thread
@@ -979,7 +979,11 @@ namespace music_importer
             }
             Close();
         }
-             
+        /// <summary>
+        /// show a report 
+        /// </summary>
+        /// <param name="sender">not used</param>
+        /// <param name="e">not used</param>
         private void linkReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             HTMLReportFrm frm = new HTMLReportFrm();
