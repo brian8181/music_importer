@@ -33,7 +33,8 @@ using MusicImporter_Lib.Properties;
 namespace MusicImporter_Lib
 {
     public delegate void StateDelegate(Importer.State state);
-    public delegate void Int32Delegate(int value);
+    //public delegate void StateChangedDelegate(Importer.State new_state, Importer.State old_sate);
+    public delegate void FileScanDelegate(string file, int total_files);
     /// <summary>
     /// imports music tag information into database 
     /// </summary>
@@ -51,31 +52,8 @@ namespace MusicImporter_Lib
             Cleaning
         }
 
-        public static class LogPolicy
-        {
-            // related to all
-            public static bool STARTS = true;
-            public static bool STOPS = true;
-            public static bool ERRORS = true;
-            // related to file scan
-            public static bool SCAN_ENTER_DIRECTORY = false;
-            public static bool SCAN_FILE = true;
-            public static bool SCAN_SQL = false;
-            // related to clean
-            public static bool CLEAN_ENTER_DIRECTORY = false;
-            public static bool CLEAN_SQL = false;
-            public static bool CLEAN_DELETE_FILE = true;
-        }
-
         #region Events
-        /// <summary>
-        /// out sync error, occurs if scan is called while another scan in progress
-        /// </summary>
-        public event Utility.VoidDelegate SyncError;
-        /// <summary>
-        /// tag scan started
-        /// </summary>
-        public event Utility.VoidDelegate CreateDatabaseStarted;
+        
         /// <summary>
         /// tag scan started
         /// </summary>
@@ -84,10 +62,7 @@ namespace MusicImporter_Lib
         /// tag scan completed
         /// </summary>
         public event Utility.VoidDelegate ScanStopped;
-        /// <summary>
-        /// status message
-        /// </summary>
-        public event Int32Delegate Count;
+       
         /// <summary>
         /// status message
         /// </summary>
@@ -101,9 +76,18 @@ namespace MusicImporter_Lib
         /// </summary>
         public event Utility.StringDelegate Error;
         /// <summary>
+        /// out sync error, occurs if scan is called while another scan in progress
+        /// </summary>
+        public event Utility.VoidDelegate SyncError;
+
+        /// file scanned specific
+        /// <summary>
+        /// status message
+        /// </summary>
+        public event FileScanDelegate FileScanned;
+        /// <summary>
         /// processing directory
         /// </summary>
-        /// 
         public event Utility.StringDelegate ProcessDirectory;
         #endregion
 
@@ -209,16 +193,16 @@ namespace MusicImporter_Lib
             try
             {
                 mysql_connection.Open( connect_string );
+                if (Settings.Default.ScanPlaylist)
+                {
+                    mm_connection.Open(mm_conn_str);
+                }
                 art_importer = new ArtImporter(mysql_connection, art_path);
             }
             catch(MySql.Data.MySqlClient.MySqlException e)
             {
                 Close();
                 throw e;
-            }
-            if(Settings.Default.ScanPlaylist)
-            {
-                mm_connection.Open( mm_conn_str );
             }
         }
         /// <summary>
@@ -270,7 +254,6 @@ namespace MusicImporter_Lib
                     try
                     {
                         // remove
-                        OnCreateDatabaseStarted();
                         OnStatus(State.CreateDB);
 
                         db_mgr = new DDLHelper(mysql_connection);
@@ -428,7 +411,7 @@ namespace MusicImporter_Lib
             {
                 ++file_count;
                 reporter.ScannedCount++;     
-                OnCount( file_count );
+                OnFileScanned( files[i], file_count );
                 pause.WaitOne();
                 if(!running) return;
 
@@ -827,14 +810,6 @@ namespace MusicImporter_Lib
         /// call TagScanStarted
         /// </summary>
         /// <param name="msg">status message</param>
-        protected virtual void OnCreateDatabaseStarted()
-        {
-            if (CreateDatabaseStarted != null) CreateDatabaseStarted();
-        }
-        /// <summary>
-        /// call TagScanStarted
-        /// </summary>
-        /// <param name="msg">status message</param>
         protected virtual void OnTagScanStarted()
         {
             if(ScanStarted != null) ScanStarted();
@@ -857,9 +832,9 @@ namespace MusicImporter_Lib
         /// <summary>
         /// 
         /// </summary>
-        protected virtual void OnCount( int value )
+        protected virtual void OnFileScanned( string file, int value )
         {
-            if(Count != null) Count(value);
+            if(FileScanned != null) FileScanned(file, value);
         }
         #endregion
     }

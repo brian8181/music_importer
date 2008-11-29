@@ -85,6 +85,9 @@ namespace MusicImporter_Lib
             }
 
             uint inserted = 0;
+            DDLHelper helper = new DDLHelper(db);
+            helper.DeleteArtLinks(song_id);
+
             foreach (TagLib.IPicture pic in tag.Pictures)
             {
                 art = GenerateFileName(pic);
