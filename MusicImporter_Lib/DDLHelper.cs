@@ -58,7 +58,7 @@ namespace MusicImporter_Lib
             this.db = db;
         }
         /// <summary>
-        /// 
+        /// initialize version info from datebase
         /// </summary>
         public void InitializeVersionInfo()
         {
@@ -167,30 +167,42 @@ namespace MusicImporter_Lib
 
         #region Procedures
         /// <summary>
-        /// delete song from database
+        /// deletes all references to song with file_name from database
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public int DeleteSong(string file)
+        public int DeleteSong(string file_name)
         {
-            return DeleteSong_Art(file, "song"); 
+            return DeleteTemplate(file_name, "song"); 
         }
         /// <summary>
-        /// delete art from database
+        /// deletes all references to art with file_name from database
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public int DeleteArt(string file)
+        public int DeleteArt(string file_name)
         {
-            return DeleteSong_Art(file, "art"); 
+            return DeleteTemplate(file_name, "art");
         }
+        /// <summary>
+        /// deletes all at links for given song id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int DeleteArtLinks(object song_id)
+        {
+            return DeleteLinksTemplate(song_id, "song");
+        }
+        #endregion
+
+        #region Templates
         /// <summary>
         /// a templatized method for deleting art or song INSERTS 
         /// </summary>
         /// <param name="file"></param>
         /// <param name="replacement_prama"></param>
         /// <returns></returns>
-        private int DeleteSong_Art(string file, string replacement_prama)
+        private int DeleteTemplate(string file, string replacement_prama)
         {
             // get id for file
             string sql = string.Format("SELECT id FROM {0} WHERE file=?file LIMIT 1", replacement_prama);
@@ -200,10 +212,7 @@ namespace MusicImporter_Lib
             // delete all links from song_art table
             if (obj != null)
             {
-                sql = string.Format("DELETE FROM song_art WHERE {0}_id=?{0}", replacement_prama);
-                cmd = new MySqlCommand(sql);
-                cmd.Parameters.AddWithValue("?" + replacement_prama + "_id", obj);
-                db.ExecuteNonQuery(cmd);
+                DeleteLinksTemplate(obj, replacement_prama);
 
                 sql = string.Format("DELETE FROM {0} WHERE id=?id", replacement_prama);
                 cmd = new MySqlCommand(sql);
@@ -211,6 +220,19 @@ namespace MusicImporter_Lib
                 return (db.ExecuteNonQuery(cmd));
             }
             return 0;
+        }
+        /// <summary>
+        /// deletes links template user 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="replacement_prama"></param>
+        /// <returns></returns>
+        private int DeleteLinksTemplate(object id, string replacement_prama)
+        {
+            string sql = string.Format("DELETE FROM song_art WHERE {0}_id=?{0}_id", replacement_prama);
+            MySqlCommand cmd = new MySqlCommand(sql);
+            cmd.Parameters.AddWithValue("?" + replacement_prama + "_id", id);
+            return (db.ExecuteNonQuery(cmd));
         }
         #endregion
     }
