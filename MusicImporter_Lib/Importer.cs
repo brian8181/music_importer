@@ -33,7 +33,7 @@ using MusicImporter_Lib.Properties;
 namespace MusicImporter_Lib
 {
     public delegate void StateDelegate(Importer.State state);
-    //public delegate void StateChangedDelegate(Importer.State new_state, Importer.State old_sate);
+    public delegate void StateChangedDelegate(Importer.State new_state, Importer.State old_sate);
     public delegate void FileScanDelegate(string file, int total_files);
     /// <summary>
     /// imports music tag information into database 
@@ -57,15 +57,17 @@ namespace MusicImporter_Lib
         /// <summary>
         /// tag scan started
         /// </summary>
+        [Obsolete("use StateChanged")]
         public event Utility.VoidDelegate ScanStarted;
         /// <summary>
         /// tag scan completed
         /// </summary>
+        [Obsolete("use StateChanged")]
         public event Utility.VoidDelegate ScanStopped;
-       
         /// <summary>
         /// status message
         /// </summary>
+        [Obsolete("use StateChanged")]
         public event StateDelegate Status;
         /// <summary>
         /// message
@@ -89,6 +91,10 @@ namespace MusicImporter_Lib
         /// processing directory
         /// </summary>
         public event Utility.StringDelegate ProcessDirectory;
+        /// <summary>
+        /// 
+        /// </summary>
+        public event StateChangedDelegate StateChanged;
         #endregion
 
         #region Construction
@@ -246,7 +252,7 @@ namespace MusicImporter_Lib
             }
             else
             {
-                OnStatus(State.Prepare); // not idle
+                OnStateChanged(State.Prepare);
                 running = true;
                 DateTime start = DateTime.Now;
                 try
@@ -254,7 +260,7 @@ namespace MusicImporter_Lib
                     try
                     {
                         // remove
-                        OnStatus(State.CreateDB);
+                        OnStateChanged(State.CreateDB);
 
                         db_mgr = new DDLHelper(mysql_connection);
 
@@ -282,7 +288,7 @@ namespace MusicImporter_Lib
                         pause.WaitOne();
                         if (!running) return;
 
-                        OnStatus(State.Scanning);
+                        OnStateChanged(State.Scanning);
                         OnTagScanStarted();
 
 
@@ -292,7 +298,7 @@ namespace MusicImporter_Lib
                         // SCAN TAGS
                         if (Settings.Default.ScanTags)
                         {
-                            OnStatus(State.Scanning);
+                            OnStateChanged(State.Scanning);
                             int len = Settings.Default.Dirs.Count;
                             // scan just root or all in list
                             if (len > 0)
@@ -323,7 +329,7 @@ namespace MusicImporter_Lib
                     // SCAN PLAYLIST
                     if (Settings.Default.ScanPlaylist)
                     {
-                        OnStatus(State.CreatePlaylists);
+                        OnStateChanged(State.CreatePlaylists);
                         ImportPlaylist();
                     }
 
@@ -334,7 +340,7 @@ namespace MusicImporter_Lib
                     // CLEAN
                     if (Settings.Default.Clean)
                     {
-                        OnStatus(State.Cleaning);
+                        OnStateChanged(State.Cleaning);
                         reporter.DeleteArtFileCount = art_importer.DeleteOrphanedFiles();
                         reporter.DeleteArtCount = art_importer.DeleteOrphanedInserts();
 
@@ -369,7 +375,7 @@ namespace MusicImporter_Lib
                                 " elapsed time " + elapsed + ".");
                     Close();
                     OnTagScanStopped();
-                    OnStatus(State.Idle);
+                    OnStateChanged(State.Idle);
                     running = false;
                 }
             }
@@ -379,7 +385,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void StopScan()
         {
-            OnStatus(State.Idle);
+            OnStateChanged(State.Idle);
             running = false;
             pause.Set();    // unpase
         }
@@ -388,7 +394,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void ContiueScan()
         {
-            OnStatus(last_state);
+            OnStateChanged(last_state);
             pause.Set();
         }
         /// <summary>
@@ -396,7 +402,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void PauseScan()
         {
-            OnStatus(State.Paused);
+            OnStateChanged(State.Paused);
             pause.Reset();
         }
         /// <summary>
@@ -772,14 +778,24 @@ namespace MusicImporter_Lib
         /// call status update
         /// </summary>
         /// <param name="msg">status message</param>
+        [Obsolete("use OnStateChanged")]
         protected virtual void OnStatus( State state )
+        {
+            if(Status != null) Status( state );
+        }
+        /// <summary>
+        /// call status update
+        /// </summary>
+        /// <param name="msg">status message</param>
+        protected virtual void OnStateChanged(State state)
         {
             lock (this)
             {
                 last_state = current_state;
                 current_state = state;
             }
-            if(Status != null) Status( state );
+            if (StateChanged != null) StateChanged(current_state, last_state);
+            OnStatus(state); 
         }
         /// <summary>
         /// call status update
