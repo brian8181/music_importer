@@ -138,7 +138,7 @@ namespace music_importer
             this.cbOptimize.Size = new System.Drawing.Size(101, 17);
             this.cbOptimize.TabIndex = 3;
             this.cbOptimize.Text = "Optimize Tables";
-            this.toolTip.SetToolTip(this.cbOptimize, "Mysql Optimize Tables.");
+            this.toolTip.SetToolTip(this.cbOptimize, "MySql Optimize Tables.");
             this.cbOptimize.UseVisualStyleBackColor = true;
             // 
             // cbTags

@@ -49,7 +49,7 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("root")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cm9vdA==")]
         public string User {
             get {
                 return ((string)(this["User"]));
@@ -61,7 +61,7 @@ namespace MusicImporter_Lib.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("PASSWORD")]
+        [global::System.Configuration.DefaultSettingValueAttribute("UEFTU1dPUkQ=")]
         public string Pass {
             get {
                 return ((string)(this["Pass"]));

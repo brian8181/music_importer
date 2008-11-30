@@ -81,7 +81,6 @@ namespace MusicImporter_Lib
         /// out sync error, occurs if scan is called while another scan in progress
         /// </summary>
         public event Utility.VoidDelegate SyncError;
-
         /// file scanned specific
         /// <summary>
         /// status message
@@ -156,11 +155,11 @@ namespace MusicImporter_Lib
             else
             {
                 string cn_str = String.Format
-                     ( "Persist Security Info=False;Data Source={0};Port={1};User Id={2};Password={3};Logging={4}",
+                     ( "Persist Security Info=False;Data Source={0};Port={1};User Id={2};Password={3};Logging=false",
                      settings.Address,
                      settings.Port,
-                     settings.User,
-                     settings.Pass,
+                     settings.User_UTF8,
+                     settings.Pass_UTF8,
                      settings.Log.ToString() );
                 connect_string = cn_str;
             }
@@ -267,14 +266,15 @@ namespace MusicImporter_Lib
                         // Create DATABASE
                         if (Settings.Default.create_db)
                         {
-                            OnMessage("creating database ...");
+                            OnMessage("Executing create scripts...");
                             string schema_name = Settings.Default.schema;
-
-                            mysql_connection.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name);
+                            string sql = "DROP DATABASE IF EXISTS " + schema_name;
+                            mysql_connection.ExecuteNonQuery(sql);
                             db_mgr.CreateDatabase(schema_name);
                             db_mgr.ExecuteCreateScript();
                         }
 
+                        OnMessage("Executing update scripts...");
                         // change to database
                         mysql_connection.ChangeDatabase(Settings.Default.schema);
                         // get version info
@@ -282,16 +282,15 @@ namespace MusicImporter_Lib
                         reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
                         reporter.DBVersion = db_mgr.UpdateVersion.ToString();
                         db_mgr.UpdateDatabase(); // update
-
+                        OnMessage("Database has been updated");
                   
                         // check for stop signal
                         pause.WaitOne();
                         if (!running) return;
 
-                        OnStateChanged(State.Scanning);
+                        OnStateChanged(State.Prepare);
                         OnTagScanStarted();
-
-
+                        
                         // make sure database set
                         mysql_connection.ChangeDatabase(Settings.Default.schema);
 
@@ -312,6 +311,7 @@ namespace MusicImporter_Lib
                             {
                                 Thread(Settings.Default.music_root);
                             }
+                            OnStateChanged(State.Prepare);
                         }
                     }
                     catch (MySqlException exp)
@@ -331,6 +331,7 @@ namespace MusicImporter_Lib
                     {
                         OnStateChanged(State.CreatePlaylists);
                         ImportPlaylist();
+                        OnStateChanged(State.Prepare);
                     }
 
                     // check for stop signal
@@ -346,6 +347,7 @@ namespace MusicImporter_Lib
 
                         //TODO clean need to delete art as to obey FKs
                         //reporter.DeleteSongCount = Clean();
+                        OnStateChanged(State.Prepare);
                     }
 
                     // check for stop signal
@@ -374,8 +376,8 @@ namespace MusicImporter_Lib
                     OnMessage( "Completed at " + end.ToShortTimeString() +
                                 " elapsed time " + elapsed + ".");
                     Close();
-                    OnTagScanStopped();
                     OnStateChanged(State.Idle);
+                    OnTagScanStopped();
                     running = false;
                 }
             }
@@ -430,18 +432,19 @@ namespace MusicImporter_Lib
                 } 
                 catch( TagLib.CorruptFileException e )
                 {
-                    LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     reporter.AddCorruptFile(files[i]);
                     continue;
                 }
                 catch( TagLib.UnsupportedFormatException e )
                 {
-                    LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     continue;
                 }
                 catch(Exception e)
                 {
-                    LogError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
+                    // unknown error should I stop ?
+                    OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     continue;
                 }
                 //insert tag data
@@ -648,7 +651,6 @@ namespace MusicImporter_Lib
                 string playlist_id = mysql_connection.LastInsertID.ToString();
                 string msg = "Creating playlist: " + name + " ..."; 
                 OnMessage( msg );
-                Log( msg );
                 //  get the playlist id
                 DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
                 foreach(DataRow pl_row in ds2.Tables[0].Rows)
@@ -665,7 +667,6 @@ namespace MusicImporter_Lib
                             continue;
                         sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "', NULL, NULL )";
                         mysql_connection.ExecuteNonQuery( sql );
-                        //Log( sql );
                     }
                 }
             }
@@ -750,31 +751,6 @@ namespace MusicImporter_Lib
 
         #region Status \ Logging
         /// <summary>
-        /// send msg to log
-        /// </summary>
-        /// <param name="str"></param>
-        protected virtual void LogError( string msg )
-        {
-            Log( Logger.Level.Error, msg );
-        }
-        /// <summary>
-        /// send msg to log
-        /// </summary>
-        /// <param name="str"></param>
-        protected virtual void Log( string msg )
-        {
-            Log( Logger.Level.Information, msg );
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="level"></param>
-        /// <param name="msg"></param>
-        protected virtual void Log( Logger.Level level, string msg )
-        {
-            Trace.WriteLine( level, msg );
-        }
-        /// <summary>
         /// call status update
         /// </summary>
         /// <param name="msg">status message</param>
@@ -794,6 +770,7 @@ namespace MusicImporter_Lib
                 last_state = current_state;
                 current_state = state;
             }
+            Trace.WriteLine(Logger.Level.Information, "State=" + state.ToString());
             if (StateChanged != null) StateChanged(current_state, last_state);
             OnStatus(state); 
         }
@@ -803,6 +780,7 @@ namespace MusicImporter_Lib
         /// <param name="msg">status message</param>
         protected virtual void OnMessage(string msg)
         {
+            Trace.WriteLine(Logger.Level.Information, msg);
             if(Message != null) Message( msg );
         }
         /// <summary>
@@ -811,7 +789,7 @@ namespace MusicImporter_Lib
         /// <param name="msg">status message</param>
         protected virtual void OnError( string msg )
         {
-            LogError( msg ); 
+            Trace.WriteLine(Logger.Level.Error, msg);
             if(Error != null) Error( msg );
         }
         /// <summary>

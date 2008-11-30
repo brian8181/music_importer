@@ -9,10 +9,10 @@
       <Value Profile="(Default)">3306</Value>
     </Setting>
     <Setting Name="User" Type="System.String" Scope="User">
-      <Value Profile="(Default)">root</Value>
+      <Value Profile="(Default)">cm9vdA==</Value>
     </Setting>
     <Setting Name="Pass" Type="System.String" Scope="User">
-      <Value Profile="(Default)">PASSWORD</Value>
+      <Value Profile="(Default)">UEFTU1dPUkQ=</Value>
     </Setting>
     <Setting Name="ScanTags" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

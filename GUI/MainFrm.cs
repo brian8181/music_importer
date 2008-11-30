@@ -95,8 +95,8 @@ namespace music_importer
         private void LoadSettings()
         {
             this.txtAddress.Text = Settings.Default.Address;
-            this.txtUser.Text = Settings.Default.User;
-            this.txtPassword.Text = Settings.Default.Pass;
+            this.txtUser.Text = Settings.Default.User_UTF8;
+            this.txtPassword.Text = Settings.Default.Pass_UTF8;
             this.txtSchema.Text = Settings.Default.schema;
             this.txtMySql.Text = Settings.Default.mysql_conn_str;
             this.txtSQLite.Text = Settings.Default.mm_conn_str;
@@ -189,8 +189,10 @@ namespace music_importer
         {
             // importer Settings
             Settings.Default.Address = this.txtAddress.Text;
-            Settings.Default.User = this.txtUser.Text;
-            Settings.Default.Pass = this.txtPassword.Text;
+            Settings.Default.User_UTF8 = this.txtUser.Text;
+
+            Settings.Default.Pass_UTF8 = this.txtPassword.Text;
+
             Settings.Default.schema = this.txtSchema.Text;
             Settings.Default.use_conn_str = cbMysql.Checked;
             if(cbMysql.Checked)
@@ -268,6 +270,9 @@ namespace music_importer
         /// <param name="e">args</param>
         private void btnOK_Click( object sender, EventArgs e )
         {
+            if (Settings.Default.Log)
+                Logger.Init();
+
             linkReport.Visible = false;
             ToggleOff();
             btnOK.Enabled = false;
@@ -644,7 +649,6 @@ namespace music_importer
         /// </summary>
         private void importer_TagScanStarted()
         {
-            Logger.Init();
 
             SafeSet_Label( lbMessage, "Tag scan started" );
             SafeSet_LabelVisible(lbDirectory_label, true);
@@ -686,11 +690,11 @@ namespace music_importer
         /// <param name="str">errror message</param>
         private void importer_Error( string error )
         {
-            MessageBox.Show(
-                    error + ".\r\n\r\nPlease make sure connection fields are correct and try agian.",
-                    "MySql Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error,
-                    MessageBoxDefaultButton.Button1 );
+            //MessageBox.Show(
+            //        error + ".\r\n\r\nPlease make sure connection fields are correct and try agian.",
+            //        "MySql Error",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error,
+            //        MessageBoxDefaultButton.Button1 );
 
         }
         /// <summary>
