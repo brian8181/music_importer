@@ -105,6 +105,7 @@ namespace TestProject
             }
 
             db.ChangeDatabase(schema_name);
+            // todo could be a DE
             string file = @"..\..\..\GUI\bin\Debug\sql\create.sql";
             // needs to be realtive 
             target.ExecuteCreateScript(file);
@@ -114,5 +115,16 @@ namespace TestProject
 
             Assert.IsTrue(dt.Rows.Count > 0);
         }
-    }
+
+         /// <summary>
+        ///A test for ExecuteCreateScript
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"create.sql")]
+        public void TestTest()
+        {
+            Assert.IsTrue( System.IO.File.Exists( @"create.sql"  ) );
+        }
+
+   }
 }

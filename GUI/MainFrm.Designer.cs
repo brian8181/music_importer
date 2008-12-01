@@ -71,8 +71,6 @@ namespace music_importer
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.lbScanLocations = new System.Windows.Forms.ListBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lbMessage = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
@@ -82,8 +80,6 @@ namespace music_importer
             this.txtRoot = new System.Windows.Forms.TextBox();
             this.lblMask = new System.Windows.Forms.Label();
             this.txtMask = new System.Windows.Forms.TextBox();
-            this.btnRemove = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.txtArtMask = new System.Windows.Forms.TextBox();
             this.btnBrowseArt = new System.Windows.Forms.Button();
@@ -227,7 +223,7 @@ namespace music_importer
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(13, 160);
+            this.label10.Location = new System.Drawing.Point(12, 160);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(42, 13);
             this.label10.TabIndex = 2;
@@ -264,7 +260,7 @@ namespace music_importer
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 79);
+            this.label7.Location = new System.Drawing.Point(12, 79);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 20;
@@ -365,7 +361,7 @@ namespace music_importer
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 52);
+            this.label4.Location = new System.Drawing.Point(12, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 19;
@@ -405,29 +401,9 @@ namespace music_importer
             this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 7;
             // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(553, 156);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 4;
-            this.btnAdd.Text = "&Add";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // lbScanLocations
-            // 
-            this.lbScanLocations.FormattingEnabled = true;
-            this.lbScanLocations.HorizontalScrollbar = true;
-            this.lbScanLocations.Location = new System.Drawing.Point(13, 55);
-            this.lbScanLocations.Name = "lbScanLocations";
-            this.lbScanLocations.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbScanLocations.Size = new System.Drawing.Size(615, 95);
-            this.lbScanLocations.TabIndex = 1;
-            // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(6, 665);
+            this.progressBar.Location = new System.Drawing.Point(6, 546);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(637, 23);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -437,7 +413,7 @@ namespace music_importer
             // 
             this.lbMessage.AutoEllipsis = true;
             this.lbMessage.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbMessage.Location = new System.Drawing.Point(74, 644);
+            this.lbMessage.Location = new System.Drawing.Point(74, 524);
             this.lbMessage.Name = "lbMessage";
             this.lbMessage.Size = new System.Drawing.Size(565, 18);
             this.lbMessage.TabIndex = 17;
@@ -445,7 +421,7 @@ namespace music_importer
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(568, 696);
+            this.btnOK.Location = new System.Drawing.Point(568, 577);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -460,13 +436,9 @@ namespace music_importer
             this.groupBox2.Controls.Add(this.txtRoot);
             this.groupBox2.Controls.Add(this.lblMask);
             this.groupBox2.Controls.Add(this.txtMask);
-            this.groupBox2.Controls.Add(this.btnRemove);
-            this.groupBox2.Controls.Add(this.btnClear);
-            this.groupBox2.Controls.Add(this.btnAdd);
-            this.groupBox2.Controls.Add(this.lbScanLocations);
             this.groupBox2.Location = new System.Drawing.Point(2, 212);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(644, 213);
+            this.groupBox2.Size = new System.Drawing.Size(644, 83);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Scan Locations";
@@ -486,7 +458,7 @@ namespace music_importer
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(10, 24);
+            this.label16.Location = new System.Drawing.Point(12, 24);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(64, 13);
             this.label16.TabIndex = 31;
@@ -506,12 +478,11 @@ namespace music_importer
             this.txtRoot.Name = "txtRoot";
             this.txtRoot.Size = new System.Drawing.Size(515, 20);
             this.txtRoot.TabIndex = 0;
-            this.txtRoot.TextChanged += new System.EventHandler(this.txtRoot_TextChanged);
             // 
             // lblMask
             // 
             this.lblMask.AutoSize = true;
-            this.lblMask.Location = new System.Drawing.Point(11, 188);
+            this.lblMask.Location = new System.Drawing.Point(12, 47);
             this.lblMask.Name = "lblMask";
             this.lblMask.Size = new System.Drawing.Size(55, 13);
             this.lblMask.TabIndex = 29;
@@ -527,35 +498,15 @@ namespace music_importer
             "*.mp3;*.wma;*.ogg;*.flac"});
             this.txtMask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtMask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtMask.Location = new System.Drawing.Point(80, 185);
+            this.txtMask.Location = new System.Drawing.Point(80, 47);
             this.txtMask.Name = "txtMask";
             this.txtMask.Size = new System.Drawing.Size(548, 20);
             this.txtMask.TabIndex = 5;
             // 
-            // btnRemove
-            // 
-            this.btnRemove.Location = new System.Drawing.Point(474, 156);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnRemove.TabIndex = 3;
-            this.btnRemove.Text = "&Remove";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-            // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(394, 156);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 2;
-            this.btnClear.Text = "&Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(5, 49);
+            this.label11.Location = new System.Drawing.Point(12, 49);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(52, 13);
             this.label11.TabIndex = 31;
@@ -565,16 +516,16 @@ namespace music_importer
             // 
             this.txtArtMask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtArtMask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtArtMask.Location = new System.Drawing.Point(75, 46);
+            this.txtArtMask.Location = new System.Drawing.Point(80, 71);
             this.txtArtMask.Name = "txtArtMask";
-            this.txtArtMask.Size = new System.Drawing.Size(553, 20);
+            this.txtArtMask.Size = new System.Drawing.Size(548, 20);
             this.txtArtMask.TabIndex = 2;
             // 
             // btnBrowseArt
             // 
             this.btnBrowseArt.Font = new System.Drawing.Font("Arial Black", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowseArt.Image = ((System.Drawing.Image)(resources.GetObject("btnBrowseArt.Image")));
-            this.btnBrowseArt.Location = new System.Drawing.Point(601, 69);
+            this.btnBrowseArt.Location = new System.Drawing.Point(601, 44);
             this.btnBrowseArt.Name = "btnBrowseArt";
             this.btnBrowseArt.Size = new System.Drawing.Size(27, 23);
             this.btnBrowseArt.TabIndex = 4;
@@ -585,7 +536,7 @@ namespace music_importer
             // lbArtRoot
             // 
             this.lbArtRoot.AutoSize = true;
-            this.lbArtRoot.Location = new System.Drawing.Point(5, 74);
+            this.lbArtRoot.Location = new System.Drawing.Point(12, 74);
             this.lbArtRoot.Name = "lbArtRoot";
             this.lbArtRoot.Size = new System.Drawing.Size(67, 13);
             this.lbArtRoot.TabIndex = 26;
@@ -595,9 +546,9 @@ namespace music_importer
             // 
             this.txtArtLoc.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtArtLoc.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtArtLoc.Location = new System.Drawing.Point(75, 72);
+            this.txtArtLoc.Location = new System.Drawing.Point(80, 46);
             this.txtArtLoc.Name = "txtArtLoc";
-            this.txtArtLoc.Size = new System.Drawing.Size(520, 20);
+            this.txtArtLoc.Size = new System.Drawing.Size(515, 20);
             this.txtArtLoc.TabIndex = 3;
             // 
             // grpOptions
@@ -629,7 +580,7 @@ namespace music_importer
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(410, 696);
+            this.btnCancel.Location = new System.Drawing.Point(410, 577);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -642,7 +593,7 @@ namespace music_importer
             // 
             this.lbDirectory.AutoEllipsis = true;
             this.lbDirectory.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDirectory.Location = new System.Drawing.Point(74, 619);
+            this.lbDirectory.Location = new System.Drawing.Point(74, 499);
             this.lbDirectory.Name = "lbDirectory";
             this.lbDirectory.Size = new System.Drawing.Size(565, 18);
             this.lbDirectory.TabIndex = 21;
@@ -653,7 +604,7 @@ namespace music_importer
             // 
             this.label5.AutoEllipsis = true;
             this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 644);
+            this.label5.Location = new System.Drawing.Point(3, 524);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 18);
             this.label5.TabIndex = 22;
@@ -663,7 +614,7 @@ namespace music_importer
             // 
             this.lbDirectory_label.AutoEllipsis = true;
             this.lbDirectory_label.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDirectory_label.Location = new System.Drawing.Point(3, 619);
+            this.lbDirectory_label.Location = new System.Drawing.Point(3, 499);
             this.lbDirectory_label.Name = "lbDirectory_label";
             this.lbDirectory_label.Size = new System.Drawing.Size(62, 18);
             this.lbDirectory_label.TabIndex = 23;
@@ -674,7 +625,7 @@ namespace music_importer
             // 
             this.label9.AutoEllipsis = true;
             this.label9.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(3, 595);
+            this.label9.Location = new System.Drawing.Point(3, 474);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(62, 18);
             this.label9.TabIndex = 25;
@@ -684,7 +635,7 @@ namespace music_importer
             // 
             this.lbStatus.AutoEllipsis = true;
             this.lbStatus.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbStatus.Location = new System.Drawing.Point(74, 595);
+            this.lbStatus.Location = new System.Drawing.Point(74, 474);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(565, 18);
             this.lbStatus.TabIndex = 24;
@@ -694,7 +645,7 @@ namespace music_importer
             // 
             this.cmbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPriority.FormattingEnabled = true;
-            this.cmbPriority.Location = new System.Drawing.Point(87, 696);
+            this.cmbPriority.Location = new System.Drawing.Point(87, 577);
             this.cmbPriority.Name = "cmbPriority";
             this.cmbPriority.Size = new System.Drawing.Size(121, 21);
             this.cmbPriority.TabIndex = 3;
@@ -704,7 +655,7 @@ namespace music_importer
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(2, 701);
+            this.label12.Location = new System.Drawing.Point(2, 582);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(78, 13);
             this.label12.TabIndex = 27;
@@ -713,7 +664,7 @@ namespace music_importer
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(30, 106);
+            this.label13.Location = new System.Drawing.Point(37, 104);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(37, 13);
             this.label13.TabIndex = 32;
@@ -721,7 +672,7 @@ namespace music_importer
             // 
             // art_large
             // 
-            this.art_large.Location = new System.Drawing.Point(75, 102);
+            this.art_large.Location = new System.Drawing.Point(80, 102);
             this.art_large.Maximum = new decimal(new int[] {
             999,
             0,
@@ -740,7 +691,7 @@ namespace music_importer
             // 
             // art_small
             // 
-            this.art_small.Location = new System.Drawing.Point(249, 102);
+            this.art_small.Location = new System.Drawing.Point(290, 102);
             this.art_small.Maximum = new decimal(new int[] {
             999,
             0,
@@ -760,7 +711,7 @@ namespace music_importer
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(208, 106);
+            this.label14.Location = new System.Drawing.Point(249, 104);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(35, 13);
             this.label14.TabIndex = 34;
@@ -768,7 +719,7 @@ namespace music_importer
             // 
             // art_xsmall
             // 
-            this.art_xsmall.Location = new System.Drawing.Point(423, 102);
+            this.art_xsmall.Location = new System.Drawing.Point(500, 102);
             this.art_xsmall.Maximum = new decimal(new int[] {
             999,
             0,
@@ -788,7 +739,7 @@ namespace music_importer
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(372, 106);
+            this.label15.Location = new System.Drawing.Point(444, 104);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(45, 13);
             this.label15.TabIndex = 36;
@@ -809,7 +760,7 @@ namespace music_importer
             this.groupBox3.Controls.Add(this.art_large);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Location = new System.Drawing.Point(2, 431);
+            this.groupBox3.Location = new System.Drawing.Point(2, 301);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(644, 134);
             this.groupBox3.TabIndex = 3;
@@ -819,7 +770,7 @@ namespace music_importer
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(5, 24);
+            this.label18.Location = new System.Drawing.Point(12, 24);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(41, 13);
             this.label18.TabIndex = 37;
@@ -828,7 +779,7 @@ namespace music_importer
             // cbGenerateThumbs
             // 
             this.cbGenerateThumbs.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbGenerateThumbs.Location = new System.Drawing.Point(75, 17);
+            this.cbGenerateThumbs.Location = new System.Drawing.Point(80, 14);
             this.cbGenerateThumbs.Name = "cbGenerateThumbs";
             this.cbGenerateThumbs.Size = new System.Drawing.Size(32, 26);
             this.cbGenerateThumbs.TabIndex = 1;
@@ -839,7 +790,7 @@ namespace music_importer
             // btnPause
             // 
             this.btnPause.Enabled = false;
-            this.btnPause.Location = new System.Drawing.Point(489, 696);
+            this.btnPause.Location = new System.Drawing.Point(489, 577);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
             this.btnPause.TabIndex = 1;
@@ -852,7 +803,7 @@ namespace music_importer
             // 
             this.label17.AutoEllipsis = true;
             this.label17.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(3, 568);
+            this.label17.Location = new System.Drawing.Point(3, 449);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(71, 18);
             this.label17.TabIndex = 31;
@@ -862,7 +813,7 @@ namespace music_importer
             // 
             this.lbStartTime.AutoEllipsis = true;
             this.lbStartTime.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbStartTime.Location = new System.Drawing.Point(74, 568);
+            this.lbStartTime.Location = new System.Drawing.Point(74, 449);
             this.lbStartTime.Name = "lbStartTime";
             this.lbStartTime.Size = new System.Drawing.Size(94, 18);
             this.lbStartTime.TabIndex = 30;
@@ -872,7 +823,7 @@ namespace music_importer
             // 
             this.label19.AutoEllipsis = true;
             this.label19.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(217, 568);
+            this.label19.Location = new System.Drawing.Point(217, 449);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(62, 18);
             this.label19.TabIndex = 33;
@@ -882,7 +833,7 @@ namespace music_importer
             // 
             this.lbElapsedTime.AutoEllipsis = true;
             this.lbElapsedTime.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbElapsedTime.Location = new System.Drawing.Point(279, 568);
+            this.lbElapsedTime.Location = new System.Drawing.Point(279, 449);
             this.lbElapsedTime.Name = "lbElapsedTime";
             this.lbElapsedTime.Size = new System.Drawing.Size(94, 18);
             this.lbElapsedTime.TabIndex = 32;
@@ -914,7 +865,7 @@ namespace music_importer
             // 
             this.lbFilesScanned_label.AutoEllipsis = true;
             this.lbFilesScanned_label.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFilesScanned_label.Location = new System.Drawing.Point(422, 568);
+            this.lbFilesScanned_label.Location = new System.Drawing.Point(422, 449);
             this.lbFilesScanned_label.Name = "lbFilesScanned_label";
             this.lbFilesScanned_label.Size = new System.Drawing.Size(91, 18);
             this.lbFilesScanned_label.TabIndex = 35;
@@ -925,7 +876,7 @@ namespace music_importer
             // 
             this.lbFilesScanned.AutoEllipsis = true;
             this.lbFilesScanned.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFilesScanned.Location = new System.Drawing.Point(512, 568);
+            this.lbFilesScanned.Location = new System.Drawing.Point(512, 449);
             this.lbFilesScanned.Name = "lbFilesScanned";
             this.lbFilesScanned.Size = new System.Drawing.Size(94, 18);
             this.lbFilesScanned.TabIndex = 34;
@@ -935,7 +886,7 @@ namespace music_importer
             // linkReport
             // 
             this.linkReport.AutoSize = true;
-            this.linkReport.Location = new System.Drawing.Point(422, 644);
+            this.linkReport.Location = new System.Drawing.Point(422, 525);
             this.linkReport.Name = "linkReport";
             this.linkReport.Size = new System.Drawing.Size(65, 13);
             this.linkReport.TabIndex = 36;
@@ -948,7 +899,7 @@ namespace music_importer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 722);
+            this.ClientSize = new System.Drawing.Size(649, 604);
             this.Controls.Add(this.linkReport);
             this.Controls.Add(this.lbFilesScanned_label);
             this.Controls.Add(this.lbFilesScanned);
@@ -1008,8 +959,6 @@ namespace music_importer
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox lbScanLocations;
-        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lbMessage;
         private System.Windows.Forms.Button btnOK;
@@ -1019,8 +968,6 @@ namespace music_importer
         private System.Windows.Forms.TextBox txtPort;
         private System.Windows.Forms.CheckBox cbCreateDB;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnRemove;
-        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Label lbDirectory;
         private System.Windows.Forms.TextBox txtMySql;
         private System.Windows.Forms.TextBox txtSQLite;

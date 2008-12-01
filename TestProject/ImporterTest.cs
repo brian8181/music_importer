@@ -82,6 +82,15 @@ namespace TestProject
         [DeploymentItem( "MusicImporter_Lib.dll" )]
         public void GetKeyTest()
         {
+            Utility.Data.MySqlDatabase db = Globals.MySQL_DB;
+
+            //DDLHelper helper = new DDLHelper(db);
+            //helper.CreateDatabase(music_test);
+
+            DDLHelperTest helper = new DDLHelperTest();
+            helper.CreateDatabaseTest();
+
+
             Importer_Accessor target = new Importer_Accessor( settings ); // TODO: Initialize to an appropriate value
             string table = "art"; // TODO: Initialize to an appropriate value
             string column = "file"; // TODO: Initialize to an appropriate value

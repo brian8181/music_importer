@@ -27,6 +27,7 @@ using System.Collections.Specialized;
 using MusicImporter_Lib.Properties;
 using MusicImporter_Lib;
 using Utility;
+using System.Reflection;
 //
 namespace music_importer
 {
@@ -85,6 +86,9 @@ namespace music_importer
             cbMysql.SetImages( Properties.Resources.enabled_trans_16, Properties.Resources.disabled_trans_16 );
             cbPlaylist.SetImages( Properties.Resources.enabled_trans_16, Properties.Resources.disabled_trans_16 );
             cbGenerateThumbs.SetImages( Properties.Resources.enabled_trans_16, Properties.Resources.disabled_trans_16 );
+
+            string version  = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+            Text += " " + version;
         }
         #endregion
 
@@ -113,11 +117,11 @@ namespace music_importer
             //this.cbCreateDB.Checked = Settings.Default.create_db;
             this.cbCreateDB.Checked = false;
             this.txtRoot.Text = Settings.Default.music_root;
-            StringCollection dirs = Settings.Default.Dirs;
-            foreach(string s in dirs)
-            {
-                lbScanLocations.Items.Add( new FileInfo( s ) );
-            }
+            //StringCollection dirs = Settings.Default.Dirs;
+            //foreach(string s in dirs)
+            //{
+            //    lbScanLocations.Items.Add( new FileInfo( s ) );
+            //}
             this.txtArtLoc.Text = Settings.Default.art_location;
             this.txtMask.Text = Settings.Default.file_mask;
             this.txtArtMask.Text = Settings.Default.art_mask;
@@ -212,14 +216,14 @@ namespace music_importer
             Settings.Default.create_db = this.cbCreateDB.Checked;
             Settings.Default.Dirs.Clear();
             Settings.Default.music_root = this.txtRoot.Text;
-            foreach(FileInfo fi in lbScanLocations.Items)
-            {
-                // do not save root
-                if(fi.FullName.Length > txtRoot.Text.Length)  
-                {
-                    Settings.Default.Dirs.Add( fi.FullName );
-                }
-            }
+            //foreach(FileInfo fi in lbScanLocations.Items)
+            //{
+            //    // do not save root
+            //    if(fi.FullName.Length > txtRoot.Text.Length)  
+            //    {
+            //        Settings.Default.Dirs.Add( fi.FullName );
+            //    }
+            //}
             Settings.Default.art_location = this.txtArtLoc.Text;
             Settings.Default.file_mask = this.txtMask.Text;
             Settings.Default.art_mask = this.txtArtMask.Text;
@@ -368,72 +372,72 @@ namespace music_importer
                 }
             }
         }
-        /// <summary>
-        /// btnAdd 
-        /// </summary>
-        /// <param name="sender">the button</param>
-        /// <param name="e">arguments</param>
-        private void btnAdd_Click( object sender, EventArgs e )
-        {
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.RootFolder = Environment.SpecialFolder.Desktop;
+        ///// <summary>
+        ///// btnAdd 
+        ///// </summary>
+        ///// <param name="sender">the button</param>
+        ///// <param name="e">arguments</param>
+        //private void btnAdd_Click( object sender, EventArgs e )
+        //{
+        //    FolderBrowserDialog dlg = new FolderBrowserDialog();
+        //    dlg.RootFolder = Environment.SpecialFolder.Desktop;
                                 
-            if(dlg.ShowDialog() == DialogResult.OK)
-            {
-                if( dlg.SelectedPath.StartsWith( txtRoot.Text, 
-                                                 true, 
-                                                 System.Globalization.CultureInfo.InvariantCulture ) &&
-                                                 dlg.SelectedPath.Length > txtRoot.Text.Length )
-                {
-                    lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
-                }
-                else
-                {
-                    StdMsgBox.OK( "Path not under root" );
-                }
-            }
-        }
-        /// <summary>
-        ///  btnRemove clicked
-        /// </summary>
-        /// <param name="sender">the button</param>
-        /// <param name="e">arguments</param>
-        private void btnRemove_Click( object sender, EventArgs e )
-        {
-            object[] objs = new object[lbScanLocations.SelectedItems.Count];
-            lbScanLocations.SelectedItems.CopyTo( objs, 0 );
-            foreach(object o in objs)
-            {
-                lbScanLocations.Items.Remove( o );
-            }
-        }
-        /// <summary>
-        ///  btnClear clicked
-        /// </summary>
-        /// <param name="sender">the button</param>
-        /// <param name="e">arguments</param>
-        private void btnClear_Click( object sender, EventArgs e )
-        {
-            lbScanLocations.Items.Clear();
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtRoot_TextChanged( object sender, EventArgs e )
-        {
-            lbScanLocations.Items.Clear();
-            if(Directory.Exists( txtRoot.Text ))
-            {
-                btnAdd.Enabled = true;
-                lbScanLocations.Items.Add( new FileInfo( txtRoot.Text ) );
-            }
-            else
-            {
-                btnAdd.Enabled = false;
-            }
-        }
+        //    if(dlg.ShowDialog() == DialogResult.OK)
+        //    {
+        //        if( dlg.SelectedPath.StartsWith( txtRoot.Text, 
+        //                                         true, 
+        //                                         System.Globalization.CultureInfo.InvariantCulture ) &&
+        //                                         dlg.SelectedPath.Length > txtRoot.Text.Length )
+        //        {
+        //            lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
+        //        }
+        //        else
+        //        {
+        //            StdMsgBox.OK( "Path not under root" );
+        //        }
+        //    }
+        //}
+        ///// <summary>
+        /////  btnRemove clicked
+        ///// </summary>
+        ///// <param name="sender">the button</param>
+        ///// <param name="e">arguments</param>
+        //private void btnRemove_Click( object sender, EventArgs e )
+        //{
+        //    object[] objs = new object[lbScanLocations.SelectedItems.Count];
+        //    lbScanLocations.SelectedItems.CopyTo( objs, 0 );
+        //    foreach(object o in objs)
+        //    {
+        //        lbScanLocations.Items.Remove( o );
+        //    }
+        //}
+        ///// <summary>
+        /////  btnClear clicked
+        ///// </summary>
+        ///// <param name="sender">the button</param>
+        ///// <param name="e">arguments</param>
+        //private void btnClear_Click( object sender, EventArgs e )
+        //{
+        //    lbScanLocations.Items.Clear();
+        //}
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void txtRoot_TextChanged( object sender, EventArgs e )
+        //{
+        //    lbScanLocations.Items.Clear();
+        //    if(Directory.Exists( txtRoot.Text ))
+        //    {
+        //        btnAdd.Enabled = true;
+        //        lbScanLocations.Items.Add( new FileInfo( txtRoot.Text ) );
+        //    }
+        //    else
+        //    {
+        //        btnAdd.Enabled = false;
+        //    }
+        //}
         /// <summary>
         /// 
         /// </summary>
@@ -856,9 +860,9 @@ namespace music_importer
             progressBar.Enabled = !state;
             // button
             btnOK.Enabled = state;
-            btnAdd.Enabled = state;
-            btnRemove.Enabled = state;
-            btnClear.Enabled = state;
+            //btnAdd.Enabled = state;
+            //btnRemove.Enabled = state;
+            //btnClear.Enabled = state;
             btnBrowseArt.Enabled = state;
             if(state) // turn on or leave off 
             {
@@ -937,7 +941,7 @@ namespace music_importer
             {
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
             }
-            result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
+            //result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
             if(cbGenerateThumbs.Checked && !Directory.Exists( txtArtLoc.Text ))
             {
                 // create directory, if not exists   
