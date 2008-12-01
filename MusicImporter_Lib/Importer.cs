@@ -154,7 +154,6 @@ namespace MusicImporter_Lib
             if(settings.insert_art)
             {
                 art_path = Settings.Default.art_location.TrimEnd('\\');
-                art_path += "\\.album_art\\";
                 Directory.CreateDirectory( art_path + "large\\" );
                 Directory.CreateDirectory( art_path + "small\\" );
                 Directory.CreateDirectory( art_path + "xsmall\\" );
