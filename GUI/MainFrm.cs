@@ -292,7 +292,7 @@ namespace music_importer
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
                     MessageBoxDefaultButton.Button1 );
                 // revert changes and return
-                importer_TagScanStopped();
+                OnStopping();
                 return;
             }
             UpdateHistory();            
@@ -304,28 +304,27 @@ namespace music_importer
                 importer = new Importer();
                 importer.Connect();
             }
-            catch(MySql.Data.MySqlClient.MySqlException exp)
+            catch( Exception exp )
             {
                 MessageBox.Show(
                     exp.Message + ".\r\n\r\nPlease make sure connection fields are correct and try agian.",
                     "MySql Connect Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error,
-                    MessageBoxDefaultButton.Button1 );
+                    MessageBoxDefaultButton.Button1);
                 // revert changes and return
-                importer_TagScanStopped();
+                OnStopping();
                 return;
             }
-            importer.Status += new StateDelegate( importer_Status );
             importer.Message += new Utility.StringDelegate( importer_Message );
-            importer.ProcessDirectory += new StringDelegate( importer_ProcessDirectory );
+            importer.DirectoryProcessing += new StringDelegate( importer_ProcessDirectory );
             importer.Error += new StringDelegate( importer_Error );
-            importer.ScanStarted += new VoidDelegate( importer_TagScanStarted );
-            importer.ScanStopped += new VoidDelegate( importer_TagScanStopped );
             importer.SyncError += new VoidDelegate( importer_SyncError );
             importer.Priority = (ThreadPriority)cmbPriority.SelectedItem;
-            importer.FileScanned += new FileScanDelegate( importer_Count );
+            importer.FileProcessing += new FileProcessingDelegate( importer_Count );
+            importer.StateChanged += new StateChangedDelegate(importer_StateChanged);
             importer.Scan( true );
         }
+              
         /// <summary>
         /// btnCancel
         /// </summary>
@@ -599,19 +598,15 @@ namespace music_importer
         #endregion
 
         #region Importer Events
-        /// <summary>
-        /// status changed
-        /// </summary>
-        /// <param name="str">new status message</param>
-        void importer_Status( MusicImporter_Lib.Importer.State state )
+        void importer_StateChanged(Importer.State new_state, Importer.State old_sate)
         {
             string str = string.Empty;
-            switch (state)
+            switch (new_state)
             {
                 case Importer.State.Idle:
                     str = "Idle";
                     break;
-                case Importer.State.Prepare:
+                case Importer.State.PrepareStep:
                     str = "Preparing For Operation";
                     break;
                 case Importer.State.Paused:
@@ -632,10 +627,18 @@ namespace music_importer
                 case Importer.State.Cleaning:
                     str = "Performing Database Maintainence";
                     break;
+                case Importer.State.Starting:
+                    str = "Importer Starting";
+                    OnStarting();
+                    break;
+                case Importer.State.Stopping:
+                    str = "Importer Stopping";
+                    OnStopping();
+                    break;
                 default:
                     break;
             }
-            SafeSet_Label( lbStatus, str );
+            SafeSet_Label(lbStatus, str);
         }
         /// <summary>
         /// importer sync error
@@ -647,7 +650,7 @@ namespace music_importer
         /// <summary>
         ///  scan started
         /// </summary>
-        private void importer_TagScanStarted()
+        private void OnStarting()
         {
 
             SafeSet_Label( lbMessage, "Tag scan started" );
@@ -667,7 +670,7 @@ namespace music_importer
         /// <summary>
         ///  scan finished
         /// </summary>
-        private void importer_TagScanStopped()
+        private void OnStopping()
         {
              this.Invoke( new VoidDelegate( delegate() {        
                                                             lbStatus.Text = "&Finished";

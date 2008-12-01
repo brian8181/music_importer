@@ -34,7 +34,7 @@ namespace MusicImporter_Lib
 {
     public delegate void StateDelegate(Importer.State state);
     public delegate void StateChangedDelegate(Importer.State new_state, Importer.State old_sate);
-    public delegate void FileScanDelegate(string file, int total_files);
+    public delegate void FileProcessingDelegate(string file, int total_files);
     /// <summary>
     /// imports music tag information into database 
     /// </summary>
@@ -43,36 +43,35 @@ namespace MusicImporter_Lib
         public enum State
         {
             Idle,
-            Prepare, // not idle 
+            Starting,
+            PrepareStep, // not idle 
             Paused,
             CreateDB,
             CreatePlaylists,
             Scanning,
             Optimizing,
-            Cleaning
+            Cleaning,
+            Stopping
         }
-
-        #region Events
         
+        #region Events
         /// <summary>
-        /// tag scan started
+        /// state change notification
         /// </summary>
-        [Obsolete("use StateChanged")]
-        public event Utility.VoidDelegate ScanStarted;
-        /// <summary>
-        /// tag scan completed
-        /// </summary>
-        [Obsolete("use StateChanged")]
-        public event Utility.VoidDelegate ScanStopped;
-        /// <summary>
-        /// status message
-        /// </summary>
-        [Obsolete("use StateChanged")]
-        public event StateDelegate Status;
+        public event StateChangedDelegate StateChanged;
         /// <summary>
         /// message
         /// </summary>
         public event Utility.StringDelegate Message;
+        /// file scanned specific
+        /// <summary>
+        /// status message
+        /// </summary>
+        public event FileProcessingDelegate FileProcessing;
+        /// <summary>
+        /// processing directory
+        /// </summary>
+        public event Utility.StringDelegate DirectoryProcessing;
         /// <summary>
         ///  error message
         /// </summary>
@@ -81,19 +80,6 @@ namespace MusicImporter_Lib
         /// out sync error, occurs if scan is called while another scan in progress
         /// </summary>
         public event Utility.VoidDelegate SyncError;
-        /// file scanned specific
-        /// <summary>
-        /// status message
-        /// </summary>
-        public event FileScanDelegate FileScanned;
-        /// <summary>
-        /// processing directory
-        /// </summary>
-        public event Utility.StringDelegate ProcessDirectory;
-        /// <summary>
-        /// 
-        /// </summary>
-        public event StateChangedDelegate StateChanged;
         #endregion
 
         #region Construction
@@ -204,9 +190,10 @@ namespace MusicImporter_Lib
                 }
                 art_importer = new ArtImporter(mysql_connection, art_path);
             }
-            catch(MySql.Data.MySqlClient.MySqlException e)
+            catch(Exception e)
             {
                 Close();
+                OnError(e.Message);
                 throw e;
             }
         }
@@ -251,7 +238,8 @@ namespace MusicImporter_Lib
             }
             else
             {
-                OnStateChanged(State.Prepare);
+                OnStateChanged(State.Starting);
+                OnStateChanged(State.PrepareStep);
                 running = true;
                 DateTime start = DateTime.Now;
                 try
@@ -288,9 +276,8 @@ namespace MusicImporter_Lib
                         pause.WaitOne();
                         if (!running) return;
 
-                        OnStateChanged(State.Prepare);
-                        OnTagScanStarted();
-                        
+                        OnStateChanged(State.PrepareStep);
+                             
                         // make sure database set
                         mysql_connection.ChangeDatabase(Settings.Default.schema);
 
@@ -311,7 +298,7 @@ namespace MusicImporter_Lib
                             {
                                 Thread(Settings.Default.music_root);
                             }
-                            OnStateChanged(State.Prepare);
+                            OnStateChanged(State.PrepareStep);
                         }
                     }
                     catch (MySqlException exp)
@@ -331,7 +318,7 @@ namespace MusicImporter_Lib
                     {
                         OnStateChanged(State.CreatePlaylists);
                         ImportPlaylist();
-                        OnStateChanged(State.Prepare);
+                        OnStateChanged(State.PrepareStep);
                     }
 
                     // check for stop signal
@@ -347,7 +334,7 @@ namespace MusicImporter_Lib
 
                         //TODO clean need to delete art as to obey FKs
                         //reporter.DeleteSongCount = Clean();
-                        OnStateChanged(State.Prepare);
+                        OnStateChanged(State.PrepareStep);
                     }
 
                     // check for stop signal
@@ -357,13 +344,9 @@ namespace MusicImporter_Lib
                     // OPITIMIZE
                     if (Settings.Default.Optimize)
                     {
-                        Status(State.Optimizing);
+                        OnStateChanged(State.Optimizing);
                         Optimize();
                     }
-                }
-                catch
-                {
-                    // log error
                 }
                 finally
                 {
@@ -376,8 +359,8 @@ namespace MusicImporter_Lib
                     OnMessage( "Completed at " + end.ToShortTimeString() +
                                 " elapsed time " + elapsed + ".");
                     Close();
+                    OnStateChanged(State.Stopping);
                     OnStateChanged(State.Idle);
-                    OnTagScanStopped();
                     running = false;
                 }
             }
@@ -754,15 +737,6 @@ namespace MusicImporter_Lib
         /// call status update
         /// </summary>
         /// <param name="msg">status message</param>
-        [Obsolete("use OnStateChanged")]
-        protected virtual void OnStatus( State state )
-        {
-            if(Status != null) Status( state );
-        }
-        /// <summary>
-        /// call status update
-        /// </summary>
-        /// <param name="msg">status message</param>
         protected virtual void OnStateChanged(State state)
         {
             lock (this)
@@ -770,9 +744,8 @@ namespace MusicImporter_Lib
                 last_state = current_state;
                 current_state = state;
             }
-            Trace.WriteLine(Logger.Level.Information, "State=" + state.ToString());
+            Trace.WriteLine("State=" + state.ToString(), Logger.Level.Information.ToString());
             if (StateChanged != null) StateChanged(current_state, last_state);
-            OnStatus(state); 
         }
         /// <summary>
         /// call status update
@@ -780,7 +753,7 @@ namespace MusicImporter_Lib
         /// <param name="msg">status message</param>
         protected virtual void OnMessage(string msg)
         {
-            Trace.WriteLine(Logger.Level.Information, msg);
+            Trace.WriteLine(msg, Logger.Level.Information.ToString());
             if(Message != null) Message( msg );
         }
         /// <summary>
@@ -789,7 +762,7 @@ namespace MusicImporter_Lib
         /// <param name="msg">status message</param>
         protected virtual void OnError( string msg )
         {
-            Trace.WriteLine(Logger.Level.Error, msg);
+            Trace.WriteLine(msg, Logger.Level.Error.ToString());
             if(Error != null) Error( msg );
         }
         /// <summary>
@@ -798,23 +771,7 @@ namespace MusicImporter_Lib
         /// <param name="msg">status message</param>
         protected virtual void OnProcessDirectory( string msg )
         {
-            if(ProcessDirectory != null) ProcessDirectory( msg );
-        }
-        /// <summary>
-        /// call TagScanStarted
-        /// </summary>
-        /// <param name="msg">status message</param>
-        protected virtual void OnTagScanStarted()
-        {
-            if(ScanStarted != null) ScanStarted();
-        }
-        /// <summary>
-        /// call TagScanStopped
-        /// </summary>
-        /// <param name="msg">status message</param>
-        protected virtual void OnTagScanStopped()
-        {
-            if(ScanStopped != null) ScanStopped();
+            if(DirectoryProcessing != null) DirectoryProcessing( msg );
         }
         /// <summary>
         /// 
@@ -828,7 +785,7 @@ namespace MusicImporter_Lib
         /// </summary>
         protected virtual void OnFileScanned( string file, int value )
         {
-            if(FileScanned != null) FileScanned(file, value);
+            if(FileProcessing != null) FileProcessing(file, value);
         }
         #endregion
     }
