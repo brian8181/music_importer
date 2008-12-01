@@ -152,7 +152,6 @@ namespace music_importer
 
             if (Properties.Settings.Default.mysql_history != null)
             {
-                Properties.Settings.Default.mysql_history = new StringCollection();
                 strs = new string[Properties.Settings.Default.mysql_history.Count];
                 Properties.Settings.Default.mysql_history.CopyTo(strs, 0);
                 this.txtMySql.AutoCompleteCustomSource.AddRange(strs);
@@ -672,7 +671,7 @@ namespace music_importer
             }
 
             // mysql
-            idx = txtMySql.AutoCompleteCustomSource.IndexOf( txtAddress.Text );
+            idx = txtMySql.AutoCompleteCustomSource.IndexOf(txtMySql.Text);
             if(idx >= 0)
             {
                 // remove and put on top
@@ -681,7 +680,7 @@ namespace music_importer
             }
             else
             {
-                if(!String.IsNullOrEmpty( txtAddress.Text ))
+                if (!String.IsNullOrEmpty(txtMySql.Text))
                     txtMySql.AutoCompleteCustomSource.Add( txtMySql.Text );
             }
 
@@ -695,7 +694,7 @@ namespace music_importer
             }
             else
             {
-                if(!String.IsNullOrEmpty( txtAddress.Text ))
+                if(!String.IsNullOrEmpty( txtPort.Text ))
                     txtPort.AutoCompleteCustomSource.Add( txtPort.Text );
             }
 
@@ -709,13 +708,13 @@ namespace music_importer
             }
             else
             {
-                if(!String.IsNullOrEmpty( txtAddress.Text ))
+                if (!String.IsNullOrEmpty( txtSchema.Text ))
                     txtSchema.AutoCompleteCustomSource.Add( txtSchema.Text );
             }
 
             // sqlite
             idx = txtSQLite.AutoCompleteCustomSource.IndexOf( txtSQLite.Text );
-            if(idx > 0)
+            if(idx >= 0)
             {
                 // remove and put on top
                 txtSQLite.AutoCompleteCustomSource.RemoveAt( idx );
@@ -723,7 +722,7 @@ namespace music_importer
             }
             else
             {
-                if(!String.IsNullOrEmpty( txtAddress.Text ))
+                if (!String.IsNullOrEmpty( txtSQLite.Text ))
                     txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
             }
         }
