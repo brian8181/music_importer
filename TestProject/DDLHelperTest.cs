@@ -116,7 +116,7 @@ namespace TestProject
             Assert.IsTrue(dt.Rows.Count > 0);
         }
 
-         /// <summary>
+        /// <summary>
         ///A test for ExecuteCreateScript
         ///</summary>
         [TestMethod()]

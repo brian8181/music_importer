@@ -43,8 +43,7 @@ namespace music_importer
         private string[] args = null;
         private Importer importer = null;
         private DateTime start_time = DateTime.Now;
-              
-    
+           
         /// <summary>
         /// default contructor
         /// </summary>

@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
-  <TestList name="art_importer" id="25416502-f1ca-4e3d-87b8-72572001b172" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6" />
-  <TestList name="database_manager" id="59d38e0e-cd6e-4b86-9483-4d375399a670" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6" />
   <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <RunConfiguration id="6b1ce649-8c76-437b-a806-71454807c13e" name="Local Test Run" storage="localtestrun.testrunconfig" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common,   PublicKeyToken=b03f5f7f11d50a3a" />
-  </TestList>
-  <TestList name="pre_release" id="c6ea6e31-7e4e-41c3-bc02-89f1a50bedf3" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
-    <TestLinks>
-      <TestLink id="283c410b-c8c9-b1de-59e6-33f8a41d31a0" name="GenerateFileNameTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="a3f90961-dac3-6f51-55f9-525f3cbf3647" name="CreateDatabaseTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="e6eca8cd-f277-d6f7-87e8-970b30a4e32b" name="DeleteOrphanedFilesTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="87a1bce8-6954-791f-f929-94145872e961" name="GetKeyTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="12b907b3-bc73-e01a-1fac-28a826a96986" name="CreateScriptTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="03ab32dc-2cf3-a2e4-cb61-2f4e8558f47c" name="ExecuteTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="dbc0a0e0-886f-95f6-ea9e-51ea87b9075d" name="DeleteOrphanedInsertsTest" storage="testproject\bin\debug\testproject.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-    </TestLinks>
   </TestList>
 </TestLists>
