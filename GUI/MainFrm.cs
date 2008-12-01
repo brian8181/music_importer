@@ -118,11 +118,6 @@ namespace music_importer
             //this.cbCreateDB.Checked = Settings.Default.create_db;
             this.cbCreateDB.Checked = false;
             this.txtRoot.Text = Settings.Default.music_root;
-            //StringCollection dirs = Settings.Default.Dirs;
-            //foreach(string s in dirs)
-            //{
-            //    lbScanLocations.Items.Add( new FileInfo( s ) );
-            //}
             this.txtArtLoc.Text = Settings.Default.art_location;
             this.txtMask.Text = Settings.Default.file_mask;
             this.txtArtMask.Text = Settings.Default.art_mask;
@@ -137,55 +132,47 @@ namespace music_importer
             this.art_large.Value = Settings.Default.art_large;
             this.art_small.Value = Settings.Default.art_small;
             this.art_xsmall.Value = Settings.Default.art_xsmall;
-            
+
             // Copy Settings to AutoCompleteCustomSource
-            string[] strs = new string[Properties.Settings.Default.address_history.Count]; 
-            Properties.Settings.Default.address_history.CopyTo( strs, 0 );
-            this.txtAddress.AutoCompleteCustomSource.AddRange( strs );
+            string[] strs = new string[Properties.Settings.Default.address_history.Count];
+            Properties.Settings.Default.address_history.CopyTo(strs, 0);
+            this.txtAddress.AutoCompleteCustomSource.AddRange(strs);
             strs = new string[Properties.Settings.Default.port_history.Count];
-            Properties.Settings.Default.port_history.CopyTo( strs, 0 );
-            this.txtPort.AutoCompleteCustomSource.AddRange( strs );
+            Properties.Settings.Default.port_history.CopyTo(strs, 0);
+            this.txtPort.AutoCompleteCustomSource.AddRange(strs);
             strs = new string[Properties.Settings.Default.schema_history.Count];
-            Properties.Settings.Default.schema_history.CopyTo( strs, 0 );
-            this.txtSchema.AutoCompleteCustomSource.AddRange( strs );
+            Properties.Settings.Default.schema_history.CopyTo(strs, 0);
+            this.txtSchema.AutoCompleteCustomSource.AddRange(strs);
             // the mask are loaded but not saved
             strs = new string[Properties.Settings.Default.art_mask_history.Count];
-            Properties.Settings.Default.art_mask_history.CopyTo( strs, 0 );
-            this.txtArtMask.AutoCompleteCustomSource.AddRange( strs );
+            Properties.Settings.Default.art_mask_history.CopyTo(strs, 0);
+            this.txtArtMask.AutoCompleteCustomSource.AddRange(strs);
             strs = new string[Properties.Settings.Default.file_mask_history.Count];
-            Properties.Settings.Default.file_mask_history.CopyTo( strs, 0 );
-            this.txtMask.AutoCompleteCustomSource.AddRange( strs );
-            
-            if(Properties.Settings.Default.mysql_history != null)
+            Properties.Settings.Default.file_mask_history.CopyTo(strs, 0);
+            this.txtMask.AutoCompleteCustomSource.AddRange(strs);
+
+            if (Properties.Settings.Default.mysql_history != null)
             {
                 Properties.Settings.Default.mysql_history = new StringCollection();
                 strs = new string[Properties.Settings.Default.mysql_history.Count];
-                Properties.Settings.Default.mysql_history.CopyTo( strs, 0 );
-                this.txtMySql.AutoCompleteCustomSource.AddRange( strs );
+                Properties.Settings.Default.mysql_history.CopyTo(strs, 0);
+                this.txtMySql.AutoCompleteCustomSource.AddRange(strs);
             }
             else
             {
                 Properties.Settings.Default.mysql_history = new StringCollection();
             }
 
-            if(Properties.Settings.Default.sqlite_history != null)
+            if (Properties.Settings.Default.sqlite_history != null)
             {
                 strs = new string[Properties.Settings.Default.sqlite_history.Count];
-                Properties.Settings.Default.sqlite_history.CopyTo( strs, 0 );
-                this.txtSQLite.AutoCompleteCustomSource.AddRange( strs );
+                Properties.Settings.Default.sqlite_history.CopyTo(strs, 0);
+                this.txtSQLite.AutoCompleteCustomSource.AddRange(strs);
             }
             else
             {
                 Properties.Settings.Default.sqlite_history = new StringCollection();
             }
-            //load version box
-            //string proc_path = Path.GetDirectoryName( Globals.ProcessPath() );
-            //string[] files = Directory.GetFiles( proc_path, "update.?.?.?.sql" );
-            //foreach( string f in files )
-            //{
-            //    string version = Path.GetFileNameWithoutExtension( f );
-            //    cmbVersion.Items.Add(version);
-            //}
         }
         /// <summary>
         /// save application settings
@@ -218,14 +205,6 @@ namespace music_importer
             Settings.Default.create_db = this.cbCreateDB.Checked;
             Settings.Default.Dirs.Clear();
             Settings.Default.music_root = this.txtRoot.Text;
-            //foreach(FileInfo fi in lbScanLocations.Items)
-            //{
-            //    // do not save root
-            //    if(fi.FullName.Length > txtRoot.Text.Length)  
-            //    {
-            //        Settings.Default.Dirs.Add( fi.FullName );
-            //    }
-            //}
             Settings.Default.art_location = this.txtArtLoc.Text;
             Settings.Default.file_mask = this.txtMask.Text;
             Settings.Default.art_mask = this.txtArtMask.Text;
@@ -378,72 +357,6 @@ namespace music_importer
                 }
             }
         }
-        ///// <summary>
-        ///// btnAdd 
-        ///// </summary>
-        ///// <param name="sender">the button</param>
-        ///// <param name="e">arguments</param>
-        //private void btnAdd_Click( object sender, EventArgs e )
-        //{
-        //    FolderBrowserDialog dlg = new FolderBrowserDialog();
-        //    dlg.RootFolder = Environment.SpecialFolder.Desktop;
-                                
-        //    if(dlg.ShowDialog() == DialogResult.OK)
-        //    {
-        //        if( dlg.SelectedPath.StartsWith( txtRoot.Text, 
-        //                                         true, 
-        //                                         System.Globalization.CultureInfo.InvariantCulture ) &&
-        //                                         dlg.SelectedPath.Length > txtRoot.Text.Length )
-        //        {
-        //            lbScanLocations.Items.Add( new FileInfo( dlg.SelectedPath ) );
-        //        }
-        //        else
-        //        {
-        //            StdMsgBox.OK( "Path not under root" );
-        //        }
-        //    }
-        //}
-        ///// <summary>
-        /////  btnRemove clicked
-        ///// </summary>
-        ///// <param name="sender">the button</param>
-        ///// <param name="e">arguments</param>
-        //private void btnRemove_Click( object sender, EventArgs e )
-        //{
-        //    object[] objs = new object[lbScanLocations.SelectedItems.Count];
-        //    lbScanLocations.SelectedItems.CopyTo( objs, 0 );
-        //    foreach(object o in objs)
-        //    {
-        //        lbScanLocations.Items.Remove( o );
-        //    }
-        //}
-        ///// <summary>
-        /////  btnClear clicked
-        ///// </summary>
-        ///// <param name="sender">the button</param>
-        ///// <param name="e">arguments</param>
-        //private void btnClear_Click( object sender, EventArgs e )
-        //{
-        //    lbScanLocations.Items.Clear();
-        //}
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void txtRoot_TextChanged( object sender, EventArgs e )
-        //{
-        //    lbScanLocations.Items.Clear();
-        //    if(Directory.Exists( txtRoot.Text ))
-        //    {
-        //        btnAdd.Enabled = true;
-        //        lbScanLocations.Items.Add( new FileInfo( txtRoot.Text ) );
-        //    }
-        //    else
-        //    {
-        //        btnAdd.Enabled = false;
-        //    }
-        //}
         /// <summary>
         /// 
         /// </summary>
