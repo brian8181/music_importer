@@ -29,6 +29,7 @@ using Utility.IO;
 using System.Data;
 using System.Text.RegularExpressions;
 using Utility;
+using System.Diagnostics;
 
 namespace MusicImporter_Lib
 {
@@ -147,6 +148,8 @@ namespace MusicImporter_Lib
         /// <param name="art_id"></param>
         public void CreateLink(object song_id, object art_id)
         {
+            Trace.WriteLine(string.Format("Created link song_id={0} -> art_id={1}: ", song_id, art_id)
+               ,Logger.Level.Information.ToString()); 
             string sql = "SELECT song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?song_id", song_id);
@@ -154,7 +157,7 @@ namespace MusicImporter_Lib
 
             if (db.Exists(cmd))
                 return; // already in db
-
+                        
             sql = "INSERT INTO song_art VALUES(NULL, ?song_id, ?art_id, NULL, NOW())";
             cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?song_id", song_id);
@@ -172,6 +175,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         public string Insert(byte[] hash, string art, string type, string description, string mime_type)
         {
+            Trace.WriteLine("INSERTED ART: " + art, Logger.Level.Information.ToString()); 
             string sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?file", art);
@@ -213,6 +217,7 @@ namespace MusicImporter_Lib
         /// <param name="data"></param>
         public void SaveArt(string file, byte[] data)
         {
+            Trace.WriteLine("Saved art: " + file, Logger.Level.Information.ToString()); 
             // write file to art location
             System.IO.File.WriteAllBytes(art_path + file, data);
             // gen & write thumbs
@@ -224,6 +229,7 @@ namespace MusicImporter_Lib
         /// <param name="file_name"></param>
         private void GenerateThumbs(string file_name)
         {
+            Trace.WriteLine("Generated thumbnails for: " + file_name, Logger.Level.Information.ToString()); 
             string art = art_path + file_name;
             Thumb.Generate(
                 art_path + "large\\" + file_name, art, Settings.Default.art_large, 0, true);
@@ -453,7 +459,7 @@ namespace MusicImporter_Lib
                 }
                 catch
                 {
-                    //return;
+                    continue;
                 }
                 if (obj == null)
                 {

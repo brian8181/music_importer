@@ -140,5 +140,17 @@ namespace music_importer.Properties {
                 this["file_mask_history"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool clear_logs {
+            get {
+                return ((bool)(this["clear_logs"]));
+            }
+            set {
+                this["clear_logs"] = value;
+            }
+        }
     }
 }

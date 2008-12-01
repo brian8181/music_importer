@@ -116,6 +116,7 @@ namespace music_importer
             this.lbFilesScanned_label = new System.Windows.Forms.Label();
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
+            this.cbClearLogs = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -129,7 +130,7 @@ namespace music_importer
             // cbOptimize
             // 
             this.cbOptimize.AutoSize = true;
-            this.cbOptimize.Location = new System.Drawing.Point(12, 90);
+            this.cbOptimize.Location = new System.Drawing.Point(12, 82);
             this.cbOptimize.Name = "cbOptimize";
             this.cbOptimize.Size = new System.Drawing.Size(101, 17);
             this.cbOptimize.TabIndex = 3;
@@ -140,7 +141,7 @@ namespace music_importer
             // cbTags
             // 
             this.cbTags.AutoSize = true;
-            this.cbTags.Location = new System.Drawing.Point(12, 58);
+            this.cbTags.Location = new System.Drawing.Point(12, 54);
             this.cbTags.Name = "cbTags";
             this.cbTags.Size = new System.Drawing.Size(88, 17);
             this.cbTags.TabIndex = 1;
@@ -151,7 +152,7 @@ namespace music_importer
             // cbLog
             // 
             this.cbLog.AutoSize = true;
-            this.cbLog.Location = new System.Drawing.Point(12, 154);
+            this.cbLog.Location = new System.Drawing.Point(12, 166);
             this.cbLog.Name = "cbLog";
             this.cbLog.Size = new System.Drawing.Size(44, 17);
             this.cbLog.TabIndex = 2;
@@ -162,7 +163,7 @@ namespace music_importer
             // cbClean
             // 
             this.cbClean.AutoSize = true;
-            this.cbClean.Location = new System.Drawing.Point(12, 122);
+            this.cbClean.Location = new System.Drawing.Point(12, 110);
             this.cbClean.Name = "cbClean";
             this.cbClean.Size = new System.Drawing.Size(70, 17);
             this.cbClean.TabIndex = 5;
@@ -553,6 +554,7 @@ namespace music_importer
             // 
             // grpOptions
             // 
+            this.grpOptions.Controls.Add(this.cbClearLogs);
             this.grpOptions.Controls.Add(this.cbCreateDB);
             this.grpOptions.Controls.Add(this.cbClean);
             this.grpOptions.Controls.Add(this.cbLog);
@@ -895,6 +897,17 @@ namespace music_importer
             this.linkReport.Visible = false;
             this.linkReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReport_LinkClicked);
             // 
+            // cbClearLogs
+            // 
+            this.cbClearLogs.AutoSize = true;
+            this.cbClearLogs.Location = new System.Drawing.Point(12, 138);
+            this.cbClearLogs.Name = "cbClearLogs";
+            this.cbClearLogs.Size = new System.Drawing.Size(76, 17);
+            this.cbClearLogs.TabIndex = 6;
+            this.cbClearLogs.Text = "Clear Logs";
+            this.toolTip.SetToolTip(this.cbClearLogs, "Turn Logging On / Off.");
+            this.cbClearLogs.UseVisualStyleBackColor = true;
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1017,6 +1030,7 @@ namespace music_importer
         private System.Windows.Forms.Label lbFilesScanned_label;
         private System.Windows.Forms.Label lbFilesScanned;
         private System.Windows.Forms.LinkLabel linkReport;
+        private System.Windows.Forms.CheckBox cbClearLogs;
     }
 }
 

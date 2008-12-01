@@ -105,7 +105,8 @@ namespace music_importer
             this.txtMySql.Text = Settings.Default.mysql_conn_str;
             this.txtSQLite.Text = Settings.Default.mm_conn_str;
             this.cbClean.Checked = Settings.Default.Clean;
-            this.cbLog.Checked = Settings.Default.Log;
+            this.cbLog.Checked = Settings.Default.Log; //TODO this is a GUI setting like below
+            this.cbClearLogs.Checked = Properties.Settings.Default.clear_logs;
             //this.cbArt.Checked = Settings.Default.RecanArt;
             this.cbTags.Checked = Settings.Default.ScanTags;
             this.cbOptimize.Checked = Settings.Default.Optimize;
@@ -209,7 +210,8 @@ namespace music_importer
             }
             Settings.Default.ScanPlaylist = this.cbPlaylist.Checked;
             Settings.Default.Clean = this.cbClean.Checked;
-            Settings.Default.Log = this.cbLog.Checked;
+            Settings.Default.Log = this.cbLog.Checked; //TODO this a GUI setting
+            Properties.Settings.Default.clear_logs = this.cbClearLogs.Checked;
             //Settings.Default.RecanArt = this.cbArt.Checked;
             Settings.Default.ScanTags = this.cbTags.Checked;
             Settings.Default.Optimize = this.cbOptimize.Checked;
@@ -274,7 +276,11 @@ namespace music_importer
         /// <param name="e">args</param>
         private void btnOK_Click( object sender, EventArgs e )
         {
-            if (Settings.Default.Log)
+            if (cbClearLogs.Checked)
+            {
+                Logger.ClearLogs();
+            }
+            if (cbLog.Checked)
                 Logger.Init();
 
             linkReport.Visible = false;
@@ -909,6 +915,7 @@ namespace music_importer
             //cbArt.Enabled = state;
             cbClean.Enabled = state;
             cbLog.Enabled = state;
+            cbClearLogs.Enabled = state;
             cbOptimize.Enabled = state;
             cbPlaylist.Enabled = state;
             cbTags.Enabled = state;
@@ -940,6 +947,11 @@ namespace music_importer
             if(cbPlaylist.Checked)
             {
                 result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
+            }
+            if (cbTags.Checked)
+            {
+                result = result ? !string.IsNullOrEmpty( txtRoot.Text ) : false;
+                result = result ? !string.IsNullOrEmpty(txtMask.Text) : false;
             }
             //result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
             if(cbGenerateThumbs.Checked && !Directory.Exists( txtArtLoc.Text ))

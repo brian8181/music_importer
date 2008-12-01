@@ -306,7 +306,7 @@ namespace MusicImporter_Lib
                         return;
                     }
 
-                    OnProcessDirectory("None.");
+                    OnDirectoryProcessing("None.");
 
                     // check for stop signal
                     pause.WaitOne();
@@ -395,13 +395,13 @@ namespace MusicImporter_Lib
         /// <param name="dir">base directory</param>
         private void Thread( string dir )
         {
-            OnProcessDirectory( dir );
+            OnDirectoryProcessing( dir );
             files = DirectoryExt.GetFiles( dir, Settings.Default.file_mask );
             for(int i = 0; i < files.Length && running; ++i)
             {
                 ++file_count;
                 reporter.ScannedCount++;     
-                OnFileScanned( files[i], file_count );
+                OnFileProcessing( files[i], file_count );
                 pause.WaitOne();
                 if(!running) return;
 
@@ -592,7 +592,7 @@ namespace MusicImporter_Lib
                       "?artist_id, ?album_id, ?track, ?title, ?file, ?genre, ?bitrate, ?length, ?year, ?comments, " +
                       "?encoder, ?file_size, ?file_type, ?art_id, ?lyrics, ?composer, ?conductor, ?copyright, " +
                       "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute)";
-                OnMessage( "INSERTED: " + Path.GetFileName( tag_file.Name ) );
+                OnMessage( "INSERTED SONG: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
                 mysql_connection.ExecuteNonQuery(cmd);
                 song_id = mysql_connection.LastInsertID;
@@ -605,7 +605,7 @@ namespace MusicImporter_Lib
                       "art_id=?art_id, lyrics=?lyrics, composer=?composer, conductor=?conductor, copyright=?copyright, disc=?disc, disc_count=?disc_count, " +
                       "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute " +
                       "WHERE id = ?song_id";
-                OnMessage( "UPDATED: " + Path.GetFileName( tag_file.Name ) );
+                OnMessage( "UPDATED SONG: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
                 mysql_connection.ExecuteNonQuery(cmd);
                 reporter.UpdateSongCount++;
@@ -768,9 +768,10 @@ namespace MusicImporter_Lib
         /// call ProcessDirectory
         /// </summary>
         /// <param name="msg">status message</param>
-        protected virtual void OnProcessDirectory( string msg )
+        protected virtual void OnDirectoryProcessing( string dir )
         {
-            if(DirectoryProcessing != null) DirectoryProcessing( msg );
+            Trace.WriteLine("Processing directory - " + dir, Logger.Level.Information.ToString());
+            if(DirectoryProcessing != null) DirectoryProcessing( dir );
         }
         /// <summary>
         /// 
@@ -782,8 +783,9 @@ namespace MusicImporter_Lib
         /// <summary>
         /// 
         /// </summary>
-        protected virtual void OnFileScanned( string file, int value )
+        protected virtual void OnFileProcessing( string file, int value )
         {
+            Trace.WriteLine("Processing file - " + file, Logger.Level.Information.ToString());
             if(FileProcessing != null) FileProcessing(file, value);
         }
         #endregion
