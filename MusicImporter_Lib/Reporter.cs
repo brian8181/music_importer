@@ -142,13 +142,13 @@ namespace MusicImporter_Lib
             timestamp = DateTime.Now;
             StringBuilder sb = new StringBuilder("<html>\r\n<head>\r\n");
             sb.AppendLine("<title>Report</title>");
-            sb.AppendLine( "<style type=\"text/css\">" );
+            sb.AppendLine("<style type=\"text/css\">");
             sb.AppendLine("body\r\n{\r\n\t font-family: Arial;\r\n}");
             sb.AppendLine(".gray_text\r\n{\r\n\tcolor:#666666;\r\n}");
-            sb.AppendLine( "</style>" );
+            sb.AppendLine("</style>");
             sb.AppendLine("</head>");
 
-            string dt = timestamp.ToString(Utility.Globals.PrettyLogDateFormat);   
+            string dt = timestamp.ToString(Utility.Globals.PrettyLogDateFormat);
             sb.AppendFormat("<h2><i>{0}</i></h2>\r\n", dt);
             sb.AppendLine("<br />");
 
@@ -168,10 +168,10 @@ namespace MusicImporter_Lib
             sb.AppendLine("</table>");
 
             sb.AppendLine("<br />");
-            sb.AppendFormat( "<div {0}>\r\n", style );
+            sb.AppendFormat("<div {0}>\r\n", style);
             sb.AppendFormat("<i><b>Database version:&nbsp;{0} previous version:&nbsp;{1}</b></i>\r\n", db_version, db_prev_version);
             sb.AppendLine("</div>");
-      
+
             sb.AppendLine("</div>");
 
             sb.AppendLine("</body>\r\n</html>");
