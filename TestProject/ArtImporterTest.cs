@@ -135,7 +135,7 @@ namespace TestProject
             // attempts to delete the art and the links because its has 
             // no matching file. ( duh.jpg )
             ArtImporter target = new ArtImporter(db, path); 
-            uint deleted = target.DeleteOrphanedInserts(path);
+            uint deleted = target.DeleteOrphanedInserts();
             Assert.IsTrue(deleted == 1);
             // do clean up
             System.IO.File.Delete(file);
@@ -157,7 +157,7 @@ namespace TestProject
             // The file DeleteOrphanedFilesTest.jpg just create should be deleted 
             // since it is not in database.
             ArtImporter target = new ArtImporter(db, path);
-            uint deleted = target.DeleteOrphanedFiles(path);
+            uint deleted = target.DeleteOrphanedFiles();
             Assert.IsTrue(deleted == 1);
         }
     }

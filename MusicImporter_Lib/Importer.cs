@@ -99,12 +99,6 @@ namespace MusicImporter_Lib
         private Reporter reporter = new Reporter();
         private State current_state = State.Idle;
         private State last_state = State.Idle; 
-
-        public Reporter Reporter
-        {
-            get { return reporter; }
-            set { reporter = value; }
-        }
         private ArtImporter art_importer = null;
 
         /// <summary>
@@ -130,6 +124,14 @@ namespace MusicImporter_Lib
             Initialize( settings );
         }
         /// <summary>
+        /// 
+        /// </summary>
+        public Reporter Reporter
+        {
+            get { return reporter; }
+            set { reporter = value; }
+        }
+        /// <summary>
         /// (Re)Initialize 
         /// </summary>
         public void Initialize( MusicImporter_Lib.Properties.Settings settings )
@@ -150,14 +152,7 @@ namespace MusicImporter_Lib
                 connect_string = cn_str;
             }
             mm_conn_str = settings.mm_conn_str;
-
-            if(settings.insert_art)
-            {
-                art_path = Settings.Default.art_location.TrimEnd('\\');
-                Directory.CreateDirectory( art_path + "large\\" );
-                Directory.CreateDirectory( art_path + "small\\" );
-                Directory.CreateDirectory( art_path + "xsmall\\" );
-            }
+            art_path = string.Format("{0}\\.album_art", Settings.Default.art_location.TrimEnd('\\'));
         }
         #endregion
 
@@ -187,7 +182,10 @@ namespace MusicImporter_Lib
                 {
                     mm_connection.Open(mm_conn_str);
                 }
-                art_importer = new ArtImporter(mysql_connection, art_path);
+                if (Settings.Default.insert_art)
+                {
+                    art_importer = new ArtImporter(mysql_connection, art_path);
+                }
             }
             catch(Exception e)
             {
@@ -207,21 +205,18 @@ namespace MusicImporter_Lib
                 OnSyncError();
                 return;
             }
+            if (fork)
+            {
+                thread = new Thread(new ThreadStart(Scan));
+                thread.Name = "Impoter Thread";
+                thread.IsBackground = true;
+                thread.Priority = priority;
+                thread.Start();
+                return;
+            }
             else
             {
-                if(fork)
-                {
-                    thread = new Thread( new ThreadStart( Scan ) );
-                    thread.Name = "Impoter Thread";
-                    thread.IsBackground = true;
-                    thread.Priority = priority;
-                    thread.Start();
-                    return;
-                }
-                else
-                {
-                    Scan();
-                }
+                Scan();
             }
         }
         /// <summary>
@@ -235,133 +230,130 @@ namespace MusicImporter_Lib
                 OnSyncError();
                 return;
             }
-            else
+
+            OnStateChanged(State.Starting);
+            OnStateChanged(State.PrepareStep);
+            running = true;
+            DateTime start = DateTime.Now;
+            try
             {
-                OnStateChanged(State.Starting);
-                OnStateChanged(State.PrepareStep);
-                running = true;
-                DateTime start = DateTime.Now;
                 try
                 {
-                    try
+                    // remove
+                    OnStateChanged(State.CreateDB);
+                    db_mgr = new DDLHelper(mysql_connection);
+
+                    // Create DATABASE
+                    if (Settings.Default.create_db)
                     {
-                        // remove
-                        OnStateChanged(State.CreateDB);
-
-                        db_mgr = new DDLHelper(mysql_connection);
-
-                        // Create DATABASE
-                        if (Settings.Default.create_db)
-                        {
-                            OnMessage("Executing create scripts...");
-                            string schema_name = Settings.Default.schema;
-                            string sql = "DROP DATABASE IF EXISTS " + schema_name;
-                            mysql_connection.ExecuteNonQuery(sql);
-                            db_mgr.CreateDatabase(schema_name);
-                            db_mgr.ExecuteCreateScript();
-                        }
-
-                        OnMessage("Executing update scripts...");
-                        // change to database
-                        mysql_connection.ChangeDatabase(Settings.Default.schema);
-                        // get version info
-                        db_mgr.InitializeVersionInfo();
-                        reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
-                        reporter.DBVersion = db_mgr.UpdateVersion.ToString();
-                        db_mgr.UpdateDatabase(); // update
-                        OnMessage("Database has been updated");
-                  
-                        // check for stop signal
-                        pause.WaitOne();
-                        if (!running) return;
-
-                        OnStateChanged(State.PrepareStep);
-                             
-                        // make sure database set
-                        mysql_connection.ChangeDatabase(Settings.Default.schema);
-
-                        // SCAN TAGS
-                        if (Settings.Default.ScanTags)
-                        {
-                            OnStateChanged(State.Scanning);
-                            int len = Settings.Default.Dirs.Count;
-                            // scan just root or all in list
-                            if (len > 0)
-                            {
-                                for (int i = 0; i < len && running; ++i)
-                                {
-                                    Thread(Settings.Default.Dirs[i]);
-                                }
-                            }
-                            else
-                            {
-                                Thread(Settings.Default.music_root);
-                            }
-                            OnStateChanged(State.PrepareStep);
-                        }
-                    }
-                    catch (MySqlException exp)
-                    {
-                        OnError(exp.Message);
-                        return;
+                        OnMessage("Executing create scripts...");
+                        string schema_name = Settings.Default.schema;
+                        string sql = "DROP DATABASE IF EXISTS " + schema_name;
+                        mysql_connection.ExecuteNonQuery(sql);
+                        db_mgr.CreateDatabase(schema_name);
+                        db_mgr.ExecuteCreateScript();
                     }
 
-                    OnDirectoryProcessing("None.");
+                    OnMessage("Executing update scripts...");
+                    // change to database
+                    mysql_connection.ChangeDatabase(Settings.Default.schema);
+                    // get version info
+                    db_mgr.InitializeVersionInfo();
+                    reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
+                    reporter.DBVersion = db_mgr.UpdateVersion.ToString();
+                    db_mgr.UpdateDatabase(); // update
+                    OnMessage("Database has been updated");
 
                     // check for stop signal
                     pause.WaitOne();
                     if (!running) return;
 
-                    // SCAN PLAYLIST
-                    if (Settings.Default.ScanPlaylist)
+                    OnStateChanged(State.PrepareStep);
+
+                    // make sure database set
+                    mysql_connection.ChangeDatabase(Settings.Default.schema);
+
+                    // SCAN TAGS
+                    if (Settings.Default.ScanTags)
                     {
-                        OnStateChanged(State.CreatePlaylists);
-                        ImportPlaylist();
+                        OnStateChanged(State.Scanning);
+                        int len = Settings.Default.Dirs.Count;
+                        // scan just root or all in list
+                        if (len > 0)
+                        {
+                            for (int i = 0; i < len && running; ++i)
+                            {
+                                Thread(Settings.Default.Dirs[i]);
+                            }
+                        }
+                        else
+                        {
+                            Thread(Settings.Default.music_root);
+                        }
                         OnStateChanged(State.PrepareStep);
                     }
+                }
+                catch (MySqlException exp)
+                {
+                    OnError(exp.Message);
+                    return;
+                }
 
-                    // check for stop signal
-                    pause.WaitOne();
-                    if (!running) return;
+                OnDirectoryProcessing("None.");
 
-                    // CLEAN
-                    if (Settings.Default.Clean)
+                // check for stop signal
+                pause.WaitOne();
+                if (!running) return;
+
+                // SCAN PLAYLIST
+                if (Settings.Default.ScanPlaylist)
+                {
+                    OnStateChanged(State.CreatePlaylists);
+                    ImportPlaylist();
+                    OnStateChanged(State.PrepareStep);
+                }
+
+                // check for stop signal
+                pause.WaitOne();
+                if (!running) return;
+
+                // CLEAN
+                if (Settings.Default.Clean)
+                {
+                    OnStateChanged(State.Cleaning);
+                    if (Settings.Default.insert_art)
                     {
-                        OnStateChanged(State.Cleaning);
                         reporter.DeleteArtFileCount = art_importer.DeleteOrphanedFiles();
                         reporter.DeleteArtCount = art_importer.DeleteOrphanedInserts();
-
-                        //TODO clean need to delete art as to obey FKs
-                        //reporter.DeleteSongCount = Clean();
-                        OnStateChanged(State.PrepareStep);
                     }
-
-                    // check for stop signal
-                    pause.WaitOne();
-                    if (!running) return;
-
-                    // OPITIMIZE
-                    if (Settings.Default.Optimize)
-                    {
-                        OnStateChanged(State.Optimizing);
-                        Optimize();
-                    }
+                    //reporter.DeleteSongCount = Clean();
+                    OnStateChanged(State.PrepareStep);
                 }
-                finally
+
+                // check for stop signal
+                pause.WaitOne();
+                if (!running) return;
+
+                // OPITIMIZE
+                if (Settings.Default.Optimize)
                 {
-                    DateTime end = DateTime.Now;
-
-                    TimeSpan ts =  (TimeSpan)( end - start );
-                    string elapsed = ts.Hours.ToString("D") + ":"  + ts.Minutes.ToString("D")
-                        + ":" + ts.Seconds.ToString( "D2" ); // +"::" + ts.Milliseconds.ToString( "D4" );
-
-                    OnMessage( "Completed at " + end.ToShortTimeString() +
-                                " elapsed time " + elapsed + ".");
-                    Close();
-                    OnStateChanged(State.Stopping);
-                    OnStateChanged(State.Idle);
-                    running = false;
+                    OnStateChanged(State.Optimizing);
+                    Optimize();
                 }
+            }
+            finally
+            {
+                DateTime end = DateTime.Now;
+                TimeSpan ts = (TimeSpan)(end - start);
+                string elapsed = ts.Hours.ToString("D") + ":" + ts.Minutes.ToString("D")
+                    + ":" + ts.Seconds.ToString("D2"); // +"::" + ts.Milliseconds.ToString( "D4" );
+
+                OnMessage("Completed at " + end.ToShortTimeString() +
+                            " elapsed time " + elapsed + ".");
+                Close();
+                OnStateChanged(State.Stopping);
+                OnStateChanged(State.Idle);
+                running = false;
             }
         }
         /// <summary>
@@ -557,9 +549,10 @@ namespace MusicImporter_Lib
             {
                 idv2 = tag_file.GetTag(TagLib.TagTypes.Id3v2) as TagLib.Id3v2.Tag;
             }
-            catch
+            catch(Exception e)
             {
                 // taglib throws an exception on some file types? 
+                OnError(e.Message);
             }
             string encoder = "NA";
             if(idv2 != null)

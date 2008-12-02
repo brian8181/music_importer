@@ -95,11 +95,12 @@ namespace TestProject
             string table = "art"; // TODO: Initialize to an appropriate value
             string column = "file"; // TODO: Initialize to an appropriate value
             string value = "{36ba30a6-618e-45f9-b2f1-1a0cf505eae9}.jpeg"; // TODO: Initialize to an appropriate value
-            Nullable<uint> expected = new Nullable<uint>(2271); // TODO: Initialize to an appropriate value
+            //Nullable<uint> expected = new Nullable<uint>(2271); // TODO: Initialize to an appropriate value
             Nullable<uint> actual;
             target.Connect();
             actual = target.GetKey( table, column, value );
-            Assert.IsNotNull( expected );
+            //Assert.IsNotNull( expected );
+            Assert.Inconclusive("TODO");
         }
     }
 }

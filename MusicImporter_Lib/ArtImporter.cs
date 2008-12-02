@@ -39,7 +39,7 @@ namespace MusicImporter_Lib
     class ArtImporter
     {
         private IDatabase db = null;
-        private string art_path = null;
+        private string path = null;
         
         /// <summary>
         /// defualt ctor
@@ -49,14 +49,18 @@ namespace MusicImporter_Lib
         public ArtImporter(IDatabase db, string art_path)
         {
             this.db = db;
-            this.art_path = art_path;
+            this.path = art_path.TrimEnd('\\');
+                      
+            Directory.CreateDirectory(path + "\\large\\");
+            Directory.CreateDirectory(path + "\\small\\");
+            Directory.CreateDirectory(path + "\\xsmall\\");
 
             // place NA jpg
-            string path = System.IO.Path.GetDirectoryName( Globals.ProcessPath() );
-            string file = path = path.TrimEnd('\\') + "\\Resources\\NA.JPG";
-            string dest = art_path.TrimEnd('\\') + "\\NA.JPG";
+            string proc_path = System.IO.Path.GetDirectoryName( Globals.ProcessPath() );
+            string file = proc_path = proc_path.TrimEnd('\\') + "\\Resources\\NA.JPG";
+            string dest = path + "\\NA.JPG";
             
-            if (File.Exists(file) && !File.Exists(dest) )
+            if ( File.Exists(file) && !File.Exists(dest) )
             {
                 File.Copy(file, dest);
                 GenerateThumbs(Path.GetFileName(dest));
@@ -219,7 +223,7 @@ namespace MusicImporter_Lib
         {
             Trace.WriteLine("Saved art: " + file, Logger.Level.Information.ToString()); 
             // write file to art location
-            System.IO.File.WriteAllBytes(art_path + file, data);
+            System.IO.File.WriteAllBytes(path + "\\" + file, data);
             // gen & write thumbs
             GenerateThumbs(file);
         }
@@ -230,13 +234,13 @@ namespace MusicImporter_Lib
         private void GenerateThumbs(string file_name)
         {
             Trace.WriteLine("Generated thumbnails for: " + file_name, Logger.Level.Information.ToString()); 
-            string art = art_path + file_name;
+            string art = path + "\\" + file_name;
             Thumb.Generate(
-                art_path + "large\\" + file_name, art, Settings.Default.art_large, 0, true);
+                path + "\\large\\" + file_name, art, Settings.Default.art_large, 0, true);
             Thumb.Generate(
-                art_path + "small\\" + file_name, art, Settings.Default.art_small, 0, true);
+                path + "\\small\\" + file_name, art, Settings.Default.art_small, 0, true);
             Thumb.Generate(
-                art_path + "xsmall\\" + file_name, art, Settings.Default.art_xsmall, 0, true);
+                path + "\\xsmall\\" + file_name, art, Settings.Default.art_xsmall, 0, true);
 
         }
         /// <summary>
@@ -305,15 +309,8 @@ namespace MusicImporter_Lib
         /// <summary>
         /// delete inserts if file does not exists
         /// </summary>
-        public uint DeleteOrphanedInserts()
-        {
-            return DeleteOrphanedInserts(Settings.Default.art_location);
-        }
-        /// <summary>
-        /// delete inserts if file does not exists
-        /// </summary>
         /// <param name="path">art path</param>
-        public uint DeleteOrphanedInserts(string path)
+        public uint DeleteOrphanedInserts()
         {
             DataSet ds = db.ExecuteQuery("SELECT file FROM art");
 
@@ -328,7 +325,7 @@ namespace MusicImporter_Lib
             {
                 file = row[0].ToString();
                 path = path.Trim('\\');
-                string full_path = String.Format("{0}\\{1}\\{2}", path, ".album_art", file);
+                string full_path = String.Format("{0}\\{1}", path, file);
                 if (!File.Exists(full_path))
                 {
                     // get id for file
@@ -354,25 +351,22 @@ namespace MusicImporter_Lib
         /// <summary>
         /// check each file in path to see if it's in the database, if not delete it
         /// </summary>
-        /// <param name="path"></param>
-        public uint DeleteOrphanedFiles()
-        {
-            return DeleteOrphanedFiles(Settings.Default.art_location);
-        }
-        /// <summary>
-        /// check each file in path to see if it's in the database, if not delete it
-        /// </summary>
         /// <param name="path">path to check</param>
-        public uint DeleteOrphanedFiles(string path)
+        public uint DeleteOrphanedFiles()
         {
             uint deleted = 0;
             path = path.TrimEnd('\\');
-            string[] files = DirectoryExt.GetFiles(path + "\\.album_art", "*.jpg;*.jpeg;*.png;*.bmp;*.gif");
+            string[] files = DirectoryExt.GetFiles(path, "*.jpg;*.jpeg;*.png;*.bmp;*.gif");
             for (int i = 0; i < files.Length; ++i)
             {
                 byte[] data = File.ReadAllBytes(files[i]);
                 byte[] hash = ComputeHash(data);
                 string file = Path.GetFileName(files[i]);
+
+                if( file == "NA.JPG" )
+                {
+                    continue; // do delete NA.JPG files
+                }
                 
                 // file exist but hash doesn't match
                 string sql = "SELECT id FROM art WHERE file=?file AND NOT hash=?hash";
@@ -395,21 +389,17 @@ namespace MusicImporter_Lib
                 {
                     File.Delete(files[i]);
 
-                    // delete thumbs if they exist
-                    string dir = Path.GetDirectoryName( files[i] );
-                    dir.TrimEnd('\\');
-
-                    string large = string.Format("{0}\\large\\{1}", dir, file);
+                    string large = string.Format("{0}\\large\\{1}", path, file);
                     if (File.Exists(large))
                     {
                         File.Delete(large);
                     }
-                    string small = string.Format("{0}\\small\\{1}", dir, file); 
+                    string small = string.Format("{0}\\small\\{1}", path, file); 
                     if( File.Exists(small) )
                     {
                         File.Delete(small);
                     }
-                    string xsmall = string.Format("{0}\\xsmall\\{1}", dir, file);
+                    string xsmall = string.Format("{0}\\xsmall\\{1}", path, file);
                     if (File.Exists(xsmall))
                     {
                         File.Delete(xsmall);
