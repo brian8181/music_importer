@@ -86,6 +86,7 @@ namespace music_importer
             this.lbArtRoot = new System.Windows.Forms.Label();
             this.txtArtLoc = new System.Windows.Forms.TextBox();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.cbClearLogs = new System.Windows.Forms.CheckBox();
             this.cbCreateDB = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lbDirectory = new System.Windows.Forms.Label();
@@ -116,7 +117,7 @@ namespace music_importer
             this.lbFilesScanned_label = new System.Windows.Forms.Label();
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
-            this.cbClearLogs = new System.Windows.Forms.CheckBox();
+            this.cbSHA1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -130,7 +131,7 @@ namespace music_importer
             // cbOptimize
             // 
             this.cbOptimize.AutoSize = true;
-            this.cbOptimize.Location = new System.Drawing.Point(12, 82);
+            this.cbOptimize.Location = new System.Drawing.Point(10, 89);
             this.cbOptimize.Name = "cbOptimize";
             this.cbOptimize.Size = new System.Drawing.Size(101, 17);
             this.cbOptimize.TabIndex = 3;
@@ -141,7 +142,7 @@ namespace music_importer
             // cbTags
             // 
             this.cbTags.AutoSize = true;
-            this.cbTags.Location = new System.Drawing.Point(12, 54);
+            this.cbTags.Location = new System.Drawing.Point(10, 43);
             this.cbTags.Name = "cbTags";
             this.cbTags.Size = new System.Drawing.Size(88, 17);
             this.cbTags.TabIndex = 1;
@@ -152,7 +153,7 @@ namespace music_importer
             // cbLog
             // 
             this.cbLog.AutoSize = true;
-            this.cbLog.Location = new System.Drawing.Point(12, 166);
+            this.cbLog.Location = new System.Drawing.Point(10, 158);
             this.cbLog.Name = "cbLog";
             this.cbLog.Size = new System.Drawing.Size(44, 17);
             this.cbLog.TabIndex = 2;
@@ -163,7 +164,7 @@ namespace music_importer
             // cbClean
             // 
             this.cbClean.AutoSize = true;
-            this.cbClean.Location = new System.Drawing.Point(12, 110);
+            this.cbClean.Location = new System.Drawing.Point(10, 112);
             this.cbClean.Name = "cbClean";
             this.cbClean.Size = new System.Drawing.Size(70, 17);
             this.cbClean.TabIndex = 5;
@@ -554,6 +555,7 @@ namespace music_importer
             // 
             // grpOptions
             // 
+            this.grpOptions.Controls.Add(this.cbSHA1);
             this.grpOptions.Controls.Add(this.cbClearLogs);
             this.grpOptions.Controls.Add(this.cbCreateDB);
             this.grpOptions.Controls.Add(this.cbClean);
@@ -567,12 +569,23 @@ namespace music_importer
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Scan Options";
             // 
+            // cbClearLogs
+            // 
+            this.cbClearLogs.AutoSize = true;
+            this.cbClearLogs.Location = new System.Drawing.Point(10, 135);
+            this.cbClearLogs.Name = "cbClearLogs";
+            this.cbClearLogs.Size = new System.Drawing.Size(76, 17);
+            this.cbClearLogs.TabIndex = 6;
+            this.cbClearLogs.Text = "Clear Logs";
+            this.toolTip.SetToolTip(this.cbClearLogs, "Turn Logging On / Off.");
+            this.cbClearLogs.UseVisualStyleBackColor = true;
+            // 
             // cbCreateDB
             // 
             this.cbCreateDB.AutoSize = true;
             this.cbCreateDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCreateDB.ForeColor = System.Drawing.Color.Red;
-            this.cbCreateDB.Location = new System.Drawing.Point(12, 26);
+            this.cbCreateDB.Location = new System.Drawing.Point(10, 20);
             this.cbCreateDB.Name = "cbCreateDB";
             this.cbCreateDB.Size = new System.Drawing.Size(108, 17);
             this.cbCreateDB.TabIndex = 0;
@@ -897,16 +910,16 @@ namespace music_importer
             this.linkReport.Visible = false;
             this.linkReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReport_LinkClicked);
             // 
-            // cbClearLogs
+            // cbSHA1
             // 
-            this.cbClearLogs.AutoSize = true;
-            this.cbClearLogs.Location = new System.Drawing.Point(12, 138);
-            this.cbClearLogs.Name = "cbClearLogs";
-            this.cbClearLogs.Size = new System.Drawing.Size(76, 17);
-            this.cbClearLogs.TabIndex = 6;
-            this.cbClearLogs.Text = "Clear Logs";
-            this.toolTip.SetToolTip(this.cbClearLogs, "Turn Logging On / Off.");
-            this.cbClearLogs.UseVisualStyleBackColor = true;
+            this.cbSHA1.AutoSize = true;
+            this.cbSHA1.Location = new System.Drawing.Point(10, 66);
+            this.cbSHA1.Name = "cbSHA1";
+            this.cbSHA1.Size = new System.Drawing.Size(99, 17);
+            this.cbSHA1.TabIndex = 7;
+            this.cbSHA1.Text = "Compute SHA1";
+            this.toolTip.SetToolTip(this.cbSHA1, "Turn Logging On / Off.");
+            this.cbSHA1.UseVisualStyleBackColor = true;
             // 
             // MainFrm
             // 
@@ -1031,6 +1044,7 @@ namespace music_importer
         private System.Windows.Forms.Label lbFilesScanned;
         private System.Windows.Forms.LinkLabel linkReport;
         private System.Windows.Forms.CheckBox cbClearLogs;
+        private System.Windows.Forms.CheckBox cbSHA1;
     }
 }
 

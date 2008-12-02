@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="Reporter.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TagLibExt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

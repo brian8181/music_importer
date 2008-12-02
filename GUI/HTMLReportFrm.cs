@@ -11,11 +11,14 @@ namespace music_importer
 {
     public partial class HTMLReportFrm : Form
     {
-        Reporter r = new Reporter();
+        private Reporter r = new Reporter();
+        private string file = string.Empty;
+
         public HTMLReportFrm()
         {
             InitializeComponent();
         }
+
         public string DocumentText
         {
             get
@@ -25,6 +28,16 @@ namespace music_importer
             set
             {
                 webBrowser1.DocumentText = value;
+            }
+        }
+
+        public string File
+        {
+            set
+            {
+                string uri = string.Format(@"file:///{0}", value);
+                webBrowser1.Url = new Uri(uri);
+
             }
         }
     }

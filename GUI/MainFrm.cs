@@ -108,6 +108,7 @@ namespace music_importer
             this.cbClearLogs.Checked = Properties.Settings.Default.clear_logs;
             //this.cbArt.Checked = Settings.Default.RecanArt;
             this.cbTags.Checked = Settings.Default.ScanTags;
+            this.cbSHA1.Checked = Settings.Default.compute_sha1;
             this.cbOptimize.Checked = Settings.Default.Optimize;
             this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
             this.txtMySql.Enabled = cbMysql.Checked;
@@ -180,9 +181,7 @@ namespace music_importer
             // importer Settings
             Settings.Default.Address = this.txtAddress.Text;
             Settings.Default.User_UTF8 = this.txtUser.Text;
-
             Settings.Default.Pass_UTF8 = this.txtPassword.Text;
-
             Settings.Default.schema = this.txtSchema.Text;
             Settings.Default.use_conn_str = cbMysql.Checked;
             if(cbMysql.Checked)
@@ -199,6 +198,7 @@ namespace music_importer
             Properties.Settings.Default.clear_logs = this.cbClearLogs.Checked;
             //Settings.Default.RecanArt = this.cbArt.Checked;
             Settings.Default.ScanTags = this.cbTags.Checked;
+            Settings.Default.compute_sha1 = this.cbSHA1.Checked;
             Settings.Default.Optimize = this.cbOptimize.Checked;
             Settings.Default.create_db = this.cbCreateDB.Checked;
             Settings.Default.Dirs.Clear();
@@ -823,13 +823,13 @@ namespace music_importer
             cbGenerateThumbs.Enabled = state;
             // check boxes
             cbMysql.Enabled = state;
-            //cbArt.Enabled = state;
             cbClean.Enabled = state;
             cbLog.Enabled = state;
             cbClearLogs.Enabled = state;
             cbOptimize.Enabled = state;
             cbPlaylist.Enabled = state;
             cbTags.Enabled = state;
+            cbSHA1.Enabled = state;
         }
         #endregion
 
@@ -921,7 +921,9 @@ namespace music_importer
         private void linkReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             HTMLReportFrm frm = new HTMLReportFrm();
-            frm.DocumentText = importer.Reporter.GetHTML();
+            importer.Reporter.ClearReports();
+            string file = importer.Reporter.SaveReport();
+            frm.File = file;
             frm.ShowDialog();
         }
     }

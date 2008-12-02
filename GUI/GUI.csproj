@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gpl-3.0.txt" />
+    <None Include="sql\updates\update.1.0.3.sql" />
     <None Include="Resources\NA.JPG" />
     <None Include="sql\create.sql" />
     <None Include="sql\procedures\get_default_art.sql" />

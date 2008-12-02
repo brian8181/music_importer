@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using Utility;
 
 namespace MusicImporter_Lib
 {
@@ -9,6 +11,13 @@ namespace MusicImporter_Lib
     /// </summary>
     public class Reporter
     {
+        private DateTime timestamp = DateTime.Now;
+
+        public DateTime Timestamp
+        {
+            get { return timestamp; }
+            set { timestamp = value; }
+        }
         private uint scanned_count = 0;
         private List<string> corrupt_files = new List<string>();
         private uint insert_song_count = 0;
@@ -130,6 +139,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         public string GetHTML()
         {
+            timestamp = DateTime.Now;
             StringBuilder sb = new StringBuilder("<html>\r\n<head>\r\n");
             sb.AppendLine("<title>Report</title>");
             sb.AppendLine( "<style type=\"text/css\">" );
@@ -138,7 +148,7 @@ namespace MusicImporter_Lib
             sb.AppendLine( "</style>" );
             sb.AppendLine("</head>");
 
-            string dt = DateTime.Now.ToString(Utility.Globals.PrettyLogDateFormat);   
+            string dt = timestamp.ToString(Utility.Globals.PrettyLogDateFormat);   
             sb.AppendFormat("<h2><i>{0}</i></h2>\r\n", dt);
             sb.AppendLine("<br />");
 
@@ -166,6 +176,37 @@ namespace MusicImporter_Lib
 
             sb.AppendLine("</body>\r\n</html>");
             return sb.ToString();
+        }
+        /// <summary>
+        /// save an html report to process directory
+        /// </summary>
+        /// <returns></returns>
+        public string SaveReport()
+        {
+            string proc_dir = Utility.Globals.ProcessDirectory();
+            string file = timestamp.ToString(Utility.Globals.LogDateFormat);
+            string path = string.Format(@"{0}/{1}.html", proc_dir, file);
+            string html = GetHTML();
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.Write(html);
+            }
+            return path;
+        }
+        /// <summary>
+        /// delete all log files in process directory
+        /// </summary>
+        public void ClearReports()
+        {
+            // find or generate a log file
+            string dir = Path.GetDirectoryName(Globals.ProcessPath());
+
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(dir);
+            FileInfo[] files = di.GetFiles("??????????????????.html");
+            foreach (FileInfo file in files)
+            {
+                file.Delete();
+            }
         }
     }
 }
