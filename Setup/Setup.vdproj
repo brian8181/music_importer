@@ -422,7 +422,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MusicImporter_Lib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MusicImporter_Lib, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_8DE1EE6780B29C63F879D082502A5A7E"
@@ -659,15 +659,15 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Music Importer 1.3.1"
-        "ProductCode" = "8:{8151D600-C42F-4961-AE1A-57914EA49540}"
-        "PackageCode" = "8:{CB4C098B-31F8-4126-8A60-33EA97D9AD0E}"
+        "ProductName" = "8:Music Importer 1.3.0"
+        "ProductCode" = "8:{24338637-77E6-4F1C-9220-4E6ACDFA1534}"
+        "PackageCode" = "8:{39AD553D-CADC-484C-9EB2-C99D05B898C9}"
         "UpgradeCode" = "8:{D4ED5470-B21B-4C53-9378-EC51BBB2FFCB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.3.1"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:Bkp-Online"
         "ARPHELPTELEPHONE" = "8:555-555-5555"
         "ARPHELPLINK" = "8:"
