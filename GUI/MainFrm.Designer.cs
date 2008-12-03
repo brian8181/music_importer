@@ -54,12 +54,8 @@ namespace music_importer
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bl1 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.cbSH_Pass = new Utility.GUI.ImageCheckBox();
-            this.cbSH_User = new Utility.GUI.ImageCheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbPlaylist = new Utility.GUI.ImageCheckBox();
             this.txtSchema = new System.Windows.Forms.TextBox();
-            this.cbMysql = new Utility.GUI.ImageCheckBox();
             this.txtSQLite = new System.Windows.Forms.TextBox();
             this.txtMySql = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -105,7 +101,6 @@ namespace music_importer
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.cbGenerateThumbs = new Utility.GUI.ImageCheckBox();
             this.btnPause = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.lbStartTime = new System.Windows.Forms.Label();
@@ -118,6 +113,11 @@ namespace music_importer
             this.lbFilesScanned_label = new System.Windows.Forms.Label();
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
+            this.cbGenerateThumbs = new Utility.GUI.ImageCheckBox();
+            this.cbSH_Pass = new Utility.GUI.ImageCheckBox();
+            this.cbSH_User = new Utility.GUI.ImageCheckBox();
+            this.cbPlaylist = new Utility.GUI.ImageCheckBox();
+            this.cbMysql = new Utility.GUI.ImageCheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -156,7 +156,7 @@ namespace music_importer
             this.cbLog.Location = new System.Drawing.Point(10, 158);
             this.cbLog.Name = "cbLog";
             this.cbLog.Size = new System.Drawing.Size(44, 17);
-            this.cbLog.TabIndex = 2;
+            this.cbLog.TabIndex = 6;
             this.cbLog.Text = "Log";
             this.toolTip.SetToolTip(this.cbLog, "Turn Logging On / Off.");
             this.cbLog.UseVisualStyleBackColor = true;
@@ -167,7 +167,7 @@ namespace music_importer
             this.cbClean.Location = new System.Drawing.Point(10, 112);
             this.cbClean.Name = "cbClean";
             this.cbClean.Size = new System.Drawing.Size(70, 17);
-            this.cbClean.TabIndex = 5;
+            this.cbClean.TabIndex = 4;
             this.cbClean.Text = "Clean Up";
             this.toolTip.SetToolTip(this.cbClean, "Clean database of orphaned entries.");
             this.cbClean.UseVisualStyleBackColor = true;
@@ -231,34 +231,6 @@ namespace music_importer
             this.label10.TabIndex = 2;
             this.label10.Text = "SQLite:";
             // 
-            // cbSH_Pass
-            // 
-            this.cbSH_Pass.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbSH_Pass.Checked = true;
-            this.cbSH_Pass.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSH_Pass.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSH_Pass.Image = ((System.Drawing.Image)(resources.GetObject("cbSH_Pass.Image")));
-            this.cbSH_Pass.Location = new System.Drawing.Point(218, 46);
-            this.cbSH_Pass.Name = "cbSH_Pass";
-            this.cbSH_Pass.Size = new System.Drawing.Size(32, 26);
-            this.cbSH_Pass.TabIndex = 10;
-            this.toolTip.SetToolTip(this.cbSH_Pass, "Show / Hide user password.");
-            this.cbSH_Pass.UseVisualStyleBackColor = true;
-            this.cbSH_Pass.CheckedChanged += new System.EventHandler(this.cbSH_Pass_CheckedChanged);
-            // 
-            // cbSH_User
-            // 
-            this.cbSH_User.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbSH_User.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbSH_User.Image = ((System.Drawing.Image)(resources.GetObject("cbSH_User.Image")));
-            this.cbSH_User.Location = new System.Drawing.Point(218, 19);
-            this.cbSH_User.Name = "cbSH_User";
-            this.cbSH_User.Size = new System.Drawing.Size(32, 26);
-            this.cbSH_User.TabIndex = 9;
-            this.toolTip.SetToolTip(this.cbSH_User, "Show / Hide user name.");
-            this.cbSH_User.UseVisualStyleBackColor = true;
-            this.cbSH_User.CheckedChanged += new System.EventHandler(this.cbSH_User_CheckedChanged);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -267,19 +239,6 @@ namespace music_importer
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 20;
             this.label7.Text = "Schema:";
-            // 
-            // cbPlaylist
-            // 
-            this.cbPlaylist.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbPlaylist.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbPlaylist.Image = ((System.Drawing.Image)(resources.GetObject("cbPlaylist.Image")));
-            this.cbPlaylist.Location = new System.Drawing.Point(436, 154);
-            this.cbPlaylist.Name = "cbPlaylist";
-            this.cbPlaylist.Size = new System.Drawing.Size(32, 26);
-            this.cbPlaylist.TabIndex = 12;
-            this.toolTip.SetToolTip(this.cbPlaylist, "Enable / disable SQlite connection string.");
-            this.cbPlaylist.UseVisualStyleBackColor = true;
-            this.cbPlaylist.CheckedChanged += new System.EventHandler(this.cbPlaylist_CheckedChanged);
             // 
             // txtSchema
             // 
@@ -290,19 +249,6 @@ namespace music_importer
             this.txtSchema.Size = new System.Drawing.Size(139, 20);
             this.txtSchema.TabIndex = 2;
             // 
-            // cbMysql
-            // 
-            this.cbMysql.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbMysql.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbMysql.Image = ((System.Drawing.Image)(resources.GetObject("cbMysql.Image")));
-            this.cbMysql.Location = new System.Drawing.Point(436, 127);
-            this.cbMysql.Name = "cbMysql";
-            this.cbMysql.Size = new System.Drawing.Size(32, 26);
-            this.cbMysql.TabIndex = 11;
-            this.toolTip.SetToolTip(this.cbMysql, "Enable / disable MySql connection string.");
-            this.cbMysql.UseVisualStyleBackColor = true;
-            this.cbMysql.CheckedChanged += new System.EventHandler(this.cbMysql_CheckedChanged);
-            // 
             // txtSQLite
             // 
             this.txtSQLite.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -310,7 +256,7 @@ namespace music_importer
             this.txtSQLite.Location = new System.Drawing.Point(75, 157);
             this.txtSQLite.Name = "txtSQLite";
             this.txtSQLite.Size = new System.Drawing.Size(346, 20);
-            this.txtSQLite.TabIndex = 8;
+            this.txtSQLite.TabIndex = 6;
             // 
             // txtMySql
             // 
@@ -320,7 +266,7 @@ namespace music_importer
             this.txtMySql.Location = new System.Drawing.Point(75, 130);
             this.txtMySql.Name = "txtMySql";
             this.txtMySql.Size = new System.Drawing.Size(346, 20);
-            this.txtMySql.TabIndex = 7;
+            this.txtMySql.TabIndex = 5;
             // 
             // label6
             // 
@@ -338,7 +284,7 @@ namespace music_importer
             this.txtPort.Location = new System.Drawing.Point(436, 103);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(40, 20);
-            this.txtPort.TabIndex = 5;
+            this.txtPort.TabIndex = 4;
             this.txtPort.Text = "3306";
             this.txtPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -357,7 +303,7 @@ namespace music_importer
             this.txtAddress.Location = new System.Drawing.Point(75, 103);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(346, 20);
-            this.txtAddress.TabIndex = 4;
+            this.txtAddress.TabIndex = 3;
             this.txtAddress.Text = "localhost";
             // 
             // label4
@@ -426,7 +372,7 @@ namespace music_importer
             this.btnOK.Location = new System.Drawing.Point(568, 577);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 3;
             this.btnOK.Text = "&Start";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -452,7 +398,7 @@ namespace music_importer
             this.btnBrowseRoot.Location = new System.Drawing.Point(601, 18);
             this.btnBrowseRoot.Name = "btnBrowseRoot";
             this.btnBrowseRoot.Size = new System.Drawing.Size(27, 23);
-            this.btnBrowseRoot.TabIndex = 37;
+            this.btnBrowseRoot.TabIndex = 2;
             this.toolTip.SetToolTip(this.btnBrowseRoot, "Browse folders.");
             this.btnBrowseRoot.UseVisualStyleBackColor = true;
             this.btnBrowseRoot.Click += new System.EventHandler(this.btnBrowseRoot_Click);
@@ -463,7 +409,7 @@ namespace music_importer
             this.label16.Location = new System.Drawing.Point(12, 24);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(64, 13);
-            this.label16.TabIndex = 31;
+            this.label16.TabIndex = 0;
             this.label16.Text = "Music Root:";
             // 
             // txtRoot
@@ -503,7 +449,7 @@ namespace music_importer
             this.txtMask.Location = new System.Drawing.Point(80, 47);
             this.txtMask.Name = "txtMask";
             this.txtMask.Size = new System.Drawing.Size(548, 20);
-            this.txtMask.TabIndex = 5;
+            this.txtMask.TabIndex = 1;
             // 
             // label11
             // 
@@ -530,7 +476,7 @@ namespace music_importer
             this.btnBrowseArt.Location = new System.Drawing.Point(601, 44);
             this.btnBrowseArt.Name = "btnBrowseArt";
             this.btnBrowseArt.Size = new System.Drawing.Size(27, 23);
-            this.btnBrowseArt.TabIndex = 4;
+            this.btnBrowseArt.TabIndex = 6;
             this.toolTip.SetToolTip(this.btnBrowseArt, "Browse folders.");
             this.btnBrowseArt.UseVisualStyleBackColor = true;
             this.btnBrowseArt.Click += new System.EventHandler(this.btnBrowseArt_Click);
@@ -551,7 +497,7 @@ namespace music_importer
             this.txtArtLoc.Location = new System.Drawing.Point(80, 46);
             this.txtArtLoc.Name = "txtArtLoc";
             this.txtArtLoc.Size = new System.Drawing.Size(515, 20);
-            this.txtArtLoc.TabIndex = 3;
+            this.txtArtLoc.TabIndex = 1;
             // 
             // grpOptions
             // 
@@ -575,7 +521,7 @@ namespace music_importer
             this.cbSHA1.Location = new System.Drawing.Point(10, 66);
             this.cbSHA1.Name = "cbSHA1";
             this.cbSHA1.Size = new System.Drawing.Size(99, 17);
-            this.cbSHA1.TabIndex = 7;
+            this.cbSHA1.TabIndex = 2;
             this.cbSHA1.Text = "Compute SHA1";
             this.toolTip.SetToolTip(this.cbSHA1, "Turn Logging On / Off.");
             this.cbSHA1.UseVisualStyleBackColor = true;
@@ -586,7 +532,7 @@ namespace music_importer
             this.cbClearLogs.Location = new System.Drawing.Point(10, 135);
             this.cbClearLogs.Name = "cbClearLogs";
             this.cbClearLogs.Size = new System.Drawing.Size(76, 17);
-            this.cbClearLogs.TabIndex = 6;
+            this.cbClearLogs.TabIndex = 5;
             this.cbClearLogs.Text = "Clear Logs";
             this.toolTip.SetToolTip(this.cbClearLogs, "Turn Logging On / Off.");
             this.cbClearLogs.UseVisualStyleBackColor = true;
@@ -609,7 +555,7 @@ namespace music_importer
             this.btnCancel.Location = new System.Drawing.Point(410, 577);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
+            this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "&Cancel";
             this.toolTip.SetToolTip(this.btnCancel, "Cancle / Finished.");
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -674,7 +620,7 @@ namespace music_importer
             this.cmbPriority.Location = new System.Drawing.Point(87, 577);
             this.cmbPriority.Name = "cmbPriority";
             this.cmbPriority.Size = new System.Drawing.Size(121, 21);
-            this.cmbPriority.TabIndex = 3;
+            this.cmbPriority.TabIndex = 0;
             this.toolTip.SetToolTip(this.cmbPriority, "Set thread priority.");
             this.cmbPriority.SelectedIndexChanged += new System.EventHandler(this.cmbPriority_SelectedIndexChanged);
             // 
@@ -706,7 +652,7 @@ namespace music_importer
             0});
             this.art_large.Name = "art_large";
             this.art_large.Size = new System.Drawing.Size(56, 20);
-            this.art_large.TabIndex = 5;
+            this.art_large.TabIndex = 3;
             this.toolTip.SetToolTip(this.art_large, "Set thumbnail size.");
             this.art_large.Value = new decimal(new int[] {
             225,
@@ -725,7 +671,7 @@ namespace music_importer
             0});
             this.art_small.Name = "art_small";
             this.art_small.Size = new System.Drawing.Size(56, 20);
-            this.art_small.TabIndex = 6;
+            this.art_small.TabIndex = 4;
             this.toolTip.SetToolTip(this.art_small, "Set thumbnail size.");
             this.art_small.Value = new decimal(new int[] {
             75,
@@ -753,7 +699,7 @@ namespace music_importer
             0});
             this.art_xsmall.Name = "art_xsmall";
             this.art_xsmall.Size = new System.Drawing.Size(56, 20);
-            this.art_xsmall.TabIndex = 7;
+            this.art_xsmall.TabIndex = 5;
             this.toolTip.SetToolTip(this.art_xsmall, "Set thumbnail size.");
             this.art_xsmall.Value = new decimal(new int[] {
             50,
@@ -802,24 +748,13 @@ namespace music_importer
             this.label18.TabIndex = 37;
             this.label18.Text = "Create:";
             // 
-            // cbGenerateThumbs
-            // 
-            this.cbGenerateThumbs.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbGenerateThumbs.Location = new System.Drawing.Point(80, 14);
-            this.cbGenerateThumbs.Name = "cbGenerateThumbs";
-            this.cbGenerateThumbs.Size = new System.Drawing.Size(32, 26);
-            this.cbGenerateThumbs.TabIndex = 1;
-            this.toolTip.SetToolTip(this.cbGenerateThumbs, "Enable / disable thumbnail creation.");
-            this.cbGenerateThumbs.UseVisualStyleBackColor = true;
-            this.cbGenerateThumbs.CheckedChanged += new System.EventHandler(this.cbGenerateThumbs_CheckedChanged);
-            // 
             // btnPause
             // 
             this.btnPause.Enabled = false;
             this.btnPause.Location = new System.Drawing.Point(489, 577);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
-            this.btnPause.TabIndex = 1;
+            this.btnPause.TabIndex = 2;
             this.btnPause.Text = "&Pause";
             this.toolTip.SetToolTip(this.btnPause, "Pause current scan.");
             this.btnPause.UseVisualStyleBackColor = true;
@@ -920,6 +855,71 @@ namespace music_importer
             this.linkReport.Text = "View Report";
             this.linkReport.Visible = false;
             this.linkReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReport_LinkClicked);
+            // 
+            // cbGenerateThumbs
+            // 
+            this.cbGenerateThumbs.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbGenerateThumbs.Location = new System.Drawing.Point(80, 14);
+            this.cbGenerateThumbs.Name = "cbGenerateThumbs";
+            this.cbGenerateThumbs.Size = new System.Drawing.Size(32, 26);
+            this.cbGenerateThumbs.TabIndex = 0;
+            this.toolTip.SetToolTip(this.cbGenerateThumbs, "Enable / disable thumbnail creation.");
+            this.cbGenerateThumbs.UseVisualStyleBackColor = true;
+            this.cbGenerateThumbs.CheckedChanged += new System.EventHandler(this.cbGenerateThumbs_CheckedChanged);
+            // 
+            // cbSH_Pass
+            // 
+            this.cbSH_Pass.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbSH_Pass.Checked = true;
+            this.cbSH_Pass.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSH_Pass.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSH_Pass.Image = ((System.Drawing.Image)(resources.GetObject("cbSH_Pass.Image")));
+            this.cbSH_Pass.Location = new System.Drawing.Point(218, 46);
+            this.cbSH_Pass.Name = "cbSH_Pass";
+            this.cbSH_Pass.Size = new System.Drawing.Size(32, 26);
+            this.cbSH_Pass.TabIndex = 8;
+            this.toolTip.SetToolTip(this.cbSH_Pass, "Show / Hide user password.");
+            this.cbSH_Pass.UseVisualStyleBackColor = true;
+            this.cbSH_Pass.CheckedChanged += new System.EventHandler(this.cbSH_Pass_CheckedChanged);
+            // 
+            // cbSH_User
+            // 
+            this.cbSH_User.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbSH_User.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSH_User.Image = ((System.Drawing.Image)(resources.GetObject("cbSH_User.Image")));
+            this.cbSH_User.Location = new System.Drawing.Point(218, 19);
+            this.cbSH_User.Name = "cbSH_User";
+            this.cbSH_User.Size = new System.Drawing.Size(32, 26);
+            this.cbSH_User.TabIndex = 7;
+            this.toolTip.SetToolTip(this.cbSH_User, "Show / Hide user name.");
+            this.cbSH_User.UseVisualStyleBackColor = true;
+            this.cbSH_User.CheckedChanged += new System.EventHandler(this.cbSH_User_CheckedChanged);
+            // 
+            // cbPlaylist
+            // 
+            this.cbPlaylist.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbPlaylist.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbPlaylist.Image = ((System.Drawing.Image)(resources.GetObject("cbPlaylist.Image")));
+            this.cbPlaylist.Location = new System.Drawing.Point(436, 154);
+            this.cbPlaylist.Name = "cbPlaylist";
+            this.cbPlaylist.Size = new System.Drawing.Size(32, 26);
+            this.cbPlaylist.TabIndex = 10;
+            this.toolTip.SetToolTip(this.cbPlaylist, "Enable / disable SQlite connection string.");
+            this.cbPlaylist.UseVisualStyleBackColor = true;
+            this.cbPlaylist.CheckedChanged += new System.EventHandler(this.cbPlaylist_CheckedChanged);
+            // 
+            // cbMysql
+            // 
+            this.cbMysql.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbMysql.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbMysql.Image = ((System.Drawing.Image)(resources.GetObject("cbMysql.Image")));
+            this.cbMysql.Location = new System.Drawing.Point(436, 127);
+            this.cbMysql.Name = "cbMysql";
+            this.cbMysql.Size = new System.Drawing.Size(32, 26);
+            this.cbMysql.TabIndex = 9;
+            this.toolTip.SetToolTip(this.cbMysql, "Enable / disable MySql connection string.");
+            this.cbMysql.UseVisualStyleBackColor = true;
+            this.cbMysql.CheckedChanged += new System.EventHandler(this.cbMysql_CheckedChanged);
             // 
             // MainFrm
             // 

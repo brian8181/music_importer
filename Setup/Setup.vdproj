@@ -28,24 +28,12 @@
         "Entry"
         {
         "MsmKey" = "8:_5A772EBA74234D76D39E743B2507134A"
-        "OwnerKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
+        "OwnerKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5A772EBA74234D76D39E743B2507134A"
-        "OwnerKey" = "8:_E733ABF3D17341D8874696141B623A63"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_625DCA34818630ADEE7267DE9CD06D68"
-        "OwnerKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_625DCA34818630ADEE7267DE9CD06D68"
         "OwnerKey" = "8:_E733ABF3D17341D8874696141B623A63"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -57,7 +45,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
+        "MsmKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
+        "OwnerKey" = "8:_E733ABF3D17341D8874696141B623A63"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A5950E74B945DE79363FFE2AC3C9A6FA"
+        "OwnerKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A5950E74B945DE79363FFE2AC3C9A6FA"
         "OwnerKey" = "8:_E733ABF3D17341D8874696141B623A63"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -70,7 +70,13 @@
         "Entry"
         {
         "MsmKey" = "8:_B1E981E3F2F6C126E51BAA6DD95D191C"
-        "OwnerKey" = "8:_625DCA34818630ADEE7267DE9CD06D68"
+        "OwnerKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B1E981E3F2F6C126E51BAA6DD95D191C"
+        "OwnerKey" = "8:_A5950E74B945DE79363FFE2AC3C9A6FA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -81,26 +87,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B1E981E3F2F6C126E51BAA6DD95D191C"
-        "OwnerKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
+        "MsmKey" = "8:_BB5765EFAC9EE5B5DF4E4FB4DB22969B"
+        "OwnerKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_BB5765EFAC9EE5B5DF4E4FB4DB22969B"
-        "OwnerKey" = "8:_625DCA34818630ADEE7267DE9CD06D68"
+        "OwnerKey" = "8:_A5950E74B945DE79363FFE2AC3C9A6FA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_BB5765EFAC9EE5B5DF4E4FB4DB22969B"
         "OwnerKey" = "8:_E733ABF3D17341D8874696141B623A63"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BB5765EFAC9EE5B5DF4E4FB4DB22969B"
-        "OwnerKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -117,6 +117,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_EE6717EE8C0A46CA80D8AA79C79AEC55"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F3160A10914674093510D55BDF9268DF"
         "OwnerKey" = "8:_E733ABF3D17341D8874696141B623A63"
         "MsmSig" = "8:_UNDEFINED"
@@ -124,7 +130,7 @@
         "Entry"
         {
         "MsmKey" = "8:_F3160A10914674093510D55BDF9268DF"
-        "OwnerKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
+        "OwnerKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -136,13 +142,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8DE1EE6780B29C63F879D082502A5A7E"
+        "OwnerKey" = "8:_A0C7364F3199AE5150CF65B425D24F17"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_625DCA34818630ADEE7267DE9CD06D68"
+        "OwnerKey" = "8:_A5950E74B945DE79363FFE2AC3C9A6FA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -241,7 +247,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\music_importer_1.2.5-rc.msi"
+        "OutputFilename" = "8:Release\\music_importer_1.3.0.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -367,37 +373,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_625DCA34818630ADEE7267DE9CD06D68"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_625DCA34818630ADEE7267DE9CD06D68"
-                    {
-                    "Name" = "8:Utility.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Utility.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6AAA6D01CD43412989702A54C153FC8C"
             {
             "SourcePath" = "8:..\\GUI\\sql\\updates\\update.1.0.1.sql"
@@ -418,20 +393,51 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8DE1EE6780B29C63F879D082502A5A7E"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A0C7364F3199AE5150CF65B425D24F17"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MusicImporter_Lib, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MusicImporter_Lib, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_8DE1EE6780B29C63F879D082502A5A7E"
+                    "_A0C7364F3199AE5150CF65B425D24F17"
                     {
                     "Name" = "8:MusicImporter_Lib.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:MusicImporter_Lib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A5950E74B945DE79363FFE2AC3C9A6FA"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A5950E74B945DE79363FFE2AC3C9A6FA"
+                    {
+                    "Name" = "8:Utility.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Utility.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
@@ -535,6 +541,26 @@
             {
             "SourcePath" = "8:..\\GUI\\sql\\updates\\update.1.0.2.sql"
             "TargetName" = "8:update.1.0.2.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_A8B98DE4A4F84DC69794323077F7B0B5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE6717EE8C0A46CA80D8AA79C79AEC55"
+            {
+            "SourcePath" = "8:..\\GUI\\sql\\updates\\update.1.0.3.sql"
+            "TargetName" = "8:update.1.0.3.sql"
             "Tag" = "8:"
             "Folder" = "8:_A8B98DE4A4F84DC69794323077F7B0B5"
             "Condition" = "8:"
@@ -661,7 +687,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Music Importer 1.3.0"
         "ProductCode" = "8:{24338637-77E6-4F1C-9220-4E6ACDFA1534}"
-        "PackageCode" = "8:{39AD553D-CADC-484C-9EB2-C99D05B898C9}"
+        "PackageCode" = "8:{8CBE766D-392B-456C-948E-469BF7603EC9}"
         "UpgradeCode" = "8:{D4ED5470-B21B-4C53-9378-EC51BBB2FFCB}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -1321,7 +1347,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E733ABF3D17341D8874696141B623A63"
             {
-            "SourcePath" = "8:..\\GUI\\obj\\Debug\\music_importer.exe"
+            "SourcePath" = "8:..\\GUI\\obj\\Release\\music_importer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_39D9793901C342C68C58D84B9DFE21A0"
