@@ -39,10 +39,12 @@ namespace TestProject
         //You can use the following additional attributes as you write your tests:
         //
         //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
+        [ClassInitialize()]
+        public static void MyClassInitialize(TestContext testContext)
+        {
+            DDLHelperTest helper = new DDLHelperTest();
+            helper.CreateDatabaseTest();
+        }
         //
         //Use ClassCleanup to run code after all tests in a class have run
         //[ClassCleanup()]
@@ -128,13 +130,11 @@ namespace TestProject
             FileInfo fi = new FileInfo(file);
             // create then close stream
             fi.Create().Close();
-            // get dir - the .album_art
-            string path =  di.Parent.FullName;
-           
+                   
             // Two songs with two arts links have been inserted, the following
             // attempts to delete the art and the links because its has 
             // no matching file. ( duh.jpg )
-            ArtImporter target = new ArtImporter(db, path); 
+            ArtImporter target = new ArtImporter(db, di.FullName); 
             uint deleted = target.DeleteOrphanedInserts();
             Assert.IsTrue(deleted == 1);
             // do clean up
@@ -151,12 +151,10 @@ namespace TestProject
             FileInfo fi = new FileInfo(file);
             // create then close stream
             fi.Create().Close();
-            // get dir - the .album_art
-            string path = fi.Directory.Parent.FullName;
-
+           
             // The file DeleteOrphanedFilesTest.jpg just create should be deleted 
             // since it is not in database.
-            ArtImporter target = new ArtImporter(db, path);
+            ArtImporter target = new ArtImporter(db, fi.Directory.FullName);
             uint deleted = target.DeleteOrphanedFiles();
             Assert.IsTrue(deleted == 1);
         }

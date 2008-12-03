@@ -86,6 +86,7 @@ namespace music_importer
             this.lbArtRoot = new System.Windows.Forms.Label();
             this.txtArtLoc = new System.Windows.Forms.TextBox();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.cbSHA1 = new System.Windows.Forms.CheckBox();
             this.cbClearLogs = new System.Windows.Forms.CheckBox();
             this.cbCreateDB = new System.Windows.Forms.CheckBox();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -117,7 +118,6 @@ namespace music_importer
             this.lbFilesScanned_label = new System.Windows.Forms.Label();
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
-            this.cbSHA1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -569,6 +569,17 @@ namespace music_importer
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Scan Options";
             // 
+            // cbSHA1
+            // 
+            this.cbSHA1.AutoSize = true;
+            this.cbSHA1.Location = new System.Drawing.Point(10, 66);
+            this.cbSHA1.Name = "cbSHA1";
+            this.cbSHA1.Size = new System.Drawing.Size(99, 17);
+            this.cbSHA1.TabIndex = 7;
+            this.cbSHA1.Text = "Compute SHA1";
+            this.toolTip.SetToolTip(this.cbSHA1, "Turn Logging On / Off.");
+            this.cbSHA1.UseVisualStyleBackColor = true;
+            // 
             // cbClearLogs
             // 
             this.cbClearLogs.AutoSize = true;
@@ -910,17 +921,6 @@ namespace music_importer
             this.linkReport.Visible = false;
             this.linkReport.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkReport_LinkClicked);
             // 
-            // cbSHA1
-            // 
-            this.cbSHA1.AutoSize = true;
-            this.cbSHA1.Location = new System.Drawing.Point(10, 66);
-            this.cbSHA1.Name = "cbSHA1";
-            this.cbSHA1.Size = new System.Drawing.Size(99, 17);
-            this.cbSHA1.TabIndex = 7;
-            this.cbSHA1.Text = "Compute SHA1";
-            this.toolTip.SetToolTip(this.cbSHA1, "Turn Logging On / Off.");
-            this.cbSHA1.UseVisualStyleBackColor = true;
-            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -951,6 +951,7 @@ namespace music_importer
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "MainFrm";
             this.RightToLeftLayout = true;
             this.Text = "Music Importer";

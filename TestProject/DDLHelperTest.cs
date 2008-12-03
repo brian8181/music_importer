@@ -13,7 +13,7 @@ namespace TestProject
     [TestClass()]
     public class DDLHelperTest
     {
-        private static Utility.Data.IDatabase db = null;
+        private static Utility.Data.IDatabase db = Globals.MySQL_DB;
         private static string schema_name = "music_test";
         private TestContext testContextInstance;
 
@@ -40,7 +40,6 @@ namespace TestProject
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
-            db = Globals.MySQL_DB;
             db.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name); // drop test db
            
             DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
@@ -116,15 +115,15 @@ namespace TestProject
             Assert.IsTrue(dt.Rows.Count > 0);
         }
 
-        /// <summary>
-        ///A test for ExecuteCreateScript
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"create.sql")]
-        public void TestTest()
-        {
-            Assert.IsTrue( System.IO.File.Exists( @"create.sql"  ) );
-        }
+        ///// <summary>
+        /////A test for ExecuteCreateScript
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem(@"create.sql")]
+        //public void TestTest()
+        //{
+        //    Assert.IsTrue( System.IO.File.Exists( @"create.sql"  ) );
+        //}
 
    }
 }

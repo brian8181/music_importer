@@ -75,32 +75,32 @@ namespace TestProject
         #endregion
 
        
-        /// <summary>
-        ///A test for GetKey
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem( "MusicImporter_Lib.dll" )]
-        public void GetKeyTest()
-        {
-            Utility.Data.MySqlDatabase db = Globals.MySQL_DB;
+        ///// <summary>
+        /////A test for GetKey
+        /////</summary>
+        //[TestMethod()]
+        //[DeploymentItem( "MusicImporter_Lib.dll" )]
+        //public void GetKeyTest()
+        //{
+        //    Utility.Data.MySqlDatabase db = Globals.MySQL_DB;
 
-            //DDLHelper helper = new DDLHelper(db);
-            //helper.CreateDatabase(music_test);
+        //    //DDLHelper helper = new DDLHelper(db);
+        //    //helper.CreateDatabase(music_test);
 
-            DDLHelperTest helper = new DDLHelperTest();
-            helper.CreateDatabaseTest();
+        //    DDLHelperTest helper = new DDLHelperTest();
+        //    helper.CreateDatabaseTest();
 
 
-            Importer_Accessor target = new Importer_Accessor( settings ); // TODO: Initialize to an appropriate value
-            string table = "art"; // TODO: Initialize to an appropriate value
-            string column = "file"; // TODO: Initialize to an appropriate value
-            string value = "{36ba30a6-618e-45f9-b2f1-1a0cf505eae9}.jpeg"; // TODO: Initialize to an appropriate value
-            //Nullable<uint> expected = new Nullable<uint>(2271); // TODO: Initialize to an appropriate value
-            Nullable<uint> actual;
-            target.Connect();
-            actual = target.GetKey( table, column, value );
-            //Assert.IsNotNull( expected );
-            Assert.Inconclusive("TODO");
-        }
+        //    Importer_Accessor target = new Importer_Accessor( settings ); // TODO: Initialize to an appropriate value
+        //    string table = "art"; // TODO: Initialize to an appropriate value
+        //    string column = "file"; // TODO: Initialize to an appropriate value
+        //    string value = "{36ba30a6-618e-45f9-b2f1-1a0cf505eae9}.jpeg"; // TODO: Initialize to an appropriate value
+        //    //Nullable<uint> expected = new Nullable<uint>(2271); // TODO: Initialize to an appropriate value
+        //    Nullable<uint> actual;
+        //    target.Connect();
+        //    actual = target.GetKey( table, column, value );
+        //    //Assert.IsNotNull( expected );
+        //    Assert.Inconclusive("TODO");
+        //}
     }
 }

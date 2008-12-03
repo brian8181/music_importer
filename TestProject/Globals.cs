@@ -8,15 +8,22 @@ namespace TestProject
     public static class Globals
     {
         private static Utility.Data.MySqlDatabase mysql_db = null;
+        private static object LOCK = new object();
 
         public static Utility.Data.MySqlDatabase MySQL_DB
         {
             get
             {
-                if (mysql_db == null)
+                if( mysql_db == null )
                 {
-                    mysql_db = new Utility.Data.MySqlDatabase(); // TODO: Initialize to an appropriate value
-                    mysql_db.Open("Data Source=localhost;Port=3306;User Id=root;Password=sas_0125");
+                    lock (LOCK)
+                    {
+                        if (mysql_db == null)
+                        {
+                            mysql_db = new Utility.Data.MySqlDatabase();
+                            mysql_db.Open("Data Source=localhost;Port=3306;User Id=root;Password=sas_0125");
+                        }
+                    }
                 }
                 return mysql_db;
             }
