@@ -293,10 +293,10 @@ namespace MusicImporter_Lib
                         OnStateChanged(State.PrepareStep);
                     }
                 }
-                catch (MySqlException exp)
+                catch (MySqlException e)
                 {
-                    OnError(exp.Message);
-                    return;
+                    OnError(e.Message);
+                    throw e;
                 }
 
                 OnDirectoryProcessing("None.");
@@ -467,6 +467,7 @@ namespace MusicImporter_Lib
                 artist_id = GetKey( "artist", "artist", artist );
                 if(artist_id == null) // not found
                 {
+                    OnMessage("Inserting artist: " + artist);
                     cmd.CommandText = "INSERT INTO artist (artist) Values(?artist)";
                     mysql_connection.ExecuteNonQuery( cmd );
                     artist_id = mysql_connection.LastInsertID;
@@ -492,6 +493,7 @@ namespace MusicImporter_Lib
                 album_id = GetKey( "album", "album", album );
                 if(album_id == null) // not found
                 {
+                    OnMessage("Inserting album: " + album);
                     cmd.CommandText = "INSERT INTO album (album, artist) Values(?album, ?artist)";
                     mysql_connection.ExecuteNonQuery( cmd );
                     album_id = mysql_connection.LastInsertID;
@@ -499,6 +501,7 @@ namespace MusicImporter_Lib
                 }
                 else
                 {
+                    //BKP? OnMessage("Updating album: " + album);
                     cmd.Parameters.AddWithValue( "?album_id", album_id );
                     cmd.CommandText = "UPDATE album SET album=?album, artist=?artist WHERE id=?album_id";
                     mysql_connection.ExecuteNonQuery( cmd );
@@ -577,23 +580,30 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue( "?beats_per_minute", tag.BeatsPerMinute );
             cmd.Parameters.AddWithValue( "?song_id", song_id );
             byte[] sha1 = null;
+            byte[] file_sha1 = null;
             if (Settings.Default.compute_sha1)
             {
+                OnMessage("Generate SHA1: " + tag_file.Name );
                 sha1 = TagLibExt.MediaSHA1(tag_file);
                 string hex = Utility.Functions.Bytes2HexString(sha1);
-                Trace.WriteLine("SHA1 - " + hex, Logger.Level.Information.ToString());
+                Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
+
+                sha1 = TagLibExt.FileSHA1(tag_file);
+                hex = Utility.Functions.Bytes2HexString(sha1);
+                Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
             }
             cmd.Parameters.AddWithValue("?sha1", sha1);
+            cmd.Parameters.AddWithValue("?file_sha1", file_sha1);
             string sql = string.Empty;
             if(song_id == null)
             {
                 sql = "INSERT INTO song (artist_id, album_id, track, title, file, genre, bitrate, length, year, comments, " +
                       "encoder, file_size, file_type, art_id, lyrics, composer, conductor, copyright, " +
-                      "disc, disc_count, performer, tag_types, track_count, beats_per_minute, sha1) VALUES(" +
+                      "disc, disc_count, performer, tag_types, track_count, beats_per_minute, sha1, file_sha1) VALUES(" +
                       "?artist_id, ?album_id, ?track, ?title, ?file, ?genre, ?bitrate, ?length, ?year, ?comments, " +
                       "?encoder, ?file_size, ?file_type, ?art_id, ?lyrics, ?composer, ?conductor, ?copyright, " +
-                      "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute, ?sha1)";
-                OnMessage( "INSERTED SONG: " + Path.GetFileName( tag_file.Name ) );
+                      "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute, ?sha1, ?file_sha1)";
+                OnMessage( "Inserting song: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
                 mysql_connection.ExecuteNonQuery(cmd);
                 song_id = mysql_connection.LastInsertID;
@@ -604,9 +614,9 @@ namespace MusicImporter_Lib
                 sql = "UPDATE song SET artist_id=?artist_id, album_id=?album_id, track=?track, title=?title, file=?file, genre=?genre, " +
                       "bitrate=?bitrate, length=?length, year=?year, comments=?comments, encoder=?encoder, file_size=?file_size, file_type=?file_type, " +
                       "art_id=?art_id, lyrics=?lyrics, composer=?composer, conductor=?conductor, copyright=?copyright, disc=?disc, disc_count=?disc_count, " +
-                      "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute, sha1=?sha1 " +
+                      "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute, sha1=?sha1, file_sha1=?file_sha1 " +
                       "WHERE id = ?song_id";
-                OnMessage( "UPDATED SONG: " + Path.GetFileName( tag_file.Name ) );
+                OnMessage( "Updating song: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
                 mysql_connection.ExecuteNonQuery(cmd);
                 reporter.UpdateSongCount++;

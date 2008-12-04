@@ -9,14 +9,23 @@ namespace MusicImporter_Lib
     class TagLibExt
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static byte[] FileSHA1(TagLib.File file)
+        {
+            return Utility.IO.FileExt.ComputeSHA1(file.Name);
+        }
+
+        /// <summary>
         /// get the sha1 of file
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public static byte[] MediaSHA1(string file)
+        public static byte[] FileSHA1(string file)
         {
-            byte[] data = System.IO.File.ReadAllBytes(file);
-            return Utility.IO.FileExt.ComputeSHA1(data);
+            return Utility.IO.FileExt.ComputeSHA1(file);
         }
 
         /// <summary>
@@ -30,7 +39,7 @@ namespace MusicImporter_Lib
             file.Seek( file.InvariantStartPosition );
             TagLib.ByteVector vector = file.ReadBlock( len );
             byte[] data = vector.Data;
-            return Utility.IO.FileExt.ComputeSHA1(data);
+            return Utility.CryptoFunctions.SHA1(data);
         }
     }
 }

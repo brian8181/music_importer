@@ -5,6 +5,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		import_policy.txt = import_policy.txt
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		music_importer1.vsmdi = music_importer1.vsmdi
 		music_importer10.vsmdi = music_importer10.vsmdi
 		music_importer8.vsmdi = music_importer8.vsmdi
 		music_importer9.vsmdi = music_importer9.vsmdi
@@ -24,6 +25,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utility", "..\utility\utility\utility.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = music_importer1.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET 2.0 = Debug|.NET 2.0
 		Debug|Any CPU = Debug|Any CPU

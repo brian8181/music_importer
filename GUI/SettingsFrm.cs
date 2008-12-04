@@ -21,6 +21,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using MusicImporter_Lib.Properties;
+using Utility;
 
 namespace music_importer
 {
@@ -29,6 +31,12 @@ namespace music_importer
         public SettingsFrm()
         {
             InitializeComponent();
+            
+            //logDirectory.TextBox.Text = Properties.Settings.Default.log_path;
+            //reportDirectory.TextBox.Text = Properties.Settings.Default.report_path;
+            //cbLoggingEnabled.Checked = Settings.Default.Log;
+            //cbDeleteLogsAfter.Checked = true;
+          
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
@@ -36,15 +44,43 @@ namespace music_importer
         }
         private void btnClearLogs_Click(object sender, EventArgs e)
         {
+            Utility.Logger.ClearLogs(Properties.Settings.Default.log_path);
         }
         private void btnClearReports_Click(object sender, EventArgs e)
         {
+            MusicImporter_Lib.Reporter.ClearReports(Properties.Settings.Default.report_path);
         }
         private void btnShowLogs_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = "explorer.exe";
+            proc.StartInfo.Arguments = Properties.Settings.Default.log_path;
+            proc.Start();
         }
         private void btnShowReports_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = "explorer.exe";
+            proc.StartInfo.Arguments = Properties.Settings.Default.report_path;
+            proc.Start();
+        }
+
+        private void cbLoggingEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            //logDirectory.Enabled = cbLoggingEnabled.Checked;
+            //cbDeleteLogsAfter.Enabled = cbLoggingEnabled.Checked;
+            //upDownKeepLogDays.Enabled = cbLoggingEnabled.Checked;
+            //lblLogDays.Enabled = cbLoggingEnabled.Checked;
+            //btnLogsDeleteNow.Enabled = cbLoggingEnabled.Checked;
+            //btnShowLogs.Enabled = cbLoggingEnabled.Checked;
+            //btnClearLogs.Enabled = cbLoggingEnabled.Checked;
+        }
+
+        private void cbDeleteLogsAfter_CheckedChanged(object sender, EventArgs e)
+        {
+            //upDownKeepLogDays.Enabled = cbDeleteLogsAfter.Checked;
+            //lblLogDays.Enabled = cbDeleteLogsAfter.Checked;
+            //btnLogsDeleteNow.Enabled = cbDeleteLogsAfter.Checked;
         }
     }
 }

@@ -32,16 +32,12 @@ namespace music_importer
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.logDirectory = new Utility.GUI.DirBrowser();
-            this.dirBrowser2 = new Utility.GUI.DirBrowser();
             this.grpLogging = new System.Windows.Forms.GroupBox();
-            this.btnClearLogs = new System.Windows.Forms.Button();
-            this.btnShowLogs = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnClearReports = new System.Windows.Forms.Button();
-            this.btnShowReports = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.logOptionsCtrl1 = new music_importer.LogOptionsCtrl();
+            this.logOptionsCtrl2 = new music_importer.LogOptionsCtrl();
             this.groupBox1.SuspendLayout();
             this.grpLogging.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -54,7 +50,7 @@ namespace music_importer
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(4, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(346, 73);
+            this.groupBox1.Size = new System.Drawing.Size(446, 47);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SHA1 hash Generation";
@@ -62,7 +58,7 @@ namespace music_importer
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(149, 33);
+            this.radioButton3.Location = new System.Drawing.Point(188, 19);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(92, 17);
             this.radioButton3.TabIndex = 2;
@@ -73,7 +69,7 @@ namespace music_importer
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(266, 33);
+            this.radioButton2.Location = new System.Drawing.Point(305, 19);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(36, 17);
             this.radioButton2.TabIndex = 1;
@@ -84,7 +80,7 @@ namespace music_importer
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(44, 33);
+            this.radioButton1.Location = new System.Drawing.Point(83, 19);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(80, 17);
             this.radioButton1.TabIndex = 0;
@@ -92,90 +88,30 @@ namespace music_importer
             this.radioButton1.Text = "Inserts Only";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // logDirectory
-            // 
-            this.logDirectory.Label = "Directory";
-            this.logDirectory.Location = new System.Drawing.Point(6, 17);
-            this.logDirectory.Name = "logDirectory";
-            this.logDirectory.Size = new System.Drawing.Size(334, 34);
-            this.logDirectory.TabIndex = 1;
-            // 
-            // dirBrowser2
-            // 
-            this.dirBrowser2.Label = "Directory";
-            this.dirBrowser2.Location = new System.Drawing.Point(6, 19);
-            this.dirBrowser2.Name = "dirBrowser2";
-            this.dirBrowser2.Size = new System.Drawing.Size(334, 34);
-            this.dirBrowser2.TabIndex = 2;
-            // 
             // grpLogging
             // 
-            this.grpLogging.Controls.Add(this.btnClearLogs);
-            this.grpLogging.Controls.Add(this.btnShowLogs);
-            this.grpLogging.Controls.Add(this.logDirectory);
-            this.grpLogging.Location = new System.Drawing.Point(4, 91);
+            this.grpLogging.Controls.Add(this.logOptionsCtrl2);
+            this.grpLogging.Location = new System.Drawing.Point(4, 65);
             this.grpLogging.Name = "grpLogging";
-            this.grpLogging.Size = new System.Drawing.Size(346, 86);
+            this.grpLogging.Size = new System.Drawing.Size(446, 127);
             this.grpLogging.TabIndex = 3;
             this.grpLogging.TabStop = false;
             this.grpLogging.Text = "Logging";
             // 
-            // btnClearLogs
-            // 
-            this.btnClearLogs.Location = new System.Drawing.Point(209, 57);
-            this.btnClearLogs.Name = "btnClearLogs";
-            this.btnClearLogs.Size = new System.Drawing.Size(86, 23);
-            this.btnClearLogs.TabIndex = 3;
-            this.btnClearLogs.Text = "Clear Logs";
-            this.btnClearLogs.UseVisualStyleBackColor = true;
-            this.btnClearLogs.Click += new System.EventHandler(this.btnClearLogs_Click);
-            // 
-            // btnShowLogs
-            // 
-            this.btnShowLogs.Location = new System.Drawing.Point(64, 57);
-            this.btnShowLogs.Name = "btnShowLogs";
-            this.btnShowLogs.Size = new System.Drawing.Size(86, 23);
-            this.btnShowLogs.TabIndex = 2;
-            this.btnShowLogs.Text = "Show Logs";
-            this.btnShowLogs.UseVisualStyleBackColor = true;
-            this.btnShowLogs.Click += new System.EventHandler(this.btnShowLogs_Click);
-            // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnClearReports);
-            this.groupBox3.Controls.Add(this.btnShowReports);
-            this.groupBox3.Controls.Add(this.dirBrowser2);
-            this.groupBox3.Location = new System.Drawing.Point(4, 183);
+            this.groupBox3.Controls.Add(this.logOptionsCtrl1);
+            this.groupBox3.Location = new System.Drawing.Point(4, 198);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(346, 88);
+            this.groupBox3.Size = new System.Drawing.Size(446, 127);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Reports";
             // 
-            // btnClearReports
-            // 
-            this.btnClearReports.Location = new System.Drawing.Point(209, 59);
-            this.btnClearReports.Name = "btnClearReports";
-            this.btnClearReports.Size = new System.Drawing.Size(86, 23);
-            this.btnClearReports.TabIndex = 5;
-            this.btnClearReports.Text = "Clear Reports";
-            this.btnClearReports.UseVisualStyleBackColor = true;
-            this.btnClearReports.Click += new System.EventHandler(this.btnClearReports_Click);
-            // 
-            // btnShowReports
-            // 
-            this.btnShowReports.Location = new System.Drawing.Point(64, 59);
-            this.btnShowReports.Name = "btnShowReports";
-            this.btnShowReports.Size = new System.Drawing.Size(86, 23);
-            this.btnShowReports.TabIndex = 4;
-            this.btnShowReports.Text = "Show Reports";
-            this.btnShowReports.UseVisualStyleBackColor = true;
-            this.btnShowReports.Click += new System.EventHandler(this.btnShowReports_Click);
-            // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(275, 279);
+            this.btnCancel.Location = new System.Drawing.Point(375, 357);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -184,7 +120,7 @@ namespace music_importer
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(194, 279);
+            this.btnOK.Location = new System.Drawing.Point(294, 357);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 6;
@@ -192,13 +128,27 @@ namespace music_importer
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // logOptionsCtrl1
+            // 
+            this.logOptionsCtrl1.Location = new System.Drawing.Point(8, 19);
+            this.logOptionsCtrl1.Name = "logOptionsCtrl1";
+            this.logOptionsCtrl1.Size = new System.Drawing.Size(425, 103);
+            this.logOptionsCtrl1.TabIndex = 0;
+            // 
+            // logOptionsCtrl2
+            // 
+            this.logOptionsCtrl2.Location = new System.Drawing.Point(8, 19);
+            this.logOptionsCtrl2.Name = "logOptionsCtrl2";
+            this.logOptionsCtrl2.Size = new System.Drawing.Size(425, 100);
+            this.logOptionsCtrl2.TabIndex = 0;
+            // 
             // SettingsFrm
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(353, 306);
+            this.ClientSize = new System.Drawing.Size(454, 384);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox3);
@@ -222,16 +172,12 @@ namespace music_importer
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
-        private Utility.GUI.DirBrowser logDirectory;
-        private Utility.GUI.DirBrowser dirBrowser2;
         private System.Windows.Forms.GroupBox grpLogging;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnClearLogs;
-        private System.Windows.Forms.Button btnShowLogs;
-        private System.Windows.Forms.Button btnClearReports;
-        private System.Windows.Forms.Button btnShowReports;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
+        private LogOptionsCtrl logOptionsCtrl1;
+        private LogOptionsCtrl logOptionsCtrl2;
     }
 }

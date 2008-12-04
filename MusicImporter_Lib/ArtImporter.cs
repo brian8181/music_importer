@@ -152,7 +152,7 @@ namespace MusicImporter_Lib
         /// <param name="art_id"></param>
         public void CreateLink(object song_id, object art_id)
         {
-            Trace.WriteLine(string.Format("Created link song_id={0} -> art_id={1}: ", song_id, art_id)
+            Trace.WriteLine(string.Format("Creating link song_id={0} -> art_id={1}: ", song_id, art_id)
                , Logger.Level.Information.ToString());
             string sql = "SELECT song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
@@ -179,7 +179,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         public string Insert(byte[] hash, string art, string type, string description, string mime_type)
         {
-            Trace.WriteLine("INSERTED ART: " + art, Logger.Level.Information.ToString());
+            Trace.WriteLine("Inserting art: " + art, Logger.Level.Information.ToString());
             string sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?file", art);
@@ -328,21 +328,21 @@ namespace MusicImporter_Lib
                 string full_path = String.Format("{0}\\{1}", path, file);
                 if (!File.Exists(full_path))
                 {
-                    //    // get id for file
-                    //    cmd = new MySqlCommand("SELECT id FROM art WHERE file=?file LIMIT 1");
-                    //    cmd.Parameters.AddWithValue("?file", file);
-                    //    object obj = db.ExecuteScalar(cmd);
-                    //    // delete all links from song_art table
-                    //    if (obj != null)
-                    //    {
-                    //        cmd = new MySqlCommand("DELETE FROM song_art WHERE art_id=?art_id");
-                    //        cmd.Parameters.AddWithValue("?art_id", obj);
-                    //        db.ExecuteNonQuery(cmd); 
-                    //    }
-                    //    // delete art
-                    //    cmd = new MySqlCommand("DELETE FROM art WHERE file=?file");
-                    //    cmd.Parameters.AddWithValue("?file", file);
+                    //// get id for file
+                    //cmd = new MySqlCommand("SELECT id FROM art WHERE file=?file LIMIT 1");
+                    //cmd.Parameters.AddWithValue("?file", file);
+                    //object obj = db.ExecuteScalar(cmd);
+                    //// delete all links from song_art table
+                    //if (obj != null)
+                    //{
+                    //    cmd = new MySqlCommand("DELETE FROM song_art WHERE art_id=?art_id");
+                    //    cmd.Parameters.AddWithValue("?art_id", obj);
                     //    db.ExecuteNonQuery(cmd);
+                    //}
+                    //// delete art
+                    //cmd = new MySqlCommand("DELETE FROM art WHERE file=?file");
+                    //cmd.Parameters.AddWithValue("?file", file);
+                    //db.ExecuteNonQuery(cmd);
 
                     DDLHelper helper = new DDLHelper(db);
                     helper.DeleteArt(file);

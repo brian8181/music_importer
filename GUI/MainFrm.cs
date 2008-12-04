@@ -261,7 +261,7 @@ namespace music_importer
         {
             if (cbClearLogs.Checked)
             {
-                Logger.ClearLogs();
+                Logger.ClearLogs(Properties.Settings.Default.log_path);
             }
             if (cbLog.Checked)
             {
@@ -929,8 +929,8 @@ namespace music_importer
         private void linkReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             HTMLReportFrm frm = new HTMLReportFrm();
-            importer.Reporter.ClearReports();
-            string file = importer.Reporter.SaveReport();
+            importer.Reporter.ClearReports(); // todo make a setting
+            string file = importer.Reporter.SaveReport(Properties.Settings.Default.report_path);
             frm.File = file;
             frm.ShowDialog();
         }
