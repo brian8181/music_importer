@@ -9,7 +9,7 @@ namespace MusicImporter_Lib
     {
         private bool valid = false;
         /// <summary>
-        /// 
+        /// is valid
         /// </summary>
         public bool Valid
         {

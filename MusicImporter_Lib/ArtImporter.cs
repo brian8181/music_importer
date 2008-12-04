@@ -40,7 +40,7 @@ namespace MusicImporter_Lib
     {
         private IDatabase db = null;
         private string path = null;
-        
+
         /// <summary>
         /// defualt ctor
         /// </summary>
@@ -50,17 +50,17 @@ namespace MusicImporter_Lib
         {
             this.db = db;
             this.path = art_path.TrimEnd('\\');
-                      
+
             Directory.CreateDirectory(path + "\\large\\");
             Directory.CreateDirectory(path + "\\small\\");
             Directory.CreateDirectory(path + "\\xsmall\\");
 
             // place NA jpg
-            string proc_path = System.IO.Path.GetDirectoryName( Globals.ProcessPath() );
+            string proc_path = System.IO.Path.GetDirectoryName(Globals.ProcessPath());
             string file = proc_path = proc_path.TrimEnd('\\') + "\\Resources\\NA.JPG";
             string dest = path + "\\NA.JPG";
-            
-            if ( File.Exists(file) && !File.Exists(dest) )
+
+            if (File.Exists(file) && !File.Exists(dest))
             {
                 File.Copy(file, dest);
                 GenerateThumbs(Path.GetFileName(dest));
@@ -83,7 +83,7 @@ namespace MusicImporter_Lib
             string description = string.Empty;
             string current_dir = Path.GetDirectoryName(tag_file.Name);
             TagLib.Tag tag = tag_file.Tag;
-         
+
             if (tag.Pictures.Length == 0)
             {
                 return 0;
@@ -101,7 +101,7 @@ namespace MusicImporter_Lib
                 type = pic.Type.ToString();
                 mime_type = pic.MimeType;
                 description = pic.Description;
-                
+
                 if (pic.MimeType != "-->") // no support for linked art
                 {
                     hash = ComputeHash(data);
@@ -127,7 +127,7 @@ namespace MusicImporter_Lib
                     CreateLink(song_id, key);
                 }
             }
-            return inserted; 
+            return inserted;
         }
         /// <summary>
         /// generate file name for picture
@@ -153,15 +153,15 @@ namespace MusicImporter_Lib
         public void CreateLink(object song_id, object art_id)
         {
             Trace.WriteLine(string.Format("Created link song_id={0} -> art_id={1}: ", song_id, art_id)
-               ,Logger.Level.Information.ToString()); 
-            string sql = "SELECT song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id";
+               , Logger.Level.Information.ToString());
+            string sql = "SELECT song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?song_id", song_id);
             cmd.Parameters.AddWithValue("?art_id", art_id);
 
             if (db.Exists(cmd))
                 return; // already in db
-                        
+
             sql = "INSERT INTO song_art VALUES(NULL, ?song_id, ?art_id, NULL, NOW())";
             cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?song_id", song_id);
@@ -179,7 +179,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         public string Insert(byte[] hash, string art, string type, string description, string mime_type)
         {
-            Trace.WriteLine("INSERTED ART: " + art, Logger.Level.Information.ToString()); 
+            Trace.WriteLine("INSERTED ART: " + art, Logger.Level.Information.ToString());
             string sql = "INSERT INTO art VALUES(NULL, ?file, ?type, ?hash, ?description, ?mime_type, NULL, NOW())";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?file", art);
@@ -221,7 +221,7 @@ namespace MusicImporter_Lib
         /// <param name="data"></param>
         public void SaveArt(string file, byte[] data)
         {
-            Trace.WriteLine("Saved art: " + file, Logger.Level.Information.ToString()); 
+            Trace.WriteLine("Saved art: " + file, Logger.Level.Information.ToString());
             // write file to art location
             System.IO.File.WriteAllBytes(path + "\\" + file, data);
             // gen & write thumbs
@@ -233,7 +233,7 @@ namespace MusicImporter_Lib
         /// <param name="file_name"></param>
         private void GenerateThumbs(string file_name)
         {
-            Trace.WriteLine("Generated thumbnails for: " + file_name, Logger.Level.Information.ToString()); 
+            Trace.WriteLine("Generated thumbnails for: " + file_name, Logger.Level.Information.ToString());
             string art = path + "\\" + file_name;
             Thumb.Generate(
                 path + "\\large\\" + file_name, art, Settings.Default.art_large, 0, true);
@@ -251,7 +251,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         private bool isDuplicateInsert(byte[] hash, out uint id)
         {
-            string sql = "SELECT id FROM art WHERE hash=?hash";
+            string sql = "SELECT id FROM art WHERE hash=?hash LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?hash", hash);
             object obj = null;
@@ -280,7 +280,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         private bool isOrphanedInsert(long id, out string file)
         {
-            string sql = "SELECT file FROM art WHERE id=?id";
+            string sql = "SELECT file FROM art WHERE id=?id LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?id", id);
             using (DbDataReader reader = db.ExecuteReader(cmd))
@@ -312,11 +312,11 @@ namespace MusicImporter_Lib
         /// <param name="path">art path</param>
         public uint DeleteOrphanedInserts()
         {
-            DataSet ds = db.ExecuteQuery("SELECT file FROM art");
+            DataSet ds = db.ExecuteQuery("SELECT file FROM art LIMIT 1");
 
             if (ds.Tables.Count != 1)
                 return 0;
-            
+
             DataTable dt = ds.Tables[0];
             MySqlCommand cmd = new MySqlCommand();
             string file = string.Empty;
@@ -328,21 +328,24 @@ namespace MusicImporter_Lib
                 string full_path = String.Format("{0}\\{1}", path, file);
                 if (!File.Exists(full_path))
                 {
-                    // get id for file
-                    cmd = new MySqlCommand("SELECT id FROM art WHERE file=?file LIMIT 1");
-                    cmd.Parameters.AddWithValue("?file", file);
-                    object obj = db.ExecuteScalar(cmd);
-                    // delete all links from song_art table
-                    if (obj != null)
-                    {
-                        cmd = new MySqlCommand("DELETE FROM song_art WHERE art_id=?art_id");
-                        cmd.Parameters.AddWithValue("?art_id", obj);
-                        db.ExecuteNonQuery(cmd); 
-                    }
-                    // delete art
-                    cmd = new MySqlCommand("DELETE FROM art WHERE file=?file");
-                    cmd.Parameters.AddWithValue("?file", file);
-                    db.ExecuteNonQuery(cmd);
+                    //    // get id for file
+                    //    cmd = new MySqlCommand("SELECT id FROM art WHERE file=?file LIMIT 1");
+                    //    cmd.Parameters.AddWithValue("?file", file);
+                    //    object obj = db.ExecuteScalar(cmd);
+                    //    // delete all links from song_art table
+                    //    if (obj != null)
+                    //    {
+                    //        cmd = new MySqlCommand("DELETE FROM song_art WHERE art_id=?art_id");
+                    //        cmd.Parameters.AddWithValue("?art_id", obj);
+                    //        db.ExecuteNonQuery(cmd); 
+                    //    }
+                    //    // delete art
+                    //    cmd = new MySqlCommand("DELETE FROM art WHERE file=?file");
+                    //    cmd.Parameters.AddWithValue("?file", file);
+                    //    db.ExecuteNonQuery(cmd);
+
+                    DDLHelper helper = new DDLHelper(db);
+                    helper.DeleteArt(file);
                     ++deleted;
                 }
             }
@@ -363,24 +366,24 @@ namespace MusicImporter_Lib
                 byte[] hash = ComputeHash(data);
                 string file = Path.GetFileName(files[i]);
 
-                if( file == "NA.JPG" )
+                if (file == "NA.JPG")
                 {
                     continue; // do delete NA.JPG files
                 }
-                
+
                 // file exist but hash doesn't match
-                string sql = "SELECT id FROM art WHERE file=?file AND NOT hash=?hash";
+                string sql = "SELECT id FROM art WHERE file=?file AND NOT hash=?hash LIMIT 1";
                 MySqlCommand cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
                 cmd.Parameters.AddWithValue("?file", file);
                 object obj = db.ExecuteScalar(cmd);
                 if (obj != null)
                 {
-                   // todo corrupt picture
+                    // todo corrupt picture
                 }
 
                 // file doesn't exist
-                sql = "SELECT id FROM art WHERE file=?file";
+                sql = "SELECT id FROM art WHERE file=?file LIMIT 1";
                 cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
                 cmd.Parameters.AddWithValue("?file", file);
@@ -394,8 +397,8 @@ namespace MusicImporter_Lib
                     {
                         File.Delete(large);
                     }
-                    string small = string.Format("{0}\\small\\{1}", path, file); 
-                    if( File.Exists(small) )
+                    string small = string.Format("{0}\\small\\{1}", path, file);
+                    if (File.Exists(small))
                     {
                         File.Delete(small);
                     }
@@ -438,7 +441,7 @@ namespace MusicImporter_Lib
                 mime_type = ext;
                 description = "cover art";
                 hash = ComputeHash(data);
-                string sql = "SELECT id FROM art WHERE hash=?hash";
+                string sql = "SELECT id FROM art WHERE hash=?hash LIMIT 1";
                 MySqlCommand cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
                 object obj = null;

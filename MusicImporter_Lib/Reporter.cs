@@ -12,12 +12,7 @@ namespace MusicImporter_Lib
     public class Reporter
     {
         private DateTime timestamp = DateTime.Now;
-
-        public DateTime Timestamp
-        {
-            get { return timestamp; }
-            set { timestamp = value; }
-        }
+        private string db_version = string.Empty;
         private uint scanned_count = 0;
         private List<string> corrupt_files = new List<string>();
         private uint insert_song_count = 0;
@@ -32,14 +27,17 @@ namespace MusicImporter_Lib
         private uint delete_art_count = 0;
         private uint delete_art_file_count = 0;
         private string db_prev_version = string.Empty;
-
+        
+        public DateTime Timestamp
+        {
+            get { return timestamp; }
+            set { timestamp = value; }
+        }
         public string DBPeviousVersion
         {
             get { return db_prev_version; }
             set { db_prev_version = value; }
         }
-        private string db_version = string.Empty;
-
         public string DBVersion
         {
             get { return db_version; }

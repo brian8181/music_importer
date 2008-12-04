@@ -150,7 +150,6 @@ namespace music_importer
             strs = new string[Properties.Settings.Default.file_mask_history.Count];
             Properties.Settings.Default.file_mask_history.CopyTo(strs, 0);
             this.txtMask.AutoCompleteCustomSource.AddRange(strs);
-
             if (Properties.Settings.Default.mysql_history != null)
             {
                 strs = new string[Properties.Settings.Default.mysql_history.Count];
@@ -161,7 +160,6 @@ namespace music_importer
             {
                 Properties.Settings.Default.mysql_history = new StringCollection();
             }
-
             if (Properties.Settings.Default.sqlite_history != null)
             {
                 strs = new string[Properties.Settings.Default.sqlite_history.Count];
@@ -171,6 +169,14 @@ namespace music_importer
             else
             {
                 Properties.Settings.Default.sqlite_history = new StringCollection();
+            }
+            if (Properties.Settings.Default.log_path == string.Empty)
+            {
+                Properties.Settings.Default.log_path = Globals.ProcessDirectory();
+            }
+            if (Properties.Settings.Default.report_path == string.Empty)
+            {
+                Properties.Settings.Default.report_path = Globals.ProcessDirectory();
             }
         }
         /// <summary>
@@ -258,8 +264,10 @@ namespace music_importer
                 Logger.ClearLogs();
             }
             if (cbLog.Checked)
-                Logger.Init();
-
+            {
+                Logger.Init(Properties.Settings.Default.log_path);
+            }
+            
             linkReport.Visible = false;
             ToggleOff();
             btnOK.Enabled = false;
@@ -926,5 +934,19 @@ namespace music_importer
             frm.File = file;
             frm.ShowDialog();
         }
+        /// <summary>
+        /// show more options form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            SettingsFrm frm = new SettingsFrm();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
+       
     }
 }

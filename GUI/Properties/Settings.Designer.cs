@@ -152,5 +152,29 @@ namespace music_importer.Properties {
                 this["clear_logs"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string log_path {
+            get {
+                return ((string)(this["log_path"]));
+            }
+            set {
+                this["log_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string report_path {
+            get {
+                return ((string)(this["report_path"]));
+            }
+            set {
+                this["report_path"] = value;
+            }
+        }
     }
 }

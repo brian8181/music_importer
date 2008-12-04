@@ -30,5 +30,21 @@ namespace music_importer
         {
             InitializeComponent();
         }
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void btnClearLogs_Click(object sender, EventArgs e)
+        {
+        }
+        private void btnClearReports_Click(object sender, EventArgs e)
+        {
+        }
+        private void btnShowLogs_Click(object sender, EventArgs e)
+        {
+        }
+        private void btnShowReports_Click(object sender, EventArgs e)
+        {
+        }
     }
 }

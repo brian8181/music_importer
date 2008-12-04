@@ -9,6 +9,17 @@ namespace MusicImporter_Lib
     class TagLibExt
     {
         /// <summary>
+        /// get the sha1 of file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static byte[] MediaSHA1(string file)
+        {
+            byte[] data = System.IO.File.ReadAllBytes(file);
+            return Utility.IO.FileExt.ComputeSHA1(data);
+        }
+
+        /// <summary>
         /// get the sha1 of media file data (not including tag info)
         /// </summary>
         /// <param name="file"></param>
