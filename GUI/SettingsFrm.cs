@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MusicImporter_Lib.Properties;
+using MusicImporter_Lib;
 using Utility;
 
 namespace music_importer
@@ -31,11 +32,69 @@ namespace music_importer
         public SettingsFrm()
         {
             InitializeComponent();
-            //logDirectory.TextBox.Text = Properties.Settings.Default.log_path;
-            //reportDirectory.TextBox.Text = Properties.Settings.Default.report_path;
-            //cbLoggingEnabled.Checked = Settings.Default.Log;
-            //cbDeleteLogsAfter.Checked = true;
-            rbSplitRun.Checked = true;
+
+            // set sha1 policy
+            Importer.SHA1_Policy sha1_policy = Importer.SHA1_Policy.Always;
+            try
+            {
+                sha1_policy = (Importer.SHA1_Policy)Enum.Parse(
+                    typeof(Importer.SHA1_Policy), Properties.Settings.Default.sha1_policy);
+            }
+            catch(System.ArgumentException)
+            {
+                sha1_policy = Importer.SHA1_Policy.Always;
+            }
+
+            switch (sha1_policy)
+            {
+                case Importer.SHA1_Policy.Always:
+                    rbAlways.Checked = true;
+                    break;
+                case Importer.SHA1_Policy.Insert_Only:
+                    rbInsert_Only.Checked = true;
+                    break;
+                case Importer.SHA1_Policy.Insert_Or_Nulls:
+                    rbInsert_Or_Nulls.Checked = true;
+                    break;
+                default:
+                    rbAlways.Checked = true;
+                    break;
+            }
+            
+            // set log type radio
+            Logger.LogType log_type = Logger.LogType.Single;
+            try
+            {
+                log_type = (Logger.LogType)Enum.Parse(
+                    typeof(Logger.LogType), Properties.Settings.Default.log_type);
+            }
+            catch (System.ArgumentException)
+            {
+                log_type = Logger.LogType.Single;
+            }
+
+            switch (log_type)
+            {
+                case Logger.LogType.Single:
+                    rbNever.Checked = true;
+                    break;
+                case Logger.LogType.SplitRun:
+                    rbSplitRun.Checked = true;
+                    break;
+                case Logger.LogType.SplitTime:
+                    rbSplitTime.Checked = true;
+                    break;
+                case Logger.LogType.SplitSize:
+                    rbSplitSize.Checked = true;
+                    break;
+                case Logger.LogType.Circular:
+                    rbCircular.Checked = true;
+                    break;
+                default:
+                    rbNever.Checked = true;
+                    break;
+            }
+
             cmbSplitTimeUnit.SelectedIndex = cmbSplitTimeUnit.FindStringExact("Hour");
             cmbSplitSizeUnit.SelectedIndex = cmbSplitSizeUnit.FindStringExact("MB");
             cmbCircularSizeUnit.SelectedIndex = cmbCircularSizeUnit.FindStringExact("MB");
@@ -44,45 +103,44 @@ namespace music_importer
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
+            // sha1 policy settings
+            if (rbAlways.Checked)
+            {
+                Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Always.ToString();
+            }
+            else if (rbInsert_Only.Checked)
+            {
+                Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Only.ToString();
+            }
+            else if (rbInsert_Or_Nulls.Checked)
+            {
+                Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Or_Nulls.ToString();
+            }
+                 
+            // logger settings
+            if (rbNever.Checked)
+            {
+                Properties.Settings.Default.log_type = Logger.LogType.Single.ToString();
+            }
+            else if (rbSplitRun.Checked)
+            {
+                Properties.Settings.Default.log_type = Logger.LogType.SplitRun.ToString();
+            }
+            else if (rbSplitSize.Checked)
+            {
+                Properties.Settings.Default.log_type = Logger.LogType.SplitSize.ToString();
+            }
+            else if (rbSplitTime.Checked)
+            {
+                Properties.Settings.Default.log_type = Logger.LogType.SplitTime.ToString();
+            }
+            else if (rbCircular.Checked)
+            {
+                Properties.Settings.Default.log_type = Logger.LogType.Circular.ToString();
+            }
+
+            Properties.Settings.Default.Save();
             Close();
-        }
-        private void btnClearLogs_Click(object sender, EventArgs e)
-        {
-            Utility.Logger.ClearLogs(Properties.Settings.Default.log_path);
-        }
-        private void btnClearReports_Click(object sender, EventArgs e)
-        {
-            MusicImporter_Lib.Reporter.ClearReports(Properties.Settings.Default.report_path);
-        }
-        private void btnShowLogs_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = "explorer.exe";
-            proc.StartInfo.Arguments = Properties.Settings.Default.log_path;
-            proc.Start();
-        }
-        private void btnShowReports_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = "explorer.exe";
-            proc.StartInfo.Arguments = Properties.Settings.Default.report_path;
-            proc.Start();
-        }
-        private void cbLoggingEnabled_CheckedChanged(object sender, EventArgs e)
-        {
-            //logDirectory.Enabled = cbLoggingEnabled.Checked;
-            //cbDeleteLogsAfter.Enabled = cbLoggingEnabled.Checked;
-            //upDownKeepLogDays.Enabled = cbLoggingEnabled.Checked;
-            //lblLogDays.Enabled = cbLoggingEnabled.Checked;
-            //btnLogsDeleteNow.Enabled = cbLoggingEnabled.Checked;
-            //btnShowLogs.Enabled = cbLoggingEnabled.Checked;
-            //btnClearLogs.Enabled = cbLoggingEnabled.Checked;
-        }
-        private void cbDeleteLogsAfter_CheckedChanged(object sender, EventArgs e)
-        {
-            //upDownKeepLogDays.Enabled = cbDeleteLogsAfter.Checked;
-            //lblLogDays.Enabled = cbDeleteLogsAfter.Checked;
-            //btnLogsDeleteNow.Enabled = cbDeleteLogsAfter.Checked;
         }
         private void rbSplitRun_CheckedChanged(object sender, EventArgs e)
         {
@@ -119,6 +177,15 @@ namespace music_importer
             cmbSplitTimeUnit.Enabled = !rbSplitSize.Checked;
             upDownCircularSize.Enabled = !rbSplitSize.Checked;
             cmbCircularSizeUnit.Enabled = !rbSplitSize.Checked;
+        }
+        private void rbNever_CheckedChanged(object sender, EventArgs e)
+        {
+            upDownCircularSize.Enabled = !rbNever.Checked;
+            upDownSplitSize.Enabled = !rbNever.Checked;
+            upDownSplitTime.Enabled = !rbNever.Checked;
+            cmbCircularSizeUnit.Enabled = !rbNever.Checked;
+            cmbSplitSizeUnit.Enabled = !rbNever.Checked;
+            cmbSplitTimeUnit.Enabled = !rbNever.Checked;
         }
     }
 }

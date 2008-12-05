@@ -40,6 +40,12 @@ namespace MusicImporter_Lib
     /// </summary>
     public class Importer
     {
+        public enum SHA1_Policy
+        {
+            Always,
+            Insert_Only,
+            Insert_Or_Nulls
+        }
         public enum State
         {
             Idle,

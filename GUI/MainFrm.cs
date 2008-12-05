@@ -264,8 +264,13 @@ namespace music_importer
             }
             if (cbLog.Checked)
             {
+                Logger.LogType log_type = (Logger.LogType)Enum.Parse(
+                    typeof(Logger.LogType), Properties.Settings.Default.log_type);
+                Logger.SizeUnit size_unit = (Logger.SizeUnit)Enum.Parse(
+                    typeof(Logger.SizeUnit), Properties.Settings.Default.log_size_unit);
+                // initialize logger
                 Logger.Init(Properties.Settings.Default.log_path, 
-                    1, Logger.SizeUnit.MB, Logger.LogType.Circular);
+                    Properties.Settings.Default.log_size, size_unit, log_type);
             }
             
             linkReport.Visible = false;

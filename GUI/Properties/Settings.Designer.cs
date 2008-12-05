@@ -176,5 +176,65 @@ namespace music_importer.Properties {
                 this["report_path"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Single")]
+        public string log_type {
+            get {
+                return ((string)(this["log_type"]));
+            }
+            set {
+                this["log_type"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MB")]
+        public string log_size_unit {
+            get {
+                return ((string)(this["log_size_unit"]));
+            }
+            set {
+                this["log_size_unit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hour")]
+        public string log_time_unit {
+            get {
+                return ((string)(this["log_time_unit"]));
+            }
+            set {
+                this["log_time_unit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int log_size {
+            get {
+                return ((int)(this["log_size"]));
+            }
+            set {
+                this["log_size"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Always")]
+        public string sha1_policy {
+            get {
+                return ((string)(this["sha1_policy"]));
+            }
+            set {
+                this["sha1_policy"] = value;
+            }
+        }
     }
 }
