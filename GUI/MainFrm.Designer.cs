@@ -86,6 +86,7 @@ namespace music_importer
             this.lbArtRoot = new System.Windows.Forms.Label();
             this.txtArtLoc = new System.Windows.Forms.TextBox();
             this.grpOptions = new System.Windows.Forms.GroupBox();
+            this.cbFileSHA1 = new System.Windows.Forms.CheckBox();
             this.btnOptions = new System.Windows.Forms.Button();
             this.cbSHA1 = new System.Windows.Forms.CheckBox();
             this.cbClearLogs = new System.Windows.Forms.CheckBox();
@@ -120,7 +121,6 @@ namespace music_importer
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -219,7 +219,7 @@ namespace music_importer
             // bl1
             // 
             this.bl1.AutoSize = true;
-            this.bl1.Location = new System.Drawing.Point(12, 133);
+            this.bl1.Location = new System.Drawing.Point(12, 168);
             this.bl1.Name = "bl1";
             this.bl1.Size = new System.Drawing.Size(39, 13);
             this.bl1.TabIndex = 1;
@@ -228,7 +228,7 @@ namespace music_importer
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 160);
+            this.label10.Location = new System.Drawing.Point(12, 195);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(42, 13);
             this.label10.TabIndex = 2;
@@ -276,7 +276,7 @@ namespace music_importer
             this.cbPlaylist.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbPlaylist.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPlaylist.Image = ((System.Drawing.Image)(resources.GetObject("cbPlaylist.Image")));
-            this.cbPlaylist.Location = new System.Drawing.Point(436, 154);
+            this.cbPlaylist.Location = new System.Drawing.Point(436, 189);
             this.cbPlaylist.Name = "cbPlaylist";
             this.cbPlaylist.Size = new System.Drawing.Size(32, 26);
             this.cbPlaylist.TabIndex = 10;
@@ -298,7 +298,7 @@ namespace music_importer
             this.cbMysql.Appearance = System.Windows.Forms.Appearance.Button;
             this.cbMysql.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbMysql.Image = ((System.Drawing.Image)(resources.GetObject("cbMysql.Image")));
-            this.cbMysql.Location = new System.Drawing.Point(436, 127);
+            this.cbMysql.Location = new System.Drawing.Point(436, 162);
             this.cbMysql.Name = "cbMysql";
             this.cbMysql.Size = new System.Drawing.Size(32, 26);
             this.cbMysql.TabIndex = 9;
@@ -310,7 +310,7 @@ namespace music_importer
             // 
             this.txtSQLite.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtSQLite.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtSQLite.Location = new System.Drawing.Point(75, 157);
+            this.txtSQLite.Location = new System.Drawing.Point(75, 192);
             this.txtSQLite.Name = "txtSQLite";
             this.txtSQLite.Size = new System.Drawing.Size(346, 20);
             this.txtSQLite.TabIndex = 6;
@@ -320,7 +320,7 @@ namespace music_importer
             this.txtMySql.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtMySql.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtMySql.Enabled = false;
-            this.txtMySql.Location = new System.Drawing.Point(75, 130);
+            this.txtMySql.Location = new System.Drawing.Point(75, 165);
             this.txtMySql.Name = "txtMySql";
             this.txtMySql.Size = new System.Drawing.Size(346, 20);
             this.txtMySql.TabIndex = 5;
@@ -558,7 +558,7 @@ namespace music_importer
             // 
             // grpOptions
             // 
-            this.grpOptions.Controls.Add(this.checkBox1);
+            this.grpOptions.Controls.Add(this.cbFileSHA1);
             this.grpOptions.Controls.Add(this.btnOptions);
             this.grpOptions.Controls.Add(this.cbSHA1);
             this.grpOptions.Controls.Add(this.cbClearLogs);
@@ -573,6 +573,17 @@ namespace music_importer
             this.grpOptions.TabIndex = 1;
             this.grpOptions.TabStop = false;
             this.grpOptions.Text = "Scan Options";
+            // 
+            // cbFileSHA1
+            // 
+            this.cbFileSHA1.AutoSize = true;
+            this.cbFileSHA1.Location = new System.Drawing.Point(10, 83);
+            this.cbFileSHA1.Name = "cbFileSHA1";
+            this.cbFileSHA1.Size = new System.Drawing.Size(118, 17);
+            this.cbFileSHA1.TabIndex = 3;
+            this.cbFileSHA1.Text = "Compute File SHA1";
+            this.toolTip.SetToolTip(this.cbFileSHA1, "Turn Logging On / Off.");
+            this.cbFileSHA1.UseVisualStyleBackColor = true;
             // 
             // btnOptions
             // 
@@ -941,17 +952,6 @@ namespace music_importer
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(10, 83);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(118, 17);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Compute File SHA1";
-            this.toolTip.SetToolTip(this.checkBox1, "Turn Logging On / Off.");
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1079,7 +1079,7 @@ namespace music_importer
         private System.Windows.Forms.CheckBox cbSHA1;
         private System.Windows.Forms.Button btnOptions;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbFileSHA1;
     }
 }
 

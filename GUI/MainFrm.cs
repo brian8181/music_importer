@@ -246,7 +246,6 @@ namespace music_importer
             this.txtSQLite.AutoCompleteCustomSource.CopyTo( strs, 0 );
             Properties.Settings.Default.sqlite_history.Clear();
             Properties.Settings.Default.sqlite_history.AddRange( strs );
-  
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -265,7 +264,8 @@ namespace music_importer
             }
             if (cbLog.Checked)
             {
-                Logger.Init(Properties.Settings.Default.log_path);
+                Logger.Init(Properties.Settings.Default.log_path, 
+                    1, Logger.SizeUnit.MB, Logger.LogType.Circular);
             }
             
             linkReport.Visible = false;
@@ -838,6 +838,7 @@ namespace music_importer
             cbPlaylist.Enabled = state;
             cbTags.Enabled = state;
             cbSHA1.Enabled = state;
+            cbFileSHA1.Enabled = state;
         }
         #endregion
 

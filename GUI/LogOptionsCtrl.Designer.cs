@@ -28,98 +28,104 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.btnClearReports = new System.Windows.Forms.Button();
+            this.cmbTimeUnit = new System.Windows.Forms.ComboBox();
+            this.cbUsePath = new System.Windows.Forms.CheckBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.txtPath = new System.Windows.Forms.TextBox();
+            this.cbEnabled = new System.Windows.Forms.CheckBox();
+            this.btnDeleteNow = new System.Windows.Forms.Button();
+            this.cbDeleteAfter = new System.Windows.Forms.CheckBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.upDownAfter = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownAfter)).BeginInit();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // cmbTimeUnit
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cmbTimeUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTimeUnit.FormattingEnabled = true;
+            this.cmbTimeUnit.Items.AddRange(new object[] {
             "Hours",
             "Days",
             "Weeks",
             "Years"});
-            this.comboBox1.Location = new System.Drawing.Point(167, 46);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 28;
+            this.cmbTimeUnit.Location = new System.Drawing.Point(167, 46);
+            this.cmbTimeUnit.Name = "cmbTimeUnit";
+            this.cmbTimeUnit.Size = new System.Drawing.Size(121, 21);
+            this.cmbTimeUnit.TabIndex = 28;
             // 
-            // checkBox3
+            // cbUsePath
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(0, 23);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(70, 17);
-            this.checkBox3.TabIndex = 27;
-            this.checkBox3.Text = "Use Path";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.cbUsePath.AutoSize = true;
+            this.cbUsePath.Location = new System.Drawing.Point(0, 23);
+            this.cbUsePath.Name = "cbUsePath";
+            this.cbUsePath.Size = new System.Drawing.Size(70, 17);
+            this.cbUsePath.TabIndex = 27;
+            this.cbUsePath.Text = "Use Path";
+            this.cbUsePath.UseVisualStyleBackColor = true;
+            this.cbUsePath.CheckedChanged += new System.EventHandler(this.cbUsePath_CheckedChanged);
             // 
-            // button2
+            // btnBrowse
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(399, 20);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(27, 23);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "...";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowse.Location = new System.Drawing.Point(399, 20);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(27, 23);
+            this.btnBrowse.TabIndex = 26;
+            this.btnBrowse.Text = "...";
+            this.btnBrowse.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // textBox1
+            // txtPath
             // 
-            this.textBox1.Location = new System.Drawing.Point(71, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(319, 20);
-            this.textBox1.TabIndex = 25;
+            this.txtPath.Location = new System.Drawing.Point(71, 21);
+            this.txtPath.Name = "txtPath";
+            this.txtPath.Size = new System.Drawing.Size(319, 20);
+            this.txtPath.TabIndex = 25;
             // 
-            // checkBox2
+            // cbEnabled
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(0, 0);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(65, 17);
-            this.checkBox2.TabIndex = 22;
-            this.checkBox2.Text = "Enabled";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbEnabled.AutoSize = true;
+            this.cbEnabled.Location = new System.Drawing.Point(0, 0);
+            this.cbEnabled.Name = "cbEnabled";
+            this.cbEnabled.Size = new System.Drawing.Size(65, 17);
+            this.cbEnabled.TabIndex = 22;
+            this.cbEnabled.Text = "Enabled";
+            this.cbEnabled.UseVisualStyleBackColor = true;
+            this.cbEnabled.CheckedChanged += new System.EventHandler(this.cbEnabled_CheckedChanged);
             // 
-            // button1
+            // btnDeleteNow
             // 
-            this.button1.Location = new System.Drawing.Point(304, 47);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 23);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "Delete Now";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDeleteNow.Location = new System.Drawing.Point(304, 47);
+            this.btnDeleteNow.Name = "btnDeleteNow";
+            this.btnDeleteNow.Size = new System.Drawing.Size(86, 23);
+            this.btnDeleteNow.TabIndex = 24;
+            this.btnDeleteNow.Text = "Delete Now";
+            this.btnDeleteNow.UseVisualStyleBackColor = true;
+            this.btnDeleteNow.Click += new System.EventHandler(this.btnDeleteNow_Click);
             // 
-            // checkBox1
+            // cbDeleteAfter
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(0, 47);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(81, 17);
-            this.checkBox1.TabIndex = 23;
-            this.checkBox1.Text = "Delete after";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbDeleteAfter.AutoSize = true;
+            this.cbDeleteAfter.Location = new System.Drawing.Point(0, 47);
+            this.cbDeleteAfter.Name = "cbDeleteAfter";
+            this.cbDeleteAfter.Size = new System.Drawing.Size(81, 17);
+            this.cbDeleteAfter.TabIndex = 23;
+            this.cbDeleteAfter.Text = "Delete after";
+            this.cbDeleteAfter.UseVisualStyleBackColor = true;
+            this.cbDeleteAfter.CheckedChanged += new System.EventHandler(this.cbDeleteAfter_CheckedChanged);
             // 
-            // btnClearReports
+            // btnClear
             // 
-            this.btnClearReports.Location = new System.Drawing.Point(304, 76);
-            this.btnClearReports.Name = "btnClearReports";
-            this.btnClearReports.Size = new System.Drawing.Size(86, 23);
-            this.btnClearReports.TabIndex = 20;
-            this.btnClearReports.Text = "Clear All";
-            this.btnClearReports.UseVisualStyleBackColor = true;
+            this.btnClear.Location = new System.Drawing.Point(304, 76);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(86, 23);
+            this.btnClear.TabIndex = 20;
+            this.btnClear.Text = "Clear All";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnShow
             // 
@@ -129,31 +135,32 @@
             this.btnShow.TabIndex = 19;
             this.btnShow.Text = "Show";
             this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
             // 
-            // numericUpDown1
+            // upDownAfter
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(87, 47);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(59, 20);
-            this.numericUpDown1.TabIndex = 21;
+            this.upDownAfter.Location = new System.Drawing.Point(87, 47);
+            this.upDownAfter.Name = "upDownAfter";
+            this.upDownAfter.Size = new System.Drawing.Size(59, 20);
+            this.upDownAfter.TabIndex = 21;
             // 
             // LogOptionsCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.btnClearReports);
+            this.Controls.Add(this.cmbTimeUnit);
+            this.Controls.Add(this.cbUsePath);
+            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.txtPath);
+            this.Controls.Add(this.cbEnabled);
+            this.Controls.Add(this.btnDeleteNow);
+            this.Controls.Add(this.cbDeleteAfter);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnShow);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.upDownAfter);
             this.Name = "LogOptionsCtrl";
             this.Size = new System.Drawing.Size(425, 100);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownAfter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,15 +168,15 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button btnClearReports;
+        private System.Windows.Forms.ComboBox cmbTimeUnit;
+        private System.Windows.Forms.CheckBox cbUsePath;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.TextBox txtPath;
+        private System.Windows.Forms.CheckBox cbEnabled;
+        private System.Windows.Forms.Button btnDeleteNow;
+        private System.Windows.Forms.CheckBox cbDeleteAfter;
+        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnShow;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown upDownAfter;
     }
 }
