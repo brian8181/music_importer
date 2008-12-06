@@ -32,7 +32,7 @@ namespace music_importer
         public SettingsFrm()
         {
             InitializeComponent();
-
+           
             // set sha1 policy
             Importer.SHA1_Policy sha1_policy = Importer.SHA1_Policy.Always;
             try

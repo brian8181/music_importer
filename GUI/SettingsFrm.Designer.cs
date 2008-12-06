@@ -33,7 +33,9 @@ namespace music_importer
             this.rbAlways = new System.Windows.Forms.RadioButton();
             this.rbInsert_Only = new System.Windows.Forms.RadioButton();
             this.grpLogging = new System.Windows.Forms.GroupBox();
+            this.logOptionsCtrl = new music_importer.LogOptionsCtrl();
             this.grp2 = new System.Windows.Forms.GroupBox();
+            this.reportOptionsCtrl = new music_importer.LogOptionsCtrl();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -51,8 +53,10 @@ namespace music_importer
             this.rbSplitTime = new System.Windows.Forms.RadioButton();
             this.rbCircular = new System.Windows.Forms.RadioButton();
             this.rbSplitSize = new System.Windows.Forms.RadioButton();
-            this.reportOptionsCtrl = new music_importer.LogOptionsCtrl();
-            this.logOptionsCtrl = new music_importer.LogOptionsCtrl();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.grpLogging.SuspendLayout();
             this.grp2.SuspendLayout();
@@ -60,6 +64,7 @@ namespace music_importer
             ((System.ComponentModel.ISupportInitialize)(this.upDownCircularSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownSplitTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownSplitSize)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -72,7 +77,7 @@ namespace music_importer
             this.groupBox1.Size = new System.Drawing.Size(446, 47);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "SHA1 hash Generation";
+            this.groupBox1.Text = "SHA1 Generation for media only";
             // 
             // rbInsert_Or_Nulls
             // 
@@ -109,27 +114,41 @@ namespace music_importer
             // grpLogging
             // 
             this.grpLogging.Controls.Add(this.logOptionsCtrl);
-            this.grpLogging.Location = new System.Drawing.Point(4, 218);
+            this.grpLogging.Location = new System.Drawing.Point(4, 271);
             this.grpLogging.Name = "grpLogging";
             this.grpLogging.Size = new System.Drawing.Size(446, 127);
             this.grpLogging.TabIndex = 3;
             this.grpLogging.TabStop = false;
             this.grpLogging.Text = "Logging";
             // 
+            // logOptionsCtrl
+            // 
+            this.logOptionsCtrl.Location = new System.Drawing.Point(8, 19);
+            this.logOptionsCtrl.Name = "logOptionsCtrl";
+            this.logOptionsCtrl.Size = new System.Drawing.Size(425, 100);
+            this.logOptionsCtrl.TabIndex = 0;
+            // 
             // grp2
             // 
             this.grp2.Controls.Add(this.reportOptionsCtrl);
-            this.grp2.Location = new System.Drawing.Point(4, 351);
+            this.grp2.Location = new System.Drawing.Point(4, 404);
             this.grp2.Name = "grp2";
             this.grp2.Size = new System.Drawing.Size(446, 127);
             this.grp2.TabIndex = 4;
             this.grp2.TabStop = false;
             this.grp2.Text = "Reports";
             // 
+            // reportOptionsCtrl
+            // 
+            this.reportOptionsCtrl.Location = new System.Drawing.Point(8, 19);
+            this.reportOptionsCtrl.Name = "reportOptionsCtrl";
+            this.reportOptionsCtrl.Size = new System.Drawing.Size(425, 103);
+            this.reportOptionsCtrl.TabIndex = 0;
+            // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(375, 484);
+            this.btnCancel.Location = new System.Drawing.Point(375, 537);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -138,7 +157,7 @@ namespace music_importer
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(294, 484);
+            this.btnOK.Location = new System.Drawing.Point(294, 537);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 6;
@@ -162,7 +181,7 @@ namespace music_importer
             this.groupBox2.Controls.Add(this.rbSplitTime);
             this.groupBox2.Controls.Add(this.rbCircular);
             this.groupBox2.Controls.Add(this.rbSplitSize);
-            this.groupBox2.Location = new System.Drawing.Point(4, 65);
+            this.groupBox2.Location = new System.Drawing.Point(4, 118);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(446, 147);
             this.groupBox2.TabIndex = 7;
@@ -362,19 +381,49 @@ namespace music_importer
             this.rbSplitSize.UseVisualStyleBackColor = true;
             this.rbSplitSize.CheckedChanged += new System.EventHandler(this.rbSplitSize_CheckedChanged);
             // 
-            // reportOptionsCtrl
+            // groupBox3
             // 
-            this.reportOptionsCtrl.Location = new System.Drawing.Point(8, 19);
-            this.reportOptionsCtrl.Name = "reportOptionsCtrl";
-            this.reportOptionsCtrl.Size = new System.Drawing.Size(425, 103);
-            this.reportOptionsCtrl.TabIndex = 0;
+            this.groupBox3.Controls.Add(this.radioButton1);
+            this.groupBox3.Controls.Add(this.radioButton2);
+            this.groupBox3.Controls.Add(this.radioButton3);
+            this.groupBox3.Location = new System.Drawing.Point(4, 65);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(446, 47);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "SHA1 Generation for file";
             // 
-            // logOptionsCtrl
+            // radioButton1
             // 
-            this.logOptionsCtrl.Location = new System.Drawing.Point(8, 19);
-            this.logOptionsCtrl.Name = "logOptionsCtrl";
-            this.logOptionsCtrl.Size = new System.Drawing.Size(425, 100);
-            this.logOptionsCtrl.TabIndex = 0;
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(170, 19);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(92, 17);
+            this.radioButton1.TabIndex = 2;
+            this.radioButton1.Text = "Insert or is null";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(318, 19);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(58, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "Always";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Checked = true;
+            this.radioButton3.Location = new System.Drawing.Point(13, 19);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(80, 17);
+            this.radioButton3.TabIndex = 0;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "Inserts Only";
+            this.radioButton3.UseVisualStyleBackColor = true;
             // 
             // SettingsFrm
             // 
@@ -382,7 +431,8 @@ namespace music_importer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(452, 510);
+            this.ClientSize = new System.Drawing.Size(452, 565);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
@@ -403,6 +453,8 @@ namespace music_importer
             ((System.ComponentModel.ISupportInitialize)(this.upDownCircularSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownSplitTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownSplitSize)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -434,5 +486,9 @@ namespace music_importer
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton rbNever;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
     }
 }

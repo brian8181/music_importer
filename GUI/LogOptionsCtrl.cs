@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Utility;
 
 namespace music_importer
 {
@@ -13,10 +13,38 @@ namespace music_importer
     {
         private FolderBrowserDialog dlg = new FolderBrowserDialog();
 
+        public bool isEnabled
+        {
+            get { return cbEnabled.Checked; }
+        }
+        public bool isDeleteAfter
+        {
+            get { return cbDeleteAfter.Checked; }
+        }
+        public bool isUsePath
+        {
+            get { return cbUsePath.Checked; }
+        }
         public TextBox TextBox
         {
             get { return txtPath; }
         }
+        public int TimeLength
+        {
+            get { return (int)upDownAfter.Value; }
+        }
+        public ComboBox TimeUnit
+        {
+            get { return this.cmbTimeUnit; }
+        }
+        //public Utility.Logger.TimeUnit Unit
+        //{
+        //    get
+        //    {
+        //        // todo initialize with a Utility.Logger.TimeUnit object
+        //        return (Utility.Logger.TimeUnit)cmbTimeUnit.SelectedItem;
+        //    }
+        //}
 
         public LogOptionsCtrl()
         {
@@ -25,16 +53,20 @@ namespace music_importer
             cbEnabled.Checked = true;
             cbUsePath.Checked = false;
             cbDeleteAfter.Checked = false;
-            
+
             cbEnabled_CheckedChanged(null, null);
             cbUsePath_CheckedChanged(null, null);
             cbDeleteAfter_CheckedChanged(null, null);
-           
-        }
 
-        public LogOptionsCtrl(string path) : this()
-        {
-            txtPath.Text = path;
+            Logger.TimeUnit[] units = (Logger.TimeUnit[])Enum.GetValues(typeof(Logger.TimeUnit));
+            foreach (Utility.Logger.TimeUnit u in units)
+            {
+                cmbTimeUnit.Items.Add(u);
+            }
+
+            Logger.TimeUnit unit = (Logger.TimeUnit)Enum.Parse(
+                typeof(Logger.TimeUnit), Properties.Settings.Default.log_time_unit);
+            cmbTimeUnit.SelectedItem = unit;
         }
 
         private void btnShow_Click(object sender, EventArgs e)
@@ -47,12 +79,10 @@ namespace music_importer
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnDeleteNow_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cbDeleteAfter_CheckedChanged(object sender, EventArgs e)

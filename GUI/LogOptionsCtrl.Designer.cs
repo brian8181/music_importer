@@ -45,11 +45,6 @@
             // 
             this.cmbTimeUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTimeUnit.FormattingEnabled = true;
-            this.cmbTimeUnit.Items.AddRange(new object[] {
-            "Hours",
-            "Days",
-            "Weeks",
-            "Years"});
             this.cmbTimeUnit.Location = new System.Drawing.Point(167, 46);
             this.cmbTimeUnit.Name = "cmbTimeUnit";
             this.cmbTimeUnit.Size = new System.Drawing.Size(121, 21);
