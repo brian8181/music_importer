@@ -57,7 +57,7 @@ namespace MusicImporter_Lib
 
             // place NA jpg
             string proc_path = System.IO.Path.GetDirectoryName(Globals.ProcessPath());
-            string file = proc_path = proc_path.TrimEnd('\\') + "\\Resources\\NA.JPG";
+            string file = proc_path.TrimEnd('\\') + "\\Resources\\NA.JPG";
             string dest = path + "\\NA.JPG";
 
             if (File.Exists(file) && !File.Exists(dest))

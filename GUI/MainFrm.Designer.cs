@@ -50,7 +50,7 @@ namespace music_importer
             this.cbTags = new System.Windows.Forms.CheckBox();
             this.cbLog = new System.Windows.Forms.CheckBox();
             this.cbClean = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpsql = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bl1 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -121,7 +121,8 @@ namespace music_importer
             this.lbFilesScanned = new System.Windows.Forms.Label();
             this.linkReport = new System.Windows.Forms.LinkLabel();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.groupBox1.SuspendLayout();
+            this.btnSQLOptions = new System.Windows.Forms.Button();
+            this.grpsql.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.grpOptions.SuspendLayout();
@@ -175,34 +176,35 @@ namespace music_importer
             this.toolTip.SetToolTip(this.cbClean, "Clean database of orphaned entries.");
             this.cbClean.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grpsql
             // 
-            this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Controls.Add(this.bl1);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.cbSH_Pass);
-            this.groupBox1.Controls.Add(this.cbSH_User);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.cbPlaylist);
-            this.groupBox1.Controls.Add(this.txtSchema);
-            this.groupBox1.Controls.Add(this.cbMysql);
-            this.groupBox1.Controls.Add(this.txtSQLite);
-            this.groupBox1.Controls.Add(this.txtMySql);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.txtPort);
-            this.groupBox1.Controls.Add(this.txtPassword);
-            this.groupBox1.Controls.Add(this.txtAddress);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.txtUser);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(2, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(482, 225);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "MySql Database";
+            this.grpsql.Controls.Add(this.btnSQLOptions);
+            this.grpsql.Controls.Add(this.pictureBox1);
+            this.grpsql.Controls.Add(this.bl1);
+            this.grpsql.Controls.Add(this.label10);
+            this.grpsql.Controls.Add(this.cbSH_Pass);
+            this.grpsql.Controls.Add(this.cbSH_User);
+            this.grpsql.Controls.Add(this.label7);
+            this.grpsql.Controls.Add(this.cbPlaylist);
+            this.grpsql.Controls.Add(this.txtSchema);
+            this.grpsql.Controls.Add(this.cbMysql);
+            this.grpsql.Controls.Add(this.txtSQLite);
+            this.grpsql.Controls.Add(this.txtMySql);
+            this.grpsql.Controls.Add(this.label6);
+            this.grpsql.Controls.Add(this.txtPort);
+            this.grpsql.Controls.Add(this.txtPassword);
+            this.grpsql.Controls.Add(this.txtAddress);
+            this.grpsql.Controls.Add(this.label4);
+            this.grpsql.Controls.Add(this.txtUser);
+            this.grpsql.Controls.Add(this.label3);
+            this.grpsql.Controls.Add(this.label1);
+            this.grpsql.Controls.Add(this.label2);
+            this.grpsql.Location = new System.Drawing.Point(2, 12);
+            this.grpsql.Name = "grpsql";
+            this.grpsql.Size = new System.Drawing.Size(482, 225);
+            this.grpsql.TabIndex = 0;
+            this.grpsql.TabStop = false;
+            this.grpsql.Text = "MySql Database";
             // 
             // pictureBox1
             // 
@@ -952,6 +954,17 @@ namespace music_importer
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             // 
+            // btnSQLOptions
+            // 
+            this.btnSQLOptions.AllowDrop = true;
+            this.btnSQLOptions.Location = new System.Drawing.Point(75, 129);
+            this.btnSQLOptions.Name = "btnSQLOptions";
+            this.btnSQLOptions.Size = new System.Drawing.Size(137, 23);
+            this.btnSQLOptions.TabIndex = 9;
+            this.btnSQLOptions.Text = "More Options ...";
+            this.btnSQLOptions.UseVisualStyleBackColor = true;
+            this.btnSQLOptions.Click += new System.EventHandler(this.btnSQLOptions_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -979,15 +992,15 @@ namespace music_importer
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lbMessage);
             this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpsql);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainFrm";
             this.RightToLeftLayout = true;
             this.Text = "Music Importer";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpsql.ResumeLayout(false);
+            this.grpsql.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -1009,7 +1022,7 @@ namespace music_importer
         private System.Windows.Forms.CheckBox cbTags;
         private System.Windows.Forms.CheckBox cbLog;
         private System.Windows.Forms.CheckBox cbClean;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpsql;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label4;
@@ -1080,6 +1093,7 @@ namespace music_importer
         private System.Windows.Forms.Button btnOptions;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.CheckBox cbFileSHA1;
+        private System.Windows.Forms.Button btnSQLOptions;
     }
 }
 

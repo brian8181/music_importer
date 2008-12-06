@@ -953,6 +953,15 @@ namespace music_importer
 
             }
         }
+
+        private void btnSQLOptions_Click(object sender, EventArgs e)
+        {
+            SQLSettingsFrm frm = new SQLSettingsFrm();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
        
     }
 }
