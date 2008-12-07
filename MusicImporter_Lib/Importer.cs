@@ -589,13 +589,14 @@ namespace MusicImporter_Lib
             byte[] file_sha1 = null;
             if (Settings.Default.compute_sha1)
             {
-                OnMessage("Generate SHA1: " + tag_file.Name );
                 sha1 = TagLibExt.MediaSHA1(tag_file);
                 string hex = Utility.Functions.Bytes2HexString(sha1);
                 Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
-
-                sha1 = TagLibExt.FileSHA1(tag_file);
-                hex = Utility.Functions.Bytes2HexString(sha1);
+            }
+            if (Settings.Default.compute_file_sha1)
+            {
+                file_sha1 = TagLibExt.FileSHA1(tag_file);
+                string hex = Utility.Functions.Bytes2HexString(sha1);
                 Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
             }
             cmd.Parameters.AddWithValue("?sha1", sha1);

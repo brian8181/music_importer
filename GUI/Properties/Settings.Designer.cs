@@ -236,5 +236,17 @@ namespace music_importer.Properties {
                 this["sha1_policy"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Always")]
+        public string sha1_file_policy {
+            get {
+                return ((string)(this["sha1_file_policy"]));
+            }
+            set {
+                this["sha1_file_policy"] = value;
+            }
+        }
     }
 }

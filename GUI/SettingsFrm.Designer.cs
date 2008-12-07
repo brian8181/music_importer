@@ -29,9 +29,9 @@ namespace music_importer
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbInsert_Or_Nulls = new System.Windows.Forms.RadioButton();
-            this.rbAlways = new System.Windows.Forms.RadioButton();
-            this.rbInsert_Only = new System.Windows.Forms.RadioButton();
+            this.rbMediaInsert_Or_Nulls = new System.Windows.Forms.RadioButton();
+            this.rbMediaAlways = new System.Windows.Forms.RadioButton();
+            this.rbMediaInsert_Only = new System.Windows.Forms.RadioButton();
             this.grpLogging = new System.Windows.Forms.GroupBox();
             this.logOptionsCtrl = new music_importer.LogOptionsCtrl();
             this.grp2 = new System.Windows.Forms.GroupBox();
@@ -54,9 +54,9 @@ namespace music_importer
             this.rbCircular = new System.Windows.Forms.RadioButton();
             this.rbSplitSize = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.rbFileInsert_Or_Nulls = new System.Windows.Forms.RadioButton();
+            this.rbFileAlways = new System.Windows.Forms.RadioButton();
+            this.rbFileInsert_Only = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.grpLogging.SuspendLayout();
             this.grp2.SuspendLayout();
@@ -69,9 +69,9 @@ namespace music_importer
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.rbInsert_Or_Nulls);
-            this.groupBox1.Controls.Add(this.rbAlways);
-            this.groupBox1.Controls.Add(this.rbInsert_Only);
+            this.groupBox1.Controls.Add(this.rbMediaInsert_Or_Nulls);
+            this.groupBox1.Controls.Add(this.rbMediaAlways);
+            this.groupBox1.Controls.Add(this.rbMediaInsert_Only);
             this.groupBox1.Location = new System.Drawing.Point(4, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(446, 47);
@@ -79,37 +79,38 @@ namespace music_importer
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SHA1 Generation for media only";
             // 
-            // rbInsert_Or_Nulls
+            // rbMediaInsert_Or_Nulls
             // 
-            this.rbInsert_Or_Nulls.AutoSize = true;
-            this.rbInsert_Or_Nulls.Location = new System.Drawing.Point(170, 19);
-            this.rbInsert_Or_Nulls.Name = "rbInsert_Or_Nulls";
-            this.rbInsert_Or_Nulls.Size = new System.Drawing.Size(92, 17);
-            this.rbInsert_Or_Nulls.TabIndex = 2;
-            this.rbInsert_Or_Nulls.Text = "Insert or is null";
-            this.rbInsert_Or_Nulls.UseVisualStyleBackColor = true;
+            this.rbMediaInsert_Or_Nulls.AutoSize = true;
+            this.rbMediaInsert_Or_Nulls.Location = new System.Drawing.Point(170, 19);
+            this.rbMediaInsert_Or_Nulls.Name = "rbMediaInsert_Or_Nulls";
+            this.rbMediaInsert_Or_Nulls.Size = new System.Drawing.Size(92, 17);
+            this.rbMediaInsert_Or_Nulls.TabIndex = 2;
+            this.rbMediaInsert_Or_Nulls.Text = "Insert or is null";
+            this.rbMediaInsert_Or_Nulls.UseVisualStyleBackColor = true;
+            this.rbMediaInsert_Or_Nulls.CheckedChanged += new System.EventHandler(this.rbInsert_Or_Nulls_CheckedChanged);
             // 
-            // rbAlways
+            // rbMediaAlways
             // 
-            this.rbAlways.AutoSize = true;
-            this.rbAlways.Location = new System.Drawing.Point(318, 19);
-            this.rbAlways.Name = "rbAlways";
-            this.rbAlways.Size = new System.Drawing.Size(58, 17);
-            this.rbAlways.TabIndex = 1;
-            this.rbAlways.Text = "Always";
-            this.rbAlways.UseVisualStyleBackColor = true;
+            this.rbMediaAlways.AutoSize = true;
+            this.rbMediaAlways.Location = new System.Drawing.Point(318, 19);
+            this.rbMediaAlways.Name = "rbMediaAlways";
+            this.rbMediaAlways.Size = new System.Drawing.Size(58, 17);
+            this.rbMediaAlways.TabIndex = 1;
+            this.rbMediaAlways.Text = "Always";
+            this.rbMediaAlways.UseVisualStyleBackColor = true;
             // 
-            // rbInsert_Only
+            // rbMediaInsert_Only
             // 
-            this.rbInsert_Only.AutoSize = true;
-            this.rbInsert_Only.Checked = true;
-            this.rbInsert_Only.Location = new System.Drawing.Point(13, 19);
-            this.rbInsert_Only.Name = "rbInsert_Only";
-            this.rbInsert_Only.Size = new System.Drawing.Size(80, 17);
-            this.rbInsert_Only.TabIndex = 0;
-            this.rbInsert_Only.TabStop = true;
-            this.rbInsert_Only.Text = "Inserts Only";
-            this.rbInsert_Only.UseVisualStyleBackColor = true;
+            this.rbMediaInsert_Only.AutoSize = true;
+            this.rbMediaInsert_Only.Checked = true;
+            this.rbMediaInsert_Only.Location = new System.Drawing.Point(13, 19);
+            this.rbMediaInsert_Only.Name = "rbMediaInsert_Only";
+            this.rbMediaInsert_Only.Size = new System.Drawing.Size(80, 17);
+            this.rbMediaInsert_Only.TabIndex = 0;
+            this.rbMediaInsert_Only.TabStop = true;
+            this.rbMediaInsert_Only.Text = "Inserts Only";
+            this.rbMediaInsert_Only.UseVisualStyleBackColor = true;
             // 
             // grpLogging
             // 
@@ -204,7 +205,7 @@ namespace music_importer
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(323, 97);
+            this.label4.Location = new System.Drawing.Point(319, 95);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(18, 13);
             this.label4.TabIndex = 16;
@@ -213,7 +214,7 @@ namespace music_importer
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(323, 75);
+            this.label3.Location = new System.Drawing.Point(319, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(18, 13);
             this.label3.TabIndex = 15;
@@ -222,7 +223,7 @@ namespace music_importer
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(323, 120);
+            this.label1.Location = new System.Drawing.Point(319, 118);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(18, 13);
             this.label1.TabIndex = 13;
@@ -232,31 +233,23 @@ namespace music_importer
             // 
             this.cmbCircularSizeUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCircularSizeUnit.FormattingEnabled = true;
-            this.cmbCircularSizeUnit.Items.AddRange(new object[] {
-            "KB",
-            "MB",
-            "GB"});
-            this.cmbCircularSizeUnit.Location = new System.Drawing.Point(235, 115);
+            this.cmbCircularSizeUnit.Location = new System.Drawing.Point(246, 115);
             this.cmbCircularSizeUnit.Name = "cmbCircularSizeUnit";
-            this.cmbCircularSizeUnit.Size = new System.Drawing.Size(82, 21);
+            this.cmbCircularSizeUnit.Size = new System.Drawing.Size(67, 21);
             this.cmbCircularSizeUnit.TabIndex = 12;
             // 
             // cmbSplitSizeUnit
             // 
             this.cmbSplitSizeUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSplitSizeUnit.FormattingEnabled = true;
-            this.cmbSplitSizeUnit.Items.AddRange(new object[] {
-            "KB",
-            "MB",
-            "GB"});
-            this.cmbSplitSizeUnit.Location = new System.Drawing.Point(235, 93);
+            this.cmbSplitSizeUnit.Location = new System.Drawing.Point(246, 93);
             this.cmbSplitSizeUnit.Name = "cmbSplitSizeUnit";
-            this.cmbSplitSizeUnit.Size = new System.Drawing.Size(82, 21);
+            this.cmbSplitSizeUnit.Size = new System.Drawing.Size(67, 21);
             this.cmbSplitSizeUnit.TabIndex = 11;
             // 
             // upDownCircularSize
             // 
-            this.upDownCircularSize.Location = new System.Drawing.Point(133, 116);
+            this.upDownCircularSize.Location = new System.Drawing.Point(144, 116);
             this.upDownCircularSize.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -270,6 +263,7 @@ namespace music_importer
             this.upDownCircularSize.Name = "upDownCircularSize";
             this.upDownCircularSize.Size = new System.Drawing.Size(77, 20);
             this.upDownCircularSize.TabIndex = 10;
+            this.upDownCircularSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.upDownCircularSize.Value = new decimal(new int[] {
             1,
             0,
@@ -280,21 +274,19 @@ namespace music_importer
             // 
             this.cmbSplitTimeUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSplitTimeUnit.FormattingEnabled = true;
-            this.cmbSplitTimeUnit.Items.AddRange(new object[] {
-            "Minute",
-            "Hour",
-            "Day",
-            "Week",
-            "Month",
-            "Year"});
-            this.cmbSplitTimeUnit.Location = new System.Drawing.Point(235, 70);
+            this.cmbSplitTimeUnit.Location = new System.Drawing.Point(246, 70);
             this.cmbSplitTimeUnit.Name = "cmbSplitTimeUnit";
-            this.cmbSplitTimeUnit.Size = new System.Drawing.Size(82, 21);
+            this.cmbSplitTimeUnit.Size = new System.Drawing.Size(67, 21);
             this.cmbSplitTimeUnit.TabIndex = 9;
             // 
             // upDownSplitTime
             // 
-            this.upDownSplitTime.Location = new System.Drawing.Point(133, 70);
+            this.upDownSplitTime.Location = new System.Drawing.Point(144, 70);
+            this.upDownSplitTime.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.upDownSplitTime.Minimum = new decimal(new int[] {
             1,
             0,
@@ -303,6 +295,7 @@ namespace music_importer
             this.upDownSplitTime.Name = "upDownSplitTime";
             this.upDownSplitTime.Size = new System.Drawing.Size(77, 20);
             this.upDownSplitTime.TabIndex = 8;
+            this.upDownSplitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.upDownSplitTime.Value = new decimal(new int[] {
             1,
             0,
@@ -322,12 +315,7 @@ namespace music_importer
             // 
             // upDownSplitSize
             // 
-            this.upDownSplitSize.Increment = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.upDownSplitSize.Location = new System.Drawing.Point(133, 93);
+            this.upDownSplitSize.Location = new System.Drawing.Point(144, 93);
             this.upDownSplitSize.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -341,6 +329,7 @@ namespace music_importer
             this.upDownSplitSize.Name = "upDownSplitSize";
             this.upDownSplitSize.Size = new System.Drawing.Size(77, 20);
             this.upDownSplitSize.TabIndex = 6;
+            this.upDownSplitSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.upDownSplitSize.Value = new decimal(new int[] {
             1,
             0,
@@ -383,9 +372,9 @@ namespace music_importer
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.radioButton1);
-            this.groupBox3.Controls.Add(this.radioButton2);
-            this.groupBox3.Controls.Add(this.radioButton3);
+            this.groupBox3.Controls.Add(this.rbFileInsert_Or_Nulls);
+            this.groupBox3.Controls.Add(this.rbFileAlways);
+            this.groupBox3.Controls.Add(this.rbFileInsert_Only);
             this.groupBox3.Location = new System.Drawing.Point(4, 65);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(446, 47);
@@ -393,37 +382,37 @@ namespace music_importer
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "SHA1 Generation for file";
             // 
-            // radioButton1
+            // rbFileInsert_Or_Nulls
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(170, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(92, 17);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.Text = "Insert or is null";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbFileInsert_Or_Nulls.AutoSize = true;
+            this.rbFileInsert_Or_Nulls.Location = new System.Drawing.Point(170, 19);
+            this.rbFileInsert_Or_Nulls.Name = "rbFileInsert_Or_Nulls";
+            this.rbFileInsert_Or_Nulls.Size = new System.Drawing.Size(92, 17);
+            this.rbFileInsert_Or_Nulls.TabIndex = 2;
+            this.rbFileInsert_Or_Nulls.Text = "Insert or is null";
+            this.rbFileInsert_Or_Nulls.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rbFileAlways
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(318, 19);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(58, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Always";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbFileAlways.AutoSize = true;
+            this.rbFileAlways.Location = new System.Drawing.Point(318, 19);
+            this.rbFileAlways.Name = "rbFileAlways";
+            this.rbFileAlways.Size = new System.Drawing.Size(58, 17);
+            this.rbFileAlways.TabIndex = 1;
+            this.rbFileAlways.Text = "Always";
+            this.rbFileAlways.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // rbFileInsert_Only
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(13, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(80, 17);
-            this.radioButton3.TabIndex = 0;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Inserts Only";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.rbFileInsert_Only.AutoSize = true;
+            this.rbFileInsert_Only.Checked = true;
+            this.rbFileInsert_Only.Location = new System.Drawing.Point(13, 19);
+            this.rbFileInsert_Only.Name = "rbFileInsert_Only";
+            this.rbFileInsert_Only.Size = new System.Drawing.Size(80, 17);
+            this.rbFileInsert_Only.TabIndex = 0;
+            this.rbFileInsert_Only.TabStop = true;
+            this.rbFileInsert_Only.Text = "Inserts Only";
+            this.rbFileInsert_Only.UseVisualStyleBackColor = true;
             // 
             // SettingsFrm
             // 
@@ -462,11 +451,11 @@ namespace music_importer
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rbAlways;
-        private System.Windows.Forms.RadioButton rbInsert_Only;
+        private System.Windows.Forms.RadioButton rbMediaAlways;
+        private System.Windows.Forms.RadioButton rbMediaInsert_Only;
         private System.Windows.Forms.GroupBox grpLogging;
         private System.Windows.Forms.GroupBox grp2;
-        private System.Windows.Forms.RadioButton rbInsert_Or_Nulls;
+        private System.Windows.Forms.RadioButton rbMediaInsert_Or_Nulls;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private LogOptionsCtrl reportOptionsCtrl;
@@ -487,8 +476,8 @@ namespace music_importer
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton rbNever;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton rbFileInsert_Or_Nulls;
+        private System.Windows.Forms.RadioButton rbFileAlways;
+        private System.Windows.Forms.RadioButton rbFileInsert_Only;
     }
 }

@@ -48,16 +48,44 @@ namespace music_importer
             switch (sha1_policy)
             {
                 case Importer.SHA1_Policy.Always:
-                    rbAlways.Checked = true;
+                    rbMediaAlways.Checked = true;
                     break;
                 case Importer.SHA1_Policy.Insert_Only:
-                    rbInsert_Only.Checked = true;
+                    rbMediaInsert_Only.Checked = true;
                     break;
                 case Importer.SHA1_Policy.Insert_Or_Nulls:
-                    rbInsert_Or_Nulls.Checked = true;
+                    rbMediaInsert_Or_Nulls.Checked = true;
                     break;
                 default:
-                    rbAlways.Checked = true;
+                    rbMediaAlways.Checked = true;
+                    break;
+            }
+
+            // set sha1 policy
+            Importer.SHA1_Policy sha1_file_policy = Importer.SHA1_Policy.Always;
+            try
+            {
+                sha1_file_policy = (Importer.SHA1_Policy)Enum.Parse(
+                    typeof(Importer.SHA1_Policy), Properties.Settings.Default.sha1_file_policy);
+            }
+            catch (System.ArgumentException)
+            {
+                sha1_file_policy = Importer.SHA1_Policy.Always;
+            }
+
+            switch (sha1_file_policy)
+            {
+                case Importer.SHA1_Policy.Always:
+                    rbFileAlways.Checked = true;
+                    break;
+                case Importer.SHA1_Policy.Insert_Only:
+                    rbFileInsert_Only.Checked = true;
+                    break;
+                case Importer.SHA1_Policy.Insert_Or_Nulls:
+                    rbFileInsert_Or_Nulls.Checked = true;
+                    break;
+                default:
+                    rbFileAlways.Checked = true;
                     break;
             }
             
@@ -95,26 +123,60 @@ namespace music_importer
                     break;
             }
 
-            cmbSplitTimeUnit.SelectedIndex = cmbSplitTimeUnit.FindStringExact("Hour");
-            cmbSplitSizeUnit.SelectedIndex = cmbSplitSizeUnit.FindStringExact("MB");
-            cmbCircularSizeUnit.SelectedIndex = cmbCircularSizeUnit.FindStringExact("MB");
+            Logger.TimeUnit[] time_units = (Logger.TimeUnit[])Enum.GetValues(typeof(Logger.TimeUnit));
+            foreach (Utility.Logger.TimeUnit u in time_units)
+            {
+                cmbSplitTimeUnit.Items.Add(u);
+            }
+
+            Logger.SizeUnit[] size_units = (Logger.SizeUnit[])Enum.GetValues(typeof(Logger.SizeUnit));
+            foreach (Utility.Logger.SizeUnit u in size_units)
+            {
+                cmbSplitSizeUnit.Items.Add(u);
+                cmbCircularSizeUnit.Items.Add(u);
+            }
+            
+            string size_unit_str = Properties.Settings.Default.log_size_unit;
+            Logger.SizeUnit size_unit = (Logger.SizeUnit)Enum.Parse(typeof(Logger.SizeUnit), size_unit_str);
+            //BKP one setting for both ?
+            cmbSplitSizeUnit.SelectedItem = size_unit;
+            cmbCircularSizeUnit.SelectedItem = size_unit;
+
+            string time_unit_str = Properties.Settings.Default.log_time_unit;
+            Logger.TimeUnit time_unit = (Logger.TimeUnit)Enum.Parse(typeof(Logger.TimeUnit), time_unit_str);
+            cmbSplitTimeUnit.SelectedItem = time_unit;
+            
             logOptionsCtrl.TextBox.Text = Properties.Settings.Default.log_path;
             reportOptionsCtrl.TextBox.Text = Properties.Settings.Default.report_path;
         }
+ 
         private void btnOK_Click(object sender, EventArgs e)
         {
             // sha1 policy settings
-            if (rbAlways.Checked)
+            if (rbMediaAlways.Checked)
             {
                 Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Always.ToString();
             }
-            else if (rbInsert_Only.Checked)
+            else if (rbMediaInsert_Only.Checked)
             {
                 Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Only.ToString();
             }
-            else if (rbInsert_Or_Nulls.Checked)
+            else if (rbMediaInsert_Or_Nulls.Checked)
             {
                 Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Or_Nulls.ToString();
+            }
+
+            if (rbFileAlways.Checked)
+            {
+                Properties.Settings.Default.sha1_file_policy = Importer.SHA1_Policy.Always.ToString();
+            }
+            else if (rbFileInsert_Only.Checked)
+            {
+                Properties.Settings.Default.sha1_file_policy = Importer.SHA1_Policy.Insert_Only.ToString();
+            }
+            else if (rbFileInsert_Or_Nulls.Checked)
+            {
+                Properties.Settings.Default.sha1_file_policy = Importer.SHA1_Policy.Insert_Or_Nulls.ToString();
             }
                  
             // logger settings
@@ -129,6 +191,8 @@ namespace music_importer
             else if (rbSplitSize.Checked)
             {
                 Properties.Settings.Default.log_type = Logger.LogType.SplitSize.ToString();
+                Properties.Settings.Default.log_size = (int)upDownSplitSize.Value;
+                Properties.Settings.Default.log_size_unit = cmbSplitSizeUnit.SelectedItem.ToString();
             }
             else if (rbSplitTime.Checked)
             {
@@ -186,6 +250,11 @@ namespace music_importer
             cmbCircularSizeUnit.Enabled = !rbNever.Checked;
             cmbSplitSizeUnit.Enabled = !rbNever.Checked;
             cmbSplitTimeUnit.Enabled = !rbNever.Checked;
+        }
+
+        private void rbInsert_Or_Nulls_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
