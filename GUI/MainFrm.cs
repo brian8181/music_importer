@@ -109,6 +109,7 @@ namespace music_importer
             //this.cbArt.Checked = Settings.Default.RecanArt;
             this.cbTags.Checked = Settings.Default.ScanTags;
             this.cbSHA1.Checked = Settings.Default.compute_sha1;
+            this.cbFileSHA1.Checked = Settings.Default.compute_file_sha1;
             this.cbOptimize.Checked = Settings.Default.Optimize;
             this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
             this.txtMySql.Enabled = cbMysql.Checked;
@@ -205,6 +206,7 @@ namespace music_importer
             //Settings.Default.RecanArt = this.cbArt.Checked;
             Settings.Default.ScanTags = this.cbTags.Checked;
             Settings.Default.compute_sha1 = this.cbSHA1.Checked;
+            Settings.Default.compute_file_sha1 = this.cbFileSHA1.Checked;
             Settings.Default.Optimize = this.cbOptimize.Checked;
             Settings.Default.create_db = this.cbCreateDB.Checked;
             Settings.Default.Dirs.Clear();

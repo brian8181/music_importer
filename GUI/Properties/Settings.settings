@@ -66,11 +66,5 @@
     <Setting Name="log_size" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="sha1_policy" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Always</Value>
-    </Setting>
-    <Setting Name="sha1_file_policy" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Always</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

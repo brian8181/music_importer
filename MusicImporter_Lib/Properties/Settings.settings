@@ -81,5 +81,8 @@
     <Setting Name="compute_file_sha1" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="sha1_policy" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Always</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

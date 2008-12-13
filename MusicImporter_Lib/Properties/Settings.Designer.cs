@@ -337,5 +337,17 @@ namespace MusicImporter_Lib.Properties {
                 this["compute_file_sha1"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Always")]
+        public string sha1_policy {
+            get {
+                return ((string)(this["sha1_policy"]));
+            }
+            set {
+                this["sha1_policy"] = value;
+            }
+        }
     }
 }

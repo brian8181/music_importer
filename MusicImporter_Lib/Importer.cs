@@ -42,6 +42,7 @@ namespace MusicImporter_Lib
     {
         public enum SHA1_Policy
         {
+            Never,
             Always,
             Insert_Only,
             Insert_Or_Nulls
@@ -89,8 +90,8 @@ namespace MusicImporter_Lib
         #endregion
 
         #region Construction
-        private SQLiteDatabase mm_connection = new SQLiteDatabase();
-        private MySqlDatabase mysql_connection = new MySqlDatabase();
+        private IDatabase mm_connection = new SQLiteDatabase();
+        private IDatabase mysql_connection = new MySqlDatabase();
         private string[] files = null;
         private ImporterOptions options = null;
         private volatile bool running = false;
@@ -106,7 +107,8 @@ namespace MusicImporter_Lib
         private State current_state = State.Idle;
         private State last_state = State.Idle; 
         private ArtImporter art_importer = null;
-
+        private SHA1_Policy sha1_policy = SHA1_Policy.Always;
+      
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -159,6 +161,7 @@ namespace MusicImporter_Lib
             }
             mm_conn_str = settings.mm_conn_str;
             art_path = string.Format("{0}\\.album_art", Settings.Default.art_location.TrimEnd('\\'));
+            sha1_policy = (SHA1_Policy)Enum.Parse(typeof(SHA1_Policy), Properties.Settings.Default.sha1_policy);
         }
         #endregion
 
@@ -451,7 +454,7 @@ namespace MusicImporter_Lib
         public void Close()
         {
             mysql_connection.Close();
-            if(mm_connection.connection.State == ConnectionState.Open)
+            if(mm_connection.Connection.State == ConnectionState.Open)
                 mm_connection.Close();
         }
         #endregion
@@ -587,23 +590,24 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue( "?song_id", song_id );
             byte[] sha1 = null;
             byte[] file_sha1 = null;
-            if (Settings.Default.compute_sha1)
-            {
-                sha1 = TagLibExt.MediaSHA1(tag_file);
-                string hex = Utility.Functions.Bytes2HexString(sha1);
-                Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
-            }
-            if (Settings.Default.compute_file_sha1)
-            {
-                file_sha1 = TagLibExt.FileSHA1(tag_file);
-                string hex = Utility.Functions.Bytes2HexString(sha1);
-                Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
-            }
+          
             cmd.Parameters.AddWithValue("?sha1", sha1);
             cmd.Parameters.AddWithValue("?file_sha1", file_sha1);
             string sql = string.Empty;
             if(song_id == null)
             {
+                if (Settings.Default.compute_sha1)
+                {
+                    sha1 = TagLibExt.MediaSHA1(tag_file);
+                    string hex = Utility.Functions.Bytes2HexString(sha1);
+                    Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
+                }
+                if (Settings.Default.compute_file_sha1)
+                {
+                    file_sha1 = TagLibExt.FileSHA1(tag_file);
+                    string hex = Utility.Functions.Bytes2HexString(sha1);
+                    Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
+                }
                 sql = "INSERT INTO song (artist_id, album_id, track, title, file, genre, bitrate, length, year, comments, " +
                       "encoder, file_size, file_type, art_id, lyrics, composer, conductor, copyright, " +
                       "disc, disc_count, performer, tag_types, track_count, beats_per_minute, sha1, file_sha1) VALUES(" +
@@ -618,11 +622,24 @@ namespace MusicImporter_Lib
             }
             else
             {
+                if (Settings.Default.compute_sha1)
+                {
+                    sha1 = TagLibExt.MediaSHA1(tag_file);
+                    string hex = Utility.Functions.Bytes2HexString(sha1);
+                    Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
+                }
+                if (Settings.Default.compute_file_sha1)
+                {
+                    file_sha1 = TagLibExt.FileSHA1(tag_file);
+                    string hex = Utility.Functions.Bytes2HexString(sha1);
+                    Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
+                }
                 sql = "UPDATE song SET artist_id=?artist_id, album_id=?album_id, track=?track, title=?title, file=?file, genre=?genre, " +
                       "bitrate=?bitrate, length=?length, year=?year, comments=?comments, encoder=?encoder, file_size=?file_size, file_type=?file_type, " +
                       "art_id=?art_id, lyrics=?lyrics, composer=?composer, conductor=?conductor, copyright=?copyright, disc=?disc, disc_count=?disc_count, " +
                       "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute, sha1=?sha1, file_sha1=?file_sha1 " +
                       "WHERE id = ?song_id";
+                bool sha1_isnull = mysql_connection.Exists("SELECT id FROM song WHERE (sha1 is NULL OR file_sha1 IS NULL) AND song.id=" + song_id); 
                 OnMessage( "Updating song: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
                 mysql_connection.ExecuteNonQuery(cmd);

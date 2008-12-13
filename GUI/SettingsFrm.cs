@@ -13,7 +13,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +37,7 @@ namespace music_importer
             try
             {
                 sha1_policy = (Importer.SHA1_Policy)Enum.Parse(
-                    typeof(Importer.SHA1_Policy), Properties.Settings.Default.sha1_policy);
+                    typeof(Importer.SHA1_Policy), Settings.Default.sha1_policy);
             }
             catch(System.ArgumentException)
             {
@@ -60,34 +59,7 @@ namespace music_importer
                     rbMediaAlways.Checked = true;
                     break;
             }
-
-            // set sha1 policy
-            Importer.SHA1_Policy sha1_file_policy = Importer.SHA1_Policy.Always;
-            try
-            {
-                sha1_file_policy = (Importer.SHA1_Policy)Enum.Parse(
-                    typeof(Importer.SHA1_Policy), Properties.Settings.Default.sha1_file_policy);
-            }
-            catch (System.ArgumentException)
-            {
-                sha1_file_policy = Importer.SHA1_Policy.Always;
-            }
-
-            switch (sha1_file_policy)
-            {
-                case Importer.SHA1_Policy.Always:
-                    rbFileAlways.Checked = true;
-                    break;
-                case Importer.SHA1_Policy.Insert_Only:
-                    rbFileInsert_Only.Checked = true;
-                    break;
-                case Importer.SHA1_Policy.Insert_Or_Nulls:
-                    rbFileInsert_Or_Nulls.Checked = true;
-                    break;
-                default:
-                    rbFileAlways.Checked = true;
-                    break;
-            }
+               
             
             // set log type radio
             Logger.LogType log_type = Logger.LogType.Single;
@@ -149,36 +121,25 @@ namespace music_importer
             logOptionsCtrl.TextBox.Text = Properties.Settings.Default.log_path;
             reportOptionsCtrl.TextBox.Text = Properties.Settings.Default.report_path;
         }
- 
         private void btnOK_Click(object sender, EventArgs e)
         {
             // sha1 policy settings
-            if (rbMediaAlways.Checked)
+            if (rbSHA1_Never.Checked)
             {
-                Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Always.ToString();
+                Settings.Default.sha1_policy = Importer.SHA1_Policy.Never.ToString();
+            }
+            else if (rbMediaAlways.Checked)
+            {
+                Settings.Default.sha1_policy = Importer.SHA1_Policy.Always.ToString();
             }
             else if (rbMediaInsert_Only.Checked)
             {
-                Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Only.ToString();
+                Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Only.ToString();
             }
             else if (rbMediaInsert_Or_Nulls.Checked)
             {
-                Properties.Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Or_Nulls.ToString();
+                Settings.Default.sha1_policy = Importer.SHA1_Policy.Insert_Or_Nulls.ToString();
             }
-
-            if (rbFileAlways.Checked)
-            {
-                Properties.Settings.Default.sha1_file_policy = Importer.SHA1_Policy.Always.ToString();
-            }
-            else if (rbFileInsert_Only.Checked)
-            {
-                Properties.Settings.Default.sha1_file_policy = Importer.SHA1_Policy.Insert_Only.ToString();
-            }
-            else if (rbFileInsert_Or_Nulls.Checked)
-            {
-                Properties.Settings.Default.sha1_file_policy = Importer.SHA1_Policy.Insert_Or_Nulls.ToString();
-            }
-                 
             // logger settings
             if (rbNever.Checked)
             {
@@ -250,11 +211,6 @@ namespace music_importer
             cmbCircularSizeUnit.Enabled = !rbNever.Checked;
             cmbSplitSizeUnit.Enabled = !rbNever.Checked;
             cmbSplitTimeUnit.Enabled = !rbNever.Checked;
-        }
-
-        private void rbInsert_Or_Nulls_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
