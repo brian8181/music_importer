@@ -219,12 +219,12 @@ namespace MusicImporter_Lib.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Port=3306;User Id=root;Password=password;Logging=True;Persi" +
             "st Security Info=False")]
-        public string mysql_conn_str {
+        public string conn_str {
             get {
-                return ((string)(this["mysql_conn_str"]));
+                return ((string)(this["conn_str"]));
             }
             set {
-                this["mysql_conn_str"] = value;
+                this["conn_str"] = value;
             }
         }
         
@@ -347,6 +347,18 @@ namespace MusicImporter_Lib.Properties {
             }
             set {
                 this["sha1_policy"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SQLServer")]
+        public string DB_Type {
+            get {
+                return ((string)(this["DB_Type"]));
+            }
+            set {
+                this["DB_Type"] = value;
             }
         }
     }

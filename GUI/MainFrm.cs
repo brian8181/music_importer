@@ -101,7 +101,7 @@ namespace music_importer
             this.txtUser.Text = Settings.Default.User_UTF8;
             this.txtPassword.Text = Settings.Default.Pass_UTF8;
             this.txtSchema.Text = Settings.Default.schema;
-            this.txtMySql.Text = Settings.Default.mysql_conn_str;
+            this.txtMySql.Text = Settings.Default.conn_str;
             this.txtSQLite.Text = Settings.Default.mm_conn_str;
             this.cbClean.Checked = Settings.Default.Clean;
             this.cbLog.Checked = Settings.Default.Log; //TODO this is a GUI setting like below
@@ -193,7 +193,7 @@ namespace music_importer
             Settings.Default.use_conn_str = cbMysql.Checked;
             if(cbMysql.Checked)
             {
-                Settings.Default.mysql_conn_str = this.txtMySql.Text;
+                Settings.Default.conn_str = this.txtMySql.Text;
             }
             if(cbPlaylist.Checked)
             {
