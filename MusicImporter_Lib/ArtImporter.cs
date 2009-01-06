@@ -154,7 +154,7 @@ namespace MusicImporter_Lib
         {
             Trace.WriteLine(string.Format("Creating link song_id={0} -> art_id={1}: ", song_id, art_id)
                , Logger.Level.Information.ToString());
-            string sql = "SELECT song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id LIMIT 1";
+            string sql = "SELECT_last_update song_id FROM song_art WHERE song_id=?song_id AND art_id=?art_id LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?song_id", song_id);
             cmd.Parameters.AddWithValue("?art_id", art_id);
@@ -188,7 +188,7 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue("?description", description);
             cmd.Parameters.AddWithValue("?mime_type", mime_type);
             db.ExecuteNonQuery(cmd);
-            string key = db.ExecuteScalar("SELECT LAST_INSERT_ID()").ToString();
+            string key = db.ExecuteScalar("SELECT_last_update LAST_INSERT_ID()").ToString();
 
             return key;
         }
@@ -251,7 +251,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         private bool isDuplicateInsert(byte[] hash, out uint id)
         {
-            string sql = "SELECT id FROM art WHERE hash=?hash LIMIT 1";
+            string sql = "SELECT_last_update id FROM art WHERE hash=?hash LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?hash", hash);
             object obj = null;
@@ -280,7 +280,7 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         private bool isOrphanedInsert(long id, out string file)
         {
-            string sql = "SELECT file FROM art WHERE id=?id LIMIT 1";
+            string sql = "SELECT_last_update file FROM art WHERE id=?id LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?id", id);
             using (DbDataReader reader = db.ExecuteReader(cmd))
@@ -312,7 +312,7 @@ namespace MusicImporter_Lib
         /// <param name="path">art path</param>
         public uint DeleteOrphanedInserts()
         {
-            DataSet ds = db.ExecuteQuery("SELECT file FROM art LIMIT 1");
+            DataSet ds = db.ExecuteQuery("SELECT_last_update file FROM art LIMIT 1");
 
             if (ds.Tables.Count != 1)
                 return 0;
@@ -329,7 +329,7 @@ namespace MusicImporter_Lib
                 if (!File.Exists(full_path))
                 {
                     //// get id for file
-                    //cmd = new MySqlCommand("SELECT id FROM art WHERE file=?file LIMIT 1");
+                    //cmd = new MySqlCommand("SELECT_last_update id FROM art WHERE file=?file LIMIT 1");
                     //cmd.Parameters.AddWithValue("?file", file);
                     //object obj = db.ExecuteScalar(cmd);
                     //// delete all links from song_art table
@@ -372,7 +372,7 @@ namespace MusicImporter_Lib
                 }
 
                 // file exist but hash doesn't match
-                string sql = "SELECT id FROM art WHERE file=?file AND NOT hash=?hash LIMIT 1";
+                string sql = "SELECT_last_update id FROM art WHERE file=?file AND NOT hash=?hash LIMIT 1";
                 MySqlCommand cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
                 cmd.Parameters.AddWithValue("?file", file);
@@ -383,7 +383,7 @@ namespace MusicImporter_Lib
                 }
 
                 // file doesn't exist
-                sql = "SELECT id FROM art WHERE file=?file LIMIT 1";
+                sql = "SELECT_last_update id FROM art WHERE file=?file LIMIT 1";
                 cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
                 cmd.Parameters.AddWithValue("?file", file);
@@ -441,7 +441,7 @@ namespace MusicImporter_Lib
                 mime_type = ext;
                 description = "cover art";
                 hash = ComputeHash(data);
-                string sql = "SELECT id FROM art WHERE hash=?hash LIMIT 1";
+                string sql = "SELECT_last_update id FROM art WHERE hash=?hash LIMIT 1";
                 MySqlCommand cmd = new MySqlCommand(sql);
                 cmd.Parameters.AddWithValue("?hash", hash);
                 object obj = null;

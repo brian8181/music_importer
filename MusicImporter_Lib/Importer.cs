@@ -673,7 +673,7 @@ namespace MusicImporter_Lib
                       "art_id=?art_id, lyrics=?lyrics, composer=?composer, conductor=?conductor, copyright=?copyright, disc=?disc, disc_count=?disc_count, " +
                       "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute, sha1=?sha1, file_sha1=?file_sha1 " +
                       "WHERE id = ?song_id";
-                bool sha1_isnull = connection.Exists("SELECT id FROM song WHERE (sha1 is NULL OR file_sha1 IS NULL) AND song.id=" + song_id); 
+                bool sha1_isnull = connection.Exists("SELECT_last_update id FROM song WHERE (sha1 is NULL OR file_sha1 IS NULL) AND song.id=" + song_id); 
                 OnMessage( "Updating song: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
                 connection.ExecuteNonQuery(cmd);
@@ -687,7 +687,7 @@ namespace MusicImporter_Lib
         private void ImportPlaylist()
         {
             // get all playlist from mediamonkey
-            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)" );
+            DataSet ds = mm_connection.ExecuteQuery( "SELECT_last_update * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)" );
             // just truncate tables and recreate
             connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
             connection.ExecuteNonQuery( "TRUNCATE playlists" );
@@ -703,10 +703,10 @@ namespace MusicImporter_Lib
                 string msg = "Creating playlist: " + name + " ..."; 
                 OnMessage( msg );
                 //  get the playlist id
-                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
+                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT_last_update * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
                 foreach(DataRow pl_row in ds2.Tables[0].Rows)
                 {
-                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString() );
+                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT_last_update * FROM Songs WHERE ID=" + pl_row[2].ToString() );
                     if(ds3.Tables[0].Rows.Count > 0)
                     {
                         string path = (string)ds3.Tables[0].Rows[0][8];
@@ -731,7 +731,7 @@ namespace MusicImporter_Lib
         private int Clean()
         {
             int deleted = 0;
-            DataSet ds = connection.ExecuteQuery( "SELECT file FROM song" );
+            DataSet ds = connection.ExecuteQuery( "SELECT_last_update file FROM song" );
             if(ds.Tables.Count != 1)
                 return 0;
             DataTable dt = ds.Tables[0];
@@ -791,7 +791,7 @@ namespace MusicImporter_Lib
         /// <returns>primary key</returns>
         private uint? GetKey( string table, string column, string value )
         {
-            MySqlCommand command = new MySqlCommand( "SELECT id FROM " + table + " WHERE " + column + "=?value LIMIT 1" );
+            MySqlCommand command = new MySqlCommand( "SELECT_last_update id FROM " + table + " WHERE " + column + "=?value LIMIT 1" );
             command.Parameters.AddWithValue( "?value", value );
             object obj = connection.ExecuteScalar( command );
             uint? result = (uint?)obj;

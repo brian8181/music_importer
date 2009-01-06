@@ -64,7 +64,7 @@ namespace MusicImporter_Lib
         {
             //db check for installed version
             string version = (string)db.ExecuteScalar(
-                "SELECT `update` FROM `update` WHERE `version` = (SELECT MAX(version) FROM `update`)");
+                "SELECT_last_update `update` FROM `update` WHERE `version` = (SELECT_last_update MAX(version) FROM `update`)");
             current_version = new DatabaseVersion();
             current_version.ParseVersion(version);
             string proc_path = Path.GetDirectoryName(Globals.ProcessPath());
@@ -96,7 +96,7 @@ namespace MusicImporter_Lib
 
             // todo make function
             string sql = String.Format
-                ("GRANT SELECT,INSERT,UPDATE ON {0}.* TO 'web'@'localhost' IDENTIFIED BY 'sas*.0125'", schema_name);
+                ("GRANT SELECT_last_update,INSERT,UPDATE ON {0}.* TO 'web'@'localhost' IDENTIFIED BY 'sas*.0125'", schema_name);
             db.ExecuteNonQuery(sql);
         }
         /// <summary>
@@ -205,7 +205,7 @@ namespace MusicImporter_Lib
         private int DeleteTemplate(string file, string replacement_prama)
         {
             // get id for file
-            string sql = string.Format("SELECT id FROM {0} WHERE file=?file LIMIT 1", replacement_prama);
+            string sql = string.Format("SELECT_last_update id FROM {0} WHERE file=?file LIMIT 1", replacement_prama);
             MySqlCommand cmd = new MySqlCommand(sql);
             cmd.Parameters.AddWithValue("?file", file);
             object obj = db.ExecuteScalar(cmd);
@@ -234,6 +234,12 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue("?" + replacement_prama + "_id", id);
             return (db.ExecuteNonQuery(cmd));
         }
+
+        // todo
+        //private void InsertSong()
+        //{
+
+        //}
         #endregion
     }
 }

@@ -92,7 +92,8 @@
     <Compile Include="DDLHelper.cs" />
     <Compile Include="DatabaseVersion.cs" />
     <Compile Include="Importer.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="MSSql_Strings.cs" />
+    <Compile Include="MySql_Strings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -106,6 +107,7 @@
     </Compile>
     <Compile Include="Reporter.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="ISql.cs" />
     <Compile Include="TagLibExt.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +149,10 @@
       <Project>{4DFC8774-E67D-4EFF-9249-301C0D5EB158}</Project>
       <Name>utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Resources\SQLStrings.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
