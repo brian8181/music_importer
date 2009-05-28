@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MusicImporter_Lib.MSSql_Strings" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAChAAAAAA0AAAAAgAAgAAAIAAA=</HashCode>
+      <FileName>MSSql_Strings.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MusicImporter_Lib.MySql_Strings" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAChAAAAAA0AAAAAgAAgAAAIAAA=</HashCode>
+      <FileName>MySql_Strings.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MusicImporter_Lib.DataView">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAABAIAIAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicImporter_Lib.Importer">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="MusicImporter_Lib.Importer.DB_Type" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Importer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="MusicImporter_Lib.Importer.SHA1_Policy" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Importer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="MusicImporter_Lib.Importer.State" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Importer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AkQABAhERQzAASEEABABIIQJRAgoABSACASAoAiAYCA=</HashCode>
+      <FileName>Importer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicImporter_Lib.ArtImporter">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAkAAAAARAAAAAAAGACAgAAgAQACAAAABCAAQCAA=</HashCode>
+      <FileName>ArtImporter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MusicImporter_Lib.ISql" Collapsed="true">
+    <Position X="7.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAACgAAAAAA0AAAAAgAAgAAAIAAA=</HashCode>
+      <FileName>ISql.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Utility.Data.IDatabase" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

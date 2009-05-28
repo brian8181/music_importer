@@ -72,7 +72,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CSharpOptParse.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=5.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -199,6 +199,7 @@
     <None Include="sql\triggers\inserted_artist_trigger.sql" />
     <None Include="sql\updates\update.1.0.1.sql" />
     <None Include="sql\updates\update.1.0.2.sql" />
+    <None Include="sql\updates\update_testing.1.0.5.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
