@@ -50,7 +50,7 @@
     <Setting Name="ScanPlaylist" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="conn_str" Type="System.String" Scope="User">
+    <Setting Name="mysql_conn_str" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source=localhost;Port=3306;User Id=root;Password=password;Logging=True;Persist Security Info=False</Value>
     </Setting>
     <Setting Name="mm_conn_str" Type="System.String" Scope="User">
@@ -77,15 +77,6 @@
     </Setting>
     <Setting Name="compute_sha1" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="compute_file_sha1" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="sha1_policy" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Always</Value>
-    </Setting>
-    <Setting Name="DB_Type" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SQLServer</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -88,7 +88,7 @@ namespace MusicImporter_Lib
         public static explicit operator MusicImporter_Lib.Properties.Settings(ImporterOptions options)
         {
             MusicImporter_Lib.Properties.Settings settings = new MusicImporter_Lib.Properties.Settings();
-            settings.conn_str = options.ConnStr;
+            settings.mysql_conn_str = options.ConnStr;
             settings.ScanTags = options.Update;
             settings.ScanPlaylist = options.Playlist;
             settings.RecanArt = options.Art;

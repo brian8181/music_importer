@@ -101,7 +101,7 @@ namespace music_importer
             this.txtUser.Text = Settings.Default.User_UTF8;
             this.txtPassword.Text = Settings.Default.Pass_UTF8;
             this.txtSchema.Text = Settings.Default.schema;
-            this.txtMySql.Text = Settings.Default.conn_str;
+            this.txtMySql.Text = Settings.Default.mysql_conn_str;
             this.txtSQLite.Text = Settings.Default.mm_conn_str;
             this.cbClean.Checked = Settings.Default.Clean;
             this.cbLog.Checked = Settings.Default.Log; //TODO this is a GUI setting like below
@@ -109,7 +109,6 @@ namespace music_importer
             //this.cbArt.Checked = Settings.Default.RecanArt;
             this.cbTags.Checked = Settings.Default.ScanTags;
             this.cbSHA1.Checked = Settings.Default.compute_sha1;
-            this.cbFileSHA1.Checked = Settings.Default.compute_file_sha1;
             this.cbOptimize.Checked = Settings.Default.Optimize;
             this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
             this.txtMySql.Enabled = cbMysql.Checked;
@@ -151,6 +150,7 @@ namespace music_importer
             strs = new string[Properties.Settings.Default.file_mask_history.Count];
             Properties.Settings.Default.file_mask_history.CopyTo(strs, 0);
             this.txtMask.AutoCompleteCustomSource.AddRange(strs);
+
             if (Properties.Settings.Default.mysql_history != null)
             {
                 strs = new string[Properties.Settings.Default.mysql_history.Count];
@@ -161,6 +161,7 @@ namespace music_importer
             {
                 Properties.Settings.Default.mysql_history = new StringCollection();
             }
+
             if (Properties.Settings.Default.sqlite_history != null)
             {
                 strs = new string[Properties.Settings.Default.sqlite_history.Count];
@@ -170,14 +171,6 @@ namespace music_importer
             else
             {
                 Properties.Settings.Default.sqlite_history = new StringCollection();
-            }
-            if (Properties.Settings.Default.log_path == string.Empty)
-            {
-                Properties.Settings.Default.log_path = Globals.ProcessDirectory();
-            }
-            if (Properties.Settings.Default.report_path == string.Empty)
-            {
-                Properties.Settings.Default.report_path = Globals.ProcessDirectory();
             }
         }
         /// <summary>
@@ -193,7 +186,7 @@ namespace music_importer
             Settings.Default.use_conn_str = cbMysql.Checked;
             if(cbMysql.Checked)
             {
-                Settings.Default.conn_str = this.txtMySql.Text;
+                Settings.Default.mysql_conn_str = this.txtMySql.Text;
             }
             if(cbPlaylist.Checked)
             {
@@ -206,7 +199,6 @@ namespace music_importer
             //Settings.Default.RecanArt = this.cbArt.Checked;
             Settings.Default.ScanTags = this.cbTags.Checked;
             Settings.Default.compute_sha1 = this.cbSHA1.Checked;
-            Settings.Default.compute_file_sha1 = this.cbFileSHA1.Checked;
             Settings.Default.Optimize = this.cbOptimize.Checked;
             Settings.Default.create_db = this.cbCreateDB.Checked;
             Settings.Default.Dirs.Clear();
@@ -248,6 +240,7 @@ namespace music_importer
             this.txtSQLite.AutoCompleteCustomSource.CopyTo( strs, 0 );
             Properties.Settings.Default.sqlite_history.Clear();
             Properties.Settings.Default.sqlite_history.AddRange( strs );
+  
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -262,19 +255,12 @@ namespace music_importer
         {
             if (cbClearLogs.Checked)
             {
-                Logger.ClearLogs(Properties.Settings.Default.log_path);
+                string dir = Globals.ProcessDirectory();
+                Logger.ClearLogs(dir);
             }
             if (cbLog.Checked)
-            {
-                Logger.LogType log_type = (Logger.LogType)Enum.Parse(
-                    typeof(Logger.LogType), Properties.Settings.Default.log_type);
-                Logger.SizeUnit size_unit = (Logger.SizeUnit)Enum.Parse(
-                    typeof(Logger.SizeUnit), Properties.Settings.Default.log_size_unit);
-                // initialize logger
-                Logger.Init(Properties.Settings.Default.log_path, 
-                    Properties.Settings.Default.log_size, size_unit, log_type);
-            }
-            
+                Logger.Init();
+
             linkReport.Visible = false;
             ToggleOff();
             btnOK.Enabled = false;
@@ -845,7 +831,6 @@ namespace music_importer
             cbPlaylist.Enabled = state;
             cbTags.Enabled = state;
             cbSHA1.Enabled = state;
-            cbFileSHA1.Enabled = state;
         }
         #endregion
 
@@ -937,33 +922,10 @@ namespace music_importer
         private void linkReport_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             HTMLReportFrm frm = new HTMLReportFrm();
-            importer.Reporter.ClearReports(); // todo make a setting
-            string file = importer.Reporter.SaveReport(Properties.Settings.Default.report_path);
+            importer.Reporter.ClearReports();
+            string file = importer.Reporter.SaveReport();
             frm.File = file;
             frm.ShowDialog();
         }
-        /// <summary>
-        /// show more options form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnOptions_Click(object sender, EventArgs e)
-        {
-            SettingsFrm frm = new SettingsFrm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-
-            }
-        }
-
-        private void btnSQLOptions_Click(object sender, EventArgs e)
-        {
-            SQLSettingsFrm frm = new SQLSettingsFrm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-
-            }
-        }
-       
     }
 }

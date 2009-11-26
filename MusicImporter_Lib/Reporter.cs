@@ -12,7 +12,12 @@ namespace MusicImporter_Lib
     public class Reporter
     {
         private DateTime timestamp = DateTime.Now;
-        private string db_version = string.Empty;
+
+        public DateTime Timestamp
+        {
+            get { return timestamp; }
+            set { timestamp = value; }
+        }
         private uint scanned_count = 0;
         private List<string> corrupt_files = new List<string>();
         private uint insert_song_count = 0;
@@ -27,17 +32,14 @@ namespace MusicImporter_Lib
         private uint delete_art_count = 0;
         private uint delete_art_file_count = 0;
         private string db_prev_version = string.Empty;
-        
-        public DateTime Timestamp
-        {
-            get { return timestamp; }
-            set { timestamp = value; }
-        }
+
         public string DBPeviousVersion
         {
             get { return db_prev_version; }
             set { db_prev_version = value; }
         }
+        private string db_version = string.Empty;
+
         public string DBVersion
         {
             get { return db_version; }
@@ -181,17 +183,9 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         public string SaveReport()
         {
-            return SaveReport(Utility.Globals.ProcessDirectory());   
-        }
-        /// <summary>
-        /// save an html report
-        /// </summary>
-        /// <param name="dir"></param>
-        /// <returns></returns>
-        public string SaveReport(string dir)
-        {
+            string proc_dir = Utility.Globals.ProcessDirectory();
             string file = timestamp.ToString(Utility.Globals.LogDateFormat);
-            string path = string.Format(@"{0}/{1}.html", dir, file);
+            string path = string.Format(@"{0}/{1}.html", proc_dir, file);
             string html = GetHTML();
             using (StreamWriter sw = File.CreateText(path))
             {
@@ -205,28 +199,13 @@ namespace MusicImporter_Lib
         public void ClearReports()
         {
             // find or generate a log file
-            string path = Path.GetDirectoryName(Globals.ProcessPath());
-            ClearReports(path);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        public static void ClearReports(string path)
-        {
-            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(path);
+            string dir = Path.GetDirectoryName(Globals.ProcessPath());
+
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(dir);
             FileInfo[] files = di.GetFiles("??????????????????.html");
             foreach (FileInfo file in files)
             {
-                try
-                {
-                    file.Delete();
-                }
-                catch(System.IO.IOException)
-                {
-                    // possible file lock 
-                    continue; 
-                }
+                file.Delete();
             }
         }
     }

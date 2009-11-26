@@ -48,23 +48,5 @@
     <Setting Name="clear_logs" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="log_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="report_path" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="log_type" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Single</Value>
-    </Setting>
-    <Setting Name="log_size_unit" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MB</Value>
-    </Setting>
-    <Setting Name="log_time_unit" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Hour</Value>
-    </Setting>
-    <Setting Name="log_size" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

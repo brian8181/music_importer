@@ -40,18 +40,6 @@ namespace MusicImporter_Lib
     /// </summary>
     public class Importer
     {
-        public enum DB_Type
-        {
-            MySQL,
-            SQLServer
-        }
-        public enum SHA1_Policy
-        {
-            Never,
-            Always,
-            Insert_Only,
-            Insert_Or_Nulls
-        }
         public enum State
         {
             Idle,
@@ -95,9 +83,8 @@ namespace MusicImporter_Lib
         #endregion
 
         #region Construction
-        private IDatabase mm_connection = new SQLiteDatabase();
-        private IDatabase connection = null;
-        private DB_Type db_type = DB_Type.MySQL;
+        private SQLiteDatabase mm_connection = new SQLiteDatabase();
+        private MySqlDatabase mysql_connection = new MySqlDatabase();
         private string[] files = null;
         private ImporterOptions options = null;
         private volatile bool running = false;
@@ -113,8 +100,7 @@ namespace MusicImporter_Lib
         private State current_state = State.Idle;
         private State last_state = State.Idle; 
         private ArtImporter art_importer = null;
-        private SHA1_Policy sha1_policy = SHA1_Policy.Always;
-      
+
         /// <summary>
         /// default ctor intitialize from default Setting file
         /// </summary>
@@ -150,52 +136,23 @@ namespace MusicImporter_Lib
         /// </summary>
         public void Initialize( MusicImporter_Lib.Properties.Settings settings )
         {
-            db_type = (DB_Type)Enum.Parse(typeof(DB_Type), settings.DB_Type);
-            switch (db_type)
+            if(settings.use_conn_str)
             {
-                case DB_Type.MySQL:
-                    connection = new MySqlDatabase();
-                    if (settings.use_conn_str)
-                    {
-                        connect_string = settings.conn_str;
-                    }
-                    else
-                    {
-                        string cn_str = String.Format
-                             ("Persist Security Info=False;Data Source={0};Port={1};User Id={2};Password={3};Logging=false",
-                             settings.Address,
-                             settings.Port,
-                             settings.User_UTF8,
-                             settings.Pass_UTF8,
-                             settings.Log.ToString());
-                        connect_string = cn_str;
-                    }
-                    break;
-                case DB_Type.SQLServer:
-                    connection = new SqlDatabase();
-                    if (settings.use_conn_str)
-                    {
-                        connect_string = settings.conn_str;
-                    }
-                    else
-                    {
-                        string cn_str = String.Format
-                             ("Data Source={0};Database=music;User Id={1};Password={2}",
-                             settings.Address,
-                             settings.User_UTF8,
-                             settings.Pass_UTF8
-                             );
-                        connect_string = cn_str;
-                    }
-                    break;
-                default:
-                    break;
+                connect_string =  settings.mysql_conn_str;
             }
-
-            
+            else
+            {
+                string cn_str = String.Format
+                     ( "Persist Security Info=False;Data Source={0};Port={1};User Id={2};Password={3};Logging=false",
+                     settings.Address,
+                     settings.Port,
+                     settings.User_UTF8,
+                     settings.Pass_UTF8,
+                     settings.Log.ToString() );
+                connect_string = cn_str;
+            }
             mm_conn_str = settings.mm_conn_str;
             art_path = string.Format("{0}\\.album_art", Settings.Default.art_location.TrimEnd('\\'));
-            sha1_policy = (SHA1_Policy)Enum.Parse(typeof(SHA1_Policy), Properties.Settings.Default.sha1_policy);
         }
         #endregion
 
@@ -220,14 +177,14 @@ namespace MusicImporter_Lib
         {
             try
             {
-                connection.Open( connect_string );
+                mysql_connection.Open( connect_string );
                 if (Settings.Default.ScanPlaylist)
                 {
                     mm_connection.Open(mm_conn_str);
                 }
                 if (Settings.Default.insert_art)
                 {
-                    art_importer = new ArtImporter(connection, art_path);
+                    art_importer = new ArtImporter(mysql_connection, art_path);
                 }
             }
             catch(Exception e)
@@ -284,7 +241,7 @@ namespace MusicImporter_Lib
                 {
                     // remove
                     OnStateChanged(State.CreateDB);
-                    db_mgr = new DDLHelper(connection);
+                    db_mgr = new DDLHelper(mysql_connection);
 
                     // Create DATABASE
                     if (Settings.Default.create_db)
@@ -292,14 +249,14 @@ namespace MusicImporter_Lib
                         OnMessage("Executing create scripts...");
                         string schema_name = Settings.Default.schema;
                         string sql = "DROP DATABASE IF EXISTS " + schema_name;
-                        connection.ExecuteNonQuery(sql);
+                        mysql_connection.ExecuteNonQuery(sql);
                         db_mgr.CreateDatabase(schema_name);
                         db_mgr.ExecuteCreateScript();
                     }
 
                     OnMessage("Executing update scripts...");
                     // change to database
-                    connection.ChangeDatabase(Settings.Default.schema);
+                    mysql_connection.ChangeDatabase(Settings.Default.schema);
                     // get version info
                     db_mgr.InitializeVersionInfo();
                     reporter.DBPeviousVersion = db_mgr.CurrentVersion.ToString();
@@ -314,7 +271,7 @@ namespace MusicImporter_Lib
                     OnStateChanged(State.PrepareStep);
 
                     // make sure database set
-                    connection.ChangeDatabase(Settings.Default.schema);
+                    mysql_connection.ChangeDatabase(Settings.Default.schema);
 
                     // SCAN TAGS
                     if (Settings.Default.ScanTags)
@@ -336,10 +293,10 @@ namespace MusicImporter_Lib
                         OnStateChanged(State.PrepareStep);
                     }
                 }
-                catch (MySqlException e)
+                catch (MySqlException exp)
                 {
-                    OnError(e.Message);
-                    throw e;
+                    OnError(exp.Message);
+                    return;
                 }
 
                 OnDirectoryProcessing("None.");
@@ -487,7 +444,7 @@ namespace MusicImporter_Lib
         /// </summary>
         public void Close()
         {
-            connection.Close();
+            mysql_connection.Close();
             if(mm_connection.Connection.State == ConnectionState.Open)
                 mm_connection.Close();
         }
@@ -510,10 +467,9 @@ namespace MusicImporter_Lib
                 artist_id = GetKey( "artist", "artist", artist );
                 if(artist_id == null) // not found
                 {
-                    OnMessage("Inserting artist: " + artist);
                     cmd.CommandText = "INSERT INTO artist (artist) Values(?artist)";
-                    connection.ExecuteNonQuery( cmd );
-                    artist_id = connection.LastInsertID;
+                    mysql_connection.ExecuteNonQuery( cmd );
+                    artist_id = mysql_connection.LastInsertID;
                     reporter.InsertArtistCount++;
                 }
             }
@@ -536,18 +492,16 @@ namespace MusicImporter_Lib
                 album_id = GetKey( "album", "album", album );
                 if(album_id == null) // not found
                 {
-                    OnMessage("Inserting album: " + album);
                     cmd.CommandText = "INSERT INTO album (album, artist) Values(?album, ?artist)";
-                    connection.ExecuteNonQuery( cmd );
-                    album_id = connection.LastInsertID;
+                    mysql_connection.ExecuteNonQuery( cmd );
+                    album_id = mysql_connection.LastInsertID;
                     reporter.InsertAlbumCount++;
                 }
                 else
                 {
-                    //BKP? OnMessage("Updating album: " + album);
                     cmd.Parameters.AddWithValue( "?album_id", album_id );
                     cmd.CommandText = "UPDATE album SET album=?album, artist=?artist WHERE id=?album_id";
-                    connection.ExecuteNonQuery( cmd );
+                    mysql_connection.ExecuteNonQuery( cmd );
                     reporter.UpdateAlbumCount++;
                 }
             }
@@ -623,60 +577,38 @@ namespace MusicImporter_Lib
             cmd.Parameters.AddWithValue( "?beats_per_minute", tag.BeatsPerMinute );
             cmd.Parameters.AddWithValue( "?song_id", song_id );
             byte[] sha1 = null;
-            byte[] file_sha1 = null;
-          
+            if (Settings.Default.compute_sha1)
+            {
+                sha1 = TagLibExt.MediaSHA1(tag_file);
+                string hex = Utility.Functions.Bytes2HexString(sha1);
+                Trace.WriteLine("SHA1 - " + hex, Logger.Level.Information.ToString());
+            }
             cmd.Parameters.AddWithValue("?sha1", sha1);
-            cmd.Parameters.AddWithValue("?file_sha1", file_sha1);
             string sql = string.Empty;
             if(song_id == null)
             {
-                if (Settings.Default.compute_sha1)
-                {
-                    sha1 = TagLibExt.MediaSHA1(tag_file);
-                    string hex = Utility.Functions.Bytes2HexString(sha1);
-                    Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
-                }
-                if (Settings.Default.compute_file_sha1)
-                {
-                    file_sha1 = TagLibExt.FileSHA1(tag_file);
-                    string hex = Utility.Functions.Bytes2HexString(sha1);
-                    Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
-                }
                 sql = "INSERT INTO song (artist_id, album_id, track, title, file, genre, bitrate, length, year, comments, " +
                       "encoder, file_size, file_type, art_id, lyrics, composer, conductor, copyright, " +
-                      "disc, disc_count, performer, tag_types, track_count, beats_per_minute, sha1, file_sha1) VALUES(" +
+                      "disc, disc_count, performer, tag_types, track_count, beats_per_minute, sha1) VALUES(" +
                       "?artist_id, ?album_id, ?track, ?title, ?file, ?genre, ?bitrate, ?length, ?year, ?comments, " +
                       "?encoder, ?file_size, ?file_type, ?art_id, ?lyrics, ?composer, ?conductor, ?copyright, " +
-                      "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute, ?sha1, ?file_sha1)";
-                OnMessage( "Inserting song: " + Path.GetFileName( tag_file.Name ) );
+                      "?disc, ?disc_count, ?performer, ?tag_types, ?track_count, ?beats_per_minute, ?sha1)";
+                OnMessage( "INSERTED SONG: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
-                connection.ExecuteNonQuery(cmd);
-                song_id = connection.LastInsertID;
+                mysql_connection.ExecuteNonQuery(cmd);
+                song_id = mysql_connection.LastInsertID;
                 reporter.InsertSongCount++;
             }
             else
             {
-                if (Settings.Default.compute_sha1)
-                {
-                    sha1 = TagLibExt.MediaSHA1(tag_file);
-                    string hex = Utility.Functions.Bytes2HexString(sha1);
-                    Trace.WriteLine("Media SHA1: " + hex, Logger.Level.Information.ToString());
-                }
-                if (Settings.Default.compute_file_sha1)
-                {
-                    file_sha1 = TagLibExt.FileSHA1(tag_file);
-                    string hex = Utility.Functions.Bytes2HexString(sha1);
-                    Trace.WriteLine("File SHA1: " + hex, Logger.Level.Information.ToString());
-                }
                 sql = "UPDATE song SET artist_id=?artist_id, album_id=?album_id, track=?track, title=?title, file=?file, genre=?genre, " +
                       "bitrate=?bitrate, length=?length, year=?year, comments=?comments, encoder=?encoder, file_size=?file_size, file_type=?file_type, " +
                       "art_id=?art_id, lyrics=?lyrics, composer=?composer, conductor=?conductor, copyright=?copyright, disc=?disc, disc_count=?disc_count, " +
-                      "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute, sha1=?sha1, file_sha1=?file_sha1 " +
+                      "performer=?performer, tag_types=?tag_types, track_count=?track_count, beats_per_minute=?beats_per_minute, sha1=?sha1 " +
                       "WHERE id = ?song_id";
-                bool sha1_isnull = connection.Exists("SELECT_last_update id FROM song WHERE (sha1 is NULL OR file_sha1 IS NULL) AND song.id=" + song_id); 
-                OnMessage( "Updating song: " + Path.GetFileName( tag_file.Name ) );
+                OnMessage( "UPDATED SONG: " + Path.GetFileName( tag_file.Name ) );
                 cmd.CommandText = sql;
-                connection.ExecuteNonQuery(cmd);
+                mysql_connection.ExecuteNonQuery(cmd);
                 reporter.UpdateSongCount++;
             }
             return song_id;
@@ -687,10 +619,10 @@ namespace MusicImporter_Lib
         private void ImportPlaylist()
         {
             // get all playlist from mediamonkey
-            DataSet ds = mm_connection.ExecuteQuery( "SELECT_last_update * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)" );
+            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)" );
             // just truncate tables and recreate
-            connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
-            connection.ExecuteNonQuery( "TRUNCATE playlists" );
+            mysql_connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
+            mysql_connection.ExecuteNonQuery( "TRUNCATE playlists" );
             foreach(DataRow row in ds.Tables[0].Rows)
             {
                 // insert all playlist
@@ -698,15 +630,15 @@ namespace MusicImporter_Lib
                 string name = (string)row[1];
                 name = name.Replace( "'", "''" );
                 string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0, NULL, NULL )";
-                connection.ExecuteNonQuery( sql );
-                string playlist_id = connection.LastInsertID.ToString();
+                mysql_connection.ExecuteNonQuery( sql );
+                string playlist_id = mysql_connection.LastInsertID.ToString();
                 string msg = "Creating playlist: " + name + " ..."; 
                 OnMessage( msg );
                 //  get the playlist id
-                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT_last_update * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
+                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
                 foreach(DataRow pl_row in ds2.Tables[0].Rows)
                 {
-                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT_last_update * FROM Songs WHERE ID=" + pl_row[2].ToString() );
+                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString() );
                     if(ds3.Tables[0].Rows.Count > 0)
                     {
                         string path = (string)ds3.Tables[0].Rows[0][8];
@@ -717,7 +649,7 @@ namespace MusicImporter_Lib
                         if(song_id == null)
                             continue;
                         sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "', NULL, NULL )";
-                        connection.ExecuteNonQuery( sql );
+                        mysql_connection.ExecuteNonQuery( sql );
                     }
                 }
             }
@@ -731,7 +663,7 @@ namespace MusicImporter_Lib
         private int Clean()
         {
             int deleted = 0;
-            DataSet ds = connection.ExecuteQuery( "SELECT_last_update file FROM song" );
+            DataSet ds = mysql_connection.ExecuteQuery( "SELECT file FROM song" );
             if(ds.Tables.Count != 1)
                 return 0;
             DataTable dt = ds.Tables[0];
@@ -756,7 +688,7 @@ namespace MusicImporter_Lib
         private int DeleteOrphanedArtist()
         {
             string sql = "DELETE FROM artist LEFT JOIN song ON artist.id=artist_id WHERE artist_id IS NULL";
-            return connection.ExecuteNonQuery( sql );
+            return mysql_connection.ExecuteNonQuery( sql );
         }
         /// <summary>
         /// 
@@ -765,7 +697,7 @@ namespace MusicImporter_Lib
         private int DeleteOrphanedAlbums()
         {
             string sql = "DELETE FROM artist LEFT JOIN song ON artist.id=artist_id WHERE artist_id IS NULL";
-            return connection.ExecuteNonQuery( sql );
+            return mysql_connection.ExecuteNonQuery( sql );
         }
 
         /// <summary>
@@ -773,11 +705,11 @@ namespace MusicImporter_Lib
         /// </summary>
         public void Optimize()
         {
-            connection.ExecuteNonQuery( "OPTIMIZE TABLE artist" );
-            connection.ExecuteNonQuery( "OPTIMIZE TABLE album" );
-            connection.ExecuteNonQuery( "OPTIMIZE TABLE art" );
-            connection.ExecuteNonQuery( "OPTIMIZE TABLE song" );
-            connection.ExecuteNonQuery("OPTIMIZE TABLE song_art");
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE artist" );
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE album" );
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE art" );
+            mysql_connection.ExecuteNonQuery( "OPTIMIZE TABLE song" );
+            mysql_connection.ExecuteNonQuery("OPTIMIZE TABLE song_art");
         }
         #endregion
         
@@ -791,9 +723,9 @@ namespace MusicImporter_Lib
         /// <returns>primary key</returns>
         private uint? GetKey( string table, string column, string value )
         {
-            MySqlCommand command = new MySqlCommand( "SELECT_last_update id FROM " + table + " WHERE " + column + "=?value LIMIT 1" );
+            MySqlCommand command = new MySqlCommand( "SELECT id FROM " + table + " WHERE " + column + "=?value LIMIT 1" );
             command.Parameters.AddWithValue( "?value", value );
-            object obj = connection.ExecuteScalar( command );
+            object obj = mysql_connection.ExecuteScalar( command );
             uint? result = (uint?)obj;
             // see if we have a result
             return result;

@@ -219,12 +219,12 @@ namespace MusicImporter_Lib.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Port=3306;User Id=root;Password=password;Logging=True;Persi" +
             "st Security Info=False")]
-        public string conn_str {
+        public string mysql_conn_str {
             get {
-                return ((string)(this["conn_str"]));
+                return ((string)(this["mysql_conn_str"]));
             }
             set {
-                this["conn_str"] = value;
+                this["mysql_conn_str"] = value;
             }
         }
         
@@ -323,42 +323,6 @@ namespace MusicImporter_Lib.Properties {
             }
             set {
                 this["compute_sha1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool compute_file_sha1 {
-            get {
-                return ((bool)(this["compute_file_sha1"]));
-            }
-            set {
-                this["compute_file_sha1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Always")]
-        public string sha1_policy {
-            get {
-                return ((string)(this["sha1_policy"]));
-            }
-            set {
-                this["sha1_policy"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SQLServer")]
-        public string DB_Type {
-            get {
-                return ((string)(this["DB_Type"]));
-            }
-            set {
-                this["DB_Type"] = value;
             }
         }
     }

@@ -42,7 +42,7 @@ namespace TestProject
         {
             db.ExecuteNonQuery("DROP DATABASE IF EXISTS " + schema_name); // drop test db
            
-            DataSet ds = db.ExecuteQuery("SELECT_last_update * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
+            DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
             DataTable dt = ds.Tables[0];
             if (dt.Rows.Count > 0)
             {
@@ -80,7 +80,7 @@ namespace TestProject
             DDLHelper target = new DDLHelper(db);
             target.CreateDatabase(schema_name);
             db.ChangeDatabase("information_schema");
-            DataSet ds = db.ExecuteQuery("SELECT_last_update * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
+            DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='music_test'");
             DataTable dt = ds.Tables[0];
             Assert.IsTrue(dt.Rows.Count > 0);
         }
@@ -95,7 +95,7 @@ namespace TestProject
 
             DDLHelper target = new DDLHelper(db);
             db.ChangeDatabase("information_schema");
-            DataSet ds = db.ExecuteQuery("SELECT_last_update * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
+            DataSet ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
             DataTable dt = ds.Tables[0];
             if (dt.Rows.Count != 1)
             {
@@ -109,7 +109,7 @@ namespace TestProject
             // needs to be realtive 
             target.ExecuteCreateScript(file);
             db.ChangeDatabase("information_schema");
-            ds = db.ExecuteQuery("SELECT_last_update * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
+            ds = db.ExecuteQuery("SELECT * FROM information_schema.SCHEMATA WHERE SCHEMA_NAME='" + schema_name + "'");
             dt = ds.Tables[0];
 
             Assert.IsTrue(dt.Rows.Count > 0);

@@ -155,7 +155,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lbMessage);
             this.Name = "StatusCtrl";
-            this.Size = new System.Drawing.Size(668, 85);
+            this.Size = new System.Drawing.Size(668, 97);
             this.ResumeLayout(false);
 
         }
