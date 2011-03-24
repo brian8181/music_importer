@@ -1,19 +1,6 @@
 // Music Importer imports ID3 tags to a MySql database.
 // Copyright (C) 2008  Brian Preston
 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -108,6 +95,7 @@ namespace MusicImporter_Lib
             : this( Settings.Default )
         {
         }
+
         /// <summary>
         ///  intialize from command line options
         /// </summary>
@@ -123,6 +111,7 @@ namespace MusicImporter_Lib
         {    
             Initialize( settings );
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -131,6 +120,7 @@ namespace MusicImporter_Lib
             get { return reporter; }
             set { reporter = value; }
         }
+
         /// <summary>
         /// (Re)Initialize 
         /// </summary>
@@ -170,6 +160,7 @@ namespace MusicImporter_Lib
                 priority = value; 
             }
         }
+
         /// <summary>
         ///  connect to MySQL
         /// </summary>
@@ -194,6 +185,7 @@ namespace MusicImporter_Lib
                 throw e;
             }
         }
+
         /// <summary>
         ///  begins file scan
         /// </summary>
@@ -219,6 +211,7 @@ namespace MusicImporter_Lib
                 Scan();
             }
         }
+
         /// <summary>
         /// thread function may or may not be an actual thread
         /// </summary>
@@ -356,6 +349,7 @@ namespace MusicImporter_Lib
                 running = false;
             }
         }
+
         /// <summary>
         ///  stops running scan
         /// </summary>
@@ -365,6 +359,7 @@ namespace MusicImporter_Lib
             running = false;
             pause.Set();    // unpase
         }
+
         /// <summary>
         /// continue after pause
         /// </summary>
@@ -373,6 +368,7 @@ namespace MusicImporter_Lib
             OnStateChanged(last_state);
             pause.Set();
         }
+
         /// <summary>
         /// pauses a running scan
         /// </summary>
@@ -381,6 +377,7 @@ namespace MusicImporter_Lib
             OnStateChanged(State.Paused);
             pause.Reset();
         }
+
         /// <summary>
         /// thread function may or may not be an actual thread
         /// </summary>
@@ -439,6 +436,7 @@ namespace MusicImporter_Lib
                 Thread( dirs[i] );
             }
         }
+
         /// <summary>
         /// close database
         /// </summary>
@@ -475,6 +473,7 @@ namespace MusicImporter_Lib
             }
             return artist_id;
         }
+
         /// <summary>
         ///insert album
         /// </summary>
@@ -507,6 +506,7 @@ namespace MusicImporter_Lib
             }
             return album_id;
         }
+
         /// <summary>
         ///  insert / update a song in database
         /// </summary>
@@ -613,43 +613,44 @@ namespace MusicImporter_Lib
             }
             return song_id;
         }
+
         /// <summary>
         /// import playlist
         /// </summary>
         private void ImportPlaylist()
         {
             // get all playlist from mediamonkey
-            DataSet ds = mm_connection.ExecuteQuery( "SELECT * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)" );
+            DataSet ds = mm_connection.ExecuteQuery("SELECT * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)");
             // just truncate tables and recreate
-            mysql_connection.ExecuteNonQuery( "TRUNCATE playlist_songs" );
-            mysql_connection.ExecuteNonQuery( "TRUNCATE playlists" );
-            foreach(DataRow row in ds.Tables[0].Rows)
+            mysql_connection.ExecuteNonQuery("TRUNCATE playlist_songs");
+            mysql_connection.ExecuteNonQuery("TRUNCATE playlists");
+            foreach (DataRow row in ds.Tables[0].Rows)
             {
                 // insert all playlist
                 long id = (long)row[0];
                 string name = (string)row[1];
-                name = name.Replace( "'", "''" );
+                name = name.Replace("'", "''");
                 string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0, NULL, NULL )";
-                mysql_connection.ExecuteNonQuery( sql );
+                mysql_connection.ExecuteNonQuery(sql);
                 string playlist_id = mysql_connection.LastInsertID.ToString();
-                string msg = "Creating playlist: " + name + " ..."; 
-                OnMessage( msg );
+                string msg = "Creating playlist: " + name + " ...";
+                OnMessage(msg);
                 //  get the playlist id
-                DataSet ds2 = mm_connection.ExecuteQuery( "SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString() );
-                foreach(DataRow pl_row in ds2.Tables[0].Rows)
+                DataSet ds2 = mm_connection.ExecuteQuery("SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString());
+                foreach (DataRow pl_row in ds2.Tables[0].Rows)
                 {
-                    DataSet ds3 = mm_connection.ExecuteQuery( "SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString() );
-                    if(ds3.Tables[0].Rows.Count > 0)
+                    DataSet ds3 = mm_connection.ExecuteQuery("SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString());
+                    if (ds3.Tables[0].Rows.Count > 0)
                     {
                         string path = (string)ds3.Tables[0].Rows[0][8];
                         long order = (long)pl_row[3];
-                        path = path.Remove( 0, 16 );
-                        path = path.Replace( "\\", "/" );
-                        object song_id = GetKey( "song", "file", path );
-                        if(song_id == null)
+                        path = path.Remove(0, 16);
+                        path = path.Replace("\\", "/");
+                        object song_id = GetKey("song", "file", path);
+                        if (song_id == null)
                             continue;
                         sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "', NULL, NULL )";
-                        mysql_connection.ExecuteNonQuery( sql );
+                        mysql_connection.ExecuteNonQuery(sql);
                     }
                 }
             }
@@ -747,6 +748,7 @@ namespace MusicImporter_Lib
             Trace.WriteLine("State=" + state.ToString(), Logger.Level.Information.ToString());
             if (StateChanged != null) StateChanged(current_state, last_state);
         }
+
         /// <summary>
         /// call status update
         /// </summary>
@@ -756,6 +758,7 @@ namespace MusicImporter_Lib
             Trace.WriteLine(msg, Logger.Level.Information.ToString());
             if(Message != null) Message( msg );
         }
+
         /// <summary>
         /// call Error
         /// </summary>
@@ -765,6 +768,7 @@ namespace MusicImporter_Lib
             Trace.WriteLine(msg, Logger.Level.Error.ToString());
             if(Error != null) Error( msg );
         }
+
         /// <summary>
         /// call ProcessDirectory
         /// </summary>
@@ -774,6 +778,7 @@ namespace MusicImporter_Lib
             Trace.WriteLine("Processing directory - " + dir, Logger.Level.Information.ToString());
             if(DirectoryProcessing != null) DirectoryProcessing( dir );
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -781,6 +786,7 @@ namespace MusicImporter_Lib
         {
             if(SyncError != null) SyncError();
         }
+
         /// <summary>
         /// 
         /// </summary>
