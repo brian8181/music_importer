@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace MusicImporter_Lib
 {
@@ -15,11 +16,22 @@ namespace MusicImporter_Lib
         /// <returns></returns>
         public static byte[] MediaSHA1(TagLib.File file)
         {
-            int len = (int)file.InvariantEndPosition - (int)file.InvariantStartPosition;
-            file.Seek( file.InvariantStartPosition );
-            TagLib.ByteVector vector = file.ReadBlock( len );
-            byte[] data = vector.Data;
-            return Utility.CryptoFunctions.SHA1(data);
+            try
+            {
+                int len = (int)file.InvariantEndPosition - (int)file.InvariantStartPosition;
+                file.Seek(file.InvariantStartPosition);
+                //
+                TagLib.ByteVector vector = file.ReadBlock(len);
+                // 
+                byte[] data = vector.Data;
+                return Utility.CryptoFunctions.SHA1(data);
+            }
+            catch (OutOfMemoryException e)
+            {
+                Trace.WriteLine("OutOfMemoryException - " + file, Utility.Logger.Level.Error.ToString());
+                return null;
+            }
+    
         }
     }
 }

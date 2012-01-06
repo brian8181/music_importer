@@ -72,7 +72,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CSharpOptParse.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.1.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
