@@ -11,15 +11,10 @@ namespace MusicImporter_Lib
     /// </summary>
     public class Reporter
     {
-        private DateTime timestamp = DateTime.Now;
-
-        public DateTime Timestamp
-        {
-            get { return timestamp; }
-            set { timestamp = value; }
-        }
-        private uint scanned_count = 0;
         private List<string> corrupt_files = new List<string>();
+        private DateTime timestamp = DateTime.Now;
+        private string db_version = string.Empty;
+        private uint scanned_count = 0;
         private uint insert_song_count = 0;
         private uint update_song_count = 0;
         private uint delete_song_count = 0;
@@ -32,14 +27,17 @@ namespace MusicImporter_Lib
         private uint delete_art_count = 0;
         private uint delete_art_file_count = 0;
         private string db_prev_version = string.Empty;
-
+        
+        public DateTime Timestamp
+        {
+            get { return timestamp; }
+            set { timestamp = value; }
+        }
         public string DBPeviousVersion
         {
             get { return db_prev_version; }
             set { db_prev_version = value; }
         }
-        private string db_version = string.Empty;
-
         public string DBVersion
         {
             get { return db_version; }
@@ -113,6 +111,7 @@ namespace MusicImporter_Lib
             get { return delete_art_file_count; }
             set { delete_art_file_count = value; }
         }
+
         /// <summary>
         /// add a corrupt file to list
         /// </summary>
@@ -121,6 +120,7 @@ namespace MusicImporter_Lib
         {
             corrupt_files.Add(file_name);
         }
+
         /// <summary>
         /// helper function used by GetHTML
         /// </summary>
@@ -133,6 +133,7 @@ namespace MusicImporter_Lib
             sb.AppendFormat("<tr><td class=\"gray_text\" {1}>{0} DELETE total:</td><td {1}>{{1}}</tr></td>\r\n", name, style);
             return sb.ToString();
         }
+
         /// <summary>
         /// return report as HTML 
         /// </summary>
@@ -177,6 +178,7 @@ namespace MusicImporter_Lib
             sb.AppendLine("</body>\r\n</html>");
             return sb.ToString();
         }
+
         /// <summary>
         /// save an html report to process directory
         /// </summary>
@@ -193,6 +195,7 @@ namespace MusicImporter_Lib
             }
             return path;
         }
+
         /// <summary>
         /// delete all log files in process directory
         /// </summary>

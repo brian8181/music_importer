@@ -1,0 +1,2 @@
+* rescan art if mistakes are made confusing  (will it correct itselft if dir is changed)
+* keep windows from sleeping
