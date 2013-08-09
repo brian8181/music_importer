@@ -1,0 +1,502 @@
+Information: Processing directory - M:\music-lib\albums\All Girl Summer Fun Band
+Information: Processing directory - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\01. Brooklyn Phone Call.mp3
+Information: SHA1 - 831E024E611CDFB859800B6935C7B90B36C8313A
+Information: INSERTED SONG: 01. Brooklyn Phone Call.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\02. Canadian Boyfriend.mp3
+Information: SHA1 - 40F9758EB8E8E398CE9FEE6693AF260023E27426
+Information: INSERTED SONG: 02. Canadian Boyfriend.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\03. Car Trouble.mp3
+Information: SHA1 - 3B87AC7101C755DFEBAEE0D7CB3700F3668B1220
+Information: INSERTED SONG: 03. Car Trouble.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\04. Later Operator.mp3
+Information: SHA1 - 87942411106B958AD60D620D758D9BD0438FD024
+Information: INSERTED SONG: 04. Later Operator.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\05. Cut Your Hair.mp3
+Information: SHA1 - 03A4B3FCDA17A50E6DD569C60D34A0728429452A
+Information: INSERTED SONG: 05. Cut Your Hair.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\06. Somehow Angels.mp3
+Information: SHA1 - 0EEF2C859C8AE50DC24A577B107C39EEF90D382B
+Information: INSERTED SONG: 06. Somehow Angels.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\07. Theme Song.mp3
+Information: SHA1 - A7792EB8E1561823E01AD82371210A55A5B7F23F
+Information: INSERTED SONG: 07. Theme Song.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\08. It's There.mp3
+A first chance exception of type 'TagLib.CorruptFileException' occurred in taglib-sharp.dll
+Error: Exception: TagLib.CorruptFileException : MPEG audio header not found.
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\09. Girl #3.mp3
+Information: SHA1 - 535F07CDC9E2248B751AA517BDEB5CD68E526510
+Information: INSERTED SONG: 09. Girl #3.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\10. Stumble Over My.mp3
+Information: SHA1 - 3408CBF8D6966E7E3228D5DB91492FCCDC34FE02
+Information: INSERTED SONG: 10. Stumble Over My.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\11. New In Town.mp3
+Information: SHA1 - 3B87F9B304BF5F6D914E45DEF45CD1D91531162C
+Information: INSERTED SONG: 11. New In Town.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\12. Cutie Pie.mp3
+Information: SHA1 - AFC5B1D40919AA391BEE197D71FC5531E6C772F9
+Information: INSERTED SONG: 12. Cutie Pie.mp3
+Information: Processing file - M:\music-lib\albums\All Girl Summer Fun Band\2002 - All Girl Summer Fun Band\13. Cell Phone.mp3
+
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\01. C.I.D. In Uruk.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - E4B7C0013C181400919B8B0FBD518B48018403EA
+Information: INSERTED SONG: 01. C.I.D. In Uruk.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\02. All The Years 'Round.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 951B095F631EC79E1C918F70DCACA7029B2E7C17
+Information: INSERTED SONG: 02. All The Years 'Round.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\03. Shimmering Sand.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - A7F059A0880D279574616A99EA6635542292C478
+Information: INSERTED SONG: 03. Shimmering Sand.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\04. Kronwinkl 12.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 46CDDD1CE4C253AD7FB66BA57A14190431DBD096
+Information: INSERTED SONG: 04. Kronwinkl 12.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\05. Tables Are Turned.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - C1EE78237284CAE9376BC05DA3DC02B36AB219E8
+Information: INSERTED SONG: 05. Tables Are Turned.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\06. Hawknose Harlequin.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 091703DF3BD7543013DC324352C272F66F3EB247
+Information: INSERTED SONG: 06. Hawknose Harlequin.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\07. Light.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - E1F0595AEC6A8912B0F06E93E12BF122E988ED79
+Information: INSERTED SONG: 07. Light.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\08. Between The Eyes.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - D5C5E4C1F6674F9DADE750357352CA95D491EA9A
+Information: INSERTED SONG: 08. Between The Eyes.flac
+Information: Processing file - M:\music-lib\albums\Amon Düül II\1972 - Carnival In Babylon\09. All The Years Round (Single Version).flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+
+
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\01. Untouchable Face.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - DAC173A0385B00E1E84AB7EBBCC858351DC7AF76
+Information: INSERTED SONG: 01. Untouchable Face.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\02. Outta Me, Onto You.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - BBFAD6312ECEA9013BB946145B44153BFDDC3C5B
+Information: INSERTED SONG: 02. Outta Me, Onto You.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\03. Superhero.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 54C640724D4364929DA7795F763D84DDA0771D2F
+Information: INSERTED SONG: 03. Superhero.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\04. Dilate.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 564A055E0022E4D993531DE20F5B8F7344992F89
+Information: INSERTED SONG: 04. Dilate.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\05. Amazing Grace.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 31FDF5DDAC308DA8444D817773A94B6D6FCA999B
+Information: INSERTED SONG: 05. Amazing Grace.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\06. Napoleon.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 5FB34CF58DABD50A71FA0FD7600A50687C20E6E7
+Information: INSERTED SONG: 06. Napoleon.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\07. Shameless.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - E4BB06B16C7F785738DC57904542FB407D3BBA84
+Information: INSERTED SONG: 07. Shameless.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\08. Done Wrong.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - DDAFEBDB5920E9F15DB0E2C1334B2DEAA1D4537D
+Information: INSERTED SONG: 08. Done Wrong.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\09. Going Down.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - F46CDF607FF89BA61740BADE8743B64DDC1C7B2E
+Information: INSERTED SONG: 09. Going Down.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\10. Adam & Eve.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 0D8CCF9B8ADCCFCC517B1935FADEFDEC7A79945B
+Information: INSERTED SONG: 10. Adam & Eve.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1996 - Dilate\11. Joyful Girl.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 7285C65E9960521F9C60FBDD59048808BDFA1BAB
+Information: INSERTED SONG: 11. Joyful Girl.flac
+Information: Processing directory - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.01. Whatever.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 12D485F2CCFABBE8CD3F03CD0007959E6CCE400F
+Information: INSERTED SONG: 1.01. Whatever.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.02. Wherever.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - A5F371A251B5DD961BFD8416A3F2AEF38DEE564B
+Information: INSERTED SONG: 1.02. Wherever.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.03. Gravel.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - D6FD0FCE5D98090F4195FEF228BC6E1229641EDE
+Information: INSERTED SONG: 1.03. Gravel.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.04. Willing to Fight.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 35C04CC2BCE5C8CDC63BA263D7FD5629C62D0F0B
+Information: INSERTED SONG: 1.04. Willing to Fight.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.05. Shy.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 06D209F129247C5E78D1A90D2F6DB463002CCE09
+Information: INSERTED SONG: 1.05. Shy.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.06. Joyful Girl.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - F8C9889298BF285E48E75EC5CFD78DD132057031
+Information: INSERTED SONG: 1.06. Joyful Girl.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.07. Hide and Seek.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 849B5155F75B864F27683F4CF6A49B7D13993824
+Information: INSERTED SONG: 1.07. Hide and Seek.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.08. Napoleon.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 910F05C43A2431688AB2BF57F83AA4A0BC5C9C52
+Information: INSERTED SONG: 1.08. Napoleon.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.09. I'm No Heroine.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 0A67947FE3B6C6A0EBF4A194A772C4D1A90A1CF3
+Information: INSERTED SONG: 1.09. I'm No Heroine.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.10. Amazing Grace.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 1EA094B595E3CE71449B71E1DB1556C4C4224FE8
+Information: INSERTED SONG: 1.10. Amazing Grace.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.11. Anticipate.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - DB078B3FA888BE7380BBB6B14B6CBF2D38110A4C
+Information: INSERTED SONG: 1.11. Anticipate.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.12. Tiptoe.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 2C8CCC0165E586F107F9212305327E358840EAE1
+Information: INSERTED SONG: 1.12. Tiptoe.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.13. Sorry I Am.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 8328444D89FFBC74C5D37D8CAECD07D25CA086F1
+Information: INSERTED SONG: 1.13. Sorry I Am.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.14. The Diner - The Slant.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 5C9D4A6BACD4B3BB74B9FC84B1445FD93F86F504
+Information: INSERTED SONG: 1.14. The Diner - The Slant.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.15. 32 Flavors.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 487FCED11C0004316D9BE02B877EB93F0B1A0392
+Information: INSERTED SONG: 1.15. 32 Flavors.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\1.16. Out of Range.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - B84889EC2C1810C7CDFF1498C8D8FB81081E317A
+Information: INSERTED SONG: 1.16. Out of Range.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.01. Untouchable Face.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - AADCAAA01EF7BB6CB06630FC7FFA309A827F6E5F
+Information: INSERTED SONG: 2.01. Untouchable Face.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.02. Shameless.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 89C802D228DCA4373A274EC0BBD25E02FA4BF37F
+Information: INSERTED SONG: 2.02. Shameless.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.03. Distracted.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - DD3888581008D1F91C9D156585DAE2257FF90573
+Information: INSERTED SONG: 2.03. Distracted.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.04. Adam and Eve.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - DFC5CF1180B8205D34442F879C2DFFEE2CA4CDA2
+Information: INSERTED SONG: 2.04. Adam and Eve.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.05. Fire Door.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - E79D06161C2BE2D35C9847E27B479032DA0F4077
+Information: INSERTED SONG: 2.05. Fire Door.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.06. Both Hands.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - FF6838873D1B2A3C6DA6D810DFA3936114EFCDF2
+Information: INSERTED SONG: 2.06. Both Hands.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.07. Out of Habit.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 2B785651FFBBF7D9CD3777F7C1FA104F56C1E6F1
+Information: INSERTED SONG: 2.07. Out of Habit.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.08. Every State Line.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 9A24FC6C8B548C4D4B8D6F3AD6C2CE4788137133
+Information: INSERTED SONG: 2.08. Every State Line.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.09. Not So Soft.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 77DEEB71AA4B633A2DB4481C3D9625D1EF3F23A9
+Information: INSERTED SONG: 2.09. Not So Soft.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.10. Travel Tips.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - CFFBDDE99C700217446BA5CFAAEC2D6F9D106C84
+Information: INSERTED SONG: 2.10. Travel Tips.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.11. Wrong With Me.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 095329D9F9C783F5E3AD95F0DA123CD4ABA46D28
+Information: INSERTED SONG: 2.11. Wrong With Me.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.12. In or Out.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - E95E8C01EB3832AE93D3A8694F3F8B14B27BBAA1
+Information: INSERTED SONG: 2.12. In or Out.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.13. We're All Gonna Blow.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 65364D49B6696AA1E2BDA5316CE37EE979614F3E
+Information: INSERTED SONG: 2.13. We're All Gonna Blow.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.14. Letter to a John.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 776E6A07A9554B03892D0ACD45ADB1EA68A429DD
+Information: INSERTED SONG: 2.14. Letter to a John.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\1997 - Living In Clip\2.15. Overlap.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - AD98724DFF1559E700CD7F5310A68F9CC9650894
+Information: INSERTED SONG: 2.15. Overlap.flac
+Information: Processing directory - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\01. Your Next Bold Move.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - E8A78E84655FE2A70121CE9B1DB4C06C7150E9C3
+Information: INSERTED SONG: 01. Your Next Bold Move.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\02. This Box Contains....flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 3CB99B27C96D4AC345E5988E9A2582D620BED47D
+Information: INSERTED SONG: 02. This Box Contains....flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\03. Reckoning.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 49FEAB6CFC24A1F39E8F25B7D1861A82E0259375
+Information: INSERTED SONG: 03. Reckoning.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\04. So What.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - EB5C2929164632A47966542FCA37B80AC5EA1E07
+Information: INSERTED SONG: 04. So What.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\05. Prison Prism.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 4A651A819F1CD592AEF42B94BD2DD51921A35263
+Information: INSERTED SONG: 05. Prison Prism.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\06. Imagine That.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 666E3A7504980BF4C570BC286B292073EB56F8BF
+Information: INSERTED SONG: 06. Imagine That.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\07. Flood Waters.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 37106226032D95788863EE74D3B840C34EA5DB55
+Information: INSERTED SONG: 07. Flood Waters.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\08. Grey.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 02EBD8CCC4C48E0A6294C9F861C66F65F0318828
+Information: INSERTED SONG: 08. Grey.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\09. Subdivision.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - BD6C233580BD39FFD356724B9512FD391523A8C8
+Information: INSERTED SONG: 09. Subdivision.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\10. Old Old Song.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 470B210749A7B74F28FFCED860A711AFC677C043
+Information: INSERTED SONG: 10. Old Old Song.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\11. Sick Of Me.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 3A73B17EFC2FD0EF506E09ECD788696F3CB99FAD
+Information: INSERTED SONG: 11. Sick Of Me.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\12. Don't Nobody Know.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - ED94F918538B8CD36355C1FD1BA744C2654D07B1
+Information: INSERTED SONG: 12. Don't Nobody Know.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\13. School Night.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 09FCD89B59E5ED7F1A23984B83A131674AA8E6E1
+Information: INSERTED SONG: 13. School Night.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\14. That Was My Love.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 6A7438C0E5616B7D94F99BC17505DD67439880C5
+Information: INSERTED SONG: 14. That Was My Love.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\15. Revelling.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 62F7733932989FCC04AB10DCC081E0F4820A3BCC
+Information: INSERTED SONG: 15. Revelling.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Reckoning\16. In Here.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 13AAC39CCF192CA0E256D71E37CC489CB9E6CFAD
+Information: INSERTED SONG: 16. In Here.flac
+Information: Processing directory - M:\music-lib\albums\Ani DiFranco\2001 - Revelling
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\01. Ain't That the Way.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 95800D0AA3AAFB91197D9CE0C1336519FEB8BD62
+Information: INSERTED SONG: 01. Ain't That the Way.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\02. O.K..flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - AEEC9484A11631B7E1D7C5ED9C765563FC482CF5
+Information: INSERTED SONG: 02. O.K..flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\03. Garden of Simple.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 85050913DBADE0598241504AF160877A8FAD0383
+Information: INSERTED SONG: 03. Garden of Simple.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\04. Tamburitza Lingua.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 891607FA56040CC2D3F5610DB01052EC29E1B13B
+Information: INSERTED SONG: 04. Tamburitza Lingua.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\05. Marrow.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - B3C6C65BA5D2B690C32CC20AC890F89A68B527F4
+Information: INSERTED SONG: 05. Marrow.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\06. Heartbreak Even.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 40839BE0FED59CD101DD1A252A1F64BE19AFC6EE
+Information: INSERTED SONG: 06. Heartbreak Even.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\07. Harvest.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - BDE931ADD73C007A5266521D30DCCEA1E9ECDA6D
+Information: INSERTED SONG: 07. Harvest.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\08. Kazoointoit.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 3AACE0FC1D4F10D36504CA30001F1E5F96BE393F
+Information: INSERTED SONG: 08. Kazoointoit.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\09. Whatall Is Nice.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 54D1ABF38C53F1084317FF02EAED7401F55C6657
+Information: INSERTED SONG: 09. Whatall Is Nice.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\10. What How When Where (Why Who).flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - A0E6A04901DE9489D1BD2DD024CE0C1317ED8434
+Information: INSERTED SONG: 10. What How When Where (Why Who).flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\11. Fierce Flawless.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - F920E5B290637803BAEEC2C13D268D11BCFC0911
+Information: INSERTED SONG: 11. Fierce Flawless.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\12. Rock Paper Scissors.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - CCC3F2547CCFBE1AF404DCED1D1D293F4A4F7E94
+Information: INSERTED SONG: 12. Rock Paper Scissors.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2001 - Revelling\13. Beautiful Night.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - AE83DB5046BCDFB6AC37C8EB1CDA1B9BFC3D18F9
+Information: INSERTED SONG: 13. Beautiful Night.flac
+Information: Processing directory - M:\music-lib\albums\Ani DiFranco\2003 - Evolve
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\01. Promised Land.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - F27832C604A29E57FB2E8CCD0FC022CE351FA522
+Information: INSERTED SONG: 01. Promised Land.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\02. In the Way.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - FE26944CF88C7B7C34B88ED51DDEACD50CE2F6E5
+Information: INSERTED SONG: 02. In the Way.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\03. Icarus.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - D9CA411824F0C4C21E2B876982A512238279C3CE
+Information: INSERTED SONG: 03. Icarus.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\04. Slide.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - C8624C4F7122C611B015EFEB201A4DB0ADA4CC36
+Information: INSERTED SONG: 04. Slide.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\05. O My My.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - A299820939C4BCAC757279C56670C45761B1F1E6
+Information: INSERTED SONG: 05. O My My.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\06. Evolve.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 5BBCD36267A07349077E9D8F04E0D2E45F8060A7
+Information: INSERTED SONG: 06. Evolve.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\07. Shrug.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 5381EBE053C6A464C96B1B225514A71566064A37
+Information: INSERTED SONG: 07. Shrug.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\08. Phase.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 25A67A3B839D2B5544BA233BDAA9526A2412DAB1
+Information: INSERTED SONG: 08. Phase.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\09. Here For Now.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - AC99E8427D92D3B0580A68CBCF4AD575E21514E8
+Information: INSERTED SONG: 09. Here For Now.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\10. Second Intermission.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - 9EBED208926E5465AD92170F0CB3E8661A670D0F
+Information: INSERTED SONG: 10. Second Intermission.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\11. Serpentine.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.
+Information: SHA1 - A13A913F7E34CF9F464BB5B39CD1788F2281F0B1
+Information: INSERTED SONG: 11. Serpentine.flac
+Information: Processing file - M:\music-lib\albums\Ani DiFranco\2003 - Evolve\12. Welcome To-.flac
+A first chance exception of type 'System.NullReferenceException' occurred in taglib-sharp.dll
+Error: Object reference not set to an instance of an object.

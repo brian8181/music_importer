@@ -334,6 +334,9 @@ namespace MusicImporter_Lib
                     Optimize();
                 }
             }
+            catch (Exception e)
+            {
+            }
             finally
             {
                 DateTime end = DateTime.Now;
@@ -418,15 +421,22 @@ namespace MusicImporter_Lib
                     OnError( "Exception: " + e.GetType().ToString() + " : " + e.Message );
                     continue;
                 }
-                //insert tag data
-                object artist_id = InsertArtist( tag );
-                object album_id = InsertAlbum( tag );
-                //string art_id = InsertArt( tag, dir );
-                object song_id = InsertSong(tag, tag_file, null, artist_id, album_id);
-                if (Settings.Default.insert_art)
+
+                try
                 {
-                    uint c = art_importer.InsertArt(song_id, tag_file); // do not need ret val
-                    reporter.InsertArtCount += c;
+                    //insert tag data
+                    object artist_id = InsertArtist(tag);
+                    object album_id = InsertAlbum(tag);
+                    //string art_id = InsertArt( tag, dir );
+                    object song_id = InsertSong(tag, tag_file, null, artist_id, album_id);
+                    if (Settings.Default.insert_art)
+                    {
+                        uint c = art_importer.InsertArt(song_id, tag_file); // do not need ret val
+                        reporter.InsertArtCount += c;
+                    }
+                }
+                catch (Exception e)
+                {
                 }
             }
             string[] dirs = System.IO.Directory.GetDirectories( dir );

@@ -454,7 +454,7 @@ namespace music_importer
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 49);
+            this.label11.Location = new System.Drawing.Point(12, 74);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(52, 13);
             this.label11.TabIndex = 31;
@@ -484,7 +484,7 @@ namespace music_importer
             // lbArtRoot
             // 
             this.lbArtRoot.AutoSize = true;
-            this.lbArtRoot.Location = new System.Drawing.Point(12, 74);
+            this.lbArtRoot.Location = new System.Drawing.Point(12, 49);
             this.lbArtRoot.Name = "lbArtRoot";
             this.lbArtRoot.Size = new System.Drawing.Size(67, 13);
             this.lbArtRoot.TabIndex = 26;
