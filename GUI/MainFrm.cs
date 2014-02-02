@@ -78,12 +78,10 @@ namespace music_importer
 
             tt_btnStart.SetToolTip( btnOK, "click to start" );
             tt_create.SetToolTip( cbCreateDB, Properties.Resources.warn_create_db );
-            tt_mm_message.SetToolTip( txtSQLite, Properties.Resources.mm_message );
-
+          
             cbSH_Pass.SetImages( Properties.Resources.lock_trans_16, Properties.Resources.unlock_trans_16 );
             cbSH_User.SetImages( Properties.Resources.lock_trans_16, Properties.Resources.unlock_trans_16 );
             cbMysql.SetImages( Properties.Resources.enabled_trans_16, Properties.Resources.disabled_trans_16 );
-            cbPlaylist.SetImages( Properties.Resources.enabled_trans_16, Properties.Resources.disabled_trans_16 );
             cbGenerateThumbs.SetImages( Properties.Resources.enabled_trans_16, Properties.Resources.disabled_trans_16 );
 
             string version  = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
@@ -102,7 +100,6 @@ namespace music_importer
             this.txtPassword.Text = Settings.Default.Pass_UTF8;
             this.txtSchema.Text = Settings.Default.schema;
             this.txtMySql.Text = Settings.Default.mysql_conn_str;
-            this.txtSQLite.Text = Settings.Default.mm_conn_str;
             this.cbClean.Checked = Settings.Default.Clean;
             this.cbLog.Checked = Settings.Default.Log; //TODO this is a GUI setting like below
             this.cbClearLogs.Checked = Properties.Settings.Default.clear_logs;
@@ -110,10 +107,8 @@ namespace music_importer
             this.cbTags.Checked = Settings.Default.ScanTags;
             this.cbSHA1.Checked = Settings.Default.compute_sha1;
             this.cbOptimize.Checked = Settings.Default.Optimize;
-            this.cbPlaylist.Checked = Settings.Default.ScanPlaylist;
             this.txtMySql.Enabled = cbMysql.Checked;
             this.cbMysql.Checked = Settings.Default.use_conn_str;
-            this.txtSQLite.Enabled = cbPlaylist.Checked;
             // always false
             //this.cbCreateDB.Checked = Settings.Default.create_db;
             this.cbCreateDB.Checked = false;
@@ -162,16 +157,6 @@ namespace music_importer
                 Properties.Settings.Default.mysql_history = new StringCollection();
             }
 
-            if (Properties.Settings.Default.sqlite_history != null)
-            {
-                strs = new string[Properties.Settings.Default.sqlite_history.Count];
-                Properties.Settings.Default.sqlite_history.CopyTo(strs, 0);
-                this.txtSQLite.AutoCompleteCustomSource.AddRange(strs);
-            }
-            else
-            {
-                Properties.Settings.Default.sqlite_history = new StringCollection();
-            }
         }
         /// <summary>
         /// save application settings
@@ -188,11 +173,6 @@ namespace music_importer
             {
                 Settings.Default.mysql_conn_str = this.txtMySql.Text;
             }
-            if(cbPlaylist.Checked)
-            {
-                Settings.Default.mm_conn_str = this.txtSQLite.Text;
-            }
-            Settings.Default.ScanPlaylist = this.cbPlaylist.Checked;
             Settings.Default.Clean = this.cbClean.Checked;
             Settings.Default.Log = this.cbLog.Checked; //TODO this a GUI setting
             Properties.Settings.Default.clear_logs = this.cbClearLogs.Checked;
@@ -236,11 +216,6 @@ namespace music_importer
             Properties.Settings.Default.schema_history.Clear();
             Properties.Settings.Default.schema_history.AddRange( strs );
 
-            strs = new string[this.txtSQLite.AutoCompleteCustomSource.Count];
-            this.txtSQLite.AutoCompleteCustomSource.CopyTo( strs, 0 );
-            Properties.Settings.Default.sqlite_history.Clear();
-            Properties.Settings.Default.sqlite_history.AddRange( strs );
-  
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -391,17 +366,6 @@ namespace music_importer
             // disallow creation with connect string
             //todo cbCreateDB.Checked = !check;
             cbCreateDB.Enabled = !check;
-        }
-        /// <summary>
-        /// check box changed
-        /// </summary>
-        /// <param name="sender">checkbox</param>
-        /// <param name="e">ags</param>
-        private void cbPlaylist_CheckedChanged( object sender, EventArgs e )
-        {
-            // set toggle button
-            //cbPlaylist.Text = cbPlaylist.Checked ? "Disable" : "Enable";
-            txtSQLite.Enabled = cbPlaylist.Checked;
         }
         /// <summary>
         /// check box changed
@@ -712,20 +676,6 @@ namespace music_importer
                 if (!String.IsNullOrEmpty( txtSchema.Text ))
                     txtSchema.AutoCompleteCustomSource.Add( txtSchema.Text );
             }
-
-            // sqlite
-            idx = txtSQLite.AutoCompleteCustomSource.IndexOf( txtSQLite.Text );
-            if(idx >= 0)
-            {
-                // remove and put on top
-                txtSQLite.AutoCompleteCustomSource.RemoveAt( idx );
-                txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
-            }
-            else
-            {
-                if (!String.IsNullOrEmpty( txtSQLite.Text ))
-                    txtSQLite.AutoCompleteCustomSource.Add( txtSQLite.Text );
-            }
         }
         /// <summary>
         /// set the lable on correct thread
@@ -792,8 +742,6 @@ namespace music_importer
                 txtPort.Enabled = !check;
                 txtSchema.Enabled = !check;
                 cbCreateDB.Enabled = !check;
-                txtSQLite.Enabled = cbPlaylist.Checked;
-                check = cbGenerateThumbs.Checked;
                 this.btnBrowseArt.Enabled = cbGenerateThumbs.Checked;
                 this.txtArtLoc.Enabled = cbGenerateThumbs.Checked;
                 this.txtArtMask.Enabled = cbGenerateThumbs.Checked;
@@ -809,7 +757,6 @@ namespace music_importer
                 txtPort.Enabled = state;
                 txtSchema.Enabled = state;
                 txtMySql.Enabled = state;
-                txtSQLite.Enabled = state;
                 cbCreateDB.Enabled = state;
                 this.btnBrowseArt.Enabled = state;
                 this.txtArtLoc.Enabled = state;
@@ -828,7 +775,6 @@ namespace music_importer
             cbLog.Enabled = state;
             cbClearLogs.Enabled = state;
             cbOptimize.Enabled = state;
-            cbPlaylist.Enabled = state;
             cbTags.Enabled = state;
             cbSHA1.Enabled = state;
         }
@@ -855,15 +801,6 @@ namespace music_importer
             else
             {
                 result = result ? !string.IsNullOrEmpty( txtMySql.Text ) : false;
-            }
-            if(cbPlaylist.Checked)
-            {
-                result = result ? !string.IsNullOrEmpty( txtSQLite.Text ) : false;
-            }
-            if (cbTags.Checked)
-            {
-                result = result ? !string.IsNullOrEmpty( txtRoot.Text ) : false;
-                result = result ? !string.IsNullOrEmpty(txtMask.Text) : false;
             }
             //result = result ? ( lbScanLocations.Items.Count > 0 ) : false;
             if(cbGenerateThumbs.Checked && !Directory.Exists( txtArtLoc.Text ))
