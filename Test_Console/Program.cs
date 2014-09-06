@@ -1,3 +1,4 @@
+using MusicImporter_Lib;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Test_Console
     {
         static void Main( string[] args )
         {
-            MusicImporter_Lib.Importer importer = new MusicImporter_Lib.Importer();
+            Importer importer = new Importer();
             importer.Connect();
         }
     }
