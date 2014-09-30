@@ -298,14 +298,6 @@ namespace MusicImporter_Lib
                 pause.WaitOne();
                 if (!running) return;
 
-                // SCAN PLAYLIST
-                if (Settings.Default.ScanPlaylist)
-                {
-                    OnStateChanged(State.CreatePlaylists);
-                    ImportPlaylist();
-                    OnStateChanged(State.PrepareStep);
-                }
-
                 // check for stop signal
                 pause.WaitOne();
                 if (!running) return;
@@ -622,48 +614,6 @@ namespace MusicImporter_Lib
                 reporter.UpdateSongCount++;
             }
             return song_id;
-        }
-
-        /// <summary>
-        /// import playlist
-        /// </summary>
-        private void ImportPlaylist()
-        {
-            //// get all playlist from mediamonkey
-            //DataSet ds = mm_connection.ExecuteQuery("SELECT * FROM Playlists WHERE ParentPlaylist=0 AND (IsAutoPlaylist<>1 OR IsAutoPlaylist IS NULL)");
-            //// just truncate tables and recreate
-            //mysql_connection.ExecuteNonQuery("TRUNCATE playlist_songs");
-            //mysql_connection.ExecuteNonQuery("TRUNCATE playlists");
-            //foreach (DataRow row in ds.Tables[0].Rows)
-            //{
-            //    // insert all playlist
-            //    long id = (long)row[0];
-            //    string name = (string)row[1];
-            //    name = name.Replace("'", "''");
-            //    string sql = "INSERT INTO playlists Values( NULL, '" + name + "', NULL, 0, NULL, NULL )";
-            //    mysql_connection.ExecuteNonQuery(sql);
-            //    string playlist_id = mysql_connection.LastInsertID.ToString();
-            //    string msg = "Creating playlist: " + name + " ...";
-            //    OnMessage(msg);
-            //    //  get the playlist id
-            //    DataSet ds2 = mm_connection.ExecuteQuery("SELECT * FROM PlaylistSongs WHERE IDPlaylist=" + id.ToString());
-            //    foreach (DataRow pl_row in ds2.Tables[0].Rows)
-            //    {
-            //        DataSet ds3 = mm_connection.ExecuteQuery("SELECT * FROM Songs WHERE ID=" + pl_row[2].ToString());
-            //        if (ds3.Tables[0].Rows.Count > 0)
-            //        {
-            //            string path = (string)ds3.Tables[0].Rows[0][8];
-            //            long order = (long)pl_row[3];
-            //            path = path.Remove(0, 16);
-            //            path = path.Replace("\\", "/");
-            //            object song_id = GetKey("song", "file", path);
-            //            if (song_id == null)
-            //                continue;
-            //            sql = "INSERT INTO playlist_songs Values( NULL, '" + playlist_id + "', '" + song_id + "', '" + order.ToString() + "', NULL, NULL )";
-            //            mysql_connection.ExecuteNonQuery(sql);
-            //        }
-            //    }
-            //}
         }
         #endregion
 

@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gpl-3.0.txt" />
+    <Content Include="notes.txt" />
     <None Include="sql\updates\update.1.0.3.sql" />
     <None Include="Resources\NA.JPG" />
     <None Include="sql\create.sql" />
