@@ -243,7 +243,7 @@ namespace MusicImporter_Lib
                         string schema_name = Settings.Default.schema;
                         string sql = "DROP DATABASE IF EXISTS " + schema_name;
                         mysql_connection.ExecuteNonQuery(sql);
-                        db_mgr.CreateDatabase(schema_name);
+                        db_mgr.CreateDatabase(schema_name); 
                         db_mgr.ExecuteCreateScript();
                     }
 

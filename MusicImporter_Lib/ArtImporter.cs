@@ -25,7 +25,7 @@ namespace MusicImporter_Lib
     /// </summary>
     class ArtImporter
     {
-        private IDatabase db = null;
+        private IDatabase<MySqlCommand> db = null;
         private string path = null;
         
         /// <summary>
@@ -33,7 +33,7 @@ namespace MusicImporter_Lib
         /// </summary>
         /// <param name="db">the db connection</param>
         /// <param name="art_path">path to art directory</param>
-        public ArtImporter(IDatabase db, string art_path)
+        public ArtImporter(IDatabase<MySqlCommand> db, string art_path)
         {
             this.db = db;
             this.path = art_path.TrimEnd('\\');

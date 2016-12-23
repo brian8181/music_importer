@@ -98,7 +98,7 @@ namespace MusicImporter_Lib
         public void ParseVersion(string value)
         {
             Regex exp =
-                   new Regex("^(?<major>[0-9]).(?<minor>[0-9]).(?<revison>[0-9])$");
+                   new Regex("^ ");
 
             MatchCollection mc = exp.Matches(value);
             if (mc.Count != 1)

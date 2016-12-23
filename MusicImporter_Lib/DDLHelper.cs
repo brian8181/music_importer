@@ -17,7 +17,7 @@ namespace MusicImporter_Lib
     /// </summary>
     class DDLHelper
     {
-        private IDatabase db = null;
+        private IDatabase<MySqlCommand> db = null;
         private SortedList<int, DatabaseVersion> versions = null;
         private DatabaseVersion current_version = null;
         private DatabaseVersion update_version = null;
@@ -53,7 +53,7 @@ namespace MusicImporter_Lib
         /// default ctor
         /// </summary>
         /// <param name="db">the database connection</param>
-        public DDLHelper(IDatabase db)
+        public DDLHelper(IDatabase<MySqlCommand> db)
         {
             this.db = db;
         }
