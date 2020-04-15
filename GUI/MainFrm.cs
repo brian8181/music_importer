@@ -442,8 +442,11 @@ namespace music_importer
             {
                 if(!( art_small.Value < art_large.Value && art_small.Value > art_xsmall.Value ))
                 {
-                    StdMsgBox.OK( "Art sizes do not make logical sense. (small < large and small > x-small)" );
-                    cbGenerateThumbs.Checked = false;
+                    string message = "Art sizes do not make logical sense. (small < large and small > x-small)";
+                    MessageBox.Show( message, "Message",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Question,
+                                          MessageBoxDefaultButton.Button1 );
+                   cbGenerateThumbs.Checked = false;
                 }
             }
             this.btnBrowseArt.Enabled = cbGenerateThumbs.Checked; 
@@ -817,13 +820,15 @@ namespace music_importer
                     return false;
                 try
                 {
-                    Directory.CreateDirectory( txtArtLoc.Text );
+                    Directory.CreateDirectory(txtArtLoc.Text);
                 }
-                catch(System.IO.DirectoryNotFoundException e)
+                catch (System.IO.DirectoryNotFoundException e)
                 {
-                    StdMsgBox.OK( "Error creating directory.\r\n" + e.Message );
+                    string message = "Error creating directory.\r\n" + e.Message;
+                    MessageBox.Show(message, "Message",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Question,
+                                      MessageBoxDefaultButton.Button1);
                 }
-
                 if(!Directory.Exists( txtArtLoc.Text ))
                 {
                     return false;
