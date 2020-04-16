@@ -6,11 +6,11 @@ CREATE TABLE `album` (
   `art` text collate latin1_german1_ci,
   `extra` text collate latin1_german1_ci,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2901 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci ROW_FORMAT=DYNAMIC;
 
-CREATE TRIGGER `inserted_album_ts` BEFORE INSERT ON `album` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+CREATE TRIGGER `inserted_album_ts` BEFORE INSERT ON `album` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '1970-01-01 00:00:01';
 
 DROP TABLE IF EXISTS `art`;
 CREATE TABLE `art` (
@@ -21,7 +21,7 @@ CREATE TABLE `art` (
   `description` text,
   `mime_type` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2279 DEFAULT CHARSET=latin1;
 
@@ -31,11 +31,11 @@ CREATE TABLE `artist` (
   `artist` text collate latin1_german1_ci NOT NULL,
   `extra` text character set latin1,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2305 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci ROW_FORMAT=FIXED;
+) ENGINE=InnoDB AUTO_INCREMENT=2305 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 
-CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+CREATE TRIGGER `inserted_artist_ts` BEFORE INSERT ON `artist` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '1970-01-01 00:00:01';
 
 DROP TABLE IF EXISTS `download`;
 CREATE TABLE `download` (
@@ -52,7 +52,7 @@ CREATE TABLE `group` (
   `group` text,
   `comment` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -71,7 +71,7 @@ CREATE TABLE `location` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `path` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
@@ -90,7 +90,7 @@ CREATE TABLE `playlist_songs` (
   `song_id` int(10) default NULL,
   `order` int(10) unsigned default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`),
   KEY `Index_play_id` (`playlist_id`),
   KEY `Index_song_id` (`song_id`)
@@ -103,7 +103,7 @@ CREATE TABLE `playlists` (
   `user_id` int(10) default NULL,
   `masked` tinyint(3) unsigned NOT NULL default '0',
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
@@ -123,7 +123,7 @@ CREATE TABLE `query_log` (
   `sortby` text,
   `ip` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -168,7 +168,7 @@ CREATE TABLE `song` (
   `track_count` int(10) unsigned default NULL,
   `beats_per_minute` int(10) unsigned default NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`),
   KEY `idx_artist_id` (`artist_id`),
   KEY `idx_album_id` (`album_id`),
@@ -179,7 +179,7 @@ CREATE TABLE `song` (
   CONSTRAINT `FK_song_3` FOREIGN KEY (`art_id`) REFERENCES `art` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci PACK_KEYS=1 ROW_FORMAT=DYNAMIC COMMENT='InnoDB';
 
-CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+CREATE TRIGGER `inserted_song_ts` BEFORE INSERT ON `song` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '1970-01-01 00:00:01';
 
 DROP TABLE IF EXISTS `song_art`;
 CREATE TABLE `song_art` (
@@ -187,7 +187,7 @@ CREATE TABLE `song_art` (
   `song_id` int(10) unsigned NOT NULL,
   `art_id` int(10) unsigned NOT NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`),
   KEY `Index_song_id` (`song_id`),
   KEY `Index_art_id` (`art_id`),
@@ -195,13 +195,13 @@ CREATE TABLE `song_art` (
   CONSTRAINT `FK_art` FOREIGN KEY (`art_id`) REFERENCES `art` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TRIGGER `inserted_song_art_ts` BEFORE INSERT ON `song_art` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '0000-00-00 00:00:00';
+CREATE TRIGGER `inserted_song_art_ts` BEFORE INSERT ON `song_art` FOR EACH ROW SET NEW.insert_ts = NOW(), NEW.update_ts = '1970-01-01 00:00:01';
 
 DROP TABLE IF EXISTS `song_tag`;
 CREATE TABLE `song_tag` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -211,19 +211,19 @@ CREATE TABLE `style` (
   `style` text NOT NULL,
   `file` text NOT NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `updated_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `updated_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-INSERT INTO `style` VALUES  (4,'Default','./css/style.css',NOW(),'0000-00-00 00:00:00'),
- (5,'Blue','./css/blue.css',NOW(),'0000-00-00 00:00:00'),
- (6,'Green','./css/green.css',NOW(),'0000-00-00 00:00:00');
+INSERT INTO `style` VALUES  (4,'Default','./css/style.css',NOW(),'1970-01-01 00:00:01'),
+ (5,'Blue','./css/blue.css',NOW(),'1970-01-01 00:00:01'),
+ (6,'Green','./css/green.css',NOW(),'1970-01-01 00:00:01');
 
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -247,7 +247,7 @@ CREATE TABLE `user` (
   `last_login` datetime default NULL,
   `comment` text,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `user_idx` (`user`(20))
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
@@ -268,7 +268,7 @@ CREATE TABLE `user_group` (
   `user_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL,
   `update_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `insert_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `insert_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`),
   KEY `FK_user_id` (`user_id`),
   KEY `FK_group_id` (`group_id`),
@@ -283,7 +283,7 @@ CREATE TABLE `user_security_question` (
   `question_id` int(10) unsigned NOT NULL,
   `answer` text NOT NULL,
   `insert_ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  `update_ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `update_ts` timestamp NOT NULL default '1970-01-01 00:00:01',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -296,4 +296,4 @@ CREATE TABLE `user_setting` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `update` (`update`, `version`, `release_date` ) VALUES( '1.0.0', 1, '2008-00-00' )
+INSERT INTO `update` (`update`, `version`, `release_date` ) VALUES( '1.0.0', 1, '2008-01-01' )
